@@ -1,0 +1,16 @@
+<div class="panel side-hotforums">
+    <div class="panel-heading">
+        <h3 class="panel-title">常用模块</h3>
+    </div>
+    {{#if hotForums }}
+        <ul class="clearfix">
+            {{#each hotForums}}
+                <li class="{{#calc @index '%2 != 0'}}even{{/calc}}">
+                    <a href="/forum/list/{{id}}" title="{{ name }}">{{ name }}</a>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>无</p>
+    {{/if}}
+</div>

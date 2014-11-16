@@ -1,0 +1,18 @@
+.visit-count{
+    margin-left:20px;
+}
+.cell .topic-title-wrapper{
+    font-size: 22px;
+}
+.cell .topic-title{
+    font-size:inherit;
+    color:#333;
+    font-weight: normal;
+}
+.cell .label{
+    position: relative;
+    top: -2px;
+}
+.label{
+
+}

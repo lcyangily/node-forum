@@ -1,0 +1,81 @@
+{{#extend "layout"}}
+    {{#append "css"}}
+        <link rel="stylesheet" href="/assets/p/forum/index.css">
+    {{/append}}
+    {{#replace "breadcrumb"}}
+        <div class="grid-row">
+            <div>
+                <ol class="breadcrumb">
+                    <li><a href="#">首页</a>
+                    </li>
+                    <li><a href="#">儿童教育</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    {{/replace}}
+    {{#replace "content"}}
+        <a href="/mgr/forum/create" class="btn btn-lg btn-default">
+            <span class="glyphicon glyphicon-plus"></span> 新增论坛版块
+        </a>
+        <table id="list"></table>
+    {{/replace}}
+
+    {{#append "js"}}
+    <script type="text/javascript">
+    require(['jquery', 'sib/datagrid/1.0/DataGrid', 'sib/dialog/1.0/Dialog'], 
+        function($, DataGrid, Dialog){
+        var d = new DataGrid({
+            target : '#list',
+            method: 'get',
+            url : '/mgr/forum/getdata',
+            columns : [
+                [{
+                    title : 'ID',
+                    field : 'id'
+                }, {
+                    title : 'Parent',
+                    field : 'parent_id'
+                }, {
+                    title : 'Name',
+                    field : 'name'
+                }, {
+                    title : 'Type',
+                    field : 'type',
+                    formatter : function(col, row, $td){
+                        return col == 0 ? '分组' : (col == 1 ? '分类' : '子模块');
+                    }
+                }, {
+                    title : '描述',
+                    field : 'desc'
+                }, {
+                    title : '操作',
+                    field : 'hello',
+                    formatter : function(col, row, $td){
+                        var $a = $('<a href="javascript:;">删除</a>').appendTo($td);
+                        $a.click(function(e){
+                            delForum(row.id);
+                            e.stopPropagation();
+                        });
+                    }
+                }]
+            ]
+        });
+
+        function delForum(id){
+            $.ajax({
+                url : '/mgr/forum/delete',
+                type : 'POST',
+                data : {
+                    id : id
+                },
+                success : function(){
+                    d.reload();
+                    //Dialog.tip('删除成功!');
+                }
+            });
+        };
+    });
+    </script>
+    {{/append}}
+{{/extend}}

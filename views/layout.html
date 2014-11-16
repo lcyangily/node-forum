@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        {{~#if topic ~}}
+            {{~ topic.title }} - {{ config.name ~}}
+        {{~ else ~}}
+            {{~ config.description ~}}
+        {{~/if~}}
+    </title>
+    {{#block "css"}}
+        <link rel="stylesheet" href="/assets/c/css/normalize.css">
+        <link rel="stylesheet" href="/assets/c/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="/assets/c/css/base.css">
+        <link rel="stylesheet" href="/assets/c/css/iconfont.css">
+        <link rel="stylesheet" href="/assets/c/css/grid.css">
+        <link rel="stylesheet" href="/assets/p/index/index.css">
+    {{/block}}
+</head>
+<body>
+{{#block "nav"}}
+    {{sub "nav"}}
+{{/block}}
+{{#block "bodyWrap"}}
+    <div class="grid-container main-body">
+        {{#block "body"}}
+            {{#block "breadcrumb"}}{{/block}}
+            {{#block "contentWrap"}}
+                <div class="grid-row">
+                    <div class="main-content grid-lg-24 grid-md-18 grid-sm-12">
+                        {{#block "content"}}{{/block}}
+                    </div>
+                    <div class="grid-sm-6">
+                        {{#block "sidebar"}}
+                            {{sub "sidebar"}}
+                        {{/block}}
+                    </div>
+                </div>
+            {{/block}}
+        {{/block}}
+    </div>
+{{/block}}
+{{#block "footer"}}
+    <div id='footer'>
+        <div id='footer_main'>
+            <div class="links">
+                <a class='dark' href='/about'>关于</a>
+                |
+                <a class='dark' href='/faq'>FAQ</a>
+                |
+                <a class='dark' href='/' target="_blank">GitHub</a>
+                |
+                <a class='dark' href='/rss' target="_blank">RSS</a>
+            </div>
+            <div class='col_fade'>
+                <p>&copy; 2012 - 2014</p>
+                <p>本社区为开源系统，版本: {{ config.version }} ，欢迎贡献代码</p>
+                <p>本站服务器由<a href="http://www.ucloud.cn/">
+                    <img src="/assets/images/ucloud.png" title="UCloud云主机" alt="UCloud云主机" height="28px" width="92px" /></a>赞助</p>
+            </div>
+        </div>
+    </div>
+{{/block}}
+{{#block "js"}}
+    <script type="text/javascript" src="/assets/c/requirejs/require-min.js"></script>
+    <script type="text/javascript" src="/assets/c/requirejs/require-config.js"></script>
+    <script type="text/javascript">
+    require(['jquery'], function($){
+        $(document).on('click', '[data-toggle=collapse]', function(){
+            var target = $(this).attr('data-target');
+            var $target = $(target);
+            $target.toggle();
+        });
+    });
+    </script>
+{{/block}}
+</body>
+</html>

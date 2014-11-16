@@ -1,0 +1,31 @@
+{{#extend "layout"}}
+    {{#append "css"}}
+        <link rel="stylesheet" href="/public/p/forum/index.css">
+    {{/append}}
+    {{#replace "content"}}
+        <div class="panel panel-type-nav">
+            <div class="panel-heading">
+                <ul class="nav nav-pills">
+                    <li>
+                        <a href="javascript:;">今日：1999</a>
+                    </li>
+                    <li>
+                        <a href="#">昨日：20000</a>
+                    </li>
+                    <li>
+                        <a href="#">帖子：1888888</a>
+                    </li>
+                    <li>
+                        <a href="#">会员：500</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="topic_list" class="list-group topic-list">
+                {{#each topics}}
+                    {{sub "forum/listItem" topic=this}}
+                {{/each}}
+            </div>
+            {{page total=100 current=current_page showNum=10 baseUrl="/" varName="page"}}
+        </div>
+    {{/replace}}
+{{/extend}}

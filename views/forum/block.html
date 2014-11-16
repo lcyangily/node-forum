@@ -1,0 +1,52 @@
+{{#extend "layout"}}
+    {{#append "css"}}
+        <link rel="stylesheet" href="/assets/p/forum/index.css">
+    {{/append}}
+    {{#replace "breadcrumb"}}
+        <div class="grid-row">
+            <div>
+                <ol class="breadcrumb">
+                    <li><a href="#">首页</a>
+                    </li>
+                    <li><a href="#">儿童教育</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    {{/replace}}
+    {{#replace "content"}}
+        {{#each groups}}
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="panel-title">{{name}}</div>
+                </div>
+                <div class="panel-body">
+                    <ul class="fclassify-list clearfix">
+                        {{#each children}}
+                            <li class="clearfix">
+                                <div class="fclassify-box">
+                                    <div class="fclassify-pic">
+                                        <a href="#" class="iconfont">{{{pic}}}</a>
+                                    </div>
+                                    <div class="fclassify-info">
+                                        <div class="fclassify-title">
+                                            <a href="forum-490-1.html">{{name}}</a>
+                                            <span class="fclassify-data">1</span>
+                                        </div>
+                                        <div class="fclassify-desc">{{desc}}</div>
+                                        <div class="fclassify-nums">
+                                            <span class="fclassify-s">主题：</span>{{topics}}
+                                            <span class="pipe">|</span>
+                                            <span class="fclassify-s">帖数：</span>
+                                            <span title="154216">{{posts}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        {{/each}}
+    {{/replace}}
+{{/extend}}

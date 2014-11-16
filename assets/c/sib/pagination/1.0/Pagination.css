@@ -1,0 +1,21 @@
+@charset "utf-8";
+.a-page {text-align: right; height:20px;padding:4px 16px 4px 10px;font:12px/1.5 "Microsoft YaHei", "Arial", '宋体';background: #f2f2f2;/* border-top:1px solid #ccc; */border-top:1px solid #fff;}
+.a-page table{float:right;}
+.a-page table a{display:block;background:#fff;color:#999;padding: 0px 6px;line-height:18px; border: 1px solid #DBDBDB;margin-left:4px;/* margin-right: -0.1em; */font-size:12px;text-decoration:none;text-align:center;cursor:pointer;}
+/* .a-page table a:hover{color:#dc1e16; border:1px solid #b8b8b8;} */
+.a-page table a:hover{background-image:none; background:#dc1e16;color:#fff;border:1px solid #dc1e16;}
+.a-page .a-page-first {padding:0;width:18px;height:18px;background-color:#fff;background-image: url("images/page.png");background-position: -1px -1px;}
+.a-page .a-page-first:hover {background:#dc1e16 url("images/page.png");background-position: -1px -21px;}
+.a-page .a-page-prev {padding:0;width:18px;height:18px;background:#fff url("images/page.png");background-position: -21px -1px;}
+.a-page .a-page-prev:hover {background-color:#dc1e16;background-image: url("images/page.png");background-position: -21px -21px;}
+.a-page .a-page-n{}
+.a-page .a-page-next{padding:0;width:18px;height:18px;background-color:#fff;background-image: url("images/page.png");background-position: -41px -1px;}
+.a-page .a-page-next:hover{background-color:#dc1e16;background-image: url("images/page.png");background-position: -41px -21px;}
+.a-page .a-page-last{padding:0;width:18px;height:18px;background-color:#fff;background-image: url("images/page.png");background-position: -61px -1px;}
+.a-page .a-page-last:hover{background-color:#dc1e16;background-image: url("images/page.png");background-position: -61px -21px;}
+/* .a-page .a-page-current, .a-page .a-page-current:hover{background-image:none; background:#dc1e16;color:#fff;border:1px solid #ae120b;} */
+.a-page .a-page-current, .a-page .a-page-current:hover{font-weight:bold; color:#dc1e16;background:#fff; border:1px solid #b8b8b8;}
+.a-page .a-page-disabled, .a-page .a-page-disabled:hover{/* background:url("images/page_min.png"); */ color:#333;font-weight:normal;}
+.a-page-info{float:left;line-height: 20px;margin-left:5px;}
+.a-page-toolbar{float:left;}
+.a-page-num{border:1px solid #ccc;height:18px;line-height:18px;width:22px;padding:0px 2px;}

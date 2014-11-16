@@ -1,0 +1,46 @@
+@charset "utf-8";
+.sib-slide {
+    position: relative;
+    overflow: hidden;
+}
+.sib-slide-content {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.sib-slide-panel {
+    position: relative;
+    overflow: hidden;
+}
+.sib-slide-panel img {
+   /* margin-left: -660px;*/
+}
+.sib-slide-nav {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    margin: 0;
+    padding: 0;
+    z-index: 99;
+    font-size: 12px;
+}
+.sib-slide-trigger {
+    float: left;
+    width: 15px;
+    height: 15px;
+    line-height: 17px;
+    margin-left: 5px;
+    background-color: #FFF;
+    opacity: .5;
+    filter: alpha(opacity=50);
+    text-align: center;
+    color: black;
+    cursor: pointer;
+    list-style: none;
+}
+.sib-slide-trigger-active {
+    color: #FFF;
+    background-color: #e96c3e;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}

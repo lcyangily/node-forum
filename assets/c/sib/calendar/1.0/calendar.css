@@ -1,0 +1,164 @@
+@charset "utf-8";
+/* year */
+.sib-calendar-year,
+.sib-calendar-month {
+  border: none;
+  box-shadow: none;
+  border-collapse: separate;
+  *border-collapse: collapse;
+  border-spacing: 0;
+}
+.sib-calendar-year-row,
+.sib-calendar-month-row {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: #fff;
+}
+.sib-calendar-year-item,
+.sib-calendar-month-item {
+  width: 79px;
+  height: 36px;
+  line-height: 36px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+.sib-calendar-year-item:hover,
+.sib-calendar-month-item:hover {
+    cursor: pointer;
+    background-color: #FFDEB8;
+    border-radius: 3px;
+}
+
+
+.sib-calendar-date{
+	border: none;
+	box-shadow: none;
+	border-collapse: separate;
+	*border-collapse: collapse;
+	border-spacing: 0;
+}
+.sib-calendar-date td{
+	text-align: center;
+}
+.sib-calendar-day-row{
+	border: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	background: #868686;
+    color: #fff;
+}
+.sib-calendar-day{
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-weight: bold;
+	padding:5px;
+}
+.sib-calendar-date-item{
+	font-size: 11px;
+	color: #636363;
+	width:50px;
+	min-width: 24px;
+	min-height: 24px;
+	padding: 3px 0;
+	line-height: 17px;
+	background: #fff;
+	text-align: center;
+	cursor: pointer;
+}
+.sib-calendar-date-item:hover{
+    background: #d6f0fd;
+    border-radius: 3px;
+}
+.sib-calendar-current-month{}
+.sib-calendar-prev-month,.sib-calendar-next-month{color:#ccc;}
+
+.sib-item-disabled,.sib-item-disabled:hover {
+  background: #e2e2e2!important;
+  color: #c3c3c3!important;
+  cursor: not-allowed!important;
+}
+.sib-item-focused,.sib-item-focused:hover{
+  color: #fff;
+  background: #f57403;
+  border-radius: 3px;
+}
+.sib-calendar {
+	position: absolute;
+	padding:1px;
+	width:200px;
+	border:1px solid #dadada;
+	border-shadow:1px 1px 9px #ccc;
+	font-size:12px;
+	color:#636363;
+	background:#fff;
+}
+.sib-calendar-inline{position: static;}
+.sib-calendar-container{
+	
+}
+.sib-calendar-pannel {
+	position:relative;
+	height: 26px;
+	line-height: 26px;
+	padding: 0;
+	margin: 0;
+	background: #f9f9f9;
+}
+.sib-calendar-control{
+	position: absolute;
+	cursor:pointer;
+	width:20px;
+	height:20px;
+	top:50%;
+	margin-top:-10px;
+	line-height:20px;
+}
+.sib-calendar-control:hover{
+	width:18px;
+	height:18px;
+	border:1px solid #ccc;
+	border-radius:3px;
+}
+.sib-calendar-currenttime{
+	margin:0px 40px;
+	text-align: center;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: bold;
+}
+.sib-calendar-cur-year, 
+.sib-calendar-cur-month {
+	cursor: pointer;
+	padding:2px 5px;
+}
+.sib-calendar-cur-year:hover, 
+.sib-calendar-cur-month:hover {
+    cursor: pointer;
+    padding:1px 4px;
+    border:1px solid #ccc;
+    border-radius:3px;
+}
+.sib-calendar-c-prevyear{
+	left: 2px;
+	background: url("./images/left-x.gif") no-repeat 4px 5px;
+}
+.sib-calendar-c-prevmonth{
+	left: 22px;
+	background: url("./images/left.gif") no-repeat 6px 5px;
+}
+.sib-calendar-c-nextmonth{
+	right: 22px;
+	background: url("./images/right.gif") no-repeat 6px 5px;
+}
+.sib-calendar-c-nextyear{
+	right: 2px;
+	background: url("./images/right-x.gif") no-repeat 5px 5px;
+}
+.sib-calendar-c-prevmonth:hover{background-position: 5px 4px;}
+.sib-calendar-c-nextmonth:hover{background-position: 5px 4px;}
+.sib-calendar-c-prevyear:hover{background-position: 3px 4px;}
+.sib-calendar-c-nextyear:hover{background-position: 4px 4px;}

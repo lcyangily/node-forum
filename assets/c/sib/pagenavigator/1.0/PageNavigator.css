@@ -1,0 +1,25 @@
+.sib-page-nav{
+    position: fixed;
+    _position:absolute;
+    right:15px;
+    top: 50%;
+    margin-top:-200px;
+    background: #f2f2f2;
+    border:1px solid #ccc;
+    padding:5px;
+    width:10em;
+    text-align: center;
+    font-size:12px;
+    line-height: 20px;
+    list-style: none;
+}
+.sib-page-nav li a{
+    display:block;
+}
+.sib-page-nav li a:hover{
+    background:#bfdaff;
+}
+.sib-page-nav li a.selected{
+    background:blue;
+    color:#fff;
+}

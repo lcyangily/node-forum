@@ -1,0 +1,14 @@
+<a href="javascript:;" class="btn btn-lg topic-pub-btn">发表帖子</a>
+{{sub "blocks/hotforums"}}
+{{#if no_reply_topics}}
+    <div class="panel">
+        <div class="panel-heading">无人回复的话题</div>
+        <div class="panel-body">
+            {{#if no_reply_topics }}
+                {{sub 'topic/small' topics=no_reply_topics }}
+            {{else}}
+                <p>无</p>
+            {{/if}}
+        </div>
+    </div>
+{{/if}}

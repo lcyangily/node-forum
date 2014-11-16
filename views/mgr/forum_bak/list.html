@@ -1,0 +1,342 @@
+{{#extend "layout"}}
+    {{#append "css"}}
+        <link rel="stylesheet" href="/assets/p/forum/index.css">
+    {{/append}}
+    {{#replace "breadcrumb"}}
+        <div class="grid-row">
+            <div>
+                <ol class="breadcrumb">
+                    <li><a href="#">首页</a>
+                    </li>
+                    <li><a href="#">儿童教育</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    {{/replace}}
+    {{#replace "content"}}
+        {{#each groups}}
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="panel-title">{{name}}</div>
+                </div>
+                <div class="panel-body">
+                    <ul class="fclassify-list clearfix">
+                        {{#each children}}
+                            <li class="clearfix">
+                                <div class="fclassify-box">
+                                    <div class="fclassify-pic">
+                                        <a href="forum-490-1.html">
+                                            <img src="http://attach.bbs.miui.com/common/c4/common_490_icon.png" align="left" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="fclassify-info">
+                                        <div class="fclassify-title">
+                                            <a href="forum-490-1.html">{{name}}</a>
+                                            <span class="fclassify-data">1</span>
+                                        </div>
+                                        <div class="fclassify-desc">{{desc}}</div>
+                                        <div class="fclassify-nums">
+                                            <span class="fclassify-s">主题：</span>{{topics}}
+                                            <span class="pipe">|</span>
+                                            <span class="fclassify-s">帖数：</span>
+                                            <span title="154216">{{posts}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        {{/each}}
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">楼盘热点区</div>
+            </div>
+            <div class="panel-body">
+                <ul class="fclassify-list clearfix">
+                    <li class="clearfix">
+                        <div class="fclassify-box">
+                            <div class="fclassify-pic">
+                                <a href="forum-490-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/c4/common_490_icon.png" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-490-1.html">水城业委会</a>
+                                    <span class="fclassify-data">1</span>
+                                </div>
+                                <div class="fclassify-desc">用心、极致的阅读软件</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>8505
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>
+                                    <span title="154216">15万</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="fclassify-box">
+                            <div class="fclassify-pic">
+                                <a href="forum-393-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/70/common_393_icon.png" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-393-1.html">社区警务室</a>
+                                    <span class="fclassify-data">16</span>
+                                </div>
+                                <div class="fclassify-desc">不刷机的MIUI，一样发烧</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>
+                                    <span title="12591">1万</span>
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>
+                                    <span title="1623893">162万</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="fclassify-box">
+                            <div class="fclassify-pic">
+                                <a href="forum-304-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/37/common_304_icon.png" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-304-1.html">小区物业</a>
+                                </div>
+                                <div class="fclassify-desc">小米官方管理工具</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>3550
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>
+                                    <span title="461442">46万</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="fclassify-box">
+                            <div class="fclassify-pic">
+                                <a href="forum-378-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/8b/common_378_icon.png?20131230" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-378-1.html">邻里之间</a>
+                                    <span class="fclassify-data">1</span>
+                                </div>
+                                <div class="fclassify-desc">网络短信让短信更自由</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>593
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>6795</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="fclassify-box" onmouseover="bd_switch2(this,1,'#ededed');" onmouseout="bd_switch2(this,2,'#ededed');" style="border-color: transparent; background: transparent;">
+                            <div class="fclassify-pic">
+                                <a href="forum-480-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/6e/common_480_icon.png" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-480-1.html">二手房·出租·交易</a>
+                                </div>
+                                <div class="fclassify-desc">三步快速鉴别，鉴定必备品</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>156
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>1630</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="fclassify-box" onmouseover="bd_switch2(this,1,'#ededed');" onmouseout="bd_switch2(this,2,'#ededed');" style="border-color: transparent; background: transparent;">
+                            <div class="fclassify-pic">
+                                <a href="forum-180-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/04/common_180_icon.png" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-180-1.html">装修·采购·集采</a>
+                                    <span class="fclassify-data">1</span>
+                                </div>
+                                <div class="fclassify-desc">在线管理手机数据、定位手机</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>6026
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>
+                                    <span title="35676">3万</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">业主讨论</div>
+            </div>
+            <div class="panel-body">
+                <ul class="fclassify-list clearfix">
+                    <li class="clearfix">
+                        <div class="fclassify-box">
+                            <div class="fclassify-pic">
+                                <a href="forum-490-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/c4/common_490_icon.png" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-490-1.html">跳蚤市场·闲物</a>
+                                    <span class="fclassify-data">1</span>
+                                </div>
+                                <div class="fclassify-desc">用心、极致的阅读软件</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>8505
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>
+                                    <span title="154216">15万</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="fclassify-box">
+                            <div class="fclassify-pic">
+                                <a href="forum-393-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/70/common_393_icon.png" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-393-1.html">美食·厨艺</a>
+                                    <span class="fclassify-data">16</span>
+                                </div>
+                                <div class="fclassify-desc">不刷机的MIUI，一样发烧</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>
+                                    <span title="12591">1万</span>
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>
+                                    <span title="1623893">162万</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="fclassify-box">
+                            <div class="fclassify-pic">
+                                <a href="forum-304-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/37/common_304_icon.png" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-304-1.html">周边购物</a>
+                                </div>
+                                <div class="fclassify-desc">小米官方管理工具</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>3550
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>
+                                    <span title="461442">46万</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="fclassify-box">
+                            <div class="fclassify-pic">
+                                <a href="forum-378-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/8b/common_378_icon.png?20131230" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-378-1.html">邻里之间</a>
+                                    <span class="fclassify-data">1</span>
+                                </div>
+                                <div class="fclassify-desc">网络短信让短信更自由</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>593
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>6795</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="fclassify-box" onmouseover="bd_switch2(this,1,'#ededed');" onmouseout="bd_switch2(this,2,'#ededed');" style="border-color: transparent; background: transparent;">
+                            <div class="fclassify-pic">
+                                <a href="forum-480-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/6e/common_480_icon.png" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-480-1.html">二手房·出租·交易</a>
+                                </div>
+                                <div class="fclassify-desc">三步快速鉴别，鉴定必备品</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>156
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>1630</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="fclassify-box" onmouseover="bd_switch2(this,1,'#ededed');" onmouseout="bd_switch2(this,2,'#ededed');" style="border-color: transparent; background: transparent;">
+                            <div class="fclassify-pic">
+                                <a href="forum-180-1.html">
+                                    <img src="http://attach.bbs.miui.com/common/04/common_180_icon.png" align="left" alt="">
+                                </a>
+                            </div>
+                            <div class="fclassify-info">
+                                <div class="fclassify-title">
+                                    <a href="forum-180-1.html">装修·采购·集采</a>
+                                    <span class="fclassify-data">1</span>
+                                </div>
+                                <div class="fclassify-desc">在线管理手机数据、定位手机</div>
+                                <div class="fclassify-nums">
+                                    <span class="fclassify-s">主题：</span>6026
+                                    <span class="pipe">|</span>
+                                    <span class="fclassify-s">帖数：</span>
+                                    <span title="35676">3万</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">运动。锻炼。健身</div>
+            </div>
+            <!-- <div class="panel-body">
+                
+            </div> -->
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">认证厂商专区</div>
+            </div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    {{/replace}}
+{{/extend}}

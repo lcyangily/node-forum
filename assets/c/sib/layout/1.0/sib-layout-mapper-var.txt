@@ -1,0 +1,274 @@
+全局变量                                                
+min,                                                                                
+max,
+round
+isStr
+runPluginCallbacks
+u
+m 
+b 
+v 
+ie
+browser
+
+
+静态变量/方法 (static   Layout.)
+
+version
+revision
+browser
+effects
+callbacks
+getParentPaneElem
+getParentPaneInstance
+getParentLayoutInstance
+getEventObject
+parsePaneName
+plugins
+onCreate
+onLoad
+onReady
+onDestroy
+onUnload
+afterOpen
+afterClose
+scrollbarWidth
+scrollbarHeight
+getScrollbarSize
+showInvisibly
+getElementDimensions
+getElementStyles
+cssWidth
+cssHeight
+cssNum
+borderWidth
+trackMouse
+isMouseOverElem
+msg
+defaults  //defaults options
+optionsMap
+transformData
+backwardCompatibility
+
+
+
+
+构造函数中全局变量 $.fn.layout
+
+browser	= $.layout.browser
+_c		= $.layout.config
+// local aliases to utlity methods
+cssW	= $.layout.cssWidth 
+cssH	= $.layout.cssHeight
+elDims	= $.layout.getElementDimensions
+styles	= $.layout.getElementStyles
+evtObj	= $.layout.getEventObject
+evtPane	= $.layout.parsePaneName
+options = $.extend(true, {}, $.layout.defaults)
+effects	= options.effects = $.extend(true, {}, $.layout.effects)
+
+//Instance.state (layout data)
+state = {    //layout-state object
+	// generate unique ID to use for event.namespace so can unbind only events added by 'this layout'
+	id:				"layout"+ $.now()	// code uses alias: sID
+	initialized:	false
+	paneResizing:	false
+	panesSliding:	{}
+	container:	{ 	// list all keys referenced in code to avoid compiler error msgs
+		innerWidth:		0
+		innerHeight:	0
+		outerWidth:		0
+		outerHeight:	0
+		layoutWidth:	0
+		layoutHeight:	0
+	}
+	/*
+	north:		{ childIdx: 0 }
+	south:		{ childIdx: 0 }
+	east:		{ childIdx: 0 }
+	west:		{ childIdx: 0 }
+	center:		{ childIdx: 0 }*/
+	
+	children = {
+		north:		null
+		south:		null
+		east:		null
+		west:		null
+		center:		null
+	}
+	
+	timer = {
+		data:	{}
+		set:	function (s, fn, ms) { timer.clear(s); timer.data[s] = setTimeout(fn, ms); }
+		clear:	function (s) { var t=timer.data; if (t[s]) {clearTimeout(t[s]); delete t[s];} }
+	}
+	
+	//Instance.container
+	$N = $(this).eq(0); // FIRST matching Container element   //$(this.element)
+	//Instance.panes             //计划改成 $panes  or  $Apanes
+	$Ps	= {}	// Panes x5		- set in initPanes()
+	//Instance.contents          //计划改成 $contents  or $Acontents
+	$Cs	= {}	// Content x5	- set in initPanes()
+	//Instance.resizers          //计划改成 $resizes or ...
+	$Rs	= {}	// Resizers x4	- set in initHandles()
+	//Instance.togglers          //
+	$Ts	= {}	// Togglers x4	- set in initHandles()
+	$Ms	= $([])	// Masks - up to 2 masks per pane (IFRAME + DIV)
+	//	aliases for code brevity
+	sC	= state.container // alias for easy access to 'container dimensions'
+	sID	= state.id // alias for unique layout ID/namespace - eg: "layout435"
+	// create Instance object to expose data & option Properties, and primary action Methods
+	
+	//Instance.options
+	options
+	hasParentLayout:	false			// set by initContainer()
+	
+	//Instance.north         state.north.state  对应原来  state.north
+	north:				false   // alias group:{ name: pane, pane: $Ps[pane], options: options[pane], state: state[pane], children: children[pane] }
+	south:				false	// ditto
+	west:				false	// ditto
+	east:				false	// ditto
+	center:				false	// ditto
+	
+//对应state.north etc.
+	layout : {
+		north:		{ childIdx: 0 },
+		south:		{ childIdx: 0 }
+		east:	    { childIdx: 0 }
+		west:		{ childIdx: 0 }
+		center:		{ childIdx: 0 }
+	}
+	
+}
+
+
+var Instance = {
+	//	border-pane open/close
+	hide:				hide			// method - ditto
+	show:				show			// method - ditto
+	toggle:				toggle			// method - pass a 'pane' ("north", "west", etc)
+	open:				open			// method - ditto
+	close:				close			// method - ditto
+	slideOpen:			slideOpen		// method - ditto
+	slideClose:			slideClose		// method - ditto
+	slideToggle:		slideToggle		// method - ditto
+	//	pane actions
+	setSizeLimits:		setSizeLimits	// method - pass a 'pane' - update state min/max data
+--> _sizePane:			sizePane		// method -intended for user by plugins only!
+--> sizePane:			manualSizePane	// method - pass a 'pane' AND an 'outer-size' in pixels or percent, or 'auto'
+	sizeContent:		sizeContent		// method - pass a 'pane'
+	swapPanes:			swapPanes		// method - pass TWO 'panes' - will swap them
+	showMasks:			showMasks		// method - pass a 'pane' OR list of panes - default = all panes with mask option set
+	hideMasks:			hideMasks		// method - ditto'
+	//	pane element methods
+	initContent:		initContent		// method - ditto
+	addPane:			addPane			// method - pass a 'pane'
+	removePane:			removePane		// method - pass a 'pane' to remove from layout, add 'true' to delete the pane-elem
+	createChildren:		createChildren	// method - pass a 'pane' and (optional) layout-options (OVERRIDES options[pane].children
+	refreshChildren:	refreshChildren	// method - pass a 'pane' and a layout-instance
+	//	special pane option setting
+	enableClosable:		enableClosable	// method - pass a 'pane'
+	disableClosable:	disableClosable	// method - ditto
+	enableSlidable:		enableSlidable	// method - ditto
+	disableSlidable:	disableSlidable	// method - ditto
+	enableResizable:	enableResizable	// method - ditto
+	disableResizable:	disableResizable// method - ditto
+	//	utility methods for panes
+	allowOverflow:		allowOverflow	// utility - pass calling element (this)
+	resetOverflow:		resetOverflow	// utility - ditto
+	//	layout control
+	destroy:			destroy			// method - no parameters
+--> initPanes:			isInitialized	// method - no parameters
+	resizeAll:			resizeAll		// method - no parameters
+	//	callback triggering
+--> runCallbacks:		_runCallbacks	// method - pass evtName & pane (if a pane-event), eg: trigger("onopen", "west")
+
+};
+
+
+
+
+
+
+_log         <function>
+_runCallbacks   <function>
+_fixIframe      <function>
+cssSize	           <function>
+cssMinDims         <function>
+setOuterWidth
+setOuterHeight
+_parseSize
+getPaneSize
+setSizeLimits
+calcNewCenterPaneDims
+getHoverClasses
+addHover
+removeHover
+onResizerEnter
+onResizerLeave
+_create
+isInitialized
+_initLayoutElements
+createChildren
+setInstanceKey
+refreshChildren
+windowResize
+setWindowResizeRepeater
+unload
+_initContainer
+initHotkeys
+initOptions
+getPane
+initPanes
+addPane
+afterInitPane
+setPanePosition
+initHandles
+initContent
+initResizable
+sizeMask
+sizeMasks
+showMasks
+hideMasks
+getMasks
+createMasks
+destroy
+removePane
+_hidePane
+_showPane
+hide
+show
+toggle
+_closePane
+close
+setAsClosed
+open
+setAsOpen
+slideOpen
+slideClose
+slideToggle
+lockPaneForFX
+bindStartSlidingEvents
+bindStopSlidingEvents
+makePaneFit
+manualSizePane
+sizePane
+sizeMidPanes
+resizeAll
+resizeChildren
+sizeContent
+sizeHandles
+enableClosable
+disableClosable
+enableSlidable
+disableSlidable
+enableResizable
+disableResizable
+swapPanes
+syncPinBtns
+
+
+///function
+keyDown
+allowOverflow
+resetOverflow

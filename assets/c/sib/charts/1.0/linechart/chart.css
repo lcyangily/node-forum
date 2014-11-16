@@ -1,0 +1,36 @@
+@charset "utf-8";
+.sib-chart{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	font: 12px "Microsoft YaHei", "Arial", '宋体';
+	/* background: #fff; */
+	/* background: #dfdfdf; */
+}
+.sib-chart-title{text-align: center;position: absolute;width: 100%;top: 0;left:0;}
+.sib-chart-h1{font-size: 16px;line-height:32px; font-weight: bold;}
+.sib-chart-h2{line-height:16px;}
+.sib-chart-legend{border: 1px solid #ccc;position: absolute;padding:2px 5px;border-radius : 5px;}
+.sib-chart-legend ul,.sib-chart-legend li{
+	list-style: none;
+    padding: 0px;
+    margin: 0px;
+    list-style-position: outside;
+}
+.sib-chart-legend li{padding:5px 10px 5px 30px;cursor: pointer;color:#666}
+.sib-chart-legend li:hover{color:#000}
+.sib-chart-legend li.legend-item-disabled{color:#ccc}
+.sib-chart-legend-v{display: block;}
+.sib-chart-legend-h li{float:left;}
+
+.sib-chart-tip{
+	position:absolute; 
+	border:1px solid red;
+	padding:3px 8px;
+	background: #fff;
+	z-index:1000;
+	border-top-left-radius: 5px;
+    border-radius: 5px;
+    opacity : 0.8
+}

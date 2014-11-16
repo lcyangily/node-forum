@@ -1,0 +1,93 @@
+                      z-index
+Grid                        1
+axes                      100
+paper                     200
+title                     300
+legend/label              400
+tooltips                  500
+
+
+
+new LineChart({
+	target : '#chart',
+	theme : 'sib-chart', 	//主题样式
+	colors : [], 			//series colors 快捷设置
+	title : {				//主标题
+		text : '',
+		show : true,
+		css : {}
+	},
+	subtitle : {			//子标题
+		text : '',
+		show : true,
+		css :{}
+	},
+	legend : {				//
+		show : false, //是否显示
+		position : 's', //position  compass direction, nw, n, ne, e, se, s, sw, w.
+		offsetx : 10, 	//x轴方向偏移量
+		offsety : 10,	//y轴方向偏移量
+		layout: 'vertical', // vertical | horizontal 横着排列还是竖着排列
+		css : {}//样式
+	},
+	xAxis : {
+		show : true,
+		css : {},
+		pad : 1.2, //自动生成时候，最近的数据点离边框的默认距离
+		labels : [], // ticks [val1, val2, ...] or [[val, label], [val, label], ...] 待定
+		renderer : LineChart.axisRenderer,
+	},
+	yAxis : {
+		show : true,
+		css : {},
+		pad : 1.2, //
+		min : ,	//最小值
+		max : ,	//最大值
+		num : 	//纵轴刻度份数
+		renderer : LineChart.axisRenderer
+	},
+	xGrid : {
+		show : true,
+		css : {},
+		renderer : LineChart.gridRenderer
+	},
+	yGrid : {
+		show : true,
+		css : {},
+		renderer : LineChart.gridRenderer
+	},
+	series : [{
+		show : true,
+		showLine : true,
+		label : '',
+		color : '',
+		css : {},
+		shadow : false, // boolean | object //false 不要阴影,true为有阴影使用默认值, object为自定义
+		renderer : LineChart.renderer,
+		marker : {
+			show : true,
+			style : '',
+			shadow : {},
+			...
+		}
+	},{
+		...
+	},{
+		...
+	}],
+	tip : {
+		enabled : true,
+		css : {},
+		anim : {
+			easing:"easeOut",
+			duration:0.3
+		},
+		formatter : function(){
+			return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y +'°C';
+
+		}
+	},
+	
+	source : [...]	//数据源
+});

@@ -1,0 +1,26 @@
+state
+  |-paper               Raphael
+  |-$chart
+  |-options
+  |-_xScales            Array
+      |-label
+      |-value
+  |-_yScales            ...
+  |-_dataset            Array
+      |-name
+      |-data            Array
+          |-[x, y]
+  |-coordset
+  |-$title
+  |-$legend
+  |-legends             Array
+      |-$item
+      |-index
+  |-series              Array
+      |-points          Array
+      |-line
+      |-lineProxy
+      |-cfg
+      |-index
+      |-coords
+      

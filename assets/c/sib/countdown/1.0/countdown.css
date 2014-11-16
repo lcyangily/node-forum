@@ -1,0 +1,23 @@
+.sib-cd-slide .sib-cd-item{
+    display: inline-block;
+    *position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+    font-size:20px;
+}
+.sib-cd-slide .sib-cd-item,
+.sib-cd-slide .sib-cd-item s{
+    text-decoration: none;
+}
+.sib-cd-slide .sib-cd-digit,
+.sib-cd-slide .sib-cd-item-inner,
+.sib-cd-slide .sib-cd-point {
+    float: left;
+}
+.sib-cd-slide .sib-cd-slide-wrap {
+    position: relative;
+    float: left;
+}
+.sib-cd-slide .sib-cd-slide-wrap .sib-cd-digit {
+    clear: left;
+}

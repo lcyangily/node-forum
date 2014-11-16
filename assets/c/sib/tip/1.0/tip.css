@@ -1,0 +1,208 @@
+.sib-tip{position: absolute;border:1px solid red;background: #fff;}
+.sib-tip-content{}
+
+.sib-tip {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    box-shadow: 0 0 7px #999;
+    border:1px solid #999;
+}
+.sib-tip-arrow {
+    width: 12px;
+    height: 6px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -6px;
+    bottom: -6px;
+    /* background: #f60; */
+}
+.sib-tip-arrow.sib-tip-top {
+    top: -6px;
+    bottom: auto;
+}
+.sib-tip-arrow.sib-tip-hidden{display:none;}
+.sib-tip-arrow span {
+    width: 0px;
+    height: 0px;
+    line-height: 0px; /**!important;**/
+    padding: 0px;
+    position: absolute;
+    left : 0px;
+    top : 0px;
+    border: 6px solid;
+}
+.sib-tip-arrow.sib-tip-top span{
+	top: -6px;
+	border-style: dashed dashed solid dashed;
+}
+.sib-tip-arrow.sib-tip-top .sib-tip-under{
+    border-color: transparent transparent #999 transparent;
+}
+.sib-tip-arrow.sib-tip-top .sib-tip-above{
+    top: -5px;
+    border-color: transparent transparent #FFF transparent;
+}
+.sib-tip-arrow.sib-tip-bottom {
+    bottom : -6px;
+    top : auto;
+}
+.sib-tip-arrow.sib-tip-bottom span{
+    border-style: solid dashed dashed dashed;
+}
+.sib-tip-arrow.sib-tip-bottom .sib-tip-under{
+    border-color: #999 transparent transparent transparent;
+}
+.sib-tip-arrow.sib-tip-bottom .sib-tip-above{
+    top: -1px;
+    border-color: #FFF  transparent transparent transparent;
+}
+.sib-tip-arrow.sib-tip-left,
+.sib-tip-arrow.sib-tip-right {
+	left : auto;
+	right : auto;
+    top  : 50%;
+    width: 6px;
+    height : 12px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top : -6px;
+}
+.sib-tip-arrow.sib-tip-left {
+    left : -6px;
+    margin-left: 0px;
+}
+.sib-tip-arrow.sib-tip-left span{
+	left : -6px;
+    border-style: dashed solid dashed dashed;
+}
+.sib-tip-arrow.sib-tip-left .sib-tip-under{
+    border-color: transparent #999 transparent transparent;
+}
+.sib-tip-arrow.sib-tip-left .sib-tip-above{
+    left: -5px;
+    border-color: transparent #FFF transparent transparent;
+}
+.sib-tip-arrow.sib-tip-right {
+    right : -6px;
+    margin-right: 0px;
+}
+.sib-tip-arrow.sib-tip-right span{
+    border-style: dashed dashed dashed solid;
+}
+.sib-tip-arrow.sib-tip-right .sib-tip-under{
+    border-color: transparent transparent transparent #999;
+}
+.sib-tip-arrow.sib-tip-right .sib-tip-above{
+    left: -1px;
+    border-color: transparent transparent transparent #FFF;
+}
+
+/*** threme ***/
+/** blue **/
+.sib-tip.blue {
+	border-color: #3784BC;
+	box-shadow: 0 0 7px #3784BC;
+}
+.sib-tip.blue .sib-tip-arrow.sib-tip-top .sib-tip-under{
+	border-color: transparent transparent #3784BC transparent;
+}
+.sib-tip.blue .sib-tip-arrow.sib-tip-bottom .sib-tip-under{
+    border-color: #3784BC transparent transparent transparent;
+}
+.sib-tip.blue .sib-tip-arrow.sib-tip-left .sib-tip-under{
+    border-color: transparent #3784BC transparent transparent;
+}
+.sib-tip.blue .sib-tip-arrow.sib-tip-right .sib-tip-under{
+    border-color: transparent transparent transparent #3784BC;
+}
+/** green **/
+.sib-tip.green {
+    border-color: #7f9f1b;
+    box-shadow: 0 0 7px #7f9f1b;
+}
+.sib-tip.green .sib-tip-arrow.sib-tip-bottom .sib-tip-under{
+    border-color: #7f9f1b transparent transparent transparent;
+}
+.sib-tip.green .sib-tip-arrow.sib-tip-left .sib-tip-under{
+    border-color: transparent #7f9f1b transparent transparent;
+}
+.sib-tip.green .sib-tip-arrow.sib-tip-top .sib-tip-under{
+    border-color: transparent transparent #7f9f1b transparent;
+}
+.sib-tip.green .sib-tip-arrow.sib-tip-right .sib-tip-under{
+    border-color: transparent transparent transparent #7f9f1b;
+}
+
+/** orange **/
+.sib-tip.orange {
+    border-color: #FF6600;
+    box-shadow: 0 0 7px #FF6600;
+}
+.sib-tip.orange .sib-tip-arrow.sib-tip-bottom .sib-tip-under{
+    border-color: #FF6600 transparent transparent transparent;
+}
+.sib-tip.orange .sib-tip-arrow.sib-tip-left .sib-tip-under{
+    border-color: transparent #FF6600 transparent transparent;
+}
+.sib-tip.orange .sib-tip-arrow.sib-tip-top .sib-tip-under{
+    border-color: transparent transparent #FF6600 transparent;
+}
+.sib-tip.orange .sib-tip-arrow.sib-tip-right .sib-tip-under{
+    border-color: transparent transparent transparent #FF6600;
+}
+
+/** red **/
+.sib-tip.red {
+    border-color: #a32626;
+    box-shadow: 0 0 7px #a32626;
+}
+.sib-tip.red .sib-tip-arrow.sib-tip-bottom .sib-tip-under{
+    border-color: #a32626 transparent transparent transparent;
+}
+.sib-tip.red .sib-tip-arrow.sib-tip-left .sib-tip-under{
+    border-color: transparent #a32626 transparent transparent;
+}
+.sib-tip.red .sib-tip-arrow.sib-tip-top .sib-tip-under{
+    border-color: transparent transparent #a32626 transparent;
+}
+.sib-tip.red .sib-tip-arrow.sib-tip-right .sib-tip-under{
+    border-color: transparent transparent transparent #a32626;
+}
+
+/** pink **/
+.sib-tip.pink {
+    border-color: #9c1866;
+    box-shadow: 0 0 7px #9c1866;
+}
+.sib-tip.pink .sib-tip-arrow.sib-tip-bottom .sib-tip-under{
+    border-color: #9c1866 transparent transparent transparent;
+}
+.sib-tip.pink .sib-tip-arrow.sib-tip-left .sib-tip-under{
+    border-color: transparent #9c1866 transparent transparent;
+}
+.sib-tip.pink .sib-tip-arrow.sib-tip-top .sib-tip-under{
+    border-color: transparent transparent #9c1866 transparent;
+}
+.sib-tip.pink .sib-tip-arrow.sib-tip-right .sib-tip-under{
+    border-color: transparent transparent transparent #9c1866;
+}
+
+/** gray **/
+.sib-tip.pink {
+    border-color: #606060;
+    box-shadow: 0 0 7px #606060;
+}
+.sib-tip.pink .sib-tip-arrow.sib-tip-bottom .sib-tip-under{
+    border-color: #606060 transparent transparent transparent;
+}
+.sib-tip.pink .sib-tip-arrow.sib-tip-left .sib-tip-under{
+    border-color: transparent #606060 transparent transparent;
+}
+.sib-tip.pink .sib-tip-arrow.sib-tip-top .sib-tip-under{
+    border-color: transparent transparent #606060 transparent;
+}
+.sib-tip.pink .sib-tip-arrow.sib-tip-right .sib-tip-under{
+    border-color: transparent transparent transparent #606060;
+}

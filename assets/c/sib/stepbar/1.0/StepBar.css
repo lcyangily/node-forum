@@ -1,0 +1,235 @@
+@charset "utf-8";
+.sib-stepbar-container{
+	position: relative;overflow:hidden;/* border:1px solid #d2d2d2; *//* padding-bottom:10px; */
+	border-radius: 3px 3px;
+    -o-border-radius: 3px 3px;
+    -moz-border-radius: 3px 3px;
+}
+.sib-stepbar-noborder{border: none;}
+.sib-stepbar-leftbtn,.sib-stepbar-rightbtn{
+	display:block;
+	position: absolute;
+	left:5px;
+	width:12px;
+	height:22px;
+	top: 50%;
+	margin:0;
+	margin-top:-10px;
+	background: url("images/btn_left.png");
+	cursor: pointer;
+	display:none;
+	z-index:1000;
+}
+.sib-stepbar-rightbtn{left:auto;right:5px;background: url("images/btn_right.png");}
+.sib-stepbar-wrap{position:relative;overflow:hidden;width:100000px;}
+.sib-stepbar-leftbtn-hover{background: url("images/btn_left_act.png");}
+.sib-stepbar-rightbtn-hover{background: url("images/btn_right_act.png");}
+.sib-stepbar {
+	display: inline-block;
+    *zoom: 1;
+    *display: inline; /* IE < 8: fake inline-block */
+	margin:0;
+	padding:0;
+	list-style:none;
+	letter-spacing: -0.31em;
+	*letter-spacing: normal;
+	word-spacing: -0.43em;
+	font:14px/24px "Microsoft YaHei", "Arial", '宋体';
+}
+.sib-step {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+    *width:50px;
+    letter-spacing: normal;
+    word-spacing: normal;
+    vertical-align: top;
+    /* height: 26px; */
+    background: #E4E4E4;
+    height: 24px;
+    line-height: 24px;
+    margin: 0px;
+    position: relative;
+    z-index: 100;
+    cursor:pointer;
+    font-size: 14px;
+    text-align: center;
+}
+
+.sib-step-txt{font-family:'宋体';font-size:12px;font-weight:normal;color:inherit;padding-left:20px;}
+
+/*第一项圆角*/
+.sib-step-first {
+    border-top-left-radius: 3px 3px;
+    border-bottom-left-radius: 3px 3px;
+    -moz-border-radius-topleft: 3px 3px;
+    -moz-border-radius-bottomleft: 3px 3px;
+}
+
+/*最后一项圆角*/
+.sib-step-last {
+    border-top-right-radius: 3px 3px;
+    border-bottom-right-radius: 3px 3px;
+    -moz-border-radius-topright: 3px 3px;
+    -moz-border-radius-bottomright: 3px 3px;
+}
+.sib-step-last .sib-step-trigon{display:none;}
+.sib-step-current {font-weight: normal;color: #ccc;}
+/* .sib-step-current .sib-step-first {background-color: #FF6600;} */
+
+/*-----箭头样式-----*/
+.sib-step-trigon {
+    position: absolute;
+    top: 0px;
+    right: -14px;
+    z-index: 200;
+    width: 14px;
+    height: 24px;
+    overflow: hidden;
+    padding: 0px;
+    background-color: transparent;
+    z-index: 200;
+}
+
+.sib-step-trigon span {
+    width: 0px;
+    height: 0px;
+    line-height: 0px !important;
+    padding: 0px;
+}
+
+.sib-step-trigon .sib-trigon-above {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    border: 12px solid;
+    border-color: transparent transparent transparent #E4E4E4;
+    border-style: dashed dashed dashed solid;
+}
+
+.sib-step-trigon .sib-trigon-under {
+    position: absolute;
+    left: 0px;
+    top: -2px;
+    border: 14px solid;
+    border-color: transparent transparent transparent #FFF;
+    border-style: dashed dashed dashed solid;
+}
+/*-----颜色-----*/
+/*橘色*/
+.orange .sib-step-done{ background-color: #FFE6BA;color: #FF6600 !important;}
+.orange .sib-step-current {background-color: #FF6600;color:#fff;}
+.orange .sib-step-done .sib-trigon-above {border-left-color: #FFE6BA !important;}
+.orange .sib-step-current .sib-trigon-above {border-left-color: #FF6600 !important;}
+
+/*蓝色*/
+.blue .sib-step-done {background-color: #CAE6F1;color: #3784BC !important;}
+.blue .sib-step-current {background-color: #3784BC;color: #fff;}
+.blue .sib-step-done .sib-trigon-above {border-left-color: #CAE6F1 !important;}
+.blue .sib-step-current .sib-trigon-above {border-left-color: #3784BC !important;}
+
+/*绿色*/
+.green .sib-step-done {background-color: #d0ed76;color: #7f9f1b !important;}
+.green .sib-step-current {background-color: #7f9f1b;color: #fff;}
+.green .sib-step-done .sib-trigon-above {border-left-color: #d0ed76 !important;}
+.green .sib-step-current .sib-trigon-above {border-left-color: #7f9f1b !important;}
+
+/*红色*/
+.red .sib-step-done {background-color: #f5abab;color: #a32626 !important;}
+.red .sib-step-current {background-color: #a32626;color: #fff;}
+.red .sib-step-done .sib-trigon-above {border-left-color: #f5abab !important;}
+.red .sib-step-current .sib-trigon-above {border-left-color: #a32626 !important;}
+
+/*粉红色*/
+.pink .sib-step-done {background-color: #f1afd6;color: #9c1866 !important;}
+.pink .sib-step-current {background-color: #9c1866;color: #fff;}
+.pink .sib-step-done .sib-trigon-above {border-left-color: #f1afd6 !important;}
+.pink .sib-step-current .sib-trigon-above {border-left-color: #9c1866 !important;}
+
+/*灰色*/
+.gray .sib-step-done {background-color: #c4c4c4;color: #606060 !important;}
+.gray .sib-step-current {background-color: #606060;color: #fff;}
+.gray .sib-step-done .sib-trigon-above {border-left-color: #c4c4c4 !important;}
+.gray .sib-step-current .sib-trigon-above {border-left-color: #606060 !important;}
+
+
+/** point threme **/
+.stepbar-point{background: #f5f3f0;}
+.stepbar-point .sib-stepbar-wrap{margin:0px 10px;padding:20px 0px;}
+.stepbar-point .sib-step{height:auto;background: none;}
+.stepbar-point .sib-step-txt{
+	display:block;
+	font-size:12px;
+	line-height:14px;
+    font-weight:normal;
+    color:#666;
+    width:12px;
+    padding:30px 0px 0px 0px;
+    margin:0px auto;
+}
+.stepbar-point .sib-step-ext{display:block;position:absolute;width:12px;height:16px;top:-12px;left:50%;margin-left:-6px;}
+.stepbar-point .sib-step-trigon {left:0px;width:100%;height:26px;display:block;}
+.stepbar-point .sib-trigon-above {
+	position: absolute;
+	cursor:pointer;
+    height:12px;width:12px;/* border-radius:6px; */
+    left:50%;
+    top:7px;
+    margin-left:-6px;
+    border:none;
+    background-color:#f5f3f0;
+    background-image: url("images/circle.png");
+    font: 0px Arial; 
+    line-height:0;
+}
+.stepbar-point .sib-step-unactive .sib-trigon-above{background-position: 0px -32px;}
+.stepbar-point .sib-step-trigon .sib-trigon-under {position: absolute;width:100%;border:none;height:3px;background:#dfd8d2;top:11px; font: 0px Arial; line-height:0;/**IE6 BUG 设置高度在1-10px无效**/}
+.stepbar-point .sib-step-current {font-weight: normal;color: #ccc;}
+.stepbar-point .sib-step-first .sib-trigon-under {left:50%;}
+.stepbar-point .sib-step-last .sib-trigon-under {right:50%;left:auto;}
+.stepbar-point .sib-step-done .sib-trigon-under,
+.stepbar-point .sib-step-current .sib-trigon-under{background: #7f9f1b;}
+.stepbar-point .sib-step-done .sib-trigon-above,
+.stepbar-point .sib-step-current .sib-trigon-above {background: #f5f3f0 url("images/circle.png") -51px 0px;}
+
+.stepbar-point .sib-step:hover .sib-step-trigon .sib-trigon-above,
+.stepbar-point .sib-step-selected .sib-step-trigon .sib-trigon-above{background-position: -17px -17px;}
+.stepbar-point .sib-step-selected .sib-step-ext{background: url("images/bg.png") -13px -69px;}
+
+/** point风格及point风格下的各种颜色 **/
+/*-----颜色-----*/
+/*橘色*/
+.stepbar-point .orange .sib-step-done .sib-trigon-under,
+.stepbar-point .orange .sib-step-current .sib-trigon-under{background: #ff6600;}
+.stepbar-point .orange .sib-step-done .sib-trigon-above,
+.stepbar-point .orange .sib-step-current .sib-trigon-above {background: #f5f3f0 url("images/circle.png") -119px 0px;}
+
+/*蓝色*/
+.stepbar-point .blue .sib-step-done .sib-trigon-under,
+.stepbar-point .blue .sib-step-current .sib-trigon-under{background: #3784bc;}
+.stepbar-point .blue .sib-step-done .sib-trigon-above,
+.stepbar-point .blue .sib-step-current .sib-trigon-above {background: #f5f3f0 url("images/circle.png") -34px 0px;}
+
+/*绿色*/
+.stepbar-point .green .sib-step-done .sib-trigon-under,
+.stepbar-point .green .sib-step-current .sib-trigon-under{background: #7f9f1b;}
+.stepbar-point .green .sib-step-done .sib-trigon-above,
+.stepbar-point .green .sib-step-current .sib-trigon-above {background: #f5f3f0 url("images/circle.png") -51px 0px;}
+
+/*红色*/
+.stepbar-point .red .sib-step-done .sib-trigon-under,
+.stepbar-point .red .sib-step-current .sib-trigon-under{background: #a32626;}
+.stepbar-point .red .sib-step-done .sib-trigon-above,
+.stepbar-point .red .sib-step-current .sib-trigon-above {background: #f5f3f0 url("images/circle.png") -68px 0px;}
+
+/** 粉红 **/
+.stepbar-point .pink .sib-step-done .sib-trigon-under,
+.stepbar-point .pink .sib-step-current .sib-trigon-under{background: #9c1866;}
+.stepbar-point .pink .sib-step-done .sib-trigon-above,
+.stepbar-point .pink .sib-step-current .sib-trigon-above {background: #f5f3f0 url("images/circle.png") -85px 0px;}
+
+/*灰色*/
+.stepbar-point .gray .sib-step-done .sib-trigon-under,
+.stepbar-point .gray .sib-step-current .sib-trigon-under{background: #606060;}
+.stepbar-point .gray .sib-step-done .sib-trigon-above,
+.stepbar-point .gray .sib-step-current .sib-trigon-above {background: #f5f3f0 url("images/circle.png") -102px 0px;}

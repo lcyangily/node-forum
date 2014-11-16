@@ -1,0 +1,90 @@
+@charset "utf-8";
+.sib-autocomplete-input{outline:0;}
+.sib-autocomplete {font-size: 12px;position: absolute;top: 0;left: 0;z-index:1000;cursor: default;/* box-shadow:2px 2px 3px rgba(0,0,0,.3); */}
+.sib-front {z-index: 100;}
+.sib-ac-resultlist ul{display:inline-block;zoom: 1;*display: inline;}
+.sib-autocomplete .sib-menu-item,
+.sib-autocomplete .sib-menu-item a{width:auto;*zoom:1;cursor: pointer;}
+.sib-autocomplete .sib-menu-item:after,
+.sib-autocomplete .sib-menu-item a:after{content:'\20';display:block;height:0;clear:both;}
+.sib-ac-message{border:1px solid #aaa;padding:3px 5px;background: #fff;}
+.sib-ac-message-hightlight{font-weight:600;color: red;}
+.sib-ac-hotlist{}
+.sib-ac-hot-table {border:1px solid #aaa;line-height: 18px;}
+.sib-ac-hot-table table{border-collapse:collapse;background:#fff;}
+.sib-ac-hot-table-even{background:#f6f6f6}
+.sib-ac-hot-item{display:block;padding:3px 8px;text-decoration: none;color:#222;}
+.sib-ac-hot-item:hover{background: #9cd9ff;color:#212121;text-decoration: none; /* color: #fff; */}
+.sib-ac-resultlist .sib-menu{border-radius:0px;padding:0px;}
+.sib-menu-item .sib-radius-all{border-radius:0px;}
+
+.sib-autocomplete a.sib-state-hover,
+.sib-autocomplete a.sib-state-focus{
+    border: 1px solid #aaa;/*#417eb7;*/
+    background: #9cd9ff; /*#417eb7*/
+    /* color: #fff; */
+    /* border:none; */
+}
+
+.sib-ac-hot-tabs{border:1px solid #aaa;background: #fff;padding:5px 0px;}
+.sib-ac-hot-tabs .hot-tab-tit{padding:3px;}
+.sib-ac-hot-tabs .hot-tab-nav {
+	list-style: none;
+	overflow: hidden;
+	zoom: 1;
+	position: relative;
+	z-index: 5;
+	padding: 3px 5px 0;
+	height: 22px;
+	margin:0px;
+}
+.sib-ac-hot-tabs .hot-tab-nav li {
+	list-style: none;
+	float: left;
+	border: 0;
+	border-bottom-color: #bec2c4;
+	padding: 1px 6px;
+	margin-right: 3px;
+	line-height: 18px;
+	cursor: pointer;
+	background: #fff;
+}
+.sib-ac-hot-tabs .hot-tab-nav li.hot-tab-selected {
+	padding: 0px 5px 3px 5px;
+	border: 1px solid #b3c2c4;
+	border-bottom: 1px solid #fff;
+	background: #fff;
+}
+.sib-ac-hot-tabs .hot-tab-content{
+	border-top: 1px solid #bec2c4;
+	margin-top: -1px;
+	padding: 6px 0;
+	line-height: 22px;
+	zoom: 1;
+	position: relative;
+}
+.sib-ac-hot-tabs .hot-tab-panel{
+	line-height: 22px;
+    zoom: 1;
+}
+
+.sib-ac-hot-tabs .hot-tab-panel dt {
+	float: left;
+	padding-left: 3px;
+	color: #f30;
+	text-indent: 5px;
+	font-family: "Lucida console",consolas,"courier new";
+	line-height: 22px;
+	font-size: 14px;
+}
+.sib-ac-hot-tabs .hot-tab-panel dd {
+	margin-left: 15px;
+	overflow: hidden;
+	zoom: 1;
+}
+.sib-ac-hot-tabs .hot-tab-panel dd span {
+	float: left;
+	padding-left: 4px;
+	width: 66px;
+	text-align: left;
+}

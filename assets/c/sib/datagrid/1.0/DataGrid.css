@@ -1,0 +1,411 @@
+@charset "utf-8";
+.a-datagrid{overflow:hidden;}
+.a-datagrid-wrap{position:relative;border:1px solid #ccc;margin-left: 0px;}
+.a-datagrid-view{position:relative;clear: both;background: #fff;}
+.a-datagrid-view table{border-collapse: separate;}
+.a-datagrid-view1{position:absolute;overflow:hidden;left:0px;top:0px;}
+.a-datagrid-view2{position:absolute;overflow:hidden;left:210px;top:0px;}
+/* .a-datagrid-view1{display: none;}
+.a-datagrid-view1, .a-datagrid-view2{} */
+.a-datagrid-mask, .a-datagrid-nodata{position:absolute;left:0;top:0;background:#ccc;opacity:0.3;filter:alpha(opacity=30);display:none;}
+.a-datagrid-mask-msg,.a-datagrid-nodata-msg{
+    position:absolute;
+    left:100px;
+    top:50px;
+    width:auto;
+    height:16px;
+    padding:12px 5px 10px 30px;
+    background:#fff url('images/page_loading.gif') no-repeat scroll 5px 10px;
+    border:2px solid #6593CF;
+    color:#222;
+    display:none;
+}
+.a-datagrid-nodata{opacity:0.1;filter:alpha(opacity=10);}
+.a-datagrid-nodata-msg{
+	border:none;
+	width:132px;
+	padding:65px 0px 0px 0px;
+	text-align:center;
+	font-size:14px;
+	color:#666;
+	background: url("images/icon_nodata.png") no-repeat 50% 0px;
+}
+/* .a-datagrid-sort-icon{
+	position: absolute;
+	top: 50%;
+	right: 0;
+	margin-top: -8px;
+	display:inline-block;
+	*display: inline;
+    *zoom: 1;
+	width:16px;
+	height:16px;
+	background: url('images/grid_sort.png') -129px 0;
+} 
+.a-datagrid-sort-desc .a-datagrid-sort-icon{
+    background-position :-3px -16px;
+}
+.a-datagrid-sort-asc .a-datagrid-sort-icon{
+    background-position :-67px -16px;
+} */
+.a-datagrid-header .a-datagrid-sortable{
+    padding-right: 20px;
+    background: url("images/sort_both.png") right center no-repeat;
+}
+.a-datagrid-header .a-datagrid-sort-desc{
+	background: url("images/sort_desc.png") right center no-repeat;
+}
+.a-datagrid-header .a-datagrid-sort-asc{
+	background: url("images/sort_asc.png") right center no-repeat;
+}
+.a-datagrid-toolbar{
+    height:28px;
+    background:#efefef;
+    padding:1px 2px;
+    border-bottom:1px solid #ccc;
+}
+.a-datagrid-btn-separator{
+    float:left;
+    height:24px;
+    border-left:1px solid #ccc;
+    border-right:1px solid #fff;
+    margin:2px 1px;
+}
+.a-datagrid-pager{
+    /* background:#efefef; */
+    /* border-top:1px solid #ccc; */
+    position:relative;
+}
+
+.a-datagrid-header{
+	width:100%;
+    overflow:hidden;
+    /* background:#fafafa url('images/datagrid_header_bg.gif') repeat-x left bottom;
+    border-bottom:1px solid #ccc; */
+    font-weight: bold;
+    color:#333;
+    background: #f2f2f2;
+    cursor:default;
+}
+.a-datagrid-header-inner{
+    /* float:left;*/
+    width:10000px;
+}
+.a-datagrid-header-inner table{
+	margin:0px;
+	/* -moz-box-shadow: 0 0px 2px #bbb;
+    -webkit-box-shadow: 0 0px 2px #bbb;
+    box-shadow: 0 0px 2px #bbb; */
+}
+.a-datagrid-body thead th,.a-datagrid-header th{
+    /* border-right:1px dotted #ccc;
+    border-bottom:1px dotted #ccc;*/
+    border-right:1px solid #ddd;
+    border-bottom:1px solid #d2d2d2;
+    font-size:12px;
+    padding:5px 0px 5px 10px;
+    /*font-weight:normal;
+    background:#fafafa url('images/datagrid_header_bg.gif') repeat-x left bottom;
+    border-top:1px dotted #fff;*/
+}
+.a-datagrid-header .a-datagrid-header-nopadding{padding:0;}
+.a-datagrid-body thead th.a-datagrid-header-over,
+.a-datagrid-header th.a-datagrid-header-over{
+    background:#EBF3FD;
+}
+.a-datagrid-cell{
+    margin:0;
+    /* position: relative; */
+    padding-right: 10px;
+    line-height: 14px;
+    height:14px;
+    /* padding:3px 10px 3px 4px;
+    white-space:nowrap;
+    word-wrap:normal;
+    overflow:hidden; */
+    text-align:center;
+    /* position: relative; */
+}
+.a-datagrid-view .a-datagrid-cell-group{
+    margin:0;
+    /* padding:4px 2px 4px 4px; */
+    white-space:nowrap;
+    word-wrap:normal;
+    overflow:hidden;
+    text-align:center;
+}
+.a-datagrid-header-rownumber{
+    width:25px;
+    text-align:center;
+    margin:0px;
+    padding:3px 0px;
+}
+.a-datagrid-td-rownumber{
+    background:#fafafa url('images/datagrid_header_bg.gif') repeat-x left bottom;
+}
+.a-datagrid-cell-rownumber{
+    width:25px;
+    text-align:center;
+    margin:0px;
+    padding:3px 0px;
+    color:#000;
+}
+.a-datagrid-body{
+    margin:0;
+    padding:0;
+    overflow:auto;
+    zoom:1;
+}
+.a-datagrid-view1 .a-datagrid-body-inner{
+    /* padding-bottom:20px; */
+}
+.a-datagrid-view1 .a-datagrid-body{
+    overflow:hidden;
+}
+.a-datagrid-footer{
+    overflow:hidden;
+}
+.a-datagrid-footer-inner{
+    border-top:1px solid #ccc;
+    width:10000px;
+    float:left;
+}
+.a-datagrid-body table{
+    margin:0;
+}
+.a-datagrid-body td,.a-datagrid-footer td{
+    font-size:12px;
+    border-bottom:1px solid #e4e4e4;
+    border-right: 1px solid #e4e4e4;
+    border-width: 0 1px 1px 0;
+    border-style: dotted;
+    border-color:#e4e4e4;
+    overflow:hidden;
+    padding:0;
+    margin:0;
+    /* line-height: 18px; */
+}
+.a-datagrid-view td{
+	padding: 3px 10px;
+}
+/* .a-datagrid-body .a-datagrid-cell,.a-datagrid-footer .a-datagrid-cell{
+    overflow:hidden;
+    margin:0;
+    padding:0px 10px 0px 4px;
+    white-space:nowrap;
+    word-wrap:normal;
+    height:18px;
+    line-height:18px;
+} */
+.a-datagrid-row-editing .a-datagrid-cell{
+    height:auto;
+}
+.a-datagrid-header-check{
+    padding:3px 6px;
+}
+.a-datagrid-cell-check{
+    padding:3px 6px;
+    font-size:1px;
+    overflow:hidden;
+}
+.a-datagrid-header-check input{
+    margin:0;
+    padding:0;
+    width:15px;
+    height:15px;
+}
+.a-datagrid-cell-check input{
+    margin:0;
+    padding:0;
+    width:15px;
+    height:15px;
+}
+.a-datagrid-row{
+    height:25px;
+    background: #fff;
+}
+.a-datagrid-row-collapse{
+    background:url('images/datagrid_row_collapse.gif') no-repeat center center;
+}
+.a-datagrid-row-expand{
+    background:url('images/datagrid_row_expand.gif') no-repeat center center;
+}
+.a-datagrid-row-alt{
+    /* background:#EEEEFF; */
+    background: #f6f6f6;
+}
+.a-datagrid-row-over{
+    /* background:#D0E5F5; */
+    background:#e1eff8;
+    cursor:default;
+}
+.a-datagrid-row-selected{
+    background:#FBEC88;
+}
+.a-datagrid-resize-proxy{
+    position:absolute;
+    width:1px;
+    top:0;
+    height:10000px;
+    background:red;
+    cursor:e-resize;
+    display:none;
+}
+.a-datagrid-body .a-datagrid-editable{
+    padding:0;
+}
+.a-datagrid-body .a-datagrid-editable table{
+    width:100%;
+    height:100%;
+}
+.a-datagrid-body .a-datagrid-editable td{
+    border:0;
+    padding:0;
+}
+.a-datagrid-body .a-datagrid-editable .a-datagrid-editable-input{
+    width:100%;
+    font-size:12px;
+    border:1px solid #A4BED4;
+    padding:3px 2px;
+}
+
+.a-datagrid-backboard{
+	/* border-top:1px solid #ccc; */
+	/* margin-top:-1px; */
+    position: relative;
+    display: none;
+    background-image: url(images/furley_bg.png);
+    background-image: -webkit-image-set(
+        url(images/furley_bg.png) 1x,
+        url(images/furley_bg_@2X.png) 2x
+    );
+    -webkit-box-shadow: inset 0 0 2px 1px #d9d9d9;
+    -moz-box-shadow: inset 0 0 2px 1px #d9d9d9;
+    -o-box-shadow: inset 0 0 2px 1px #d9d9d9;
+    -ms-box-shadow: inset 0 0 2px 1px #d9d9d9;
+    box-shadow: inset 0 0 2px 1px #d9d9d9;
+    text-align: left;
+    
+    /* filter:alpha(opacity=70);  
+    -moz-opacity:0.7;  
+    -khtml-opacity: 0.7;  
+    opacity: 0.7; */
+}
+.a-datagrid-btnBackboardDn{
+    position: absolute;
+    top: 0;
+    right: 20px;
+    display: block;
+    width: 50px;
+    height: 20px;
+    background: #fff url(images/arrow_down.png) no-repeat center center;
+    border: 1px solid #ccc;
+    border-top: 0;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 1px 1px 3px #ccc;
+    -moz-box-shadow: 1px 1px 3px #ccc;
+    -o-box-shadow: 1px 1px 3px #ccc;
+    -ms-box-shadow: 1px 1px 3px #ccc;
+    box-shadow:1px 1px 3px #ccc;
+    cursor: pointer;
+}
+
+.a-datagrid-backboard .a-datagrid-btnBackboardUp{
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    display: block;
+    width: 50px;
+    height: 20px;
+    background: #fff url(images/arrow_up.png) no-repeat center center;
+    border: 1px solid #ccc;
+    border-bottom: 0;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 1px 1px 3px #ccc;
+    -moz-box-shadow: 1px 1px 3px #ccc;
+    -o-box-shadow: 1px 1px 3px #ccc;
+    -ms-box-shadow: 1px 1px 3px #ccc;
+    box-shadow:1px 1px 3px #ccc;
+    cursor: pointer;
+}
+.a-datagrid-backboard h1{
+    margin: 0 10px 5px 10px;
+    padding: 10px 0 5px 0;
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1.8;
+    border-bottom: 1px solid #ccc;
+}
+.a-datagrid-backboard label{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    /* width: 95px; */
+    font-size: 1em;
+    line-height: 2.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size:12px;
+}
+.a-datagrid-backboard label input{
+    margin: 0 5px 0 10px;
+    padding: 0px;
+    border: 0px;
+}
+.a-datagrid-noborder{border-width:0px;}
+.a-datagrid-row-expander {
+	width:16px;
+	height:16px;
+	cursor: pointer;
+	/* border:1px solid red; */
+	background: url("images/grid_sort.png");
+}
+.a-datagrid-row-collapse {
+	background-position: -64px -129px;
+}
+.a-datagrid-row-expand {
+	background-position: -32px -129px
+}
+.a-datagrid-row-detail{background: #ddd;}
+.a-datagrid-row-detail > td{
+	border-top:1px solid #ccc;
+}
+/*-----箭头样式-----*/
+.a-datagrid-detail-trigon {
+    position: absolute;
+    top:-7px;
+    left: 10px;
+    width: 14px;
+    height: 7px;
+    overflow: hidden;
+    padding: 0px;
+    background-color: transparent;
+    z-index: 200;
+}
+.a-datagrid-detail-trigon span {
+    width: 0px;
+    height: 0px;
+    line-height: 0px !important;
+    padding: 0px;
+}
+.a-datagrid-detail-trigon .blo {
+    position: absolute;
+    left: 1px;
+    top: -5px;
+    border: 6px solid;
+    border-color: transparent transparent #ddd transparent;
+    border-style: solid dashed dashed dashed;
+}
+.a-datagrid-detail-trigon .bor {
+    position: absolute;
+    left: 0px;
+    top: -7px;
+    border: 7px solid;
+    border-color: transparent transparent #aaa transparent;
+    border-style: solid dashed dashed dashed;
+}

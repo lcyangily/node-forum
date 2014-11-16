@@ -1,0 +1,122 @@
+@screen-xs:                  360px;
+@screen-sm:                  768px;
+@screen-md:                  992px;
+@screen-lg:                  1220px;
+@grid-columns:               30;
+@container-lg:               1190px;  /** 30 栅格 **/
+@container-md:               950px;   /** 24 栅格 **/
+@container-sm:               710px;   /** 18 栅格 **/
+@container-xs:               350px;   /**  9 栅格 **/
+@col-prefix:                 grid;    
+
+.@{col-prefix}-container {
+  .container-fixed();
+
+  @media (min-width: @screen-xs) {
+    padding-right:0px;
+    width: @container-xs;
+  }
+  @media (min-width: @screen-sm) {
+    padding-right:0px;
+    width: @container-sm;
+  }
+  @media (min-width: @screen-md) {
+    padding-right:0px;
+    width: @container-md;
+  }
+  @media (min-width: @screen-lg) {
+    padding-right:0px;
+    width: @container-lg;
+  }
+}
+
+.@{col-prefix}-row{
+  .make-row();
+}
+
+.make-row() {
+    margin-right: -10px;
+    zoom: 1;
+    &:after{
+      clear: both;
+      content: " ";
+      display: block;
+      font-size: 0;
+      height: 0;
+      visibility: hidden;
+    };
+}
+
+.make-grid-columns();
+
+.make-grid(xs);
+
+@media (min-width: @screen-sm) {
+  .make-grid(sm);
+}
+
+@media (min-width: @screen-md) {
+  .make-grid(md);
+}
+
+@media (min-width: @screen-lg) {
+  .make-grid(lg);
+}
+
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.container-fixed() {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 10px;
+  &:extend(.clearfix all);
+}
+
+.make-grid-columns() {
+  // Common styles for all sizes of grid columns, widths 1-12
+  .col(@index) when (@index = 1) { // initial
+    @item: ~".@{col-prefix}-xs-@{index}, .@{col-prefix}-sm-@{index}, .@{col-prefix}-md-@{index}, .@{col-prefix}-lg-@{index}";
+    .col((@index + 1), @item);
+  } 
+  .col(@index, @list) when (@index =< @grid-columns) { // general; "=<" isn't a typo
+    @item: ~".@{col-prefix}-xs-@{index}, .@{col-prefix}-sm-@{index}, .@{col-prefix}-md-@{index}, .@{col-prefix}-lg-@{index}";
+    .col((@index + 1), ~"@{list}, @{item}");
+  }
+  .col(@index, @list) when (@index > @grid-columns) { // terminal
+    .@{col-prefix}-col{
+      margin: 0 10px 10px 0;
+    }
+    @{list} {
+      margin: 0 10px 10px 0;
+      float:left;
+      display:inline;
+    }
+  }
+  .col(1); // kickstart it
+}
+
+.make-grid(@class) {
+  .loop-grid-columns(@grid-columns, @class, width);
+}
+
+.loop-grid-columns(@index, @class, @type) when (@index >= 0) {
+  .calc-grid-column(@index, @class, @type);
+  // next iteration
+  .loop-grid-columns((@index - 1), @class, @type);
+}
+
+
+.calc-grid-column(@index, @class, @type) when (@type = width) and (@index > 0) {
+  .@{col-prefix}-@{class}-@{index} {
+    width: (@index * 40px - 10);
+  }
+}

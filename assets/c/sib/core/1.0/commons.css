@@ -1,0 +1,111 @@
+.sib-clearfix:before,
+.sib-clearfix:after {content: " "; /* 1 */display: table; /* 2 */}
+.sib-clearfix:after {clear: both;}
+.sib-clearfix {*zoom: 1;}
+.sib-left{float:left;}
+.sib-right{float:right;}
+
+/** btns **/
+.sib-btn {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    font-size: 12px;
+    /* font-weight: bold; */
+    border-radius: 4px;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    line-height: 16px;
+    /* line-height:23px; */
+    /* height:23px; */
+    *overflow: visible; /* for a ie6/7 bug http://blog.csdn.net/jyy_12/article/details/6636099 */ 
+    background-image: none;
+}
+a.sib-btn:hover{
+    text-decoration: none;
+}
+.sib-btn-xs{
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+.sib-btn-sm{
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 12px;
+    border-radius: 3px;
+}
+.sib-btn-lg{
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 23px;
+    border-radius: 6px;
+}
+
+.sib-btn-orange,
+a.sib-btn-orange {
+    color: #fff;
+    border:1px solid #d66500;
+    background-color: #f57403;
+}
+
+.sib-btn-orange:hover {
+    background-color: #fb8318;
+}
+
+.sib-btn-white,
+a.sib-btn-white {
+    border:1px solid #afafaf;
+    background-color: #f3f3f3;
+    color: #777;
+}
+
+.sib-btn-white:hover {
+    border: 1px solid #8e8e8e;
+    background-color: #fcfbfb;
+    color: #676d70;
+}
+.sib-btn-blue,
+a.sib-btn-blue{
+    color: #fff;
+    background-color: #428bca;
+    border-color: #357ebd;
+}
+.sib-btn-blue:hover,
+.sib-btn-blue:focus,
+.sib-btn-blue:active{
+    color:#fff;
+    background-color:#3071a9;
+    border-color:#285e8e
+}
+.sib-btn-green,
+a.sib-btn-green{
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.sib-btn-green:hover,
+.sib-btn-green:focus,
+.sib-btn-green:active{
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
+}
+.sib-btn-red,
+a.sib-btn-red{
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+.sib-btn-red:hover,
+.sib-btn-red:focus,
+.sib-btn-red:active{
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
