@@ -9,9 +9,9 @@ define(function(require, exports, module){
     //导入依赖样式资源
     //require('css!./lazyload.css');
 
-    var $      = require('../../core/1.0/jQuery+'),
-        Widget = require('../../core/1.0/Widget'),
-        Sib    = require('../../core/1.0/Sib'),
+    var $      = require('jquery+'),
+        Widget = require('sib.widget'),
+        Sib    = require('sib.sib'),
         w = (function(){return this})(), d = w.document;
 
     //默认值
@@ -130,6 +130,9 @@ define(function(require, exports, module){
                     return;
                 }
 
+                this._trigger('load', null, {
+                    element : $el
+                });
                 /*if (typeof(load) == "function") {
                     load.call(this, el);
                 }*/

@@ -22,7 +22,7 @@
 
       mysql_config: {
           host: "127.0.0.1", //数据库地址
-          database: "bbs", //数据库表名
+          database: "node-forum", //数据库表名
           username: "root", //数据库用户名
           password: "manager", //数据库密码
       }

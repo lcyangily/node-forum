@@ -7,14 +7,14 @@
 define(function(require, exports, module){
 
     //导入依赖样式资源
-    require('css!./countdown.css');
+    //require('css!./countdown.css');
 
-    var $      = require('../../core/1.0/jQuery+'),
-        Sib    = require('../../core/1.0/Sib'),
-        Widget = require('../../core/1.0/Widget'),
-        JSON   = require('../../core/1.0/json2'),
-        Effect = require('./effect'),
-        Timer  = require('./timer'),
+    var $      = require('jquery+'),
+        Sib    = require('sib.sib'),
+        Widget = require('sib.widget'),
+        JSON   = require('json'),
+        Effect = require('sib.countdown.effect'),
+        Timer  = require('sib.countdown.timer'),
         w = (function(){return this})(), d = w.document;
 
     //默认值

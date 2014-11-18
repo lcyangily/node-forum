@@ -96,12 +96,79 @@
 	cursor: move;
 }
 .sib-dialog-btns{
-    padding: .5em;
+    padding: 1em .5em;
     padding-top:0;
     background: #fff;
-    text-align: right;
+    text-align: center;
 }
 .sib-dialog-btns .sib-btn{
     margin-left: 3px;
     margin-right: 3px;
+}
+.sib-btn-confirm{
+    color: #fff;
+    background-color: #428bca;
+    border-color: #357ebd;
+}
+.sib-btn-confirm:hover,
+.sib-btn-confirm:focus,
+.sib-btn-confirm:active{
+    color:#fff;
+    background-color:#3071a9;
+    border-color:#285e8e
+}
+.sib-btn-cancel{
+    border:1px solid #afafaf;
+    background-color: #f3f3f3;
+    color: #777;
+}
+.sib-btn-cancel:hover {
+    border: 1px solid #8e8e8e;
+    background-color: #fcfbfb;
+    color: #676d70;
+}
+
+/** sib-dialog-tip **/
+.sib-dialog-tip-inner {
+    position: relative;
+    zoom: 1;
+    font-size: 12px;
+    line-height: 22px;
+    background: #fff;
+    border: 1px solid transparent;
+    _border-color:tomato;   /* fix ie6 dont support border transparent */
+    _filter:chroma(color=tomato);
+}
+
+.sib-dialog-tip-inner .sib-dialog-tip-icon {
+    background: #fff;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 20px;
+    left: 40px;
+}
+
+.sib-dialog-tip-icon .iconfont {
+    font-size: 36px;
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    width: 32px;
+    height: 32px;
+    line-height: 36px;
+    text-shadow: 0 1px 0 #fff;
+    color: #68b5e2;
+}
+.sib-dialog-tip-content {
+    margin: 20px 40px 20px 80px;
+}
+.sib-dialog-tip-content h3.sib-dialog-tip-title {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+/** tip theme**/
+.sib-dialog-tip .sib-dialog-tip-content {
+    margin-bottom: 40px;
 }

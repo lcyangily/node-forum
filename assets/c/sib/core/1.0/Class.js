@@ -1,5 +1,5 @@
 define(function(require, exports, module){
-  var $ = require('../../core/1.0/jQuery+');
+  var $ = require('jquery+');
   var /*initializing = false,*/ fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
  
   // The base Class implementation (does nothing)

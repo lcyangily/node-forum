@@ -7,16 +7,16 @@
 define(function(require, exports, module){
 
     //导入依赖样式资源
-    require('css!./calendar.css');
+    //require('css!./calendar.css');
     
-    var $      = require('../../core/1.0/jQuery+'),
-        SIB    = require('../../core/1.0/Sib'),
-        i18n   = require('./i18n/en'),
-        moment = require('./moment/moment'), 
-        BaseCalendar  = require('./BaseCalendar'),
-        YearCalendar  = require('./YearPanel'),
-        MonthCalendar = require('./MonthPanel'),
-        DateCalendar  = require('./DatePanel'),
+    var $      = require('jquery+'),
+        SIB    = require('sib.sib'),
+        i18n   = require('sib.calendar.i18n.en'),
+        moment = require('moment'), 
+        BaseCalendar  = require('sib.calendar.base'),
+        YearCalendar  = require('sib.calendar.year'),
+        MonthCalendar = require('sib.calendar.month'),
+        DateCalendar  = require('sib.calendar.date'),
         w = (function(){return this})(), d = w.document;
 
     var calTmpl = [

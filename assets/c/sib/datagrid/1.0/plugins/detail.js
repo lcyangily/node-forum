@@ -1,6 +1,6 @@
 define(function(require, exports, module){
-    var $ = require('../../../core/1.0/jQuery+'),
-        DataGrid = require('../DataGrid'),
+    var $ = require('jquery+'),
+        DataGrid = require('sib.datagrid'),
         defaultPlugin = DataGrid.plugins['default'];
 
     DataGrid.plugins['detail'] = $.extend({}, defaultPlugin, {

@@ -7,11 +7,11 @@
 define(function(require, exports, module){
 
     //导入依赖样式资源
-    require('css!./tip.css');
+    //require('css!./tip.css');
 
-    var $      = require('../../core/1.0/jQuery+'),
-        Popup  = require('../../popup/1.0/Popup'),
-        SIB    = require('../../core/1.0/Sib'),
+    var $      = require('jquery+'),
+        Popup  = require('sib.popup'),
+        SIB    = require('sib.sib'),
         w = (function(){return this})(), d = w.document;
 
     //默认值

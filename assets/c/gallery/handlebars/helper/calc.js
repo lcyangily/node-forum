@@ -1,5 +1,5 @@
 define(function(require, exports, module){
-    var Handlebars = require('handlebars');
+    var Handlebars = require('hbs');
 
     Handlebars.registerHelper({
         calc : function() {
@@ -75,6 +75,21 @@ define(function(require, exports, module){
                 //不满足条件执行{{else}}部分
                 return options.inverse(this);
             }
+        },
+        sub : function(partial, options){
+            var tmpl = Handlebars.partials[partial];
+            if(tmpl == null) {
+                new Error('partial is not found : ' + partial);
+            }
+            //options.fn(this);
+            var ctx = Object.create(this);
+            for(var i in options.hash) {
+                ctx[i] = options.hash[i];
+            }
+            if (typeof tmpl !== 'function') {
+                tmpl = Handlebars.compile(tmpl);
+            }
+            return new Handlebars.SafeString(tmpl(ctx));
         }
     });
 

@@ -9,11 +9,11 @@
 
 define(function(require, exports, module) {
 
-    require('css!./pager.css');
+    //require('css!./pager.css');
     
-    var $ = require('../../core/1.0/jQuery+'),
-        Widget = require('../../core/1.0/Widget'),
-        Sib    = require('../../core/1.0/Sib'),
+    var $ = require('jquery+'),
+        Widget = require('sib.widget'),
+        Sib    = require('sib.sib'),
         w = (function(){return this;})(), d = w.document;
 
     var defaults = {

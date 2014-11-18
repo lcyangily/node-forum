@@ -1,5 +1,5 @@
 define(function(require, exports, module){
-    var $ = require('../../../core/1.0/jQuery+');
+    var $ = require('jquery+');
 
     var fade = {
         init : function( oChoose ){

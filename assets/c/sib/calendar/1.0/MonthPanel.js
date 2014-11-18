@@ -7,13 +7,13 @@
 define(function(require, exports, module){
 
     //导入依赖样式资源
-    require('css!./calendar.css');
+    //require('css!./calendar.css');
     
-    var $ = require('../../core/1.0/jQuery+'),
-        Widget = require('../../core/1.0/Widget'),
-        SIB = require('../../core/1.0/Sib'),
-        moment = require('./moment/moment'), 
-        BaseCalendar = require('./BaseCalendar'), 
+    var $ = require('jquery+'),
+        Widget = require('sib.widget'),
+        SIB = require('sib.sib'),
+        moment = require('moment'), 
+        BaseCalendar = require('sib.calendar.base'), 
         w = (function(){return this})(), d = w.document;
 
     //默认值

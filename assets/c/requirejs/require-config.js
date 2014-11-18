@@ -6,37 +6,40 @@ requirejs.config({
         }
     },
     paths : {
-        'handlebars'        : 'gallery/handlebars/handlebars',
-        'hbs-helper.calc'   : 'gallery/handlebars/helper/calc',
-        'hbs-helper.eq'     : 'gallery/handlebars/helper/eq',
-        'hbs-helper.string' : 'gallery/handlebars/helper/string',
-        'jquery'            : 'sib/core/1.0/jquery/jquery-1.8.3',
-        //'jquery'          : '../p/base/jll-jquery', //让jquery依赖初始化js
-        'jquery.cookie'           : 'gallery/jquery.cookie',
-        'jquery.validate.core'    : 'gallery/jquery.validate/jquery.validate',
-        'jquery.validate.i18n.zh' : 'gallery/jquery.validate/localization/messages_zh',
-        'jquery.validate'         : 'gallery/jquery.validate/jquery.validate.customize',
-        'jquery.blockUI'  : 'gallery/jquery.blockUI',
-        'utils'           : 'common/utils',
-        'cryptojs.core'   : 'gallery/cryptojs/core',
-        'cryptojs.sha256' : 'gallery/cryptojs/sha256',
-        'cryptojs.hmac'   : 'gallery/cryptojs/hmac',
-        'init'            : '../p/base/init'
-    },
-    shim : {
-        'handlebars' : {
-            exports : 'Handlebars'
-        },
-        'cryptojs.core': {
-            exports: "CryptoJS"
-        },
-        'cryptojs.hmac': {
-            deps: ['cryptojs.core'],
-            exports: "CryptoJS"
-        },
-        'cryptojs.sha256': {
-            deps: ['cryptojs.hmac'],
-            exports: "CryptoJS"
-        }
+        //'jQuery' : 'sib/core/1.0/jQuery+',
+        /** jquery and jquery plugin **/
+        '$'      : 'sib/core/1.0/jQuery+',
+        'jQuery' : 'sib/core/1.0/jQuery+',
+        'jQuery.validate' : 'sib/core/1.0/jquery/jquery.validate',
+        'jQuery.blockUI' : 'sib/core/1.0/jquery/jquery.blockUI',
+        
+        /** other base **/
+        'json' : 'sib/core/1.0/json2',
+        
+        /** sib base **/
+        'Sib'    : 'sib/core/1.0/Sib',
+        'Widget' : 'sib/core/1.0/Widget',
+        'Class'  : 'sib/core/1.0/Class',
+
+        /** sib widget **/
+        'Autocomplete' : 'sib/autocomplete/1.0/Autocomplete',
+        'Calendar'     : 'sib/calendar/1.0/Calendar',
+        'LineChart'    : 'sib/charts/1.0/linechart/LineChart',
+        'Choose'       : 'sib/choose/1.0/Choose',
+        'ComboBox'     : 'sib/combo/1.0/ComboBox',
+        'DataGrid'     : 'sib/datagrid/1.0/DataGrid',
+        'Dialog'       : 'sib/dialog/1.0/Dialog',
+        'Layout'       : 'sib/layout/1.0/Layout',
+        'Menu'         : 'sib/menu/1.0/Menu',
+        'PageNavigator': 'sib/pagenavigator/1.0/PageNavigator',
+        'Pagination'   : 'sib/pagination/1.0/Pagination',
+        'Pin'          : 'sib/pin/1.0/Pin',
+        'Placeholder'  : 'sib/placeholder/1.0/Placeholder',
+        'Popup'        : 'sib/popup/1.0/Popup',
+        'ProgressBar'  : 'sib/progressbar/1.0/ProgressBar',
+        'Slide'        : 'sib/slide/1.0/Slide',
+        'StepBar'      : 'sib/stepbar/1.0/StepBar',
+        'Tabs'         : 'sib/tabs/1.0/Tabs',
+        'Tip'          : 'sib/tip/1.0/Tip'
     }
 });

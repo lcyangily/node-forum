@@ -9,12 +9,12 @@
 define(function(require, exports, module){
     
     //导入依赖样式资源
-    require('css!./combobox.css');
+    //require('css!./combobox.css');
     
     //depends
-    var $   = require('../../core/1.0/jQuery+'),
-        SIB = require('../../core/1.0/Sib'),
-        Autocomplete  = require('../../autocomplete/1.0/Autocomplete'),
+    var $   = require('jquery+'),
+        SIB = require('sib.sib'),
+        Autocomplete  = require('sib.autocomplete'),
         w = (function(){return this;})(), d = w.document;
 
     //config

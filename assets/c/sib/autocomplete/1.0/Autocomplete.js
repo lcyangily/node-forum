@@ -11,16 +11,15 @@
  * 选择值总是提示不存在！对IE只想说一个字：X
  */
 define(function(require, exports, module){
-    
-    //导入依赖样式资源
-    require('css!./Autocomplete.css');
-    
+
     //depends
-    var $ = require('../../core/1.0/jQuery+'),
-        Widget = require('../../core/1.0/Widget'),
-        SIB  = require('../../core/1.0/Sib'),
-        JSON = require('../../core/1.0/json2'),
-        Menu = require('../../menu/1.0/Menu'),
+    var $ = require('jquery+'),
+        Widget = require('sib.widget'),
+        SIB  = require('sib.sib'),
+        JSON = require('json'),
+        Menu = require('sib.menu'),
+        tab  = require('sib.autocomplete.tab'),
+        table = require('sib.autocomplete.table'),
         w = (function(){return this;})(), d = w.document;
 
     //config
@@ -130,7 +129,10 @@ define(function(require, exports, module){
             widgetName : 'SIBAutocomplete',
             require : require,
             defaults : defaults,
-            hotPlugins : []
+            hotPlugins : {
+                tab   : tab,
+                table : table
+            }
         },
         private : {
             _prepareOption : function(){

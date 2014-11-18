@@ -7,12 +7,13 @@
 define(function(require, exports, module){
 
     //导入依赖样式资源
-    require('css!./dialog.css');
+    //require('css!./dialog.css');
     
-    var $      = require('../../core/1.0/jQuery+'),
-        SIB    = require('../../core/1.0/Sib'),
-        Widget = require('../../core/1.0/Widget'),
-        Mask   = require('./Mask'),
+    var $      = require('jquery+'),
+        SIB    = require('sib.sib'),
+        Widget = require('sib.widget'),
+        Mask   = require('sib.dialog.mask'),
+        Events = require('events'),
         w = (function(){return this})(), d = w.document;
 
     //默认值
@@ -145,7 +146,7 @@ define(function(require, exports, module){
                 $el.attr('tabIndex', -1);
 
                 if(opts.theme) {
-                    $el.addClass(opts.theme);
+                    $el.addClass(SIB.unite(opts.theme, state.mconst));
                 }
                 
                 //close
@@ -499,6 +500,7 @@ define(function(require, exports, module){
             },
             _createIframe: function() {
                 var state = this.state,
+                    self  = this,
                     $content = state.$content;
 
                 var $iframe = state.$iframe = $("<iframe>", {
@@ -516,11 +518,9 @@ define(function(require, exports, module){
                 }).appendTo($content);
                 // 给 iframe 绑一个 close 事件
                 // iframe 内部可通过 window.frameElement.trigger('close') 关闭
-                //Events.mixTo(this.iframe[0]);
-                this._on($iframe, {
-                    "close" : function(e) {
-                        this.close();
-                    }
+                Events.mixTo($iframe[0]);
+                $iframe[0].on('close', function(data){
+                    self.close(null, data);
                 });
             },
             _setIframeHeight : function(){
@@ -607,8 +607,10 @@ define(function(require, exports, module){
                     if(btn.autoFocus) {
                         $btn.focus();
                     }
-                    if(opts.align && $.inArray(opts.align, ['left','right'])) {
-                        $btn.addClass('sib-' + opts.align);
+
+                    if(btn.align && $.inArray(btn.align, ['left', 'center', 'right'])) {
+                        $btns.css('text-align', btn.align);
+                        //$btn.addClass('sib-' + opts.align);
                     }
                 });
             }
@@ -690,20 +692,20 @@ define(function(require, exports, module){
                 this._trigger("open");
                 return this;
             },
-            close : function( event ){
+            close : function( event, data ){
                 var state = this.state,
                     opts = state.options,
                     $dialog = state.$dialog,
                     that = this;
 
-                if ( !state._isOpen || this._trigger( "beforeClose", event ) === false ) {
+                if ( !state._isOpen || this._trigger( "beforeClose", event, data ) === false ) {
                     return;
                 }
 
                 state._isOpen = false;
 
                 var afterClose = function(){
-                    that._trigger('afterclose');
+                    that._trigger('afterclose', event, data);
                 }
                 if('slide' == opts.effect) {
                     $dialog.slideUp(opts.speed || 'normal', afterClose);
@@ -712,8 +714,8 @@ define(function(require, exports, module){
                 } else {
                     $dialog.hide(0, afterClose);
                 }
-                this._trigger('hide', event);
-                this._trigger('close', event);
+                this._trigger('hide', event, data);
+                this._trigger('close', event, data);
             },
             resize : function(){
                 this._size();
@@ -736,22 +738,50 @@ define(function(require, exports, module){
     });
 
     $.extend(D, {
-        confirmDefault : {
+        tipDefault : {
             title : null,
             closeTpl : null,
             minHeight : 50,
-            minWidth : 100,
+            minWidth : 350,
+            maxWidth : 550,
             effect : 'fade',
             modal : true,
             afterclose : function(){
                 this.destroy();
+            },
+            tipTpl : '<div class="{clsPrefix}-tip-inner">'+
+                         '<div class="{clsPrefix}-tip-icon">'+
+                             '<i class="iconfont" title="提示">{icon}</i>'+    
+                         '</div>'+
+                         '<div class="{clsPrefix}-tip-content">'+
+                             '<h3 class="{clsPrefix}-tip-title">{msg}</h3>'+
+                         '</div>'+
+                     '</div>',
+            alert:{
+                title : '温馨提示',
+                btnTpl : '<a href="javascript:;" class="sib-btn sib-btn-confirm">确定</a>'
+            },
+            confirm:{
+                title : '请确认',
+                confirmBtnTpl : '<a href="javascript:;" class="sib-btn sib-btn-confirm">确定</a>',
+                cancelBtnTpl : '<a href="javascript:;" class="sib-btn sib-btn-cancel">取消</a>'
+            },
+            tip : {
+                title : '温馨提示'
             }
         },
         alert : function(msg, callback, options){
+            var content = SIB.unite(D.tipDefault.tipTpl, $.extend(true, {
+                icon : '&#xe687;',
+                msg : msg,
+                clsPrefix : D.clsPrefix
+            }, options));
             var defaults = {
-                content : msg,
+                title : D.tipDefault.alert.title,
+                content : content,
+                theme : '{clsPrefix}-alert',
                 btns : [{
-                    tpl : '<a href="javascript:;" class="sib-btn sib-btn-sm sib-btn-blue">确定</a>',
+                    tpl : D.tipDefault.alert.btnTpl,
                     autoFocus : true,
                     click : function(e){
                         callback && callback();
@@ -759,36 +789,50 @@ define(function(require, exports, module){
                     }
                 }]
             };
-            return new Dialog($.extend(true, {}, D.confirmDefault, defaults, options)).open();
+            return new Dialog($.extend(true, {}, D.tipDefault, defaults, options)).open();
         },
         confirm : function(msg, title, onConfirm, onCancel, options){
+            var content = SIB.unite(D.tipDefault.tipTpl, $.extend(true, {
+                icon : '&#xe681;',
+                msg : msg,
+                clsPrefix : D.clsPrefix
+            }, options));
+
             var defaults = {
-                title : title || '请确认',
-                content : msg,
+                title : D.tipDefault.confirm.title || '请确认',
+                content : content,
+                theme : '{clsPrefix}-confirm',
                 btns : [{
-                    tpl : '<a href="javascript:;" class="sib-btn sib-btn-sm sib-btn-blue">确定</a>',
+                    tpl : D.tipDefault.confirm.confirmBtnTpl,
                     autoFocus : true,
                     click : function(e){
                         $.isFunction(onConfirm) && onConfirm();
                         this.close();
                     }
                 }, {
-                    tpl : '<a href="javascript:;" class="sib-btn sib-btn-sm sib-btn-white">取消</a>',
+                    tpl : D.tipDefault.confirm.cancelBtnTpl,
                     click : function(){
                         $.isFunction(onCancel) && onCancel();
                         this.close();
                     }
                 }]
             }
-            return new Dialog($.extend(true, {}, D.confirmDefault, defaults, options)).open();
+            return new Dialog($.extend(true, {}, D.tipDefault, defaults, options)).open();
         },
         tip : function(msg, timeout, callback, options){
+            var content = SIB.unite(D.tipDefault.tipTpl, $.extend(true, {
+                icon : '&#xe686;',
+                msg : msg,
+                clsPrefix : D.clsPrefix
+            }, options));
+
             var defaults = {
-                title : null,
+                title : D.tipDefault.tip.title,
+                theme : '{clsPrefix}-tip',
                 modal : false,
-                content : msg
+                content : content
             }
-            var d = new Dialog($.extend(true, {}, D.confirmDefault, defaults, options));
+            var d = new Dialog($.extend(true, {}, D.tipDefault, defaults, options));
             d.open();
             setTimeout(function(){
                 d.close();
@@ -796,7 +840,12 @@ define(function(require, exports, module){
             }, timeout || 1000);
         },
         blockUI : function(opts){
-            var bui = new Dialog($.extend(true, {}, defaults, opts, {
+            
+            var bui = $(w).data(D.widgetName + '-blockui');
+            if(bui) {
+                D.unblockUI();
+            }
+            bui = new Dialog($.extend(true, {}, defaults, opts, {
                 trigger : null,
                 closeOnEscape : false,
                 closeTpl : null,
@@ -817,6 +866,7 @@ define(function(require, exports, module){
                 },
                 draggable : false
             }));
+            
             $(w).data(D.widgetName + '-blockui', bui);
             bui.open();
         },
@@ -826,6 +876,7 @@ define(function(require, exports, module){
                 d.close();
                 d.destroy();
             }
+            $(w).data(D.widgetName + '-blockui', null);
         }
     });
 

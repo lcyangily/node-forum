@@ -8,11 +8,11 @@
  */
 define(function(require, exports, module){
     //导入依赖样式资源
-    require('css!./tabs.css');
+    //require('css!./tabs.css');
 
-    var $      = require('../../core/1.0/jQuery+'),
-        Slide  = require('../../slide/1.0/Slide'),
-        SIB    = require('../../core/1.0/Sib'),
+    var $      = require('jquery+'),
+        Slide  = require('sib.slide'),
+        SIB    = require('sib.sib'),
         w      = (function(){return this})(), 
         d      = w.document;
 

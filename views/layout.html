@@ -11,12 +11,16 @@
         {{~/if~}}
     </title>
     {{#block "css"}}
+        <link rel="stylesheet" href="/assets/c/sib/theme/index.css">
         <link rel="stylesheet" href="/assets/c/css/normalize.css">
         <link rel="stylesheet" href="/assets/c/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="/assets/c/css/base.css">
         <link rel="stylesheet" href="/assets/c/css/iconfont.css">
         <link rel="stylesheet" href="/assets/c/css/grid.css">
         <link rel="stylesheet" href="/assets/p/index/index.css">
+    {{/block}}
+    {{#block "topjs"}}
+        {{sub "topjs"}}
     {{/block}}
 </head>
 <body>
@@ -43,29 +47,17 @@
     </div>
 {{/block}}
 {{#block "footer"}}
-    <div id='footer'>
+    <div id='footer' class="grid-container">
         <div id='footer_main'>
             <div class="links">
                 <a class='dark' href='/about'>关于</a>
                 |
                 <a class='dark' href='/faq'>FAQ</a>
-                |
-                <a class='dark' href='/' target="_blank">GitHub</a>
-                |
-                <a class='dark' href='/rss' target="_blank">RSS</a>
-            </div>
-            <div class='col_fade'>
-                <p>&copy; 2012 - 2014</p>
-                <p>本社区为开源系统，版本: {{ config.version }} ，欢迎贡献代码</p>
-                <p>本站服务器由<a href="http://www.ucloud.cn/">
-                    <img src="/assets/images/ucloud.png" title="UCloud云主机" alt="UCloud云主机" height="28px" width="92px" /></a>赞助</p>
             </div>
         </div>
     </div>
 {{/block}}
 {{#block "js"}}
-    <script type="text/javascript" src="/assets/c/requirejs/require-min.js"></script>
-    <script type="text/javascript" src="/assets/c/requirejs/require-config.js"></script>
     <script type="text/javascript">
     require(['jquery'], function($){
         $(document).on('click', '[data-toggle=collapse]', function(){

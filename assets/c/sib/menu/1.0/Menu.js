@@ -8,12 +8,12 @@
  */
 define(function(require, exports, module){
     //导入依赖样式资源
-    require('css!./menu.css');
+    //require('css!./menu.css');
     
     //depends
-    var $       = require('../../core/1.0/jQuery+'),
-        Widget  = require('../../core/1.0/Widget'),
-        SIB     = require('../../core/1.0/Sib'),
+    var $       = require('jquery+'),
+        Widget  = require('sib.widget'),
+        SIB     = require('sib.sib'),
         w = (function(){return this;})(), d = w.document;
 
     //config

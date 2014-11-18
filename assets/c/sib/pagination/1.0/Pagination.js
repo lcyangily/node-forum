@@ -9,10 +9,10 @@
 
 define(function(require, exports, module) {
 
-    require('css!./Pagination.css');
+    //require('css!./Pagination.css');
     
-    var $ = require('../../core/1.0/jQuery+'),
-        Widget = require('../../core/1.0/Widget'),
+    var $ = require('jquery+'),
+        Widget = require('sib.widget'),
         w = (function(){return this;})(), d = w.document;
     
     var defaults = {

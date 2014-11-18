@@ -9,13 +9,13 @@
 
 define(function(require, exports, module) {
 
-    require('css!./DataGrid.css');
+    //require('css!./DataGrid.css');
 
-    var $ = require('../../core/1.0/jQuery+'),
-        Widget = require('../../core/1.0/Widget'),
-        SIB = require('../../core/1.0/Sib'),
-        Pagination = require('../../pagination/1.0/Pagination'),
-        JSON = require('../../core/1.0/json2'),
+    var $ = require('jquery+'),
+        Widget = require('sib.widget'),
+        SIB = require('sib.sib'),
+        Pagination = require('sib.pagination'),
+        JSON = require('json'),
         //i18n = require('./i18n/en'),
         //viewDefault = require('./plugins/default.js'),
         w = (function(){return this;})(), d = w.document;

@@ -7,11 +7,11 @@
 define(function(require, exports, module){
 
     //导入依赖样式资源
-    require('css!./dialog.css');
+    //require('css!./dialog.css');
     
-    var $      = require('../../core/1.0/jQuery+'),
-        SIB    = require('../../core/1.0/Sib'),
-        Widget = require('../../core/1.0/Widget'),
+    var $      = require('jquery'),
+        SIB    = require('sib.sib'),
+        Widget = require('sib.widget'),
         w = (function(){return this})(), d = w.document;
 
     //默认值

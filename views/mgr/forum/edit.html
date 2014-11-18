@@ -78,7 +78,7 @@
     {{#append "js"}}
         <script type="text/javascript">
         var d = {{{json forums}}};
-        require(['sib/core/1.0/jQuery+', 'sib/combo/1.0/ComboBox'], function($, ComboBox){
+        require(['jquery', 'sib.combobox'], function($, ComboBox){
             $('#J_form input[name=type]').click(function(){
                 var val = $(this).val();
                 if(val == 0) {

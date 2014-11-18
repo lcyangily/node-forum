@@ -8,13 +8,14 @@
  */
 define(function(require, exports, module){
     //导入依赖样式资源
-    require('css!./slide.css');
+    //require('css!./slide.css');
 
-    var $      = require('../../core/1.0/jQuery+'),
-        Widget = require('../../core/1.0/Widget'),
-        SIB    = require('../../core/1.0/Sib'),
-        fade   = require('./plugins/effect.fade'),
-        scrollx= require('./plugins/effect.scrollx'),
+    var $      = require('jquery+'),
+        Widget = require('sib.widget'),
+        SIB    = require('sib.sib'),
+        fade   = require('sib.slide.fade'),
+        scrollx= require('sib.slide.scrollx'),
+        scrolly= require('sib.slide.scrolly'),
         w      = (function(){return this})(), 
         d      = w.document;
 
@@ -53,6 +54,7 @@ define(function(require, exports, module){
             defaults : defaults,
             plugins : {
                 scrollx : scrollx,
+                scrolly : scrolly,
                 fade : fade
             },
             clsPrefix : 'sib-slide'
@@ -410,6 +412,13 @@ define(function(require, exports, module){
             _init : function () {
                 var state = this.state,
                     opts = state.options;
+
+                //如果没有panels 则直接返回
+                var $el = this.$element;
+                var $panels = $el.find(opts.panels);
+                if($panels.length <= 0) {
+                    return null;
+                }
 
                 this._prepareOption();
                 this._buildHTML();

@@ -1,9 +1,7 @@
 define(function(require, exports, module){
-    var $ = require('../../../core/1.0/jQuery+'),
-        A = require('../Autocomplete'),
-        defaultPlugin = A.hotPlugins['default'];
+    var $ = require('jquery+');
 
-    A.hotPlugins['table'] = {
+    var table = {
         options : {
             colNum : 4,
             itemWidth : 'auto',
@@ -71,5 +69,5 @@ define(function(require, exports, module){
         }
     };
 
-    return A.hotPlugins['table'];
+    return table;
 });

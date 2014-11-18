@@ -7,13 +7,13 @@
  * @version V1.0   
  */
 define(function(require, exports, module){
-    var $ =     require('./jQuery+'),
-        Class = require('./Class'),
-        SIB =   require('./Sib'),
+    var $ =     require('jquery+'),
+        Class = require('sib.class'),
+        SIB =   require('sib.sib'),
         w = (function(){this})(), d = document;
 
     //导入依赖样式资源
-    require('css!./commons.css');
+    //require('css!./commons.css');
 
     var uuid = 0,
         Widget, 
@@ -108,6 +108,10 @@ define(function(require, exports, module){
                 //国际化资源加载
                 function i18n() {
                     if(!options.lang) {
+                        return;
+                    }
+                    if(typeof options.lang != 'string') {
+                        state.i18n = options.lang;
                         return;
                     }
                     

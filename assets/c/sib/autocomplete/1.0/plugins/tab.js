@@ -1,10 +1,8 @@
 define(function(require, exports, module){
-    var $   = require('../../../core/1.0/jQuery+'),
-        SIB = require('../../../core/1.0/Sib'),
-        A = require('../Autocomplete'),
-        defaultPlugin = A.hotPlugins['default'];
+    var $   = require('jquery+'),
+        SIB = require('sib.sib');
 
-    A.hotPlugins['tab'] = {
+    var plugin = {
         options : {
             itemWidth : 'auto',
             tabTitle : 'title',
@@ -161,5 +159,5 @@ define(function(require, exports, module){
         }
     };
 
-    return A.hotPlugins['tab'];
+    return plugin;
 });

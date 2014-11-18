@@ -12,12 +12,12 @@ define(function(require, exports, module){
     var $ = require('jquery');
 
     //jquery plugins or enhance
-    require('./jquery/jquery.easing.1.3');
-    require('./jquery/jquery.enhance');
-    require('./jquery/jquery.position');
-    require('./jquery/jquery.resizable');
-    require('./jquery/jquery.resize');
-    require('./jquery/jquery.event.drag-2.2');
+    require('jquery.easing');
+    require('jquery.enhance');
+    require('jquery.position');
+    //require('jquery.resizable');
+    require('jquery.resize');
+    require('jquery.event.drag');
 
     return $;
 });

@@ -7,11 +7,11 @@
 define(function(require, exports, module){
 
     //导入依赖样式资源
-    require('css!./spinner.css');
+    //require('css!./spinner.css');
 
-    var $      = require('../../core/1.0/jQuery+'),
-        SIB    = require('../../core/1.0/Sib'),
-        Widget = require('../../core/1.0/Widget'),
+    var $      = require('jquery+'),
+        SIB    = require('sib.sib'),
+        Widget = require('sib.widget'),
         w = (function(){return this})(), d = w.document;
 
     //默认值
@@ -38,7 +38,11 @@ define(function(require, exports, module){
         change : null,
         create : null,
         spin : null,
-        start : null,
+        /** 
+         * start 事件改成 changestart IE下input元素trigger会自动有个属性值为fileopen的start属性，
+         * 导致报错，参见 jquery1.8.3 2973行 trigger 函数
+         */
+        changestart : null,
         stop : null
     };
 
@@ -320,7 +324,7 @@ define(function(require, exports, module){
             },
             _start: function( event ) {
                 var state = this.state;
-                if ( !state.spinning && this._trigger( "start", event ) === false ) {
+                if ( !state.spinning && this._trigger( "changestart", event ) === false ) {
                     return false;
                 }
 

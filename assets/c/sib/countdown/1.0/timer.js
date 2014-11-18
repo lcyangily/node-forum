@@ -19,7 +19,7 @@
  */
 define(function(require, exports, module){
 
-    var $ = require('../../core/1.0/jQuery+');
+    var $ = require('jquery+');
         // fns 中的元素都是二元组，依次为：
         //   frame {function}   帧函数
         //   frequency {number} 二进制末位——1代表帧频率是1000次/s，0代表帧频率是100次/s
