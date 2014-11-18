@@ -12,5 +12,5 @@ ExpressInit(app);
 //protectProcess(config.base_path + "/rabbit/task.js");
 
 //生成数据库模型
-// var createMysqlModel = require('./rabbit/lib/create_mysql_model.js');
-// createMysqlModel();
+ var createMysqlModel = require('./rabbit/lib/create_mysql_model.js');
+ //createMysqlModel();

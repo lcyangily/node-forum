@@ -79,7 +79,7 @@ exports.getFullTopic = function (id, cb) {
                 }
             ], function(err, results){
                 callback(err, topic, results && results[0], results && results[1],
-                         results && results[2], results && results[3],);
+                         results && results[2], results && results[3]);
             });
         }
     ], function(err, topic, author, replys, forum, froumTypes){

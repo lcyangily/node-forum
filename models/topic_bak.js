@@ -2,7 +2,7 @@ module.exports = {
   "id": {
     "type": "int(11)",
     "allowNull": false,
-    "defaultValue": null,
+    autoIncrement: true,
     "primaryKey": true,
     "comment": null
   },

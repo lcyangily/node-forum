@@ -23,7 +23,7 @@ connection = mysql.createConnection({
 });
 
 connection.connect();
-
+console.log('------> database : ' + database);
 connection.query('use ' + database + ';');
 
 createTableInfo = function(tableName, callback) {
@@ -33,13 +33,21 @@ createTableInfo = function(tableName, callback) {
         } else {
             result[tableName] = {};
             _results.forEach(function(r) {
-                return result[tableName][r.Field] = {
+                //console.log('---> r obj : ' + JSON.stringify(r));
+                var ret = {
                     type: r.Type,
                     allowNull: r.Null === "YES" ? true : false,
                     defaultValue: r.Default,
-                    primaryKey: r.Key === "PRI" ? true : false,
+                    //primaryKey: r.Key === "PRI" ? true : false,
                     comment: r.Comment || null
                 };
+                if(r.Key === "PRI") {
+                    ret.primaryKey = true;
+                }
+                if(r.Extra === "auto_increment") {
+                    ret.autoIncrement = true;
+                }
+                return result[tableName][r.Field] = ret;
             });
             return callback();
         }
