@@ -1,4 +1,5 @@
 var forumSvc  = loadService('forum');
+var topicSvc  = loadService('topic');
 var async     = require('async');
 var sanitize  = require('html-css-sanitizer').sanitize;
 var validator = require('validator');
@@ -40,10 +41,13 @@ module.exports = {
                         return next(error);
                     }
 
-                    res.render('topic/edit', {
+                    res.locals.forum = forum;
+                    res.locals.forums = forums;
+                    next();
+                    /*res.render('topic/edit', {
                         forum : forum,
                         forums : forums
-                    });
+                    });*/
                 });
             }
         },
@@ -54,10 +58,10 @@ module.exports = {
                 var content = req.body.content;
                 var fid = req.body.fid;
                 var ftype_id = req.body.ftype_id;
-                var tags = [];
+                /*var tags = [];
                 if (req.body.tags !== '') {
                     tags = req.body.tags.split(',');
-                }
+                }*/
 
                 var edit_error;
                 if(title === '') {
@@ -88,7 +92,7 @@ module.exports = {
                         }
                         res.render('topic/edit', {tags: tags, edit_error: edit_error, title: title, content: content});
                     });*/
-                    res.render('topic/edit', {
+                    res.render('topic/create', {
                         edit_error: edit_error, 
                         title: title, 
                         content: content
@@ -105,6 +109,9 @@ module.exports = {
                             })
                         },
                         function(forum, callback){
+                            topicSvc.add({}, function(error){
+
+                            });
                             Topic.newAndSave(title, content, req.session.user._id, forum.parent_id, forum._id, function (err, topic) {
                                 if (err) {
                                     return next(err);

@@ -4,6 +4,7 @@ var _ = require('lodash');
 module.exports = {
     "/": {
         get: {
+            filters : ['blocks/hotForums'],
             controller : function(req, res, next) {
                 //res.render('forum/index');
                 next();
