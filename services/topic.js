@@ -1,7 +1,7 @@
 var async  = require('async');
-var Topic  = new BaseModel('topic');
-var User   = new BaseModel('user');
-var Reply  = new BaseModel('reply');
+var Topic  = new BaseModel('forum_topic');
+var User   = new BaseModel('users');
+var Reply  = new BaseModel('forum_reply');
 var replySvc = loadService('reply');
 var forumSvc = loadService('forum');
 

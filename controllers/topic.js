@@ -110,12 +110,18 @@ module.exports = {
                         },
                         function(forum, callback){
                             topicSvc.add({
-                                title : titile,
-                                
+                                title : title,
+                                content : content,
+                                fid : fid,
+                                ftype_id : ftype_id,
+                                author_id : 1,
+                                author_nick : 'test'
                             }, function(error){
-
+                                res.render('notify/notify', {
+                                    success : '发布成功!'
+                                });
                             });
-                            Topic.newAndSave(title, content, req.session.user._id, forum.parent_id, forum._id, function (err, topic) {
+                            /*Topic.newAndSave(title, content, req.session.user._id, forum.parent_id, forum._id, function (err, topic) {
                                 if (err) {
                                     return next(err);
                                 }
@@ -153,7 +159,7 @@ module.exports = {
 
                                 //发送at消息
                                 at.sendMessageToMentionUsers(content, topic._id, req.session.user._id);
-                            });
+                            });*/
                         }
                     ], function(error, forum, forums){
                         if(error) {
