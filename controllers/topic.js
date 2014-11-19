@@ -109,7 +109,10 @@ module.exports = {
                             })
                         },
                         function(forum, callback){
-                            topicSvc.add({}, function(error){
+                            topicSvc.add({
+                                title : titile,
+                                
+                            }, function(error){
 
                             });
                             Topic.newAndSave(title, content, req.session.user._id, forum.parent_id, forum._id, function (err, topic) {
