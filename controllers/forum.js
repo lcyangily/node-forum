@@ -1,4 +1,6 @@
 var forumSvc  = loadService('forum');
+var replySvc  = loadService('reply');
+var topicSvc = loadService('topic');
 var _ = require('lodash');
 
 module.exports = {
@@ -7,7 +9,10 @@ module.exports = {
             filters : ['blocks/hotForums'],
             controller : function(req, res, next) {
                 //res.render('forum/index');
-                next();
+                topicSvc.getList(function(err, topics){
+                    res.locals.topics = topics;
+                    next();
+                });
             }
         }
     },

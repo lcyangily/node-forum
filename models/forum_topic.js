@@ -1,3 +1,4 @@
+var Sequelize = require('sequelize');
 module.exports = {
   "id": {
     "type": "int(11)",
@@ -9,8 +10,8 @@ module.exports = {
   },
   "title": {
     "type": "varchar(300)",
-    "allowNull": true,
-    "defaultValue": null,
+    "allowNull": false,
+    "defaultValue": "",
     "comment": null
   },
   "content": {
@@ -33,8 +34,8 @@ module.exports = {
   },
   "author_id": {
     "type": "int(11)",
-    "allowNull": true,
-    "defaultValue": null,
+    "allowNull": false,
+    "defaultValue": "",
     "comment": null
   },
   "author_nick": {
@@ -45,79 +46,79 @@ module.exports = {
   },
   "author_pic": {
     "type": "varchar(50)",
-    "allowNull": false,
-    "defaultValue": "",
+    "allowNull": true,
+    "defaultValue": null,
     "comment": null
   },
   "top": {
     "type": "tinyint(4)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "0",
     "comment": null
   },
   "reply_count": {
     "type": "int(11)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "0",
     "comment": null
   },
   "visit_count": {
     "type": "int(11)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "0",
     "comment": null
   },
   "collect_count": {
     "type": "int(11)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "0",
     "comment": null
   },
   "create_time": {
     "type": "datetime",
-    "allowNull": false,
-    "defaultValue": "",
+    "allowNull": true,
+    "defaultValue": Sequelize.NOW,
     "comment": null
   },
   "update_time": {
     "type": "datetime",
-    "allowNull": false,
-    "defaultValue": "",
+    "allowNull": true,
+    "defaultValue": null,
     "comment": null
   },
   "last_reply": {
     "type": "int(11)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "0",
     "comment": null
   },
   "last_reply_user_id": {
     "type": "int(11)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "0",
     "comment": null
   },
   "last_reply_user_nick": {
     "type": "int(11)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "0",
     "comment": null
   },
   "last_reply_time": {
     "type": "datetime",
-    "allowNull": false,
-    "defaultValue": "",
+    "allowNull": true,
+    "defaultValue": null,
     "comment": null
   },
   "is_hot": {
     "type": "tinyint(4)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "0",
     "comment": null
   },
   "zan_count": {
     "type": "int(11)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "0",
     "comment": null
   }

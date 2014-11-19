@@ -171,29 +171,6 @@ module.exports = {
                             forums : forums
                         });
                     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    ForumModel.findById(ftype_id, function(error, forum){
-                        
-
-                        
-                    });
                 }
             }
         }

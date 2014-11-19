@@ -22,8 +22,8 @@ module.exports = {
   },
   "name": {
     "type": "varchar(200)",
-    "allowNull": true,
-    "defaultValue": null,
+    "allowNull": false,
+    "defaultValue": "",
     "comment": null
   },
   "desc": {
@@ -76,14 +76,14 @@ module.exports = {
   },
   "create_time": {
     "type": "datetime",
-    "allowNull": true,
+    "allowNull": false,
     "defaultValue": Sequelize.NOW,
     "comment": null
   },
   "pic": {
     "type": "varchar(200)",
     "allowNull": true,
-    "defaultValue": "0",
+    "defaultValue": null,
     "comment": "图标"
   }
 }

@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var async  = require('async');
 var Topic  = new BaseModel('forum_topic');
 var User   = new BaseModel('users');
@@ -66,7 +67,7 @@ exports.getFullTopic = function (id, cb) {
                     User.findById(topic.author_id).done(callback);
                 },
                 function(callback){
-                    replySvc.getRepliesByTopicId(id, {
+                    replySvc.getByTopicId(id, {
                         page : 1,
                         pageSize : 10
                     }, callback);
@@ -87,18 +88,45 @@ exports.getFullTopic = function (id, cb) {
     });
 };
 
-/**
- * 获取关键词能搜索到的主题数量
- * Callback:
- * - err, 数据库错误
- * - count, 主题数量
- * @param {String} query 搜索关键词
- * @param {Function} callback 回调函数
- */
-/*exports.getCountByQuery = function (query, callback) {
-    Topic.count(query, callback);
-};
-*/
+exports.getList = function(cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    Topic.findAll().page(p.page, p.pageSize).done(cb);
+}
+exports.getListByFid = function(forumId, cb, page){
+    cb();
+}
+
+//增加回复数
+exports.increaseReplyCount = function(tid, cb){
+    cb();
+}
+//减少回复数
+exports.reduceReplyCount = function(tid, cb){
+    cb();
+}
+
+//增加访问数
+exports.increaseVisitCount = function(tid, cb){
+    cb();
+}
+exports.reduceVisitCount = function(tid, cb){
+    cb();
+}
+//增加收藏数
+exports.increaseCollectCount = function(tid, cb){
+    cb();
+}
+exports.reduceCollectCount = function(tid, cb){
+    cb();
+}
+//增加赞数
+exports.increaseZanCount = function(tid, cb){
+    cb();
+}
+exports.reduceZanCount = function(tid, cb){
+    cb();
+}
+
 
 /**
  * 将当前主题的回复计数减1，删除回复时用到
