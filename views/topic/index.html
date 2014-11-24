@@ -24,7 +24,7 @@
                     <span class="visit-count" title="点击数">{{topic.visit_count}}</span>
                     <span class="visit-count" title="回复数">{{topic.reply_count}}</span>
                 </div>
-        \        <div class="topic-title-wrapper">
+                <div class="topic-title-wrapper">
                     {{#if topic.top }}
                         <span class="label label-default">置顶</span>
                     {{/if}}
@@ -52,7 +52,6 @@
                     {{ topic.content }}
                 </div>
                 <div class="action">
-                    <span class="span-success" id="share_weibo_btn" onclick="((function(s,d,e,r,l,p,t,z,c){var f='http://v.t.sina.com.cn/share/share.php?appkey=3096165605',u=z||d.location,p=['&amp;url=',e(u),'&amp;title=',e(t||d.title),'&amp;source=',e(r),'&amp;sourceUrl=',e(l),'&amp;content=',c||'gb2312','&amp;pic=',e(p||'')].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else a();})(screen,document,encodeURIComponent,'','','','@cnodejs 分享来自CNode的话题：如何给socket.io和node.js做的即时通信系统加上点对点文件传输功能？','',''));">分享到微博</span>
                     <span class="span-common span-success" id="collect_btn" action="collect">加入收藏</span>
                 </div>
             </div>

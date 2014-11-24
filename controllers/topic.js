@@ -121,45 +121,6 @@ module.exports = {
                                     success : '发布成功!'
                                 });
                             });
-                            /*Topic.newAndSave(title, content, req.session.user._id, forum.parent_id, forum._id, function (err, topic) {
-                                if (err) {
-                                    return next(err);
-                                }
-
-                                var proxy = new EventProxy();
-                                var render = function () {
-                                    res.redirect('/topic/' + topic._id);
-                                };
-
-                                proxy.assign('tags_saved', 'score_saved', render);
-                                proxy.fail(next);
-                                // 话题可以没有标签
-                                if (topic_tags.length === 0) {
-                                    proxy.emit('tags_saved');
-                                }
-                                var tags_saved_done = function () {
-                                    proxy.emit('tags_saved');
-                                };
-                                proxy.after('tag_saved', topic_tags.length, tags_saved_done);
-                                //save topic tags
-                                topic_tags.forEach(function (tag) {
-                                    TopicTag.newAndSave(topic._id, tag, proxy.done('tag_saved'));
-                                    Tag.getTagById(tag, proxy.done(function (tag) {
-                                        tag.topic_count += 1;
-                                        tag.save();
-                                    }));
-                                });
-                                User.getUserById(req.session.user._id, proxy.done(function (user) {
-                                    user.score += 5;
-                                    user.topic_count += 1;
-                                    user.save();
-                                    req.session.user = user;
-                                    proxy.emit('score_saved');
-                                }));
-
-                                //发送at消息
-                                at.sendMessageToMentionUsers(content, topic._id, req.session.user._id);
-                            });*/
                         }
                     ], function(error, forum, forums){
                         if(error) {
@@ -172,6 +133,14 @@ module.exports = {
                         });
                     });
                 }
+            }
+        }
+    },
+    'edit' : {
+        get : {
+            filters : [],
+            controller : function(req, res, next){
+
             }
         }
     }

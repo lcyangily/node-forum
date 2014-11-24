@@ -3,6 +3,7 @@ var async  = require('async');
 var Topic  = new BaseModel('forum_topic');
 var User   = new BaseModel('users');
 var Reply  = new BaseModel('forum_reply');
+var Forum  = new BaseModel('forum');
 var replySvc = loadService('reply');
 var forumSvc = loadService('forum');
 
@@ -90,7 +91,7 @@ exports.getFullTopic = function (id, cb) {
 
 exports.getList = function(cb, page){
     var p = _.extend({page : 1, pageSize : 20}, page);
-    Topic.findAll().page(p.page, p.pageSize).done(cb);
+    Topic.findAll().include([User.Model, Forum.Model]).page(p.page, p.pageSize).done(cb);
 }
 exports.getListByFid = function(forumId, cb, page){
     cb();

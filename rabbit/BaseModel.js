@@ -38,6 +38,7 @@ BaseModel.prototype = {
                 offset = self.params.offset,
                 fields = self.params.fields,
                 order  = self.params.order,
+                include= self.params.include,
                 raw    = self.params.raw;
 
             if (self.Model.db_type == 'sql') {
@@ -52,7 +53,8 @@ BaseModel.prototype = {
                                 offset: offset,
                                 attributes: fields,
                                 order: order,
-                                raw: raw
+                                raw: raw,
+                                include : include
                             }).success(function(datas) {
                                 cb(null, datas);
                             }).error(function(e) {
@@ -126,7 +128,8 @@ BaseModel.prototype = {
                     where: self.params.where,
                     attributes: self.params.fields,
                     order: self.params.order,
-                    raw: self.params.raw
+                    raw: self.params.raw,
+                    include : self.params.include
                 }).success(function(data) {
                     callback(null, data);
                 }).error(function(e) {
@@ -153,7 +156,8 @@ BaseModel.prototype = {
                     where: self.params.where,
                     attributes: self.params.fields,
                     order: self.params.order,
-                    raw: self.params.raw
+                    raw: self.params.raw,
+                    include : self.params.include
                 }).success(function(data) {
                     self.result = data;
                     callback(null, data);
@@ -182,7 +186,8 @@ BaseModel.prototype = {
                     where: self.params.where,
                     attributes: self.params.fields,
                     order: self.params.order,
-                    raw: self.params.raw
+                    raw: self.params.raw,
+                    include : self.params.include
                 }).success(function(data) {
                     self.result = data;
                     callback(null, data);
@@ -401,8 +406,6 @@ BaseModel.prototype = {
     }
 }
 
-
-
 _.extend(BaseModel.prototype, {
     where: function(param) {
         this.params.where = param;
@@ -440,6 +443,18 @@ _.extend(BaseModel.prototype, {
             this.params.order = order_str;
         } else {
             this.params.order = order
+        }
+        return this;
+    },
+    include : function(models){
+        if(!_.isArray(models)) {
+            models = [models];
+        }
+
+        if(!this.params.include) {
+            this.params.include = models;
+        } else {
+            this.params.include.concat(models);
         }
         return this;
     },

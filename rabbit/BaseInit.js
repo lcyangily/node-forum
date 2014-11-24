@@ -1,8 +1,10 @@
 var Sequelize, config, path, sequelize;
 config = require('./../config.js');
 path = require('path');
+modelRelation = require('../models/model_relation');
+_ = require('lodash');
 
-
+global.dbModels = {};
 
 global.loadService = function(functionName) {
     return require(path.join(config.base_path, 'services', functionName + config.script_ext));
@@ -31,6 +33,9 @@ if (config.mysql_config) {
 }
 //全局的针对SQL的BaseModel
 global.loadModel = function(modelName) {
+    if(dbModels[modelName]) {
+        return dbModels[modelName];
+    }
     var obj;
     var model_config = require(path.join(config.base_path, 'models', modelName + config.script_ext));
     var options = {
@@ -43,9 +48,28 @@ global.loadModel = function(modelName) {
     if (!sequelize) {
         throw new Error("请配置mysql数据库，")
     }
+//console.log('define model : ' + modelName);
     obj = sequelize.define(modelName.replace(/\/|\\/g, '_'), model_config, options);
     obj.db_type = 'sql';
+    obj.table_name = modelName;
+    dbModels[modelName] = obj;
 
+    //初始化关系
+    if(modelRelation && modelRelation[modelName]) {
+        var r = modelRelation[modelName];
+        if(r && r.length) {
+            for(var i = 0; i < r.length; i++) {
+                var rela = r[i];
+                if(rela.relation && _.isFunction(obj[rela.relation]) && rela.modelName) {
+                    var m = loadModel(rela.modelName);
+                    if(m) {
+                        obj[rela.relation](m, rela.params);
+                        console.log('----------------> ' + modelName + ' - ' + rela.relation + ' - ' + m.tableName);
+                    }
+                }
+            }
+        }
+    }
 
     return obj;
 };
