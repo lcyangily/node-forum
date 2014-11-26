@@ -1,41 +1,64 @@
-var forumSvc  = loadService('forum');
-var replySvc  = loadService('reply');
+var async  = require('async');
+var _      = require('lodash');
+var forumSvc = loadService('forum');
+var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
-var _ = require('lodash');
 
 module.exports = {
     "/": {
         get: {
             filters : ['blocks/hotForums'],
             controller : function(req, res, next) {
-                //res.render('forum/index');
-                topicSvc.getList(function(err, topics){
-                    res.locals.topics = topics;
-                    next();
+                async.parallel([
+                    function(cb){
+                        forumSvc.getStat(function(error, forum){
+                            res.locals.forum = forum;
+                            cb(error);
+                        });
+                    },
+                    function(cb){
+                        topicSvc.getList(function(err, topics, page){
+                            res.locals.topics = topics;
+                            res.locals.page = page;
+                            //console.log('page : ' + page.current + ';page.total : ' + page.total);
+                            cb(err);
+                        }, {
+                            pageSize : req.query.pageSize,
+                            page : req.query.page
+                        });
+                    }
+                ], function(err, results){
+                    next(err);
                 });
             }
         }
     },
-    '/block' : {
+    '/:fid' : {
         get : {
             filters : ['blocks/hotForums'],
+            template : 'forum/index',
             controller : function(req, res, next){
-                forumSvc.getAll(function(err, forums){
-                    //console.log('-----> count : ' + count);
-                    var groups = _.filter(forums, function(f){
-                        return f.type == 0;
-                    });
-                    groups = _.map(groups, function(g, index){
-                        //var ga = _.clone(g);
-                        g.children = _.filter(forums, function(f){
-                            return g.id === f.parent_id;
+                var fid = req.params.fid;
+                async.parallel([
+                    function(cb){
+                        forumSvc.getById(fid, function(error, forum){
+                            res.locals.forum = forum;
+                            cb(error || (!forum ? '论坛版块不存在或已删除！' : null));
                         });
-                        return g;
-                    });
-
-                    res.render('forum/block', {
-                        groups : groups
-                    });
+                    },
+                    function(cb){
+                        topicSvc.getListByFid(fid, function(err, topics, page){
+                            res.locals.topics = topics;
+                            res.locals.page = page;
+                            //console.log('page : ' + page.current + ';page.total : ' + page.total);
+                            cb(err);
+                        }, {
+                            pageSize : req.query.pageSize,
+                            page : req.query.page
+                        });
+                    }
+                ], function(err, results){
+                    next(err);
                 });
             }
         }

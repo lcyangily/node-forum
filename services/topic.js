@@ -94,7 +94,12 @@ exports.getList = function(cb, page){
     Topic.findAll().include([User.Model, Forum.Model]).page(p.page, p.pageSize).done(cb);
 }
 exports.getListByFid = function(forumId, cb, page){
-    cb();
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    Topic.findAll()
+         .include([User.Model, Forum.Model])
+         .where({
+            fid : forumId
+         }).page(p.page, p.pageSize).done(cb);
 }
 
 //增加回复数

@@ -7,16 +7,13 @@
             <div class="panel-heading">
                 <ul class="nav nav-pills">
                     <li>
-                        <a href="javascript:;">今日：1999a</a>
+                        <a href="javascript:;">今日：{{forum.today_posts}}</a>
                     </li>
                     <li>
-                        <a href="#">昨日：20000</a>
+                        <a href="#">昨日：{{forum.yestoday_posts}}</a>
                     </li>
                     <li>
-                        <a href="#">帖子：1888888</a>
-                    </li>
-                    <li>
-                        <a href="#">会员：500</a>
+                        <a href="#">帖子：{{forum.posts}}</a>
                     </li>
                 </ul>
             </div>
@@ -25,7 +22,7 @@
                     {{sub "forum/listItem" topic=this}}
                 {{/each}}
             </div>
-            {{page total=100 current=current_page showNum=10 baseUrl="/" varName="page"}}
+            {{page totalRecords=page.total current=page.current}}
         </div>
     {{/replace}}
 {{/extend}}

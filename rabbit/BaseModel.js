@@ -35,6 +35,7 @@ BaseModel.prototype = {
         this.action = function(callback) {
             var where  = self.params.where,
                 limit  = self.params.limit,
+                curPage= self.params.current_page,
                 offset = self.params.offset,
                 fields = self.params.fields,
                 order  = self.params.order,
@@ -71,7 +72,11 @@ BaseModel.prototype = {
                             });
                         }
                     ], function(err, results){
-                        callback(err, results && results[0], results && results[1]);
+                        callback(err, results && results[0], {
+                            total    : results && results[1],
+                            current  : curPage,
+                            pageSize : limit
+                        });
                     });
                 } else {
                     self.Model.findAll({
@@ -105,7 +110,13 @@ BaseModel.prototype = {
                                 cb(err, count);
                             })
                         }
-                    ], callback);
+                    ], function(err, results){
+                        callback(err, results && results[0], {
+                            total    : results && results[1],
+                            current  : curPage,
+                            pageSize : limit
+                        });
+                    });
                 } else {
                     self.Model.find().where(self.params.where).skip(self.params.offset)
                         .limit(self.params.limit)
@@ -427,6 +438,7 @@ _.extend(BaseModel.prototype, {
         console.log('---> start : ' + start + ';pageSize' + pageSize);
         this.offset(start).limit(pageSize);
         this.params.is_page = true;
+        this.params.current_page = page;
         return this;
     },
     //返回哪些字段

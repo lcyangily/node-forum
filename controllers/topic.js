@@ -31,9 +31,8 @@ module.exports = {
                         })
                     },
                     function(forum, callback){
-                        forumSvc.getSub(function(error, forums){
+                        forumSvc.getSub(forum.id, function(error, forums){
                             callback(error, forum, forums);
-                            
                         });
                     }
                 ], function(error, forum, forums){

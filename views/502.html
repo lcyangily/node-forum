@@ -5,6 +5,11 @@
         </style>
     </head>
     <body id="404">
-        错误：{{error.message}}
+        错误：
+        {{#if error.message}}
+            {{error.message}}
+        {{else}}
+            {{error}}
+        {{/if}}
     </body>
 </html>

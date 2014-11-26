@@ -6,7 +6,7 @@
         <ul class="clearfix">
             {{#each hotForums}}
                 <li class="{{#calc @index '%2 != 0'}}even{{/calc}}">
-                    <a href="/forum/list/{{id}}" title="{{ name }}">{{ name }}</a>
+                    <a href="/forum/{{id}}" title="{{ name }}">{{ name }}</a>
                 </li>
             {{/each}}
         </ul>

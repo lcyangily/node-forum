@@ -1,5 +1,5 @@
 <div class="cell">
-    <a class="user-avatar pull-left" href="/user/{{author.name }}">
+    <a class="user-avatar pull-left" href="/user/{{author_id }}">
         <img src="{{author.avatar_url}}" title="{{author.name }}" />
     </a>
     <div class="reply-count pull-right">
@@ -19,7 +19,8 @@
                 <a href="#">{{author_nick}}</a>
             </em>
             <em>于
-                <span>{{last_reply}}</span>发表在 [<a href="#">{{forum.name}}</a>]
+                <span>{{moment create_time format='YYYY-MM-DD'}}</span> 发表在 [
+                <a href="/forum/{{forum.id}}">{{forum.name}}</a>]
             </em>
             {{#if reply }}
                 <em>最后回复

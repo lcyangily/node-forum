@@ -8,6 +8,14 @@ module.exports = {
             cb && cb(error, datas);
         });
     },
+    //得到统计数
+    getStat : function(cb){
+        Forum.find().where({
+            type : -1
+        }).done(function(error, forum){
+            cb && cb(error, forum);
+        });
+    },
     getGroup: function(cb) {
         Forum.findAll().where({
             type : 0
@@ -23,9 +31,17 @@ module.exports = {
             cb && cb(error, forums);
         });
     },
-    getSub: function(cb) {
+    getAllSub: function(cb) {
         Forum.findAll().where({
             type : 2
+        }).done(function(error, forums) {
+            cb && cb(error, forums);
+        });
+    },
+    getSub: function(fid, cb) {
+        Forum.findAll().where({
+            type : 2,
+            parent_id : fid
         }).done(function(error, forums) {
             cb && cb(error, forums);
         });
