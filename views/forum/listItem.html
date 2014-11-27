@@ -10,13 +10,13 @@
         {{#if top }}
             <span class="label label-default">置顶</span>
         {{/if}}
-        <a class="topic-title" href="/topic/{{ _id }}" title="{{ title }}">{{ title }}</a>
+        <a class="topic-title" href="/topic/{{ id }}" title="{{ title }}">{{ title }}</a>
         <div class="info">
             <em>
                 <a href="#" target="_blank">
                     <img src="http://bbs.xiaomi.cn/static/image/xiaomibbs3/uvip_auth.png" class="vm" alt="论坛认证用户" title="论坛认证用户">
                 </a>
-                <a href="#">{{author_nick}}</a>
+                <a href="/user/author_id">{{author_nick}}</a>
             </em>
             <em>于
                 <span>{{moment create_time format='YYYY-MM-DD'}}</span> 发表在 [

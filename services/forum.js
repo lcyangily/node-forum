@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var Forum = new BaseModel('forum');
 
 module.exports = {
@@ -24,7 +25,7 @@ module.exports = {
         });
     },
     getForum: function(cb) {
-        console.log('forum service getForum ... ');
+        //console.log('forum service getForum ... ');
         Forum.findAll().where({
             type : 1
         }).done(function(error, forums) {
@@ -51,6 +52,25 @@ module.exports = {
             cb && cb(error, forum);
         });
     },
+    getForumPath : function(fid, cb){
+        this.getAll(function(err, forums){
+            var path = [];
+            var curFid = fid;
+            while(curFid && curFid > 0) {
+                var cur = _.find(forums, function(f){
+                    return f.id == curFid;
+                });
+
+                if(cur) {
+                    curFid = cur.parent_id;
+                    path.unshift(cur);
+                } else {
+                    break;
+                }
+            }
+            cb && cb(err, path);
+        });
+    },
     getPage : function(param, page, cb){
         Forum.findAll().page(page.page, page.pageSize).done(cb);
     },
@@ -71,5 +91,17 @@ module.exports = {
         Forum.delete().where({id : 1}).done(function(error){
             cb && cb(error);
         });
+    },
+    isGroup : function(forum){
+        return forum && forum.type == 0;
+    },
+    isForum : function(forum){
+        return forum && forum.type == 1;
+    },
+    isSub : function(forum){
+        return forum && forum.type == 2;
+    },
+    isStat : function(forum){
+        return forum && forum.type == -1;
     }
 };

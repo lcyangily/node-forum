@@ -9,8 +9,14 @@ exports.getById = function (id, cb) {
     cb();
 }
 
-exports.getByTopicId = function(tid, page, cb){
-    cb();
+exports.getListByTopicId = function(tid, cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    Reply.findAll().where({
+        tid : tid
+    }).page({
+        page : p.page,
+        pageSize : p.pageSize
+    }).done(cb);
 }
 exports.add = function(kv, cb){
     cb();

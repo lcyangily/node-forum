@@ -8,16 +8,18 @@ var replySvc = loadService('reply');
 var forumSvc = loadService('forum');
 
 exports.getById = function (id, cb) {
+    console.log('topic getbyid ... ');
     async.waterfall([
         //得到帖子内容
         function(callback){
             Topic.findById(id).done(function(error, topic) {
+                //console.log('topic ... ');
                 callback(error, topic);
             });
         },
         //得到帖子其他信息：用户信息、回复信息
         function(topic, callback){
-            if(!topic) callback();
+            if(!topic) callback('主题不存在');
 
             async.parallel([
                 function(callback){
@@ -31,10 +33,12 @@ exports.getById = function (id, cb) {
                     }
                 }
             ], function(err, results){
+                //console.log('----------topic callback ... ');
                 callback(err, topic, results && results[0], results && results[1]);
             });
         }
     ], function(err, topic, author, last_reply){
+        //console.log('----------topic hello callback ... ');
         cb && cb(err, topic, author, last_reply);
     });
 };
@@ -51,7 +55,6 @@ exports.getById = function (id, cb) {
  * @param {Function} callback 回调函数
  */
 exports.getFullTopic = function (id, cb) {
-
     async.waterfall([
         //得到帖子内容
         function(callback){
@@ -61,17 +64,14 @@ exports.getFullTopic = function (id, cb) {
         },
         //得到帖子其他信息：用户信息、回复信息
         function(topic, callback){
-            if(!topic) callback();
+            if(!topic) return callback('内容不存在');
 
             async.parallel([
                 function(callback){
                     User.findById(topic.author_id).done(callback);
                 },
                 function(callback){
-                    replySvc.getByTopicId(id, {
-                        page : 1,
-                        pageSize : 10
-                    }, callback);
+                    replySvc.getListByTopicId(id, callback);
                 },
                 function(callback){
                     forumSvc.getById(topic.fid, callback);
@@ -85,6 +85,8 @@ exports.getFullTopic = function (id, cb) {
             });
         }
     ], function(err, topic, author, replys, forum, froumTypes){
+//console.log('-------> topic.getFullTopic callback ... ');
+//console.log('-------> callback : ' + cb);
         cb && cb(err, topic, author, replys, forum, froumTypes);
     });
 };
