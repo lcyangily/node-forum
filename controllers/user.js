@@ -1,8 +1,8 @@
 var _      = require('lodash');
+var userSvc  = loadService('user');
 var forumSvc = loadService('forum');
 var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
-var userSvc  = loadService('user');
 
 module.exports = {
     "/": {
@@ -32,30 +32,6 @@ module.exports = {
                     res.render('forum/block', {
                         groups : groups
                     });
-                });
-            }
-        }
-    },
-    '/reg' : {
-        get : {
-            filter : [],
-            template : 'login/reg',
-            controller : function(req, res, next){
-                next();
-            }
-        },
-        post : {
-            filter : [],
-            template : 'notify/notify',
-            controller : function(req, res, next){
-                var uname = req.body.loginname;
-                var passwd = req.body.passwd;
-
-                userSvc.register({
-                    loginname : uname,
-                    signature : passwd
-                }, function(err, user){
-                    next(err || '注册成功!');                 
                 });
             }
         }
