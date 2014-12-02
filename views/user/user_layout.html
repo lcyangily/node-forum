@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        {{~#if topic ~}}
+            {{~ topic.title }} - {{ config.name ~}}
+        {{~ else ~}}
+            {{~ config.description ~}}
+        {{~/if~}}
+    </title>
+    {{#block "css"}}
+        {{sub "topcss"}}
+    {{/block}}
+    {{#block "topjs"}}
+        {{sub "topjs"}}
+    {{/block}}
+</head>
+<body>
+{{#block "navWrap"}}
+    <div class="navbar navbar-fixed-top">
+        <div class="grid-container">
+            {{#block "nav"}}
+                {{sub "nav"}}
+            {{/block}}
+        </div>
+    </div>
+{{/block}}
+{{#block "bodyWrap"}}
+    <div class="grid-container main-body">
+        {{#block "body"}}
+            {{#block "breadcrumb"}}
+                {{sub "blocks/breadcrumb"}}
+            {{/block}}
+            {{#block "contentWrap"}}
+                <div class="grid-row">
+                    <div class="main-content grid-lg-24 grid-md-18 grid-sm-12">
+                        {{#block "content"}}{{/block}}
+                    </div>
+                    <div class="grid-sm-6">
+                        {{#block "sidebar"}}
+                            {{sub "sidebar"}}
+                        {{/block}}
+                    </div>
+                </div>
+            {{/block}}
+        {{/block}}
+    </div>
+{{/block}}
+{{#block "footer"}}
+    {{sub "footer"}}
+{{/block}}
+{{#block "js"}}{{/block}}
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+{{#extend "layout"}}
+    {{#append "css"}}
+        <link rel="stylesheet" href="/assets/p/forum/index.css">
+        <link rel="stylesheet" href="/assets/p/index/index.css">
+    {{/append}}
+    {{#replace "breadcrumb"}}{{/replace}}
+    {{#replace "content"}}
+        <div class="panel index-panel">
+            <div class="article-list">
+                <div class="clearfix article-box ">
+                    <a href="/article/43735/1.html" class="a-img" target="_blank">
+                        <img src="#">
+                    </a>
+                    <div class="article-box-ctt">
+                        <h4><a href="#" target="_blank">爱奇艺发布Q3中国动漫指数，视频网站已成本土动漫孵化器</a>
+                        </h4>
+                        <div class="box-other">
+                            <span class="source-quote"><a class="hx-card" userid="328034" href="/member/328034.html" target="_blank">陈昌业</a>
+                                <a href="/renzheng.html?#hxtdrz" target="_blank" class="c-hxrz hxfwtd" title="虎嗅团队"></a>
+                            </span>
+                            <time>2014-10-01 20:12:42</time>
+                        </div>
+                        <div class="article-summary">包括爱奇艺在内的这些视频平台所提供的孵化机制，不仅可以为上海美影厂这样的老牌动漫制作机构找到新的未来，亦或能解决杨文艳所提出的动画电影“无解”难题。</div>
+                        <p class="tags-box"><a href="/tags/3439.html" target="_blank">视频网站</a><a href="/tags/180.html" target="_blank">爱奇艺</a><a href="/tags/3459.html" target="_blank">动漫</a><i class="i-icon-bottom"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="article-list">
+                <div class="clearfix article-box ">
+                    <a href="/article/43735/1.html" class="a-img" target="_blank">
+                        <img src="#">
+                    </a>
+                    <div class="article-box-ctt">
+                        <h4><a href="#" target="_blank">爱奇艺发布Q3中国动漫指数，视频网站已成本土动漫孵化器</a>
+                        </h4>
+                        <div class="box-other">
+                            <span class="source-quote"><a class="hx-card" userid="328034" href="/member/328034.html" target="_blank">陈昌业</a>
+                                <a href="/renzheng.html?#hxtdrz" target="_blank" class="c-hxrz hxfwtd" title="虎嗅团队"></a>
+                            </span>
+                            <time>2014-10-01 20:12:42</time>
+                        </div>
+                        <div class="article-summary">包括爱奇艺在内的这些视频平台所提供的孵化机制，不仅可以为上海美影厂这样的老牌动漫制作机构找到新的未来，亦或能解决杨文艳所提出的动画电影“无解”难题。</div>
+                        <p class="tags-box"><a href="/tags/3439.html" target="_blank">视频网站</a><a href="/tags/180.html" target="_blank">爱奇艺</a><a href="/tags/3459.html" target="_blank">动漫</a><i class="i-icon-bottom"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <ul class="pagination ">
+                <li class="disabled"><a>«</a>
+                </li>
+                <li class="disabled"><a>1</a>
+                </li>
+                <li><a href="?2">2</a>
+                </li>
+                <li><a href="?3">3</a>
+                </li>
+                <li><a href="?4">4</a>
+                </li>
+                <li><a href="?5">5</a>
+                </li>
+                <li><a href="?6">6</a>
+                </li>
+                <li><a href="?7">7</a>
+                </li>
+                <li><a href="?8">8</a>
+                </li>
+                <li><a href="?9">9</a>
+                </li>
+                <li><a href="?10">10</a>
+                </li>
+                <li><a href="?100">»</a>
+                </li>
+            </ul>
+        </div>
+    {{/replace}}
+    {{#append "js"}}
+
+    {{/append}}
+{{/extend}}

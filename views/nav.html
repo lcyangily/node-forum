@@ -1,108 +1,101 @@
-<div class="navbar navbar-fixed-top">
-    <div class="grid-container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#" style="padding:10px 15px">
-                <img alt="Brand" src="/assets/images/logo.png">
-            </a>
-            <a class="navbar-toggle collapsed" href="javascript:void(0);" 
-                data-toggle="collapse" data-target="#J_topMainNav">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-        </div>
-        <div id="J_topMainNav" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right navbar-horizontal">
-                {{#if user}}
-                    {{#if user.messages_count}}
-                        <li>
-                            <a href='/my/messages'>
-                                <span class='big messages_count'>
-                                  {{user.messages_count}}
-                                </span> 未读消息
+<div class="navbar-header">
+    <a class="navbar-brand" href="#" style="padding:10px 15px">
+        <img alt="Brand" src="/assets/images/logo.png">
+    </a>
+    <a class="navbar-toggle collapsed" href="javascript:void(0);" 
+        data-toggle="collapse" data-target="#J_topMainNav">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </a>
+</div>
+<div id="J_topMainNav" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav navbar-right navbar-horizontal">
+        {{#if user}}
+            {{#if user.messages_count}}
+                <li>
+                    <a href='/my/messages'>
+                        <span class='big messages_count'>
+                          {{user.messages_count}}
+                        </span> 未读消息
+                    </a>
+                </li>
+            {{/if}}
+            <li>
+                <a href='/setting'>欢迎回来, {{ user.name }}！</a>
+            </li>
+            <li>
+                <a href='/signout' data-method="post" rel="nofollow">退出</a>
+            </li>
+        {{else}}
+            <li><a href='/signup'>注册</a></li>
+            <li>
+                <a href='/signin' id="J_loginBtn">登录</a>
+                <div class="user-detail" id="J_userDetail" style="display:none;">
+                    <div class="user-detail-con">
+                        <div class="username-line">
+                            <a href="/home/1">
+                                <span class="glyphicon glyphicon-home"></span> 我的首页
                             </a>
-                        </li>
-                    {{/if}}
-                    <li>
-                        <a href='/setting'>欢迎回来, {{ user.name }}！</a>
-                    </li>
-                    <li>
-                        <a href='/signout' data-method="post" rel="nofollow">退出</a>
-                    </li>
-                {{else}}
-                    <li><a href='/signup'>注册</a></li>
-                    <li>
-                        <a href='/signin' id="J_loginBtn">登录</a>
-                        <div class="user-detail" id="J_userDetail" style="display:none;">
-                            <div class="user-detail-con">
-                                <div class="username-line">
-                                    <a href="/home/1">
-                                        <span class="glyphicon glyphicon-home"></span> 我的首页
-                                    </a>
-                                    <a href="#" class="pull-right">
-                                        <span class="glyphicon glyphicon-off"></span> 退出
-                                    </a>
-                                </div>
-                                <div class="uinfo-horizontal">
-                                    <dl>
-                                        <dt>积分：</dt>
-                                        <dd><a href="#">100</a></dd>
-                                        <dt>认证：</dt>
-                                        <dd>
-                                            <a href="#">业主认证</a>
-                                            <a href="#" class="pull-right">申请>></a>
-                                        </dd>
-                                    </dl>
-                                </div>
-                                <ul class="navlist clearfix" id="navlist">
-                                    <li>
-                                        <a href="#">
-                                            <span class="glyphicon glyphicon-envelope"></span>
-                                            <span>消息</span>
-                                            <span>(1)</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="glyphicon glyphicon-list-alt"></span>
-                                            <span>我的帖子</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                            <span>好友</span>
-                                        </a>
-                                    </li>
-                                    <li><a href="#">
-                                            <span class="glyphicon glyphicon-retweet"></span>
-                                            <span>关注</span>
-                                        </a>
-                                        
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="glyphicon glyphicon-cog"></span>
-                                            <span>设置</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a href="#" class="pull-right">
+                                <span class="glyphicon glyphicon-off"></span> 退出
+                            </a>
                         </div>
-                    </li>
-                {{/if}}
-            </ul>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/">首页</a>
-                </li>
-                <li><a href="/hy">小区黄页</a>
-                </li>
-                <li><a href="/forum/">论坛</a>
-                </li>
-                <li><a href="/block">版块</a></li>
-            </ul>
-        </div>
-    </div>
+                        <div class="uinfo-horizontal">
+                            <dl>
+                                <dt>积分：</dt>
+                                <dd><a href="#">100</a></dd>
+                                <dt>认证：</dt>
+                                <dd>
+                                    <a href="#">业主认证</a>
+                                    <a href="#" class="pull-right">申请>></a>
+                                </dd>
+                            </dl>
+                        </div>
+                        <ul class="navlist clearfix" id="navlist">
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                    <span>消息</span>
+                                    <span>(1)</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-list-alt"></span>
+                                    <span>我的帖子</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <span>好友</span>
+                                </a>
+                            </li>
+                            <li><a href="#">
+                                    <span class="glyphicon glyphicon-retweet"></span>
+                                    <span>关注</span>
+                                </a>
+                                
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-cog"></span>
+                                    <span>设置</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        {{/if}}
+    </ul>
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/">首页</a></li>
+        <li><a href="/hy">小区黄页</a></li>
+        <li><a href="/forum/">论坛</a></li>
+        <li><a href="/block">版块</a></li>
+    </ul>
 </div>
 <script type="text/javascript">
 require(['jquery', 'sib.popup'], function($, Popup) {

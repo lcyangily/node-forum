@@ -11,23 +11,21 @@
         {{~/if~}}
     </title>
     {{#block "css"}}
-        <link rel="stylesheet" href="/assets/c/sib/theme/index.css">
-        <link rel="stylesheet" href="/assets/c/css/normalize.css">
-        <link rel="stylesheet" href="/assets/c/bootstrap/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="/assets/c/css/base.css">
-        <link rel="stylesheet" href="/assets/c/css/iconfont.css">
-        <link rel="stylesheet" href="/assets/c/css/grid.css">
-        <link rel="stylesheet" href="/assets/c/css/grid-x.css">
-        <link rel="stylesheet" href="/assets/c/css/common.css">
-        <link rel="stylesheet" href="/assets/p/index/index.css">
+        {{sub "topcss"}}
     {{/block}}
     {{#block "topjs"}}
         {{sub "topjs"}}
     {{/block}}
 </head>
 <body>
-{{#block "nav"}}
-    {{sub "nav"}}
+{#block "navWrap"}
+    <div class="navbar navbar-fixed-top">
+        <div class="grid-container">
+            {{#block "nav"}}
+                {{sub "nav"}}
+            {{/block}}
+        </div>
+    </div>
 {{/block}}
 {{#block "bodyWrap"}}
     <div class="grid-container main-body">
@@ -51,17 +49,7 @@
     </div>
 {{/block}}
 {{#block "footer"}}
-    <div id='footer' style="background:#fff;">
-        <div class="grid-container">
-            <div id='footer_main'>
-                <div class="links">
-                    <a class='dark' href='/about'>关于</a>
-                    |
-                    <a class='dark' href='/faq'>FAQ</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{sub "footer"}}
 {{/block}}
 {{#block "js"}}{{/block}}
 </body>
