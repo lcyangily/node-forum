@@ -177,7 +177,7 @@ module.exports = {
                     },
                     function(topic, cb){
                         forumSvc.getForumPath(topic.fid, function(err, forumPath){
-console.log('--------------> forumPath : ' + forumPath.length);
+//console.log('--------------> forumPath : ' + forumPath.length);
                             res.locals.forumPath = forumPath;
                             cb(err);
                         });

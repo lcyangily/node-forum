@@ -4,21 +4,39 @@
     position: relative;
     font-size: 14px;
     padding: 10px;
-    background: #fff;
-    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    padding-right: 60px;
+}
+.topic-list .cell.odd{
+    background: #F7F7F7;
+}
+.topic-list .cell:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.topic-list .cell:last-child {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 .topic-list .cell:hover {
-    background: #f6f6f6;
 }
 .topic-list .label {
     padding: .2em .5em;
     position: relative;
     top: -0.1em;
 }
+.user-avatar{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -20px;
+}
 .user-avatar img {
-    width: 50px;
-    height: 50px;
-    border-radius: 3px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
 }
 .last_time .user_small_avatar {
     height: 18px;
@@ -46,7 +64,6 @@
     color: #777;
 }
 .topic-title-wrapper {
-    padding-left: 60px;
     text-overflow: ellipsis;
     /* white-space: nowrap; */
     word-wrap: break-word;
@@ -55,23 +72,29 @@
     font-size: 12px;
     margin-top: 5px;
 }
+.info em{
+    font-size: 12px;
+    margin-right: 20px;
+}
+.info .info-label{
+    color: #ccc;
+}
+.info .info-value{
+    color: #aaa;
+}
 .topic-title {
+    line-height: 28px;
+    margin: 0;
     font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
+    font-weight: normal;
 }
-.topic-title:hover {
-    text-decoration: none;
+.topic-title a{
+    color: #404040;
 }
-.topic-pub-btn, a.topic-pub-btn {
-    width: 100%;
-    color: #fff;
-    border: 1px solid #d66500;
-    background-color: #f57403;
-}
-.topic-pub-btn:hover, .topic-pub-btn:focus, .topic-pub-btn:active, a.topic-pub-btn:hover, a.topic-pub-btn:focus, a.topic-pub-btn:active {
-    background-color: #fb8318;
-    color: #fff !important;
+.topic-list .tag {
+    font-size: 12px;
+    padding: 0 2px;
+    color: #888;
 }
 /** forum list begin **/
 
@@ -102,7 +125,7 @@
     border-radius: 14px;
 }
 .fclassify-list .fclassify-pic a{
-    font-size: 36px;
+    font-size: 30px;
     line-height: 46px;
     color: #fff;
 }

@@ -20,7 +20,7 @@ Handlebars.registerHelper("sub", function(partial, options){
     if (typeof tmpl !== 'function') {
         tmpl = Handlebars.compile(tmpl);
     }
-    return new Handlebars.SafeString(tmpl(ctx));
+    return new Handlebars.SafeString(tmpl(ctx, options));
 });
 
 exports = Handlebars;

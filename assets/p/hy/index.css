@@ -1,0 +1,21 @@
+.panel .nav-tabs > li > a{
+    border:none;
+}
+.panel .nav-tabs > li > a:hover, 
+.panel .nav-tabs > li > a:focus {
+    background-color: #fff;
+    border:#fff;
+}
+.panel .nav-tabs > li.active > a, 
+.panel .nav-tabs > li.active > a:hover, 
+.panel .nav-tabs > li.active > a:focus {
+    color: #ff6f3d ;
+    font-weight: bold;
+    cursor: default;
+    /* background-color: #f6f6f6; */
+    border: none;
+    border-bottom: 3px solid #ff6f3d;
+}
+.main-content .table{
+    font-size: 12px;
+}

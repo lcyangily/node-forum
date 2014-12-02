@@ -17,6 +17,8 @@
         <link rel="stylesheet" href="/assets/c/css/base.css">
         <link rel="stylesheet" href="/assets/c/css/iconfont.css">
         <link rel="stylesheet" href="/assets/c/css/grid.css">
+        <link rel="stylesheet" href="/assets/c/css/grid-x.css">
+        <link rel="stylesheet" href="/assets/c/css/common.css">
         <link rel="stylesheet" href="/assets/p/index/index.css">
     {{/block}}
     {{#block "topjs"}}
@@ -30,7 +32,9 @@
 {{#block "bodyWrap"}}
     <div class="grid-container main-body">
         {{#block "body"}}
-            {{#block "breadcrumb"}}{{/block}}
+            {{#block "breadcrumb"}}
+                {{sub "blocks/breadcrumb"}}
+            {{/block}}
             {{#block "contentWrap"}}
                 <div class="grid-row">
                     <div class="main-content grid-lg-24 grid-md-18 grid-sm-12">
@@ -59,16 +63,6 @@
         </div>
     </div>
 {{/block}}
-{{#block "js"}}
-    <script type="text/javascript">
-    require(['jquery'], function($){
-        $(document).on('click', '[data-toggle=collapse]', function(){
-            var target = $(this).attr('data-target');
-            var $target = $(target);
-            $target.toggle();
-        });
-    });
-    </script>
-{{/block}}
+{{#block "js"}}{{/block}}
 </body>
 </html>

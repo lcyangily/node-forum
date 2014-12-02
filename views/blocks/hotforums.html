@@ -1,16 +1,16 @@
-<div class="panel side-hotforums">
-    <div class="panel-heading">
-        <h3 class="panel-title">常用模块</h3>
-    </div>
-    {{#if hotForums }}
-        <ul class="clearfix">
+{{#if hotForums }}
+    <div class="panel side-hotforums">
+        <div class="panel-heading">
+            <h3 class="panel-title">常用模块</h3>
+        </div>
+        <div class="x-grid-row">
             {{#each hotForums}}
-                <li class="{{#calc @index '%2 != 0'}}even{{/calc}}">
-                    <a href="/forum/{{id}}" title="{{ name }}">{{ name }}</a>
-                </li>
+                <div class="x-grid-1-2">
+                    <a href="/forum/{{id}}" 
+                        class="{{#calc @index '%2 != 0'}}even{{/calc}}" 
+                        title="{{ name }}">{{ name }}</a>
+                </div>
             {{/each}}
-        </ul>
-    {{else}}
-        <p>无</p>
-    {{/if}}
-</div>
+        </div>
+    </div>
+{{/if}}

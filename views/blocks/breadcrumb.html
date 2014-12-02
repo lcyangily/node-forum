@@ -1,10 +1,22 @@
-<div class="grid-row">
+<!-- <div class="grid-row">
     <div>
         <ol class="breadcrumb main-breadcrumb">
             <li><a href="#">首页</a>
             </li>
             <li><a href="#">儿童教育</a>
             </li>
+        </ol>
+    </div>
+</div> -->
+<div class="grid-row">
+    <div class="grid-col breadcrumb-wrap">
+        <ol class="breadcrumb">
+            <li><a href="/">首页</a></li>
+            {{#block "breadcrumbPath"}}
+                {{#each forumPath}}
+                    <li><a href="/forum/{{id}}">{{name}}</a></li>
+                {{/each}}
+            {{/block}}
         </ol>
     </div>
 </div>

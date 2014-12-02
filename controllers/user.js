@@ -5,9 +5,9 @@ var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
 
 module.exports = {
-    "/": {
+    "/:uid": {
         get: {
-            template : 'index/index',
+            template : '/user/index',
             controller : function(req, res, next) {
                 next();
             }

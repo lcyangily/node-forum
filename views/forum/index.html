@@ -2,21 +2,23 @@
     {{#append "css"}}
         <link rel="stylesheet" href="/assets/p/forum/index.css">
     {{/append}}
+    {{#replace "breadcrumbPath"}}
+        <li><a href="/forum">论坛</a></li>
+        {{#if forum}}
+            {{#gt forum.type 0}}
+                <li><a href="/forum/{forum.id}">{{forum.name}}</a></li>
+            {{/gt}}
+        {{/if}}
+    {{/replace}}
     {{#replace "content"}}
-        <div class="panel panel-type-nav">
-            <div class="panel-heading">
-                <ul class="nav nav-pills">
-                    <li>
-                        <a href="javascript:;">今日：{{forum.today_posts}}</a>
-                    </li>
-                    <li>
-                        <a href="#">昨日：{{forum.yestoday_posts}}</a>
-                    </li>
-                    <li>
-                        <a href="#">帖子：{{forum.posts}}</a>
-                    </li>
-                </ul>
+        <div class="panel">
+            <div class="panel-body">
+                <span>今日：{{forum.today_posts}}</span>
+                <span>昨日：{{forum.yestoday_posts}}</span>
+                <span>帖子：{{forum.posts}}</span>
             </div>
+        </div>
+        <div class="panel panel-type-nav">
             <div id="topic_list" class="list-group topic-list">
                 {{#each topics}}
                     {{sub "forum/listItem" topic=this}}

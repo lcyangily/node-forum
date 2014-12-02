@@ -1,15 +1,26 @@
-<a href="/topic/create{{#if forum}}?fid={{forum.id}}{{/if}}" 
-    class="btn btn-lg topic-pub-btn">发表帖子</a>
-{{sub "blocks/hotforums"}}
-{{#if no_reply_topics}}
-    <div class="panel">
-        <div class="panel-heading">无人回复的话题</div>
-        <div class="panel-body">
-            {{#if no_reply_topics }}
-                {{sub 'topic/small' topics=no_reply_topics }}
-            {{else}}
-                <p>无</p>
-            {{/if}}
-        </div>
+{{#block "topicPubBtn"}}
+    <div class="panel topic-fast-btns">
+        <a href="/topic/create{{#if forum}}?fid={{forum.id}}{{/if}}" 
+            class="btn btn-sm topic-pub-btn">
+            <span class="glyphicon glyphicon-edit"></span>&nbsp;
+            <span>发表帖子</span>
+        </a>
     </div>
-{{/if}}
+{{/block}}
+{{#block "hotForums"}}
+    {{sub "blocks/hotforums"}}
+{{/block}}
+{{#block "noReplyTopics"}}
+    {{#if no_reply_topics}}
+        <div class="panel">
+            <div class="panel-heading">无人回复的话题</div>
+            <div class="panel-body">
+                {{#if no_reply_topics }}
+                    {{sub 'topic/small' topics=no_reply_topics }}
+                {{else}}
+                    <p>无</p>
+                {{/if}}
+            </div>
+        </div>
+    {{/if}}
+{{/block}}

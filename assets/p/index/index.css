@@ -4,19 +4,17 @@ body {
 }
 body, p, input, textarea {
     font-size: 14px;
-    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Wenquanyi Micro Hei", "Microsoft Yahei", Arial, sans-serif;
     word-break: break-word;
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Wenquanyi Micro Hei", "Microsoft Yahei", Arial, sans-serif;
 }
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     line-height: 1.2;
 }
 a:link, a:visited {
     color: #656d78;
-    text-decoration: none;
 }
 a:hover{
     color: #ff6f3d /* !important */;
-    text-decoration: none;
 }
 .navbar {
     margin-bottom: 0px;
@@ -32,13 +30,13 @@ a:hover{
 .navbar-brand{
     padding:10px 0px;
 }
-.navbar .nav > li > a {
+.navbar .nav > li a {
     text-shadow: none;
     color: #aaa;
 }
-.navbar .nav > li > a:hover {
+.navbar .nav > li a:hover {
     color: #7ee400;
-    background-color: #0e0e0e;
+    background: #0e0e0e;
 }
 .navbar .navbar-toggle{
     padding: 12px 0px 0px 16px;
@@ -56,10 +54,12 @@ a:hover{
 }
 .panel {
     border: none;
+    margin-bottom: 10px;
 }
 .panel-heading{
     background-color: #f6f6f6;
     padding: 6px 10px;
+    /* padding:10px 20px 0px 20px; */
 }
 .panel-heading .nav-pills>li>a {
     padding: 0px 8px;
@@ -73,6 +73,9 @@ a:hover{
 }
 .panel-heading .nav-pills > li > a > .badge {
     margin-left: 0px;
+}
+.panel-body{
+    padding:15px 20px;
 }
 /** reset end **/
 /* .index-page-body {
@@ -90,6 +93,7 @@ a:hover{
 }
 .navbar-horizontal li{
     float:left;
+    position: relative;
 }
 .breadcrumb-wrap{
     margin-bottom:0px;
@@ -178,9 +182,8 @@ a:hover{
     list-style: none;
     overflow: hidden;
 }
-.side-hotforums li{
-    float: left;
-    width: 115px;
+.side-hotforums a{
+    display: block;
     height: 40px;
     line-height: 40px;
     text-align: center;
@@ -188,17 +191,21 @@ a:hover{
     border-top: 1px solid #f3f3f3;
     border-right: 1px solid #f3f3f3;
 }
-.side-hotforums li:hover{
+.side-hotforums a:hover{
     background: #fbfbfb;
-}
-.side-hotforums li.even{
-    border-right:none;
-}
-.side-hotforums li a:hover{
     color: #33ac0a;
     text-decoration: none;
+}
+.side-hotforums a.even{
+    border-right:none;
 }
 .pagination {
     height: 40px;
     margin: 10px 0 0 10px;
+}
+.label{
+    padding: .3em .6em .3em;
+}
+.nav-sm > li > a{
+    padding: 5px 10px;
 }

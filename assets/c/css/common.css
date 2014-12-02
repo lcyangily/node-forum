@@ -1,0 +1,295 @@
+::selection{
+    background:#eb7350;
+    color:#fff;
+}
+/** 回复 begin **/
+.revert-list{
+    margin-top:10px;
+    margin-bottom:30px;
+}
+.revert-hd{
+    background: url(../../../images/np_dr_hd.png) no-repeat;
+    height:63px;
+    border-bottom:1px solid #dcdddd;
+}
+.revert-it{
+    /* padding:10px; */
+    padding-left:80px;
+    position: relative;
+    /* border: 1px solid #dcdddd; */
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.revert-it .uinfo {
+    width:60px;
+    height: auto;
+    text-align: center;
+    font-size:12px;
+    float:left;
+    margin-left: -80px;
+    padding: 0px;
+    border:none;
+}
+.revert-it .uinfo img{
+    width: 60px;
+    height: 60px;
+    border-radius: 40px;
+    border: 1px solid #fff;
+    box-shadow: 0px 0px 3px #aaa;
+}
+/* .revert-it .uinfo .head-icon{
+    box-shadow: 0px 0px 10px #dedddd;
+    display: block;
+    margin:0px auto;
+    border:1px solid #dcdddd;
+    width:60px;
+    height: 60px;
+    padding:5px;
+    font-size: 0px;
+}
+.revert-it .uinfo .head-icon img{
+    width: 60px;
+    height: 60px;
+}
+.revert-it .uinfo .u-name {
+    margin-top: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.revert-it .uinfo .u-level{
+    text-align: center;
+    color: #9C9A9C;
+} */
+.revert-bd{
+    overflow:visible;
+    min-height:80px;
+}
+.revert-r{
+    float:right;
+}
+.revert-it .revert-it{
+    border:1px solid #dcdddd;
+    border-top: none;
+    padding-left: 90px;
+    margin-bottom:0px;
+}
+.revert-it .revert-it .uinfo{
+    margin-left: -90px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width:90px;
+    border: none;
+}
+.revert-cnt-hd{
+    position:relative;
+    line-height:22px;
+    height:24px;
+}
+.revert-cnt-hd .name{
+    color: #333;
+    font-weight: bold;
+    line-height: 25px;
+    font-size: 15px;
+    margin-right: 15px;
+}
+.revert-cnt-hd .hd-time{
+    color: #aaa;
+    line-height: 20px;
+    font-size: 12px;
+}
+.revert-it .revert-it .revert-bd{
+    border:none;
+    border-left: 1px solid #dcdddd;
+}
+.revert-form {
+    text-align:right;
+    margin-bottom:30px;
+}
+.revert-form textarea{
+    width:600px;
+    height: 200px;
+    padding:5px;
+}
+.revert-form .d-btn{
+    float: right;
+    width:80px;
+    padding:5px 20px;
+    font-size:18px;
+    font-weight: normal;
+}
+.revert-cnt{
+    padding:10px 0px;
+}
+.revert-cnt dl {
+    padding: 2px 0;
+    padding-left: 62px;
+    overflow: hidden;
+    zoom: 1;
+}
+.revert-it .revert-cnt dt {
+    float: left;
+    width: 62px;
+    margin-left: -62px;
+    text-align: right;
+    color: #9C9A9C;
+}
+.revert-it .revert-cnt dd {
+    word-wrap: break-word;
+}
+.revert-it .revert-cnt .showimg-list{
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+.revert-it .revert-cnt .showimg-list td{
+    border: 1px solid #dcdddd;
+    padding: 1px;
+    margin: 2px;
+}
+.revert-it .revert-cnt .showimg-label{
+    color:#9C9A9C;
+    margin-right:5px;
+}
+.revert-it .revert-cnt .p-simsun{
+    color: #08c;
+}
+.revert-it .revert-bd .btns{
+    padding: 10px 0 5px;
+    visibility: hidden;
+}
+.revert-it:hover .revert-bd .btns{
+    visibility: visible;
+}
+.revert-it .reply-mate{
+    line-height: 26px;
+    margin:5px 0px;
+}
+.revert-it .revert-reply {
+    padding-left: 60px;
+}
+.revert-it .revert-reply .uinfo{
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+    width:60px;
+    margin-left: -60px;
+    padding-top:10px;
+}
+.revert-it .revert-reply .revert-bd {
+    min-height: 30px;
+}
+.revert-it .revert-reply .rv-replyname{
+    margin:0px 5px;
+    font-weight: bold;
+    color: #333;
+}
+.revert-it .reply-input{
+    padding: 2px 5px;
+    line-height: 18px;
+    border: 1px solid #c1c1c1;
+    width:750px;
+    position: relative;
+    top: 1px;
+}
+/** 回复 end **/
+/** 快捷回复 begin **/
+.topic-fast-btns{
+    padding-bottom: 10px;
+    padding:10px;
+}
+.topic-fast-group{
+    margin-top: 10px;
+}
+.topic-fast-btn{
+    display: block;
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+.topic-fast-btns .last{
+    border-right: none;
+}
+.topic-fast-btn .glyphicon{
+    font-size: 20px;
+}
+.topic-fast-btn p{
+    font-size: 12px;
+    margin-bottom: 0px;
+}
+.topic-pub-btn, a.topic-pub-btn, a.topic-pub-btn:link, a.topic-pub-btn:visited {
+    /* width: 100%; */
+    /* margin-bottom: 10px; */
+    border: 1px solid #d66500;
+    background-color: #f57403;
+    color: #fff;
+    display: block;
+    font-size: 15px;
+    line-height: 18px;
+}
+.topic-pub-btn:hover, 
+.topic-pub-btn:focus, 
+.topic-pub-btn:active, 
+a.topic-pub-btn:hover, 
+a.topic-pub-btn:focus,
+a.topic-pub-btn:active {
+    background-color: #fb8318;
+    color: #fff !important;
+}
+/** 快捷回复 end **/
+
+/** login begin **/
+.user-detail{
+    background: #0e0e0e;
+    position: absolute;
+    z-index: 111;
+    color: #ddd;
+    padding:10px 20px;
+    background-color: rgba(30, 30, 30, 0.9);
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+/* .user-detail a:link, .user-detail a:visited{
+    color: #ddd;
+} */
+.nav .user-detail .user-detail-con a:hover{
+    background:none;
+    text-decoration: none;
+}
+.user-detail-con {
+    width:200px;
+}
+.user-detail .uinfo-horizontal{
+    border-top: 1px solid #555;
+    margin-top: 8px;
+    padding: 5px 0px;
+    line-height: 30px;
+}
+.user-detail .uinfo-horizontal dt {
+    float: left;
+    width: 50px;
+    overflow: hidden;
+    clear: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: normal;
+    line-height: 30px;
+    color: #888;
+}
+.user-detail .uinfo-horizontal dd{
+    margin-left: 50px;
+    line-height: 30px;
+}
+.navlist{
+    border-top: 1px solid #555;
+    padding: 5px 0px;
+}
+.navlist li {
+    float: left;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+/** login end **/

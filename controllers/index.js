@@ -7,6 +7,7 @@ var userSvc  = loadService('user');
 module.exports = {
     "/": {
         get: {
+            filters : ['blocks/hotForums'],
             template : 'index/index',
             controller : function(req, res, next) {
                 next();
