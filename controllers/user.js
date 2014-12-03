@@ -7,32 +7,49 @@ var topicSvc = loadService('topic');
 module.exports = {
     "/:uid": {
         get: {
-            template : '/user/index',
+            template : 'user/index',
             controller : function(req, res, next) {
                 next();
             }
         }
     },
-    '/block' : {
+    '/:uid/topic' : {
         get : {
-            filters : ['blocks/hotForums'],
+            template : 'user/topic',
+            controller : function(req, res, next) {
+                next();
+            }
+        }
+    },
+    '/:uid/posts' : {
+        get : {
+            template : 'user/posts',
+            controller : function(req, res, next) {
+                next();
+            }
+        }
+    },
+    '/:uid/friends' : {
+        get : {
+            template : 'user/friends',
+            controller : function(req, res, next) {
+                next();
+            }
+        }
+    },
+    '/home/info' : {
+        get : {
+            template : 'user/home/info',
             controller : function(req, res, next){
-                forumSvc.getAll(function(err, forums){
-                    var groups = _.filter(forums, function(f){
-                        return f.type == 0;
-                    });
-                    groups = _.map(groups, function(g, index){
-                        //var ga = _.clone(g);
-                        g.children = _.filter(forums, function(f){
-                            return g.id === f.parent_id;
-                        });
-                        return g;
-                    });
-
-                    res.render('forum/block', {
-                        groups : groups
-                    });
-                });
+                next();
+            }
+        }
+    },
+    '/home/msg' : {
+        get : {
+            template : 'user/home/msg',
+            controller : function(req, res, next){
+                next();
             }
         }
     }

@@ -5,7 +5,7 @@
     <div class="topic-title-wrapper">
         <h2 class="topic-title">
             <a href="/topic/{{ id }}" title="{{ title }}">{{ title }}</a>
-            [<a href="/forum/{{forum.id}}">{{forum.name}}</a>]
+            [<a href="/forum/{{forum.id}}" class="tag">{{forum.name}}</a>]
             {{#if top }}
                 <span class="label label-default">置顶</span>
             {{/if}}
@@ -17,7 +17,7 @@
             </em>
             <em>
                 <span class="info-label">浏览：</span>
-                <span class="value">{{ visit_count }}</span>
+                <span class="info-value">{{ visit_count }}</span>
             </em>
             <em>
                 <a href="/user/{{author_id}}" class="info-value">{{author_nick}}</a>

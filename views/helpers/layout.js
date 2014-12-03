@@ -9,9 +9,16 @@ var getBlocks = function (context, name) {
 Handlebars.registerHelper({
 	extend: function (partial, options) {
 
-		var context = this;
-		if(!this._blocks) {
-			context = Object.create(this);
+		//var context = this;
+		var context = Object.create(this);
+		for(var i in options.hash) {
+			//有值忽略，同一个值以子模板的为准，子模板先执行，如果有值，父模板直接忽略
+			if(i != '_blocks' && (context[i] == undefined || context[i] == null)) {
+				context[i] = options.hash[i];
+			}
+	    }
+		if(!context._blocks) {
+			//context = Object.create(this);
 			context._blocks = {};
 		}
 		var template = Handlebars.partials[partial];
