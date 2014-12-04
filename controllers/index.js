@@ -39,14 +39,14 @@ module.exports = {
     },
     '/reg' : {
         get : {
-            filter : [],
+            filters : [],
             template : 'login/reg',
             controller : function(req, res, next){
                 next();
             }
         },
         post : {
-            filter : [],
+            filters : [],
             template : 'notify/notify',
             controller : function(req, res, next){
                 var uname = req.body.loginname;
@@ -58,6 +58,42 @@ module.exports = {
                 }, function(err, user){
                     next(err || '注册成功!');                 
                 });
+            }
+        }
+    },
+    '/login' : {
+        get : {
+            filters : [],
+            template : 'login/login',
+            controller : function(req, res, next){
+                if(req.session.user) {
+                    console.log('用户已登录！');
+                }
+                next();
+            }
+        },
+        post : {
+            filters : [],
+            //template : '',
+            controller : function(req, res, next){
+                console.log('---> name : ' + req.body.loginname);
+                userSvc.login({
+                    loginname : req.body.loginname,
+                    passwd : req.body.passwd
+                },function(err, user){
+
+                    if(err) {
+                        console.log('------> err : ' + err);
+                        return res.render('login/login', {
+                            error : err
+                        });
+                    } else {
+                        req.session.user = user;
+                        console.log('------> user : ' + user);
+                        return res.render('index/index');
+                    }
+                });
+
             }
         }
     }

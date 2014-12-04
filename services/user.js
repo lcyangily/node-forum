@@ -21,7 +21,20 @@ exports.register = function (user, cb){
 }
 
 exports.login = function(user, cb){
-
+    User.find().where({
+        loginname : user.loginname
+    }).done(function(err, u){
+        console.log('----service user : ' + user );
+        if(err) {
+            cb(err);
+        } else if(!u) {
+            cb('用户名不存在！');
+        } else if(user.passwd != u.signature){
+            cb('密码不正确！');
+        } else {
+            cb(null, u);
+        }
+    });
 }
 
 exports.update = function(){
