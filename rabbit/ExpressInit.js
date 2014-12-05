@@ -45,6 +45,11 @@ module.exports = function(app) {
         }));
         app.use(express.methodOverride());
 
+        app.all('*', function(req, res, next){
+            res.locals.user = req.session.user;
+            next();
+        });
+
         //rainbow配置
         rainbow.route(app, config.rainbow);
         //404处理
@@ -58,6 +63,7 @@ module.exports = function(app) {
                 error: err
             });
         });
+
         //给模板引擎设置默认函数，例如时间显示moment
         app.locals.moment = require('moment');
         app.locals.moment.lang('zh-cn');

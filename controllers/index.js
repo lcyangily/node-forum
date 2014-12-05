@@ -10,6 +10,7 @@ module.exports = {
             filters : ['blocks/hotForums'],
             template : 'index/index',
             controller : function(req, res, next) {
+                console.log('-----> user : ' + req.session.user);
                 next();
             }
         }
