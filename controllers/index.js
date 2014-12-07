@@ -3,6 +3,8 @@ var forumSvc = loadService('forum');
 var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
 var userSvc  = loadService('user');
+var config   = require('../config');
+var md5      = require('MD5');
 
 module.exports = {
     "/": {
@@ -11,6 +13,14 @@ module.exports = {
             template : 'index/index',
             controller : function(req, res, next) {
                 console.log('-----> user : ' + req.session.user);
+                next();
+            }
+        }
+    },
+    '/hy' : {
+        get : {
+            filters : ['blocks/hotForums'], 
+            controller : function(req, res, next){
                 next();
             }
         }
@@ -77,24 +87,40 @@ module.exports = {
             filters : [],
             //template : '',
             controller : function(req, res, next){
-                console.log('---> name : ' + req.body.loginname);
                 userSvc.login({
                     loginname : req.body.loginname,
                     passwd : req.body.passwd
                 },function(err, user){
 
                     if(err) {
-                        console.log('------> err : ' + err);
                         return res.render('login/login', {
                             error : err
                         });
                     } else {
                         req.session.user = user;
-                        console.log('------> user : ' + user);
-                        return res.render('index/index');
+                        console.log('---> weibo token : ' + user.weibo_token);
+                        var alToken = user.id + ':' + md5(user.weibo_token); // 以后可能会存储更多信息，用 $$$$ 来分隔
+                        res.cookie(config.auth_cookie_name, alToken, {
+                            path: '/', 
+                            maxAge: 1000 * 60 * 60 * 24 * 30, 
+                            //signed: true, 
+                            httpOnly: true
+                        }); //cookie 有效期30天
+
+                        return res.redirect('/');
                     }
                 });
 
+            }
+        }
+    },
+    '/logout' : {
+        get : {
+            controller : function (req, res, next) {
+                //req.session.destroy();
+                req.session = null;
+                res.clearCookie(config.auth_cookie_name, { path: '/' });
+                res.redirect('/');
             }
         }
     }

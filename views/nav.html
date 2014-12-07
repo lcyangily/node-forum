@@ -1,7 +1,5 @@
 <div class="navbar-header">
-    <a class="navbar-brand" href="#" style="padding:10px 15px">
-        <img alt="Brand" src="/assets/images/logo.png">
-    </a>
+    <a class="navbar-brand" href=""></a>
     <a class="navbar-toggle collapsed" href="javascript:void(0);" 
         data-toggle="collapse" data-target="#J_topMainNav">
         <span class="icon-bar"></span>
@@ -10,7 +8,7 @@
     </a>
 </div>
 <div id="J_topMainNav" class="collapse navbar-collapse">
-    <ul class="nav navbar-nav navbar-right navbar-horizontal">
+    <ul class="nav navbar-nav navbar-right btns-wrap">
         {{#if user}}
             {{#if user.messages_count}}
                 <li>
@@ -21,88 +19,83 @@
                     </a>
                 </li>
             {{/if}}
-            <li>
-                <a href='/user/{{id}}'>欢迎回来, {{ user.name }}！</a>
-            </li>
-            <li>
-                <a href='/logout' data-method="post" rel="nofollow">退出</a>
+            <li id="J_topUserBtn">
+                <div class="top-user-wrap">
+                    <a class="user-avatar" href="/user/{{user.id}}">
+                        <img src="https://avatars.githubusercontent.com/u/1147375?v=2" title="">
+                    </a>
+                    <a href="/user/home/msg" class="msg pull-right">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </a>
+                    <a href="/user/{{user.id}}" class="user-name">{{ user.name }}
+                        <span class="caret"></span>
+                    </a>
+                </div>
+                <div class="user-detail" id="J_userDetail"  style="display:none;">
+                    <div class="user-detail-con">
+                        <ul class="uinfo-horizontal">
+                            <li>
+                                <a href="#">业主
+                                    <img src="http://bbs.xiaomi.cn/static/image/xiaomibbs3/uvip_auth.png" class="vm" alt="论坛认证用户" title="论坛认证用户">
+                                </a>
+                                <a href="#">尚未认证，认证申请</a>
+                            </li>
+                            <li>
+                                <span class="info-label">积分：</span>
+                                <a href="/user/home/score">100</a>
+                            </li>
+                        </ul>
+                        <ul class="navlist clearfix" id="navlist">
+                            <li>
+                                <a href="/user/{{user.id}}/topic">
+                                    <span class="glyphicon glyphicon-list-alt"></span>
+                                    <span>我的帖子</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/{{user.id}}/friends">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <span>好友</span>
+                                </a>
+                            </li>
+                            <li><a href="#">
+                                    <span class="glyphicon glyphicon-retweet"></span>
+                                    <span>关注</span>
+                                </a>
+                                
+                            </li>
+                            <li>
+                                <a href="/user/home/info">
+                                    <span class="glyphicon glyphicon-cog"></span>
+                                    <span>设置</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/logout">
+                                    <span class="glyphicon glyphicon-off"></span> 退出
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                require(['jquery', 'sib.popup'], function($, Popup) {
+
+                    new Popup({
+                        target : '#J_userDetail',
+                        trigger : '#J_topUserBtn',
+                        position : {
+                            at : 'right bottom',
+                            my : 'right top'
+                        }
+                    });
+                });
+                </script>
             </li>
         {{else}}
             <li><a href='/reg'>注册</a></li>
-            <li>
-                <a href='/login' id="J_loginBtn">登录{{session}}==={{user}}</a>
-                {{#if user}}
-                    <div class="user-detail" id="J_userDetail" style="display:none;">
-                        <div class="user-detail-con">
-                            <div class="username-line">
-                                <a href="/user/{{id}}">
-                                    <span class="glyphicon glyphicon-home"></span> 我的首页
-                                </a>
-                                <a href="#" class="pull-right">
-                                    <span class="glyphicon glyphicon-off"></span> 退出
-                                </a>
-                            </div>
-                            <div class="uinfo-horizontal">
-                                <dl>
-                                    <dt>积分：</dt>
-                                    <dd><a href="/user/home/score">100</a></dd>
-                                    <dt>认证：</dt>
-                                    <dd>
-                                        <a href="#">业主认证</a>
-                                        <a href="#" class="pull-right">申请>></a>
-                                    </dd>
-                                </dl>
-                            </div>
-                            <ul class="navlist clearfix" id="navlist">
-                                <li>
-                                    <a href="/user/home/msg">
-                                        <span class="glyphicon glyphicon-envelope"></span>
-                                        <span>消息</span>
-                                        <span>(1)</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/user/{{id}}/topic">
-                                        <span class="glyphicon glyphicon-list-alt"></span>
-                                        <span>我的帖子</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/user/{{id}}/friends">
-                                        <span class="glyphicon glyphicon-user"></span>
-                                        <span>好友</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="glyphicon glyphicon-retweet"></span>
-                                        <span>关注</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/user/home/info">
-                                        <span class="glyphicon glyphicon-cog"></span>
-                                        <span>设置</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <script type="text/javascript">
-                    require(['jquery', 'sib.popup'], function($, Popup) {
-
-                        new Popup({
-                            target : '#J_userDetail',
-                            trigger : '#J_loginBtn',
-                            position : {
-                                at : 'right bottom',
-                                my : 'right top'
-                            }
-                        });
-                    });
-                    </script>
-                {{/if}}
-            </li>
+            <li><span class="separator">/</span></li>
+            <li><a href='/login' id="J_loginBtn">登录</a></li>
         {{/if}}
     </ul>
     <ul class="nav navbar-nav">

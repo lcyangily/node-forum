@@ -134,6 +134,7 @@ BaseModel.prototype = {
         var self = this;
         this.action = null;
         this.action = function(callback) {
+console.log('----find action begin.');
             if (self.Model.db_type == 'sql') {
                 self.Model.find({
                     where: self.params.where,
@@ -142,8 +143,10 @@ BaseModel.prototype = {
                     raw: self.params.raw,
                     include : self.params.include
                 }).success(function(data) {
+console.log('----find callback data : ' + data);
                     callback(null, data);
                 }).error(function(e) {
+console.log('----find callback e : ' + e);
                     callback(e);
                 });
             } else {

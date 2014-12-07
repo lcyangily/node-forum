@@ -106,7 +106,7 @@ exports.getListByFid = function(forumId, cb, page){
 
 //增加回复数
 exports.increaseReplyCount = function(tid, cb){
-    cb();
+    cb && cb();
 }
 //减少回复数
 exports.reduceReplyCount = function(tid, cb){
@@ -115,7 +115,7 @@ exports.reduceReplyCount = function(tid, cb){
 
 //增加访问数
 exports.increaseVisitCount = function(tid, cb){
-    cb();
+    cb && cb();
 }
 exports.reduceVisitCount = function(tid, cb){
     cb();

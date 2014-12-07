@@ -45,10 +45,10 @@ module.exports = function(app) {
         }));
         app.use(express.methodOverride());
 
-        app.all('*', function(req, res, next){
+/*        app.all('*', function(req, res, next){
             res.locals.user = req.session.user;
             next();
-        });
+        });*/
 
         //rainbow配置
         rainbow.route(app, config.rainbow);

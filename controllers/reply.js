@@ -10,12 +10,12 @@ function trimxss( str ) {
 }
 
 module.exports = {
-    "/create": {
-        get: {
-            filters : ['blocks/hotForums'],
+    "/add/:tid": {
+        post: {
+            //filters : ['blocks/hotForums'],
             controller : function(req, res, next) {
-                var fid = req.query.fid;
-                if(!fid) {
+                var tid = req.param.tid;
+                if(!tid) {
                     //return res.render('topic/block-select');
                     return selectBlock(req, res, next);
                 }
@@ -185,9 +185,6 @@ module.exports = {
                 ], function(err){
                     next(err);
                 });
-
-                //更新访问数量
-                topicSvc.increaseVisitCount(tid);
             }
         }
     }

@@ -4,8 +4,28 @@ var glob = require('glob');
 var methods = require('methods');
 var fs = require('fs');
 var Path = require('path');
+var _ = require('lodash');
 //var BaseController = require('./BaseController.js')
-var ControllerParser = require('./ControllerParser')
+var ControllerParser = require('./ControllerParser');
+var filtersConfig = require('./../filters.config.js');
+
+function initFilters(app, filtersConfig){
+    //检查全局的filter配置
+    for (var route in filtersConfig) {
+        var routeConfig = filtersConfig[route];
+
+        if(_.isArray(routeConfig)) {
+            app.all(route, loadFilters(routeConfig));
+        } else {
+            methods.forEach(function(method) {
+                if(routeConfig[method]) {
+                    var filters = loadFilters(routeConfig[method]);
+                    app[method].apply(app, [route].concat(filters));
+                }
+            });
+        }
+    }
+}
 
 /**
  * Main function to initialize routers of a Express app.
@@ -15,6 +35,10 @@ var ControllerParser = require('./ControllerParser')
  *                        controllers and filters rather than defaults.
  */
 exports.route = function(app, paths) {
+
+    //初始化全局filter
+    initFilters(app, filtersConfig.filters);
+
     paths = paths || {};
     //app.set('views', approot + paths.template);
 
@@ -63,4 +87,7 @@ exports.route = function(app, paths) {
         }
 
     });
+
+    //初始化全局filters
+    initFilters(app, filtersConfig.afterFilters);
 };

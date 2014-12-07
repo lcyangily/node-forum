@@ -9,7 +9,11 @@ var replySvc = loadService('reply');
 var forumSvc = loadService('forum');*/
 
 exports.getById = function (id, cb){
-
+    User.find().where({
+        id : id
+    }).done(function(err, u){
+        cb(err, u);
+    });
 }
 
 exports.getByName = function (name, cb){
@@ -24,7 +28,6 @@ exports.login = function(user, cb){
     User.find().where({
         loginname : user.loginname
     }).done(function(err, u){
-        console.log('----service user : ' + user );
         if(err) {
             cb(err);
         } else if(!u) {

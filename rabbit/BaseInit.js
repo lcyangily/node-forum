@@ -10,6 +10,25 @@ global.loadService = function(functionName) {
     return require(path.join(config.base_path, 'services', functionName + config.script_ext));
 };
 
+global.loadFilter = function(functionName) {
+    return require(path.join(config.base_path, config.rainbow.filters, functionName + config.script_ext));
+}
+global.loadFilters = function(filters) {
+    var f = [];
+    if(!filters) {
+        return f;
+    }
+    if(_.isString(filters)) {
+        filters = [filters];
+    }
+
+    filters.forEach(function(filter_path) {
+        f.push(loadFilter(filter_path));
+    });
+
+    return f;
+}
+
 /**
  * 初始化sequelize,通常为mysql。
  */

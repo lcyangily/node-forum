@@ -4,7 +4,15 @@
  * @type {Object}
  */
 module.exports = {
-    '/exa.*': {
-        get: ['checkLogin']
+    filters : {
+        '/*': {
+            get: ['autoLogin', 'beforeTest']
+        },
+        '/mgr*' : ['checkAdmin']
+    },
+    afterFilters : {
+        '/*': {
+            get: ['afterTest']
+        }
     }
 }

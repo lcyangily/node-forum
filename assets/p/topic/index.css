@@ -82,20 +82,3 @@ textarea.reply-area{
     height: 80px;
     border-radius: 3px;
 }
-
-
-/** 风格2 **/
-.panel-module .panel-heading{
-    background: #fff;
-    padding:10px 20px 0px 20px;
-}
-.panel-module .panel-title{
-    line-height: 16px;
-    margin: 8px 0;
-    font-size: 16px;
-    height: 16px;
-    font-weight: 100;
-    color: #666;
-    border-left: 3px solid #88d1b4;
-    padding-left: 8px;
-}

@@ -10,6 +10,7 @@
       script_ext: ".js", //编程用的脚本后缀
       assets_head: "/assets",
       session_secret: "1234567", //session
+      auth_cookie_name: 'linbilin',
       //rainbow的配置
       rainbow: {
           controllers: '/controllers/',

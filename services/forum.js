@@ -84,6 +84,10 @@ module.exports = {
             cb && cb(error, teacher);
         });
     },
+    //更新最后一个回复
+    updateLastPost : function(fid, postId, cb){
+        cb && cb();
+    },
     remove : function(id, cb){
         if(!id) {
             cb && cb('没有指定删除板块!');
