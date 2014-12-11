@@ -85,7 +85,7 @@ module.exports = {
                     edit_error = '标题不能是空的。';
                 }
                 
-                if(validator.isLength(title, 10, 100)) {
+                if(!validator.isLength(title, 10, 300)) {
                     edit_error = '标题字数太多或太少';
                 }
 
@@ -131,8 +131,8 @@ module.exports = {
                                 content : content,
                                 fid : fid,
                                 ftype_id : ftype_id,
-                                author_id : 1,
-                                author_nick : 'test'
+                                author_id : req.session.user.id,
+                                author_nick : req.session.user.name
                             }, function(error){
                                 callback(error);
                             });
@@ -164,20 +164,26 @@ module.exports = {
             template : 'topic/index',
             controller : function(req, res, next){
                 var tid = req.params.tid;
+                var page = req.query.page || 1;
+console.log('---------> topic controller page : ' + page);
                 async.waterfall([
                     function(cb){
-                        topicSvc.getFullTopic(tid, function(error, topic, author, replys, forum, ftype){
+                        topicSvc.getFullTopic(tid, function(error, topic, author, replysInfo, forum, ftype, zans){
                             res.locals.topic = topic;
                             res.locals.author = author;
-                            res.locals.replys = replys;
+                            res.locals.replys = replysInfo && replysInfo[0];
+                            res.locals.replyPage = replysInfo && replysInfo[1];
+                            res.locals.zaners = zans;
+console.log('--------> zans : ' + JSON.stringify(zans));
                             res.locals.forum = forum;
                             res.locals.ftype = ftype;
                             cb(error, topic);
+                        }, {
+                            page : page
                         });
                     },
                     function(topic, cb){
                         forumSvc.getForumPath(topic.fid, function(err, forumPath){
-//console.log('--------------> forumPath : ' + forumPath.length);
                             res.locals.forumPath = forumPath;
                             cb(err);
                         });
@@ -188,6 +194,23 @@ module.exports = {
 
                 //更新访问数量
                 topicSvc.increaseVisitCount(tid);
+            }
+        }
+    },
+    '/:tid/zan' : {
+        post : {
+            filters : ['checkLogin'],
+            controller : function(req, res, next){
+                var tid = req.params.tid;
+                topicSvc.zan(tid, req.session.user.id, function(err, zan){
+                    if(err) {
+                        return next(err);
+                    }
+                    return res.send(200, {
+                        code : 1,
+                        msg : '点赞成功！'
+                    });
+                });
             }
         }
     }

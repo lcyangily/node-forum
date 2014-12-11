@@ -8,6 +8,7 @@ module.exports = {
     "/": {
         get: {
             filters : ['blocks/hotForums'],
+            template : 'forum/index',
             controller : function(req, res, next) {
                 async.parallel([
                     function(cb){
@@ -20,14 +21,13 @@ module.exports = {
                         topicSvc.getList(function(err, topics, page){
                             res.locals.topics = topics;
                             res.locals.page = page;
-                            //console.log('page : ' + page.current + ';page.total : ' + page.total);
                             cb(err);
                         }, {
-                            pageSize : req.query.pageSize,
                             page : req.query.page
                         });
                     }
                 ], function(err, results){
+console.log('--------------> forum index is ready ...');
                     next(err);
                 });
             }
@@ -39,23 +39,40 @@ module.exports = {
             template : 'forum/index',
             controller : function(req, res, next){
                 var fid = req.params.fid;
+                var ftypeid = req.query.ftype;
                 async.parallel([
                     function(cb){
                         forumSvc.getById(fid, function(error, forum){
                             res.locals.forum = forum;
-                            cb(error || (!forum ? '论坛版块不存在或已删除！' : null));
+                            cb(error || ((!forum || forum.type !=1 )? '论坛版块不存在或已删除！' : null));
+                        });
+                    },
+                    function(cb){ //所有分类
+                        forumSvc.getSub(fid, function(error, forums){
+                            res.locals.ftypes = forums;
+                            cb(error);
                         });
                     },
                     function(cb){
-                        topicSvc.getListByFid(fid, function(err, topics, page){
-                            res.locals.topics = topics;
-                            res.locals.page = page;
-                            //console.log('page : ' + page.current + ';page.total : ' + page.total);
-                            cb(err);
-                        }, {
-                            pageSize : req.query.pageSize,
-                            page : req.query.page
-                        });
+                        if(ftypeid) {
+                            topicSvc.getListByFtypeid(ftypeid, function(err, topics, page){
+                                res.locals.topics = topics;
+                                res.locals.page = page;
+                                cb(err);
+                            }, {
+                                pageSize : req.query.pageSize,
+                                page : req.query.page
+                            });
+                        } else {
+                            topicSvc.getListByFid(fid, function(err, topics, page){
+                                res.locals.topics = topics;
+                                res.locals.page = page;
+                                cb(err);
+                            }, {
+                                pageSize : req.query.pageSize,
+                                page : req.query.page
+                            });
+                        }
                     }
                 ], function(err, results){
                     next(err);

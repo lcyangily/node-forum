@@ -20,7 +20,6 @@ var BaseModel = function(modelName, modelType) {
     this.params.order = '';
     this.params.raw = false;
 
-
     this.result = null;
     this.action = null;
 }
@@ -72,10 +71,13 @@ BaseModel.prototype = {
                             });
                         }
                     ], function(err, results){
+                        var total = (results && results[1]) || 0;
+                        var totalPages = Math.ceil(total / limit);
                         callback(err, results && results[0], {
                             total    : results && results[1],
                             current  : curPage,
-                            pageSize : limit
+                            pageSize : limit,
+                            totalPages : totalPages
                         });
                     });
                 } else {
@@ -85,7 +87,8 @@ BaseModel.prototype = {
                         offset: offset,
                         attributes: fields,
                         order: order,
-                        raw: raw
+                        raw: raw,
+                        include : include
                     }).success(function(datas) {
                         callback(null, datas);
                     }).error(function(e) {
@@ -263,11 +266,13 @@ console.log('----find callback e : ' + e);
         this.action = null;
         this.action = function(callback) {
             if (self.Model.db_type == 'sql') {
+console.log('----> update begin done ... result : ' + self.result);
                 if (self.result) {
                     var fields, k, v;
                     fields = [];
-                    for (k in data) {
-                        v = data[k];
+                    for (k in kv) {
+                        v = kv[k];
+                        console.log('-------> Model.rawAttributes : ' + self.Model.rawAttributes[k]);
                         if (self.Model.rawAttributes[k]) {
                             fields.push(k);
                         }
@@ -278,8 +283,10 @@ console.log('----find callback e : ' + e);
                         callback(e);
                     });
                 } else {
-                    self.Model.update(kv, self.params.where).success(function() {
-                        callback()
+                    self.Model.update(kv, {where : self.params.where}).success(function(num, rows) {
+                        callback();
+                    }).error(function(e){
+                        callback(e);
                     });
                 }
             } else {
@@ -433,12 +440,12 @@ _.extend(BaseModel.prototype, {
         this.params.offset = offset;
         return this;
     },
-    page: function(page, pageSize){
-        page = page || 1;
-        pageSize = pageSize || 10;
+    page: function(p){
+console.log('======> page : ' + page + '; pageSize : ' + pageSize);
+        var page = (p && p.page) || 1;
+        var pageSize = (p && p.pageSize) || 10;
         var start = (page - 1) * pageSize;
         start = start > 0 ? start : 0;
-        console.log('---> start : ' + start + ';pageSize' + pageSize);
         this.offset(start).limit(pageSize);
         this.params.is_page = true;
         this.params.current_page = page;
@@ -475,6 +482,10 @@ _.extend(BaseModel.prototype, {
     },
     raw: function(raw) {
         this.params.raw = raw;
+        return this;
+    },
+    clean : function(){
+        this.result = null;
         return this;
     }
 });

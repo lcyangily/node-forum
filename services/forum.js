@@ -72,7 +72,7 @@ module.exports = {
         });
     },
     getPage : function(param, page, cb){
-        Forum.findAll().page(page.page, page.pageSize).done(cb);
+        Forum.findAll().page(page).done(cb);
     },
     add : function(f, cb){
         Forum.add(f).done(function(error, teacher) {
@@ -85,8 +85,25 @@ module.exports = {
         });
     },
     //更新最后一个回复
-    updateLastPost : function(fid, postId, cb){
-        cb && cb();
+    updateLastPost : function(reply, cb){
+
+        Forum.findById(reply.fid).done(function(error, forum) {
+
+            if (error || !reply.fid) {
+                cb && cb(error || new Error('该论坛模块不存在'));
+                return;
+            }
+
+            Forum.update({
+                posts : forum.posts + 1,
+                last_reply : reply.id,
+                last_reply_time : new Date(),
+                last_reply_user_id : reply.author_id,
+                last_reply_user_nick : reply.author_nick
+            }).done(function(err, forum){
+                cb && cb(err, forum);
+            });
+        });
     },
     remove : function(id, cb){
         if(!id) {

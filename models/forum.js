@@ -1,4 +1,4 @@
-var Sequelize = require('sequelize');
+var Sequelize = require("sequelize");
 module.exports = {
   "id": {
     "type": "int(11)",
@@ -68,11 +68,29 @@ module.exports = {
     "defaultValue": "0",
     "comment": "昨日帖子"
   },
-  "last_post": {
+  "last_reply": {
     "type": "int(11)",
     "allowNull": true,
     "defaultValue": "0",
     "comment": "最后一帖"
+  },
+  "last_reply_user_id": {
+    "type": "int(11)",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": null
+  },
+  "last_reply_user_nick": {
+    "type": "varchar(50)",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": null
+  },
+  "last_reply_time": {
+    "type": "datetime",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": null
   },
   "create_time": {
     "type": "datetime",

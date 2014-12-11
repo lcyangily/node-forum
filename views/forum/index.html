@@ -1,30 +1,56 @@
-{{#extend "layout"}}
+{{#extend "layout" _page_gnavCode="forum"}}
     {{#append "css"}}
         <link rel="stylesheet" href="/assets/p/forum/index.css">
     {{/append}}
-    {{#replace "breadcrumbPath"}}
-        <li><a href="/forum">论坛</a></li>
-        {{#if forum}}
-            {{#gt forum.type 0}}
-                <li><a href="/forum/{forum.id}">{{forum.name}}</a></li>
-            {{/gt}}
-        {{/if}}
+    {{#replace "breadcrumb"}}
+        {{#gt forum.type 0}}
+            {{#replace "breadcrumbPath"}}
+                {{#if forum}}
+                    {{#gt forum.type 0}}
+                        <li><a href="/forum">论坛</a></li>
+                        <li><a href="/forum/{{forum.id}}">{{forum.name}}</a></li>
+                    {{/gt}}
+                {{/if}}
+            {{/replace}}
+
+            {{sub "blocks/breadcrumb"}}
+        {{/gt}}
     {{/replace}}
     {{#replace "content"}}
-        <div class="panel">
+        <!-- <div class="panel">
             <div class="panel-body">
-                <span>今日：{{forum.today_posts}}</span>
-                <span>昨日：{{forum.yestoday_posts}}</span>
-                <span>帖子：{{forum.posts}}</span>
+                <span class="post-total">今日：{{forum.today_posts}}</span>
+                <span class="post-total">昨日：{{forum.yestoday_posts}}</span>
+                <span class="post-total">帖子：{{forum.posts}}</span>
             </div>
-        </div>
+        </div> -->
         <div class="panel panel-type-nav">
             <div id="topic_list" class="list-group topic-list">
+                {{#eq forum.type -1}}
+                    <div class="cell">
+                        <span class="post-total">今日：{{forum.today_posts}}</span>
+                        <span class="post-total">昨日：{{forum.yestoday_posts}}</span>
+                        <span class="post-total">帖子：{{forum.posts}}</span>
+                    </div>
+                {{else}}
+                    <div class="cell theader">
+                        <span class="post-total">
+                            <a class="{{#unless _pathvar.ftype}}current{{/unless}}" href="/forum/{{../forum.id}}">全部</a>
+                        </span>
+                        {{#each ftypes}}
+                            <span class="post-total">
+                                <a href="/forum/{{../forum.id}}?ftype={{id}}"
+                                   class="{{#eq ../_pathvar.ftype id}}current{{/eq}}">
+                                   {{name}}({{topics}})</a>
+                            </span>
+                        {{/each}}
+                    </div>
+                {{/eq}}
                 {{#each topics}}
-                    {{sub "forum/listItem" topic=this}}
+                    {{sub "forum/listItem" topic=this curblock=../forum}}
                 {{/each}}
             </div>
-            {{page totalRecords=page.total current=page.current}}
+            {{page totalPages=page.totalPages current=page.current}}
         </div>
     {{/replace}}
 {{/extend}}

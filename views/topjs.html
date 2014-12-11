@@ -78,6 +78,7 @@ requirejs.config({
         
         /** services components & utils **/
         'utils'           : 'common/utils',
+        'lbl'             : '../p/base/lbl',
         'init'            : '../p/base/init'
     },
     shim : {
@@ -99,5 +100,10 @@ requirejs.config({
 });
 </script>
 <script type="text/javascript">
-    require(['init']);//初始化
+    //定义调用全局函数
+    (function(){
+        var w = function(){return this}();
+        w.LBL = w.LBL || {};
+    })();
+    require(['lbl', 'init']);//初始化
 </script>

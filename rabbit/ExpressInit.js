@@ -8,7 +8,6 @@ var consolidate = require('consolidate');
 var Handlebars  = require('handlebars');
 require('./registerHbsInfo');
 
-
 log4js = require('log4js');
 express = require('express');
 module.exports = function(app) {
@@ -59,9 +58,14 @@ module.exports = function(app) {
         //所有错误的集中处理，在任何route中调用next(error)即可进入此逻辑
         app.use(function(err, req, res, next) {
             console.trace(err);
-            return res.render('502', {
-                error: err
-            });
+
+            if(req.xhr) {
+                return res.send(502, err);
+            } else {
+                return res.render('502', {
+                    error : err
+                });
+            }
         });
 
         //给模板引擎设置默认函数，例如时间显示moment

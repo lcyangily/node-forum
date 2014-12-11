@@ -1,3 +1,4 @@
+var Sequelize = require("sequelize");
 module.exports = {
   "tid": {
     "type": "int(11)",
@@ -28,7 +29,7 @@ module.exports = {
   "vote_time": {
     "type": "datetime",
     "allowNull": true,
-    "defaultValue": null,
+    "defaultValue": Sequelize.NOW,
     "comment": "发表时间"
   }
 }

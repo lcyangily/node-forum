@@ -7,7 +7,7 @@ Handlebars.registerHelper("page", function(){
         current = (options.hash.current || 1)*1,
         showNum = (options.hash.showNum || 10)*1,
         pageSize= options.hash.pageSize || 20,
-        totalPages   = options.hash.totalPage,
+        totalPages   = options.hash.totalPages,
         totalRecords = options.hash.totalRecords,
         type = options.hash.type,
         pageVar = options.pageVar || 'page',

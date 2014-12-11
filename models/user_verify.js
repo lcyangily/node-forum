@@ -1,3 +1,4 @@
+var Sequelize = require("sequelize");
 module.exports = {
   "uid": {
     "type": "int(11)",

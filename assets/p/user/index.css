@@ -163,6 +163,10 @@
     white-space: nowrap;
     color: #fff;
 }
+.upage-info-list dt,
+.upage-info-list dd{
+    line-height: 35px;
+}
 
 /**user card mini begin **/
 .card-mini.panel{

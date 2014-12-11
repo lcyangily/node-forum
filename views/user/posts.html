@@ -1,3 +1,12 @@
 {{#extend "user/topic" _page_navCode="posts"}}
-
+    {{#replace "content"}}
+        <div class="panel">
+            <div id="topic_list" class="list-group topic-list">
+                {{#each replys}}
+                    {{sub "forum/listItem"}}
+                {{/each}}
+                {{page totalPages = pageinfo.totalPages current=pageinfo.current }}
+            </div>
+        </div>
+    {{/replace}}
 {{/extend}}

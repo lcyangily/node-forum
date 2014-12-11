@@ -13,7 +13,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     line-height: 1.2;
 }
 a:link, a:visited {
-    color: #656d78;
+    /* color: #656d78; */
+    color: #999;
 }
 a:hover{
     color: #ff6f3d /* !important */;
@@ -75,6 +76,10 @@ a:hover{
     -moz-transform: scaleX(1);
     transform: scaleX(1);
 }
+.navbar .nav > li .current{
+    color: #FF5E52;
+    font-weight: bold;
+}
 .navbar .navbar-toggle{
     padding: 12px 0px 0px 16px;
     margin-right: 0px;
@@ -121,7 +126,9 @@ a:hover{
 } */
 .header{
     position: fixed;
-    background-color: #fff;
+    /* background-color: #fff; */
+    background: #fcfcfc;
+    border-top: 3px solid #ff8500;
     box-shadow: 1px 1px 5px rgba(0,0,0,.08);
     _position: absolute;
     top: 0;

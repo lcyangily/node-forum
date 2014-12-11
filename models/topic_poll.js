@@ -1,3 +1,4 @@
+var Sequelize = require("sequelize");
 module.exports = {
   "tid": {
     "type": "int(11)",

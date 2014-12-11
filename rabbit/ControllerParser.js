@@ -32,18 +32,19 @@ var parser = function(orig, path, method){
         //配置了默认模板
         if(orig.template) {
             filters.push(function(req, res, next){
-                res.render(orig.template)
+                return res.render(orig.template)
             });
         }
     }
 
     //如果都没有则进入约定的模板（文件路径）
     filters.push(function(req, res, next){
+
         var viewPath = path;
         if('/' == path) {
             viewPath = 'index';
         }
-        res.render(viewPath)
+        return res.render(viewPath);
     });
     //console.log('-----> ControllerParser.filters : ' + filters);
     return filters.length ? filters : null;

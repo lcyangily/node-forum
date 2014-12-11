@@ -1,186 +1,38 @@
 {{#extend "user/index" _page_navCode="friends"}}
     {{#replace "content"}}
         <div class="grid-row">
-            <div class="grid-md-8 grid-sm-9">
-                <div class="panel card-mini">
-                    <a class="avatar" href="#">
-                        <img src="https://avatars.githubusercontent.com/u/1147375?v=2">
-                    </a>
-                    <div class="card-wrapper">
-                        <h2 class="title">
-                            <a href="#">八千里路</a>
-                        </h2>
-                        <div class="info">
-                            <em>
-                                <span class="info-label">主题：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                            <em>
-                                <span class="info-label">跟帖：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                        </div>
-                        <div class="info">
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 加好友
-                            </button>
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 关注
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-md-8 grid-sm-9">
-                <div class="panel card-mini">
-                    <a class="avatar" href="#">
-                        <img src="https://avatars.githubusercontent.com/u/1147375?v=2">
-                    </a>
-                    <div class="card-wrapper">
-                        <h2 class="title">
-                            <a href="#">八千里路</a>
-                        </h2>
-                        <div class="info">
-                            <em>
-                                <span class="info-label">主题：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                            <em>
-                                <span class="info-label">跟帖：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                        </div>
-                        <div class="info">
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 加好友
-                            </button>
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 关注
-                            </button>
+            {{#each friends}}
+                <div class="grid-md-8 grid-sm-9">
+                    <div class="panel card-mini">
+                        <a class="avatar" href="#">
+                            <img src="{{user.head_pic}}">
+                        </a>
+                        <div class="card-wrapper">
+                            <h2 class="title">
+                                <a href="/user/{{user.id}}">{{user.name}}</a>
+                            </h2>
+                            <div class="info">
+                                <em>
+                                    <span class="info-label">主题：</span>
+                                    <span class="info-value">{{user.topic_count}}</span>
+                                </em>
+                                <em>
+                                    <span class="info-label">跟帖：</span>
+                                    <span class="info-value">{{user.reply_count}}</span>
+                                </em>
+                            </div>
+                            <div class="info">
+                                <button class="btn btn-success btn-xs">
+                                    <span class="glyphicon glyphicon-plus"></span> 加好友
+                                </button>
+                                <button class="btn btn-success btn-xs">
+                                    <span class="glyphicon glyphicon-plus"></span> 关注
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="grid-md-8 grid-sm-9">
-                <div class="panel card-mini">
-                    <a class="avatar" href="#">
-                        <img src="https://avatars.githubusercontent.com/u/1147375?v=2">
-                    </a>
-                    <div class="card-wrapper">
-                        <h2 class="title">
-                            <a href="#">八千里路</a>
-                        </h2>
-                        <div class="info">
-                            <em>
-                                <span class="info-label">主题：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                            <em>
-                                <span class="info-label">跟帖：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                        </div>
-                        <div class="info">
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 加好友
-                            </button>
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 关注
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-md-8 grid-sm-9">
-                <div class="panel card-mini">
-                    <a class="avatar" href="#">
-                        <img src="https://avatars.githubusercontent.com/u/1147375?v=2">
-                    </a>
-                    <div class="card-wrapper">
-                        <h2 class="title">
-                            <a href="#">八千里路</a>
-                        </h2>
-                        <div class="info">
-                            <em>
-                                <span class="info-label">主题：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                            <em>
-                                <span class="info-label">跟帖：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                        </div>
-                        <div class="info">
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 加好友
-                            </button>
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 关注
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-md-8 grid-sm-9">
-                <div class="panel card-mini">
-                    <a class="avatar" href="#">
-                        <img src="https://avatars.githubusercontent.com/u/1147375?v=2">
-                    </a>
-                    <div class="card-wrapper">
-                        <h2 class="title">
-                            <a href="#">八千里路</a>
-                        </h2>
-                        <div class="info">
-                            <em>
-                                <span class="info-label">主题：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                            <em>
-                                <span class="info-label">跟帖：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                        </div>
-                        <div class="info">
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 加好友
-                            </button>
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 关注
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-md-8 grid-sm-9">
-                <div class="panel card-mini">
-                    <a class="avatar" href="#">
-                        <img src="https://avatars.githubusercontent.com/u/1147375?v=2">
-                    </a>
-                    <div class="card-wrapper">
-                        <h2 class="title">
-                            <a href="#">八千里路</a>
-                        </h2>
-                        <div class="info">
-                            <em>
-                                <span class="info-label">主题：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                            <em>
-                                <span class="info-label">跟帖：</span>
-                                <span class="info-value">20</span>
-                            </em>
-                        </div>
-                        <div class="info">
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 加好友
-                            </button>
-                            <button class="btn btn-success btn-xs">
-                                <span class="glyphicon glyphicon-plus"></span> 关注
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{/each}}
         </div>
     {{/replace}}
 {{/extend}}

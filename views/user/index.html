@@ -8,8 +8,12 @@
                 <div class="upage-uinfo">
                     <div class="upage-cover">
                         <div class="headpic">
-                            <a href="#" title="八千里路阳光">
-                                <img class="W_face_radius" src="http://tp4.sinaimg.cn/1183470035/180/0/1">
+                            <a href="/user/{{user.id}}" title="{{user.name}}">
+                                <img src="{{#if user.head_pic ~}}
+                                            {{user.head_pic}}
+                                          {{~ else ~}}
+                                            /assets/images/head.gif
+                                          {{~/if}}">
                             </a>
                         </div>
                     </div>
@@ -17,28 +21,32 @@
                     <!-- <div class="upage-uinfo-bg-2"></div> -->
                     <div class="uinfo-inner">
                         <div class="name-box">
-                            <span class="name" title="八千里路阳光">八千里路阳光</span>
+                            <span class="name" title="{{user.name}}">{{user.name}}</span>
                         </div>
                         <div class="upage-intro">
-                            <span class="tlink">梦想还是要有的，万一实现了呢！</span>
+                            <span class="tlink">{{user.signature}}</span>
                         </div>
                         <div class="upage-opt">
-                            <button class="btn btn-success btn-sm">
-                                <span class="glyphicon glyphicon-plus"></span> 加好友
-                            </button> 
-                            <button class="btn btn-success btn-sm">
-                                <span class="glyphicon glyphicon-plus"></span> 关注
-                            </button> 
-                            <button class="btn btn-success btn-sm">
-                                <span class="glyphicon glyphicon-envelope"></span> 发消息
-                            </button> 
+                            {{#ne user.id _s.user.id}}
+                                <button class="btn btn-success btn-sm" 
+                                        onclick="LBL.addFriend({{user.id}});" >
+                                    <span class="glyphicon glyphicon-plus"></span> 加好友
+                                </button> 
+                                <button class="btn btn-success btn-sm"
+                                        onclick="LBL.follow({{user.id}});">
+                                    <span class="glyphicon glyphicon-plus"></span> 关注
+                                </button> 
+                                <button class="btn btn-success btn-sm">
+                                    <span class="glyphicon glyphicon-envelope"></span> 发消息
+                                </button> 
+                            {{/ne}}
                         </div>
                     </div>
                     <div class="upage-hnav">
                         <a  {{#eq _page_navCode 'info'}}
                                 href="javascript:void(0);" class="current"
                             {{else}}
-                                href="/user/1" 
+                                href="/user/{{user.id}}" 
                             {{/eq}}>
                             <span>个人信息</span>
                             <span class="act-border"></span>
@@ -47,7 +55,7 @@
                         <a  {{#eq _page_navCode 'topic'}}
                                 href="javascript:void(0);" class="current"
                             {{else}}
-                                href="/user/1/topic" 
+                                href="/user/{{user.id}}/topic" 
                             {{/eq}}>
                             <span>主题</span>
                             <span class="act-border"></span>
@@ -56,7 +64,7 @@
                         <a  {{#eq _page_navCode 'posts'}}
                                 href="javascript:void(0);" class="current"
                             {{else}}
-                                href="/user/1/posts" 
+                                href="/user/{{user.id}}/posts" 
                             {{/eq}}>
                             <span>帖子</span>
                             <span class="act-border"></span>
@@ -65,7 +73,7 @@
                         <a {{#eq _page_navCode 'friends'}}
                                 href="javascript:void(0);" class="current"
                             {{else}}
-                                href="/user/1/friends" 
+                                href="/user/{{user.id}}/friends" 
                             {{/eq}}>
                             <span>好友</span>
                             <span class="act-border"></span>
@@ -76,19 +84,21 @@
                     <div class="grid-row">
                         <div class="grid-lg-24 grid-lg-offset-3 grid-md-24 grid-sm-18">
                             {{#block "content"}}
-                                <div class="panel">
+                                <div class="panel upage-info-list">
                                     <div class="panel-body">
                                         <div class="x-grid-row">
                                             <div class="x-grid-1-2">
                                                 <dl class="dl-horizontal">
                                                     <dt>昵称：</dt>
-                                                    <dd>八千里路云和月</dd>
+                                                    <dd>{{user.name}}</dd>
                                                     <dt>小区：</dt>
-                                                    <dd>威尼斯水城十五街区</dd>
+                                                    <dd></dd>
                                                     <dt>性别：</dt>
                                                     <dd>男</dd>
                                                     <dt>注册时间：</dt>
-                                                    <dd>2014-10-10</dd>
+                                                    <dd>
+                                                        {{moment user.create_time format='YYYY-MM-DD'}}
+                                                    </dd>
                                                 </dl>
                                             </div>
                                             <div class="x-grid-1-2">
@@ -100,7 +110,7 @@
                                                     <dt>性别：</dt>
                                                     <dd>男</dd>
                                                     <dt>注册时间：</dt>
-                                                    <dd>2014-10-10</dd>
+                                                    <dd></dd>
                                                 </dl>
                                             </div>
                                         </div>

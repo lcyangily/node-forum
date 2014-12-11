@@ -1,3 +1,4 @@
+var Sequelize = require("sequelize");
 module.exports = {
   "id": {
     "type": "int(11)",
@@ -10,35 +11,41 @@ module.exports = {
   "loginname": {
     "type": "varchar(50)",
     "allowNull": false,
-    "defaultValue": "0",
-    "comment": null
+    "defaultValue": "",
+    "comment": "登录名"
+  },
+  "password": {
+    "type": "varchar(100)",
+    "allowNull": true,
+    "defaultValue": "",
+    "comment": "密码"
   },
   "head_pic": {
-    "type": "varchar(50)",
+    "type": "varchar(255)",
     "allowNull": false,
-    "defaultValue": "0",
-    "comment": null
+    "defaultValue": "",
+    "comment": "用户头像"
   },
   "name": {
     "type": "varchar(50)",
     "allowNull": true,
     "defaultValue": null,
-    "comment": null
+    "comment": "用户昵称"
   },
   "location": {
-    "type": "varchar(50)",
+    "type": "varchar(255)",
     "allowNull": true,
     "defaultValue": null,
     "comment": null
   },
   "email": {
-    "type": "varchar(50)",
+    "type": "varchar(100)",
     "allowNull": true,
     "defaultValue": null,
     "comment": null
   },
   "signature": {
-    "type": "varchar(50)",
+    "type": "varchar(255)",
     "allowNull": true,
     "defaultValue": null,
     "comment": null
@@ -118,7 +125,7 @@ module.exports = {
   "create_time": {
     "type": "datetime",
     "allowNull": true,
-    "defaultValue": null,
+    "defaultValue": Sequelize.NOW,
     "comment": null
   },
   "update_time": {

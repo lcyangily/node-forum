@@ -154,9 +154,12 @@
     color: #08c;
 }
 .revert-it .revert-bd .btns{
-    padding: 10px 0 5px;
+    padding: 10px 0 5px;;
     /* visibility: hidden; */
 }
+/* .revert-it .revert-bd .btn{
+    color: #999;
+} */
 .revert-it:hover .revert-bd .btns{
     visibility: visible;
 }
@@ -195,7 +198,7 @@
 /** 快捷回复 begin **/
 .topic-fast-btns{
     padding-bottom: 10px;
-    padding:10px;
+    padding:7px;
 }
 .topic-fast-group{
     margin-top: 10px;
@@ -224,6 +227,8 @@
     display: block;
     font-size: 15px;
     line-height: 18px;
+    padding: 8px;
+    margin-bottom: 10px;
 }
 .topic-pub-btn:hover, 
 .topic-pub-btn:focus, 
@@ -234,11 +239,14 @@ a.topic-pub-btn:active {
     background-color: #fb8318;
     color: #fff !important;
 }
+.topic-fast-btns .topic-pub-btn{
+    margin-bottom: 0px;
+}
 /** 快捷回复 end **/
 
 /** login begin **/
 #J_topUserBtn{
-    min-width: 200px;
+    min-width: 150px;
     padding:0px;
 }
 #J_topUserBtn a:before{

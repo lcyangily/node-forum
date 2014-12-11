@@ -1,3 +1,4 @@
+var Sequelize = require("sequelize");
 module.exports = {
   "id": {
     "type": "int(11)",
@@ -8,6 +9,12 @@ module.exports = {
     "autoIncrement": true
   },
   "fid": {
+    "type": "int(11)",
+    "allowNull": false,
+    "defaultValue": "",
+    "comment": null
+  },
+  "ftype_id": {
     "type": "int(11)",
     "allowNull": false,
     "defaultValue": "",
@@ -52,7 +59,7 @@ module.exports = {
   "create_time": {
     "type": "datetime",
     "allowNull": true,
-    "defaultValue": null,
+    "defaultValue": Sequelize.NOW,
     "comment": null
   },
   "author_ip": {

@@ -5,10 +5,14 @@
  */
 module.exports = {
     filters : {
-        '/*': {
+        /*'/*': {
             get: ['autoLogin', 'beforeTest']
-        },
-        '/mgr*' : ['checkAdmin']
+        },*/
+        '/*' : ['autoLogin', 'pathvar'],
+        '/mgr*' : ['checkAdmin'],
+        '/home*' : ['checkLogin'],
+        '/friend*' : ['checkLogin'],
+        '/follow*' : ['checkLogin']
     },
     afterFilters : {
         '/*': {

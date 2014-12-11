@@ -1,3 +1,6 @@
+.post-total{
+    margin-right: 20px;
+}
 .topic-list .cell {
     /* line-height: 2em; */
     overflow: hidden;
@@ -19,6 +22,13 @@
     border-bottom-left-radius: 4px;
 }
 .topic-list .cell:hover {
+}
+.topic-list .theader{
+    padding: 8px 10px;
+}
+.topic-list .theader .current{
+    font-weight: bold;
+    color: #ff6f3d;
 }
 .topic-list .label {
     padding: .2em .5em;
@@ -80,7 +90,7 @@
     color: #ccc;
 }
 .info .info-value{
-    color: #aaa;
+    color: #999;
 }
 .topic-title {
     line-height: 28px;
@@ -91,9 +101,9 @@
 .topic-title a{
     color: #404040;
 }
-.topic-list .tag {
+.topic-list .tag, 
+.topic-list .tag a{
     font-size: 12px;
-    padding: 0 2px;
     color: #888;
 }
 /** forum list begin **/

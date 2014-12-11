@@ -1,3 +1,4 @@
+var Sequelize = require("sequelize");
 module.exports = {
   "poid": {
     "type": "int(11)",

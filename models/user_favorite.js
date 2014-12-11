@@ -1,3 +1,4 @@
+var Sequelize = require("sequelize");
 module.exports = {
   "favid": {
     "type": "int(11)",
@@ -40,7 +41,7 @@ module.exports = {
   "dateline": {
     "type": "datetime",
     "allowNull": true,
-    "defaultValue": null,
+    "defaultValue": Sequelize.NOW,
     "comment": null
   }
 }

@@ -70,9 +70,11 @@ createTableInfo = function(tableName, callback) {
             }, function() {
                 var cCount, table_name, targetPath;
                 cCount = 0;
+                var prefix = 'var Sequelize = require("sequelize");\nmodule.exports = ';
                 for (table_name in result) {
                     targetPath = path.join(modelsPath, table_name + ".js");
-                    fs.writeFileSync(targetPath, "module.exports = " + JSON.stringify(result[table_name], null, 2));
+
+                    fs.writeFileSync(targetPath, prefix + JSON.stringify(result[table_name], null, 2));
                     cCount++;
                     console.log('create model config success : ' + targetPath);
                 }

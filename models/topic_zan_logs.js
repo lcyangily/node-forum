@@ -1,18 +1,24 @@
 var Sequelize = require("sequelize");
 module.exports = {
+  "id": {
+    "type": "int(11)",
+    "allowNull": false,
+    "defaultValue": null,
+    "comment": null,
+    "primaryKey": true,
+    "autoIncrement": true
+  },
+  "tid": {
+    "type": "int(11)",
+    "allowNull": false,
+    "defaultValue": 0,
+    "comment": null
+  },
   "uid": {
     "type": "int(11)",
     "allowNull": false,
     "defaultValue": "",
-    "comment": null,
-    "primaryKey": true
-  },
-  "buid": {
-    "type": "int(11)",
-    "allowNull": false,
-    "defaultValue": "",
-    "comment": "被屏蔽的用户ID",
-    "primaryKey": true
+    "comment": null
   },
   "dateline": {
     "type": "datetime",

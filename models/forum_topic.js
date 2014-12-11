@@ -1,4 +1,4 @@
-var Sequelize = require('sequelize');
+var Sequelize = require("sequelize");
 module.exports = {
   "id": {
     "type": "int(11)",

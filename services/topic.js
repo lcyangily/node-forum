@@ -4,6 +4,8 @@ var Topic  = new BaseModel('forum_topic');
 var User   = new BaseModel('users');
 var Reply  = new BaseModel('forum_reply');
 var Forum  = new BaseModel('forum');
+var UserCount    = new BaseModel('user_count');
+var TopicZanLogs = new BaseModel('topic_zan_logs');
 var replySvc = loadService('reply');
 var forumSvc = loadService('forum');
 
@@ -54,7 +56,8 @@ exports.getById = function (id, cb) {
  * @param {String} id 主题ID
  * @param {Function} callback 回调函数
  */
-exports.getFullTopic = function (id, cb) {
+exports.getFullTopic = function (id, cb, replyPage) {
+    self = this;
     async.waterfall([
         //得到帖子内容
         function(callback){
@@ -71,37 +74,126 @@ exports.getFullTopic = function (id, cb) {
                     User.findById(topic.author_id).done(callback);
                 },
                 function(callback){
-                    replySvc.getListByTopicId(id, callback);
+                    replySvc.getListByTopicId(id, callback, replyPage);
                 },
                 function(callback){
                     forumSvc.getById(topic.fid, callback);
                 },
                 function(callback){
                     forumSvc.getById(topic.ftype_id, callback);
+                },
+                function(callback) {
+                    self.getTopicZaners(id, callback);
                 }
             ], function(err, results){
                 callback(err, topic, results && results[0], results && results[1],
-                         results && results[2], results && results[3]);
+                         results && results[2], results && results[3], results && results[4]);
             });
         }
-    ], function(err, topic, author, replys, forum, froumTypes){
-//console.log('-------> topic.getFullTopic callback ... ');
-//console.log('-------> callback : ' + cb);
-        cb && cb(err, topic, author, replys, forum, froumTypes);
+    ], function(err, topic, author, replys, forum, froumTypes, zaners){
+        cb && cb(err, topic, author, replys, forum, froumTypes, zaners);
     });
 };
 
 exports.getList = function(cb, page){
     var p = _.extend({page : 1, pageSize : 20}, page);
-    Topic.findAll().include([User.Model, Forum.Model]).page(p.page, p.pageSize).done(cb);
+    Topic.findAll()
+        .include([
+            User.Model, 
+            Forum.Model, 
+            {model : User.Model, as : 'reply_author'},
+            {model : Forum.Model, as : 'forum_type'}
+        ]).page(p).done(cb);
 }
-exports.getListByFid = function(forumId, cb, page){
+
+exports.getListByFid = function(fid, cb, page){
     var p = _.extend({page : 1, pageSize : 20}, page);
     Topic.findAll()
-         .include([User.Model, Forum.Model])
-         .where({
-            fid : forumId
-         }).page(p.page, p.pageSize).done(cb);
+        .include([
+            User.Model, 
+            Forum.Model,
+            {model : User.Model, as : 'reply_author'},
+            {model : Forum.Model, as : 'forum_type'}])
+        .where({
+            fid : fid
+        }).page(p).done(cb);
+}
+
+exports.getListByFtypeid = function(ftypeid, cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    Topic.findAll()
+        .include([
+            User.Model, 
+            Forum.Model,
+            {model : User.Model, as : 'reply_author'},
+            {model : Forum.Model, as : 'forum_type'}])
+        .where({
+            ftype_id : ftypeid
+        }).page(p).done(cb);
+}
+
+exports.getListByUid = function(uid, cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    Topic.findAll()
+        .include([
+            User.Model, 
+            Forum.Model,
+            {model : User.Model, as : 'reply_author'},
+            {model : Forum.Model, as : 'forum_type'}])
+        .where({
+            author_id : uid
+        }).page(p).done(cb);
+}
+
+//查询当前主题点赞人列表
+exports.getTopicZaners = function(tid, cb){
+    TopicZanLogs.findAll().include([
+        User.Model
+    ]).where({
+        tid : tid
+    }).done(cb);
+}
+
+//对主题点赞
+exports.zan = function(tid, uid, cb){
+    async.waterfall([
+        function(callback){
+            TopicZanLogs.find().where({
+                tid : tid,
+                uid : uid
+            }).done(function(err, zlog){
+                callback(zlog ?  '您已赞过，不能重复赞。' : null);
+            });
+        },
+        function(callback){
+            Topic.find().where({
+                id : tid
+            }).done(function(err, topic){
+                callback(!topic ? '帖子不存在或被删除！' : err, topic);
+            });
+        },
+        function(topic, callback) {
+            TopicZanLogs.add({
+                tid : tid,
+                uid : uid
+            }).done(function(err, zlog){
+                callback(err)
+            });
+
+            //更新数量
+            Topic.clean().update({
+                zan_count : topic.zan_count + 1
+            }).where({
+                id : topic.id
+            }).done(function(err, t){
+                console.log('--------------> topic update err : ' + err);
+                //callback(err);
+            });
+        }
+    ], function(err){
+        return cb && cb(err);
+    });
+
 }
 
 //增加回复数
@@ -141,7 +233,7 @@ exports.reduceZanCount = function(tid, cb){
  * @param {String} id 主题ID
  * @param {Function} callback 回调函数
  */
-exports.reduceCount = function (id, callback) {
+/*exports.reduceCount = function (id, callback) {
 
     Topic.findById(id).done(function(error, topic) {
         
@@ -156,10 +248,99 @@ exports.reduceCount = function (id, callback) {
             callback(err, topic);
         });
     });
-};
+};*/
+
+/** 增加主题数量 **/
+exports.increaseCount = function(topic, callback){
+
+    async.parallel([
+        //user count
+        function(cb){
+            UserCount.find().where({
+                uid : topic.author_id
+            }).done(function(err, uc){
+                if(err || !uc){
+                    return cb(err || '帖子作者不存在！');
+                }
+console.log('---------> ');
+                UserCount.clean().update({
+                    topics : uc.topics + 1
+                }).where({
+                    uid : topic.author_id
+                }).done(cb);
+            });
+        },
+        //forum count
+        function(cb){
+            Forum.find().where({
+                id : topic.fid
+            }).done(function(err, forum){
+                if(err || !forum) {
+                    cb(err || '论坛版块不存在！');
+                    return;
+                }
+                Forum.update({
+                    topics : forum.topics + 1
+                }).where({
+                    id : topic.fid
+                }).done(cb);
+            });
+        },
+        //forum_type count
+        function(cb){
+            Forum.find().where({
+                id : topic.ftype_id
+            }).done(function(err, forum){
+                if(err || !forum) {
+                    cb(err || '论坛版块分类不存在！');
+                    return;
+                }
+                Forum.update({
+                    topics : forum.topics + 1
+                }).where({
+                    id : topic.ftype_id
+                }).done(cb);
+            });
+        },
+        //total count
+        function(cb){
+            forumSvc.getStat(function(err, stat){
+                if(err || !stat) {
+                    //cb(err || '统计不存在！');
+                    return cb();
+                }
+                Forum.update({
+                    topics : stat.topics + 1
+                }).where({
+                    id : stat.id
+                }).done(function(err, forum){
+                    cb(err);
+                });
+            });
+        }
+    ], function(err, results){
+        callback && callback(err);
+    });
+}
+
+/** 减少主题数量 **/
+exports.reduceCount = function(topic, cb){
+    //forum
+    //forum_type
+    //total
+    //user
+}
 
 exports.add = function (kv, callback) {
-    Topic.add(kv).done(callback);
+    var self = this;
+    Topic.add(kv).done(function(err, topic){
+        callback && callback(err);
+        try{
+            self.increaseCount(topic);
+        } catch(e) {
+            console.error(e);
+        }
+    });
 };
 
 /**
@@ -168,69 +349,22 @@ exports.add = function (kv, callback) {
  * @param {String} replyId 回复ID
  * @param {Function} callback 回调函数
  */
-exports.updateLastReply = function (topicId, replyId, callback) {
-    Topic.findById(id).done(function(error, topic) {
+exports.updateLastReply = function (reply, callback) {
+    Topic.findById(reply.tid).done(function(error, topic) {
 
         if (error || !topic) {
-            return callback(error || new Error('该主题不存在'));
+            callback && callback(error || new Error('该主题不存在'));
+            return;
         }
-        topic.last_reply = replyId;
-        topic.last_reply_time = new Date();
-        topic.reply_count += 1;
 
-        Topic.update(topic).done(function(err, topic){
-            callback(error, topic);
+        Topic.update({
+            last_reply : reply.id,
+            last_reply_time : new Date(),
+            reply_count : topic.reply_count + 1,
+            last_reply_user_id : reply.author_id,
+            last_reply_user_nick : reply.author_nick
+        }).done(function(err, topic){
+            callback && callback(err, topic);
         });
     });
-};
-
-/*******======= 还未修改 ======******/
-
-
-/**
- * 根据关键词，获取主题列表
- * Callback:
- * - err, 数据库错误
- * - count, 主题列表
- * @param {String} query 搜索关键词
- * @param {Object} opt 搜索选项
- * @param {Function} callback 回调函数
- */
-exports.getTopicsByQuery = function (query, opt, callback) {
-  Topic.find(query, '', opt, function (err, docs) {
-    if (err) {
-      return callback(err);
-    }
-    if (docs.length === 0) {
-      return callback(null, []);
-    }
-
-    var topics_id = [];
-    for (var i = 0; i < docs.length; i++) {
-      topics_id.push(docs[i]._id);
-    }
-
-    var proxy = new EventProxy();
-    proxy.after('topic_ready', topics_id.length, function (topics) {
-      // 过滤掉空值
-      var filtered = topics.filter(function (item) {
-        return !!item;
-      });
-      return callback(null, filtered);
-    });
-    proxy.fail(callback);
-
-    topics_id.forEach(function (id, i) {
-      exports.getTopicById(id, proxy.group('topic_ready', function (topic, author, last_reply) {
-        // 当id查询出来之后，进一步查询列表时，文章可能已经被删除了
-        // 所以这里有可能是null
-        if (topic) {
-          topic.author = author;
-          topic.reply = last_reply;
-          topic.friendly_create_at = Util.format_date(topic.create_at, true);
-        }
-        return topic;
-      }));
-    });
-  });
 };

@@ -65,10 +65,24 @@ module.exports = {
 
                 userSvc.register({
                     loginname : uname,
-                    signature : passwd
+                    password : passwd
                 }, function(err, user){
                     next(err || '注册成功!');                 
                 });
+            }
+        }
+    },
+    'islogin' : {
+        get : {
+            controller : function(req, res, next){
+                var ret = {};
+                if(req.session && req.session.user) {
+                    ret.login = true;
+                } else {
+                    ret.nologin = true;
+                }
+
+                return res.send(200, ret);
             }
         }
     },
@@ -89,13 +103,19 @@ module.exports = {
             controller : function(req, res, next){
                 userSvc.login({
                     loginname : req.body.loginname,
-                    passwd : req.body.passwd
+                    password : req.body.passwd
                 },function(err, user){
 
                     if(err) {
-                        return res.render('login/login', {
-                            error : err
-                        });
+                        if(req.xhr) {
+                            return res.send(200, {
+                                errorMsg : '登录失败！'
+                            });
+                        } else {
+                            return res.render('login/login', {
+                                error : err
+                            });
+                        }
                     } else {
                         req.session.user = user;
                         console.log('---> weibo token : ' + user.weibo_token);
@@ -107,10 +127,25 @@ module.exports = {
                             httpOnly: true
                         }); //cookie 有效期30天
 
-                        return res.redirect('/');
+                        if(req.xhr) {
+                            return res.send(200, {
+                                success : true,
+                                user : user
+                            });
+                        } else {
+                            return res.redirect('/');
+                        }
                     }
                 });
 
+            }
+        }
+    },
+    '/loginpop' : {
+        get : {
+            template : 'login/loginpop',
+            controller : function(req, res, next){
+                next();
             }
         }
     },

@@ -1,3 +1,4 @@
+var Sequelize = require("sequelize");
 module.exports = {
   "uid": {
     "type": "int(11)",
@@ -46,7 +47,7 @@ module.exports = {
   "follow_time": {
     "type": "datetime",
     "allowNull": true,
-    "defaultValue": null,
+    "defaultValue": Sequelize.NOW,
     "comment": null
   }
 }

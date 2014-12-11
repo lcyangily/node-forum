@@ -1,11 +1,11 @@
 {{#block "topicPubBtn"}}
-    <div class="panel topic-fast-btns">
-        <a href="/topic/create{{#if forum}}?fid={{forum.id}}{{/if}}" 
-            class="btn btn-sm topic-pub-btn">
-            <span class="glyphicon glyphicon-edit"></span>&nbsp;
-            <span>发表帖子</span>
-        </a>
-    </div>
+    <!-- <div class="panel topic-fast-btns"> -->
+    <a href="/topic/create{{#if forum}}?fid={{forum.id}}{{/if}}" 
+        class="btn btn-sm topic-pub-btn">
+        <span class="glyphicon glyphicon-edit"></span>&nbsp;
+        <span>发表帖子</span>
+    </a>
+    <!-- </div> -->
 {{/block}}
 {{#block "hotForums"}}
     {{sub "blocks/hotforums"}}

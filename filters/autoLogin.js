@@ -29,7 +29,8 @@ module.exports = function(req, res, next) {
     }
 
     function dealNext(user) {
-        res.locals.user = user;
+        res.locals._s = res.locals._session || {};
+        res.locals._s.user = user;
         next();
     }
 }
