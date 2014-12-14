@@ -139,13 +139,13 @@
                     </a>
                 </div>
                 <div class="x-grid-1-4">
-                    <a href="#" class="topic-fast-btn">
+                    <a href="javascript:LBL.collectTopic({{topic.id}});" class="topic-fast-btn">
                         <span class="glyphicon glyphicon-heart-empty"></span>
                         <p>收藏</p>
                     </a>
                 </div>
                 <div class="x-grid-1-4">
-                    <a href="javascript:;LBL.zan({{topic.id}});" class="topic-fast-btn last">
+                    <a href="javascript:LBL.zan({{topic.id}});" class="topic-fast-btn last">
                         <span class="glyphicon glyphicon-thumbs-up"></span>
                         <p> {{~#each zaners}}
                                 {{~#eq user.id ../_s.user.id}}已{{/eq ~}}

@@ -1,0 +1,109 @@
+{{#extend "layout"}}
+    {{#append "css"}}
+        <link rel="stylesheet" href="/assets/p/forum/index.css">
+        <style type="text/css">
+        body{
+            padding-top: 0px;
+            background: #fff;
+        }
+        </style>
+    {{/append}}
+    {{#replace "navWrap"}}{{/replace}}
+    {{#replace "bodyWrap"}}
+        <div style="width:900px;">
+            <form class="form-horizontal" id="J_form" method="post" onsubmit="return false;">
+                <input type="hidden" name="fid" value="{{forum.id}}">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">版块名</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{forum.name}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">版主</label>
+                    <div class="col-sm-10" id="J_masters">
+                        {{#each masters}}
+                            <label class="checkbox-inline">
+                                <input type="checkbox" checked=checked name="masters" value="{{uid}}">{{user.name}}
+                            </label>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">确定</button>
+                    </div>
+                </div>
+            </form>
+            <div class="user-grid">
+                <table id="J_userGrid"></table>
+            </div>
+        </div>
+    {{/replace}}
+    {{#replace "footer"}}{{/replace}}
+
+    {{#append "js"}}
+    <script type="text/javascript">
+    require(['jquery', 'sib.sib', 'sib.datagrid', 'sib.dialog'], function($, Sib, DataGrid, Dialog){
+        var d = new DataGrid({
+            target : '#J_userGrid',
+            method: 'get',
+            url : '/mgr/user/alldata',
+            singleSelect : false,
+            columns : [
+                [{
+                    title : 'ID',
+                    field : 'id'
+                }, {
+                    title : '登录名',
+                    field : 'loginname'
+                }, {
+                    title : '名称',
+                    field : 'name'
+                }, {
+                    title : '是否是管理员',
+                    field : 'is_admin',
+                    formatter : function(col, row, $td){
+                        return col == 1 ? '是' : '不是';
+                    }
+                }, {
+                    title : '操作',
+                    field : 'hello',
+                    formatter : function(col, row, $td){
+                        var $a = $('<a href="javascript:void(0);">增加</a>').appendTo($td);
+                        $a.click(function(e){
+                            addMaster(row.id, row.name);
+                            e.stopPropagation();
+                        });
+                    }
+                }]
+            ]
+        });
+
+        function addMaster(id, name){
+            var $ma = $('#J_masters').find('input[name=masters][value='+id+']');
+            if(!$ma.length){
+                $('<label class="checkbox-inline">'+
+                    '<input type="checkbox" checked=checked name="masters" value="' + id + '"> '+ name +
+                '</label>').appendTo('#J_masters');
+            }
+        }
+
+        $('#J_form').submit(function(){
+            var fj = Sib.form2json('#J_form');
+            $.ajax({
+                url : '/mgr/forum/master',
+                type : 'POST',
+                data : fj,
+                success : function(){
+                    window.frameElement.trigger('close', {
+                        msg : '操作成功！'
+                    });
+                }
+            });
+            return false;
+        });
+    });
+    </script>
+    {{/append}}
+{{/extend}}

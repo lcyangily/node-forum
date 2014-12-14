@@ -1,6 +1,11 @@
 {{#extend "layout"}}
     {{#append "css"}}
         <link rel="stylesheet" href="/assets/p/forum/index.css">
+        <style type="text/css">
+        .action{
+            padding:0px 5px;
+        }
+        </style>
     {{/append}}
     {{#replace "breadcrumb"}}
         <div class="grid-row">
@@ -37,13 +42,13 @@
                     title : 'Parent',
                     field : 'parent_id'
                 }, {
-                    title : 'Name',
+                    title : '名称',
                     field : 'name'
                 }, {
-                    title : 'Type',
+                    title : '类型',
                     field : 'type',
                     formatter : function(col, row, $td){
-                        return col == 0 ? '分组' : (col == 1 ? '分类' : '子模块');
+                        return col == 0 ? '分组' : (col == 1 ? '版块' : '主题分类');
                     }
                 }, {
                     title : '描述',
@@ -52,29 +57,62 @@
                     title : '操作',
                     field : 'hello',
                     formatter : function(col, row, $td){
-                        var $a = $('<a href="javascript:;">删除</a>').appendTo($td);
+                        var $a = $('<a href="javascript:void(0);" class="action">删除</a>');
+                        $a.appendTo($td);
                         $a.click(function(e){
-                            delForum(row.id);
+                            delForum(row.id, row.name);
                             e.stopPropagation();
                         });
+
+                        if(row.type == 1) {
+                            var $b = $('<a href="javascript:void(0);" class="action">版主管理</a>');
+                            $b.appendTo($td);
+                            $b.click(function(){
+                                moderatorMgr(row.id);
+                            });
+                        }
                     }
                 }]
             ]
         });
 
-        function delForum(id){
-            $.ajax({
-                url : '/mgr/forum/delete',
-                type : 'POST',
-                data : {
-                    id : id
-                },
-                success : function(){
-                    d.reload();
-                    //Dialog.tip('删除成功!');
-                }
+        function delForum(id, name){
+            Dialog.confirm('确定删除版块' + name + '?', '温馨提示', function(){
+                $.ajax({
+                    url : '/mgr/forum/delete',
+                    type : 'POST',
+                    data : {
+                        id : id
+                    },
+                    success : function(){
+                        d.reload();
+                        //Dialog.tip('删除成功!');
+                    }
+                });
             });
+            
         };
+
+        var mDialog;
+        function moderatorMgr(id){
+            if(!mDialog) {
+                mDialog = new Dialog({
+                    title : '分配版主',
+                    content : '/mgr/forum/master?',
+                    modal : true,
+                    zIndex : 10000,
+                    height : 500,
+                    close : function(evt, data){
+                        if(data && data.msg) {
+                            Dialog.tip(data.msg);
+                            d.reload();
+                        }
+                    }
+                });
+            }
+            mDialog.option('content', '/mgr/forum/master?fid=' + id);
+            mDialog.open();
+        }
     });
     </script>
     {{/append}}

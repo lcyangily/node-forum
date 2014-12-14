@@ -68,6 +68,12 @@ module.exports = {
     "defaultValue": "0",
     "comment": "昨日帖子"
   },
+  "collect_count": {
+    "type": "int(11)",
+    "allowNull": true,
+    "defaultValue": "0",
+    "comment": null
+  },
   "last_reply": {
     "type": "int(11)",
     "allowNull": true,

@@ -1,5 +1,7 @@
 var _ = require('lodash');
 var Forum = new BaseModel('forum');
+var ForumModerator = new BaseModel('forum_moderator');
+var User = new BaseModel('users');
 
 module.exports = {
     getAll: function(cb) {
@@ -74,6 +76,13 @@ module.exports = {
     getPage : function(param, page, cb){
         Forum.findAll().page(page).done(cb);
     },
+    getMasters : function(fid, cb){
+        ForumModerator.findAll().where({
+            fid : fid
+        }).include([
+            User.Model
+        ]).done(cb);
+    },
     add : function(f, cb){
         Forum.add(f).done(function(error, teacher) {
             cb && cb(error, teacher);
@@ -85,7 +94,7 @@ module.exports = {
         });
     },
     //更新最后一个回复
-    updateLastPost : function(reply, cb){
+    /*updateLastPost : function(reply, cb){
 
         Forum.findById(reply.fid).done(function(error, forum) {
 
@@ -104,13 +113,38 @@ module.exports = {
                 cb && cb(err, forum);
             });
         });
-    },
+    },*/
     remove : function(id, cb){
         if(!id) {
             cb && cb('没有指定删除板块!');
         }
         Forum.delete().where({id : 1}).done(function(error){
             cb && cb(error);
+        });
+    },
+    addMasters : function(fid, masters, cb){
+        ForumModerator.delete().where({
+            fid : fid
+        }).done(function(err){
+            if(err) {
+                return cb &&cb(err);
+            }
+            var masts = [];
+            if(masters && _.isArray(masters)) {
+                for(var i = 0 ; i < masters.length; i++) {
+                    masts.push({
+                        fid : fid,
+                        uid : masters[i]
+                    });
+                }
+            } else if(masters) {
+                masts.push({
+                    fid : fid,
+                    uid : masters
+                });
+            }
+
+            ForumModerator.addBat(masts).done(cb);
         });
     },
     isGroup : function(forum){

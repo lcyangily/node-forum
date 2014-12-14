@@ -5,7 +5,7 @@ body {
     padding-top: 72px;
 }
 body, p, input, textarea {
-    font-size: 14px;
+    font-size: 12px;
     word-break: break-word;
     font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Wenquanyi Micro Hei", "Microsoft Yahei", Arial, sans-serif;
 }
@@ -14,10 +14,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 }
 a:link, a:visited {
     /* color: #656d78; */
-    color: #999;
+    /* color: #999; */
+    color: #666;
 }
 a:hover{
-    color: #ff6f3d /* !important */;
+    color: #ff6f3d !important;
 }
 .navbar {
     margin-bottom: 0px;
@@ -176,6 +177,7 @@ a:hover{
 }
 .breadcrumb-wrap{
     margin-bottom:0px;
+    line-height: 22px;
 }
 .panel-type-nav .panel-heading {
     padding: 5px 10px;

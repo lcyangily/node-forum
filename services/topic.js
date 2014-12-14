@@ -349,7 +349,7 @@ exports.add = function (kv, callback) {
  * @param {String} replyId 回复ID
  * @param {Function} callback 回调函数
  */
-exports.updateLastReply = function (reply, callback) {
+/*exports.updateLastReply = function (reply, callback) {
     Topic.findById(reply.tid).done(function(error, topic) {
 
         if (error || !topic) {
@@ -367,4 +367,4 @@ exports.updateLastReply = function (reply, callback) {
             callback && callback(err, topic);
         });
     });
-};
+};*/

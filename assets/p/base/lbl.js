@@ -127,6 +127,40 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
                 }
             });
         },
+        collectTopic : function(tid){
+            LBL.collect(tid, 2);
+        },
+        collectForum : function(fid){
+            LBL.collect(fid, 1);
+        },
+        collect : function(id, type) {
+            if(!id || !type) {
+                return;
+            }
+
+            var url = '/fav/';
+            if(type ==1) {
+                url += 'forum';
+            } else if(type == 2) {
+                url += 'topic';
+            } else {
+                return;
+            }
+            url += '/add/' + id;
+
+            $.ajax({
+                url : url,
+                type : 'post',
+                //data : data,
+                success : function(data){
+                    var msg = (data && data.msg) || '操作成功！';
+                    Dialog.tip(msg);
+                },
+                error : function(err){
+                    Dialog.tip(err.responseText);
+                }
+            });
+        },
         attend : function(id, type){
             if(!id) {
                 return;
@@ -143,7 +177,7 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
                 data.attentType = "0";
             }
             $.ajax({
-                url : LBL.contextPath + '/mall/collect',
+                url : '/mall/collect',
                 data : data,
                 success : function(data){
                     if(data) {

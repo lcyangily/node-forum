@@ -16,6 +16,38 @@
             {{sub "blocks/breadcrumb"}}
         {{/gt}}
     {{/replace}}
+    {{#replace "contentBefore"}}
+        {{#ne forum.type -1}}
+            <div class="grid-row">
+                <div class="main-content grid-lg-30 grid-md-24 grid-sm-18 topic-card">
+                    <div class="moderator tc-label">版主: 
+                        <span>
+                            {{#each masters}}
+                                {{#unless @first}},{{/unless}}
+                                <a href="/user/{{uid}}">{{user.name}}</a>
+                            {{/each}}
+                        </span>
+                    </div>
+                    <h1>
+                        <a href="/forum/{{forum.id}}">{{forum.name}}</a>
+                    </h1>
+                    <div class="tc-fav">
+                        <button type="button" onclick="LBL.collectForum({{forum.id}})" 
+                                class="btn btn-xs btn-success">
+                            <span class="glyphicon glyphicon-heart"></span> 收藏本版
+                        </button>
+                    </div>
+                    <div class="tc-label">
+                        <!-- <span>今日:<strong></strong></span>
+                        <span class="pipe">|</span> -->
+                        <span>主题:<strong>{{forum.topics}}</strong></span>
+                        <span class="pipe">|</span>
+                        <span>回复:<strong>{{forum.posts}}</strong></span>
+                    </div>
+                </div>
+            </div>
+        {{/ne}}
+    {{/replace}}
     {{#replace "content"}}
         <!-- <div class="panel">
             <div class="panel-body">
@@ -24,13 +56,19 @@
                 <span class="post-total">帖子：{{forum.posts}}</span>
             </div>
         </div> -->
-        <div class="panel panel-type-nav">
+        <div class="panel">
             <div id="topic_list" class="list-group topic-list">
                 {{#eq forum.type -1}}
-                    <div class="cell">
-                        <span class="post-total">今日：{{forum.today_posts}}</span>
-                        <span class="post-total">昨日：{{forum.yestoday_posts}}</span>
-                        <span class="post-total">帖子：{{forum.posts}}</span>
+                    <div class="cell theader">
+                        {{!--<span class="post-total">今日：{{forum.today_posts}}</span>
+                        <span class="post-total">昨日：{{forum.yestoday_posts}}</span>--}}
+                        <span class="post-total">主题数：{{forum.topics}}</span>
+                        <span class="pipe-min">|</span>
+                        <span class="post-total">回复数：{{forum.posts}}</span>
+                        <span class="pipe-min">|</span>
+                        {{#if lastRegUser}}
+                            <span class="post-total">欢迎新会员：{{lastRegUser.name}}</span>
+                        {{/if}}
                     </div>
                 {{else}}
                     <div class="cell theader">

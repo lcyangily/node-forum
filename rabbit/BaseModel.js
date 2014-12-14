@@ -137,7 +137,6 @@ BaseModel.prototype = {
         var self = this;
         this.action = null;
         this.action = function(callback) {
-console.log('----find action begin.');
             if (self.Model.db_type == 'sql') {
                 self.Model.find({
                     where: self.params.where,
@@ -146,10 +145,8 @@ console.log('----find action begin.');
                     raw: self.params.raw,
                     include : self.params.include
                 }).success(function(data) {
-console.log('----find callback data : ' + data);
                     callback(null, data);
                 }).error(function(e) {
-console.log('----find callback e : ' + e);
                     callback(e);
                 });
             } else {
@@ -272,7 +269,7 @@ console.log('----> update begin done ... result : ' + self.result);
                     fields = [];
                     for (k in kv) {
                         v = kv[k];
-                        console.log('-------> Model.rawAttributes : ' + self.Model.rawAttributes[k]);
+console.log('-------> Model.rawAttributes : ' + self.Model.rawAttributes[k]);
                         if (self.Model.rawAttributes[k]) {
                             fields.push(k);
                         }
@@ -377,8 +374,24 @@ console.log('----> update begin done ... result : ' + self.result);
         }
         return this;
     },
-    getAllAndCount: function() {
-
+    addBat : function(records, options){
+        var self = this;
+        this.action = null;
+        this.action = function(callback) {
+            if (self.Model.db_type == 'sql') {
+                self.Model.bulkCreate(records, options).success(function(data) {
+                    callback(null, data);
+                }).error(function(e) {
+                    callback(e);
+                });
+            } else {
+                //
+            }
+        }
+        return this;
+    },
+    findOrAdd : function(){
+        //待实现
     },
     updateOrAdd: function(kv) {
         var self = this;

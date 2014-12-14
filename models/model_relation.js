@@ -52,5 +52,12 @@ module.exports = {
         params : {
             foreignKey : 'uid'
         }
+    }],
+    forum_moderator : [{
+        relation : 'belongsTo',
+        modelName : 'users',
+        params : {
+            foreignKey : 'uid'
+        }
     }]
 }

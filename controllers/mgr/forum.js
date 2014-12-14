@@ -1,4 +1,5 @@
 var forumSvc = loadService('forum');
+var async = require('async');
 
 module.exports = {
     "/": {
@@ -83,6 +84,37 @@ module.exports = {
                                     res.redirect('/mgr/forum/create');
                                 }
                             });
+        }
+    },
+    '/master' :  {
+        get : {
+            controller : function(req, res, next){
+                var fid = req.query.fid;
+                forumSvc.getById(fid, function(err, forum){
+                    if(err || (!forum || forum.type != 1)) {
+                        return next((!forum || forum.type != 1) ? '版块不存在！': err);
+                    }
+                    res.locals.forum = forum;
+                    forumSvc.getMaster(fid, function(err, masters){
+                        res.locals.masters = masters;
+                        next(err);
+                    });
+                });
+            }
+        },
+        post : {
+            controller : function(req, res, next){
+                console.log('----> ' + JSON.stringify(req.body.masters));
+                var fid = req.body.fid;
+                var masters = req.body.masters;
+                if(fid && masters && masters.length) {
+                    forumSvc.addMasters(fid, masters, function(err){
+                        return res.send(200, {code : 'success'});
+                    });
+                } else {
+                    next('参数不对！');
+                }
+            }
         }
     }
 }

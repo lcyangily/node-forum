@@ -1,6 +1,10 @@
 <div class="cell {{#calc @index '%2 == 0' }}odd{{/calc}}">
     <a class="user-avatar" href="/user/{{author_id }}">
-        <img src="{{user.head_pic}}" title="{{user.name }}" />
+        <img src="{{#if user.head_pic ~}}
+                    {{user.head_pic}}
+                  {{~ else ~}}
+                    /assets/images/head.gif
+                  {{~/if}}" title="{{user.name }}" />
     </a>
     <div class="topic-title-wrapper">
         <h2 class="topic-title">
@@ -38,10 +42,7 @@
                 {{#if reply_author}}
                     <span class="info-label">最后由</span>
                     <a href="/user/{{last_reply_user_id}}" class="info-value">{{reply_author.name}}</a>
-                    <span class="info-label">回复于</span>
-                    <span class="info-value">
-                         {{moment last_reply_time format='YYYY-MM-DD'}}
-                    </span>
+                    <span class="info-label">回复于 {{moment last_reply_time fromNow=""}}</span>
                 {{/if}}
             </em>
         </div>

@@ -5,6 +5,7 @@ var User       = new BaseModel('users');
 var UserCount  = new BaseModel('user_count');
 var UserFriend = new BaseModel('user_friend');
 var UserFollow = new BaseModel('user_follow');
+var UserFav    = new BaseModel('user_favorite');
 var UserFriendRequest = new BaseModel('user_friend_request');
 /*var Topic  = new BaseModel('forum_topic');
 var Reply  = new BaseModel('forum_reply');
@@ -68,6 +69,17 @@ exports.getById = function (id, cb){
 exports.getByName = function (name, cb){
     User.find().where({
         loginname : name
+    }).done(cb);
+}
+
+exports.getList = function(cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    User.findAll().page(p).done(cb);
+}
+
+exports.getLastRegUser = function(cb){
+    User.find().order({
+        create_time : 'desc'
     }).done(cb);
 }
 
@@ -178,6 +190,27 @@ exports.unfollow = function(uid, fuid, cb){
     cb && cb();
 }
 
+//增加收藏
+exports.addFav = function(uid, id, type, cb){
+
+    UserFav.find().where({
+        uid : uid,
+        id : id,
+        type : type
+    }).done(function(err, fav){
+        if(err || fav) {
+            return cb && cb(fav ? {msg : '您已经收藏，不能重复收藏！'} : err);
+        }
+
+        UserFav.add({
+            uid : uid,
+            id : id,
+            type : type
+        }).done(cb);
+    });
+    
+}
+
 exports.update = function(){
 
 }
@@ -187,25 +220,6 @@ exports.updateScoreCount = function(uid, modVal, cb){
     cb();
 }
 
-//增加用户帖子数量
-exports.increaseTopicCount = function(){
-
-}
-
-//减少用户帖子数量
-exports.reduceTopicCount = function(){
-    
-}
-
-//增加用户回复数量
-exports.increaseReplyCount = function(){
-
-}
-
-//减少用户回复数量
-exports.reduceReplyCount = function(){
-
-}
 
 //增加关注数
 //增加被关注数

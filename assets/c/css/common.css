@@ -195,6 +195,9 @@
     top: 1px;
 }
 /** 回复 end **/
+.side-hotforums{
+    font-size: 13px;
+}
 /** 快捷回复 begin **/
 .topic-fast-btns{
     padding-bottom: 10px;
@@ -253,15 +256,14 @@ a.topic-pub-btn:active {
     display: none;
 }
 #J_topUserBtn .top-user-wrap{
-    padding: 5px;
-    padding-top: 10px;
+    padding: 10px;
 }
 #J_topUserBtn.sib-popup-active .top-user-wrap{
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
     border: 1px solid #FF5E52;
     border-bottom: 0px;
-    padding: 9px 4px 5px 4px;
+    padding: 9px 9px 5px 9px;
 }
 #J_topUserBtn.sib-popup-active .user-detail{
     height: auto;
@@ -359,7 +361,7 @@ a.topic-pub-btn:active {
 }
 .nav .user-detail .navlist li a:hover{
     background:#FF5E52;
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
 }
 

@@ -1,30 +1,25 @@
 var Sequelize = require("sequelize");
 module.exports = {
-  "favid": {
-    "type": "int(11)",
-    "allowNull": false,
-    "defaultValue": null,
-    "comment": null,
-    "primaryKey": true,
-    "autoIncrement": true
-  },
   "uid": {
     "type": "int(11)",
     "allowNull": false,
     "defaultValue": "",
+    "primaryKey": true,
     "comment": null
   },
   "id": {
     "type": "int(11)",
-    "allowNull": true,
-    "defaultValue": null,
+    "allowNull": false,
+    "defaultValue": 0,
+    "primaryKey": true,
     "comment": null
   },
-  "idtype": {
-    "type": "varchar(255)",
-    "allowNull": true,
+  "type": {
+    "type": "int(11)",
+    "allowNull": false,
     "defaultValue": null,
-    "comment": null
+    "primaryKey": true,
+    "comment": "收藏内容类型：1-版块，2-主题"
   },
   "title": {
     "type": "varchar(255)",

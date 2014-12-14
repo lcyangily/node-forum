@@ -3,6 +3,7 @@ var _      = require('lodash');
 var forumSvc = loadService('forum');
 var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
+var userSvc = loadService('user');
 
 module.exports = {
     "/": {
@@ -25,9 +26,14 @@ module.exports = {
                         }, {
                             page : req.query.page
                         });
+                    },
+                    function(cb){
+                        userSvc.getLastRegUser(function(err, user){
+                            res.locals.lastRegUser = user;
+                            cb();//失败忽略
+                        });
                     }
                 ], function(err, results){
-console.log('--------------> forum index is ready ...');
                     next(err);
                 });
             }
@@ -47,7 +53,13 @@ console.log('--------------> forum index is ready ...');
                             cb(error || ((!forum || forum.type !=1 )? '论坛版块不存在或已删除！' : null));
                         });
                     },
-                    function(cb){ //所有分类
+                    function(cb){   //版主
+                        forumSvc.getMasters(fid, function(error, masters){
+                            res.locals.masters = masters;
+                            cb();   //忽略错误
+                        });
+                    },
+                    function(cb){ //帖子分类
                         forumSvc.getSub(fid, function(error, forums){
                             res.locals.ftypes = forums;
                             cb(error);

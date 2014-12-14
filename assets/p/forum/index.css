@@ -1,5 +1,48 @@
 .post-total{
+    padding-left:10px;
+    padding-right:10px;
+}
+.pipe{
+    color: #ddd;
+    margin-left:5px;
+    margin-right: 5px;
+}
+.pipe-min{
+    color: #ddd;
+}
+.topic-card{
+    margin: 5px 0px 15px 0px;
+}
+.topic-card a{
+    color: #333;
+    text-decoration: none;
+}
+.topic-card h1{
+    float: left;
     margin-right: 20px;
+    margin-top:0px; 
+    line-height: 42px;
+    font-size: 40px;
+}
+.topic-card .moderator{
+    float: right;
+    margin-top: 10px;
+}
+.topic-card .tc-fav{
+    height: 26px;
+}
+.topic-card .tc-fav .btn{
+    padding:0px 3px;
+}
+.topic-card .tc-fav strong{
+    color: #ff6f3d;
+}
+.topic-card .tc-label, 
+.topic-card .tc-label a{
+    color: #aaa;
+}
+.topic-card .tc-label .pipe{
+    color: #bbb;
 }
 .topic-list .cell {
     /* line-height: 2em; */
@@ -25,6 +68,8 @@
 }
 .topic-list .theader{
     padding: 8px 10px;
+    font-size: 12px;
+    color: #999;
 }
 .topic-list .theader .current{
     font-weight: bold;
@@ -175,9 +220,5 @@
 }
 .fclassify-list .fclassify-s {
     color: #999999;
-}
-.pipe {
-    color: #E7E7E7;
-    margin: 0 5px;
 }
 /** forum list end**/
