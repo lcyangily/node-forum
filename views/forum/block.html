@@ -6,6 +6,39 @@
         <li><a href="/block">论坛板块</a></li>
     {{/replace}}
     {{#replace "content"}}
+        {{#if favs}}
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="panel-title">我收藏的版块</div>
+                </div>
+                <div class="panel-body">
+                    <ul class="fclassify-list clearfix">
+                        {{#each favs}}
+                            <li class="clearfix">
+                                <div class="fclassify-box">
+                                    <div class="fclassify-pic">
+                                        <a href="/forum/{{forum.id}}" class="iconfont">{{{forum.pic}}}</a>
+                                    </div>
+                                    <div class="fclassify-info">
+                                        <div class="fclassify-title">
+                                            <a href="/forum/{{forum.id}}">{{forum.name}}</a>
+                                            <!-- <span class="fclassify-data">1</span> -->
+                                        </div>
+                                        <div class="fclassify-desc">{{forum.desc}}</div>
+                                        <div class="fclassify-nums">
+                                            <span class="fclassify-s">主题：</span>{{forum.topics}}
+                                            <span class="pipe">|</span>
+                                            <span class="fclassify-s">帖数：</span>
+                                            <span title="{{posts}}">{{forum.posts}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        {{/if}}
         {{#each groups}}
             <div class="panel">
                 <div class="panel-heading">
@@ -17,7 +50,7 @@
                             <li class="clearfix">
                                 <div class="fclassify-box">
                                     <div class="fclassify-pic">
-                                        <a href="#" class="iconfont">{{{pic}}}</a>
+                                        <a href="/forum/{{id}}" class="iconfont">{{{pic}}}</a>
                                     </div>
                                     <div class="fclassify-info">
                                         <div class="fclassify-title">

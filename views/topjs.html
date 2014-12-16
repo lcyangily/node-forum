@@ -95,6 +95,10 @@ requirejs.config({
         'cryptojs.sha256': {
             deps: ['cryptojs.hmac'],
             exports: "CryptoJS"
+        },
+        'umeditor' : {
+            deps : ['jquery'],
+            exports : "UM"
         }
     }
 });

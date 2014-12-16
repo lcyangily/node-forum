@@ -7,6 +7,7 @@ var UserFriend = new BaseModel('user_friend');
 var UserFollow = new BaseModel('user_follow');
 var UserFav    = new BaseModel('user_favorite');
 var UserFriendRequest = new BaseModel('user_friend_request');
+var Forum      = new BaseModel('forum');
 /*var Topic  = new BaseModel('forum_topic');
 var Reply  = new BaseModel('forum_reply');
 var Forum  = new BaseModel('forum');
@@ -208,7 +209,15 @@ exports.addFav = function(uid, id, type, cb){
             type : type
         }).done(cb);
     });
-    
+}
+
+exports.getFavForums = function(uid, cb){
+    UserFav.findAll().where({
+        uid : uid,
+        type : 1
+    }).include([
+        Forum.Model
+    ]).done(cb);
 }
 
 exports.update = function(){

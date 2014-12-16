@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var forumSvc  = loadService('forum');
 var topicSvc  = loadService('topic');
+var userSvc   = loadService('user');
 var async     = require('async');
 var sanitize  = require('html-css-sanitizer').sanitize;
 var validator = require('validator');
@@ -49,21 +50,37 @@ module.exports = {
                 });
                 
                 function selectBlock(req, res, next){
-                    forumSvc.getAll(function(err, forums){
-                        var groups = _.filter(forums, function(f){
-                            return f.type == 0;
-                        });
-                        groups = _.map(groups, function(g, index){
-                            //var ga = _.clone(g);
-                            g.children = _.filter(forums, function(f){
-                                return g.id === f.parent_id;
-                            });
-                            return g;
-                        });
 
-                        res.render('topic/block-select', {
-                            groups : groups
-                        });
+                    async.parallel([
+                        function(cb){
+                            if(req.session.user) {
+                                userSvc.getFavForums(req.session.user.id, function(err, favs){
+                                    res.locals.favs = favs;
+                                    cb(); //忽略错误
+                                });
+                            } else {
+                                cb();
+                            }
+                        },
+                        function(cb){
+                            forumSvc.getAll(function(err, forums){
+                                var groups = _.filter(forums, function(f){
+                                    return f.type == 0;
+                                });
+                                groups = _.map(groups, function(g, index){
+                                    //var ga = _.clone(g);
+                                    g.children = _.filter(forums, function(f){
+                                        return g.id === f.parent_id;
+                                    });
+                                    return g;
+                                });
+
+                                res.locals.groups = groups;
+                                cb(err);
+                            });
+                        }
+                    ], function(err, results){
+                        res.render('topic/block-select');
                     });
                 }
             }

@@ -65,6 +65,36 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <input type="checkbox" id="J_vote" name="vote" value="1"  /> 增加投票
+                            </div>
+                        </div>
+                        <div id="J_voteArea" style="display:none;">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">计票天数</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="expiration">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <input type="checkbox" name="overt" value="1"  /> 公开投票参与人
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <input type="checkbox" name="visible" value="1"  /> 投票后结果可见
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <input type="radio" name="multiple" value="0"  /> 单选
+                                    <input type="radio" name="multiple" value="1"  /> 多选
+                                    <input type="text" style="width:60px;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-default btn-primary">提交</button>
                             </div>
@@ -76,5 +106,18 @@
     {{/replace}}
     {{#replace "sidebar"}}
         {{sub "blocks/hotforums"}}
+    {{/replace}}
+    {{#replace "js"}}
+    <script type="text/javascript">
+        require(['jquery'], function($){
+            $('#J_vote').on('click', function(e){
+                if($(this).prop('checked')){
+                    $('#J_voteArea').show();
+                } else {
+                    $('#J_voteArea').hide();
+                }
+            });
+        });
+    </script>
     {{/replace}}
 {{/extend}}

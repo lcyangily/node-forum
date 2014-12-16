@@ -13,6 +13,23 @@
         </div>
     {{/replace}}
     {{#replace "content"}}
+        {{#if favs}}
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="panel-title">我收藏的版块</div>
+                </div>
+
+                <div class="grid-row" style="padding-top:10px;">
+                    {{#each favs}}
+                        <div class="grid-lg-6 grid-md-6 grid-sm-6">
+                            <div class="" style="padding-left:20px;">
+                                <a href="/topic/create?fid={{forum.id}}">{{forum.name}}</a>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        {{/if}}
         {{#each groups}}
             <div class="panel">
                 <div class="panel-heading">

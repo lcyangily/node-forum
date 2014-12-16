@@ -59,5 +59,18 @@ module.exports = {
         params : {
             foreignKey : 'uid'
         }
+    }],
+    user_favorite : [{
+        relation : 'belongsTo',
+        modelName : 'forum',
+        params : {
+            foreignKey : 'id'
+        }
+    }, {
+        relation : 'belongsTo',
+        modelName : 'forum_topic',
+        params : {
+            foreignKey : 'id'
+        }
     }]
 }

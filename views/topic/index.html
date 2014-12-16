@@ -2,6 +2,7 @@
     {{#append "css"}}
         <link rel="stylesheet" href="/assets/p/forum/index.css">
         <link rel="stylesheet" href="/assets/p/topic/index.css">
+        <link rel="stylesheet" href="/assets/c/gallery/umeditor/themes/default/css/umeditor.min.css">
     {{/append}}
     {{#prepend "breadcrumbPath"}}
         <li><a href="/forum">论坛</a></li>
@@ -154,5 +155,13 @@
                 </div>
             </div>
         </div>
+    {{/replace}}
+    {{#replace "js"}}
+    <script type="text/javascript" href="/assets/c/gallery/umeditor/umeditor.config.js"></script>
+    <script type="text/javascript">
+    /*require(['jquery', 'umeditor'], function($, UM){
+        alert(UM);
+    });*/
+    </script>
     {{/replace}}
 {{/extend}}cmd
