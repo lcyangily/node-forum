@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var moment = require('moment');
 var forumSvc  = loadService('forum');
 var topicSvc  = loadService('topic');
 var userSvc   = loadService('user');
@@ -13,7 +14,7 @@ function trimxss( str ) {
 module.exports = {
     "/create": {
         get: {
-            filters : ['blocks/hotForums'],
+            filters : ['checkLogin', 'blocks/hotForums'],
             controller : function(req, res, next) {
                 var fid = req.query.fid;
                 if(!fid) {
@@ -43,10 +44,6 @@ module.exports = {
                     res.locals.forum = forum;
                     res.locals.forums = forums;
                     next();
-                    /*res.render('topic/edit', {
-                        forum : forum,
-                        forums : forums
-                    });*/
                 });
                 
                 function selectBlock(req, res, next){
@@ -86,16 +83,19 @@ module.exports = {
             }
         },
         post : {
-            filters : [],
+            filters : ['checkLogin'],
             controller : function(req, res, next){
                 var title = trimxss(req.body.title);
                 var content = req.body.content;
                 var fid = req.body.fid;
                 var ftype_id = req.body.ftype_id;
-                /*var tags = [];
-                if (req.body.tags !== '') {
-                    tags = req.body.tags.split(',');
-                }*/
+                var vote = req.body.vote;
+                var multiple = req.body.multiple;
+                var overt = req.body.overt || 0;
+                var visible = req.body.visible || 0;
+                var options = req.body.option;
+                var maxchoices = req.body.maxchoices || 2;
+                var expiration = (req.body.expiration && Number(req.body.expiration)) || 7;
 
                 var edit_error;
                 if(title === '') {
@@ -107,60 +107,67 @@ module.exports = {
                 }
 
                 if(!ftype_id) {
-                    return res.render('notify/notify', {
-                        error : '请先选择论坛模块'
-                    });
+                    edit_error = '请先选择论坛模块';
+                }
+
+                if(vote == 1) {
+                    if(!options || !options.length || options.length < 2) {
+                        edit_error = '投票选项必须是两个以上！';
+                    }
                 }
 
                 if (edit_error) {
-                    /*Tag.getAllTags(function (err, tags) {
-                        if (err) {
-                            return next(err);
-                        }
-                        for (var i = 0; i < topic_tags.length; i++) {
-                            for (var j = 0; j < tags.length; j++) {
-                                if (topic_tags[i] === tags[j]._id) {
-                                    tags[j].is_selected = true;
-                                }
-                            }
-                        }
-                        res.render('topic/edit', {tags: tags, edit_error: edit_error, title: title, content: content});
-                    });*/
-                    res.render('topic/create', {
-                        edit_error: edit_error, 
-                        title: title, 
-                        content: content
-                    });
+                    return res.send(502, edit_error);
                 } else {
                     async.waterfall([
                         function(callback){
                             forumSvc.getById(ftype_id, function(err, forum){
                                 if(err || !forum) {
                                     return callback(err || new Error('此话题不存在或已被删除。'));
-                                    //return res.render('notify/notify', {error: '此话题不存在或已被删除。'});
                                 }
                                 callback(err, forum);
                             })
                         },
                         function(forum, callback){
-                            topicSvc.add({
-                                title : title,
-                                content : content,
-                                fid : fid,
-                                ftype_id : ftype_id,
-                                author_id : req.session.user.id,
-                                author_nick : req.session.user.name
-                            }, function(error){
-                                callback(error);
-                            });
+                            if(vote == 1) {
+                                topicSvc.addVote({
+                                    title : title,
+                                    content : content,
+                                    fid : fid,
+                                    ftype_id : ftype_id,
+                                    author_id : req.session.user.id,
+                                    author_nick : req.session.user.name,
+                                    vote : vote,
+                                    multiple : multiple,
+                                    overt : overt,
+                                    visible : visible,
+                                    options : options,
+                                    maxchoices : maxchoices,
+                                    expiration : moment(new Date()).add(expiration, 'days').toDate()
+                                }, function(error){
+                                    callback(error);
+                                });
+                            } else {
+                                topicSvc.add({
+                                    title : title,
+                                    content : content,
+                                    fid : fid,
+                                    ftype_id : ftype_id,
+                                    author_id : req.session.user.id,
+                                    author_nick : req.session.user.name
+                                }, function(error){
+                                    callback(error);
+                                });
+                            }
                         }
                     ], function(error, forum){
                         if(error) {
                             return next(error);
                         }
 
-                        res.render('notify/notify', {
-                            success : '发布成功!'
+                        res.send(200, {
+                            code : 1,
+                            msg  : '发布成功!'
                         });
                     });
                 }
@@ -182,23 +189,28 @@ module.exports = {
             controller : function(req, res, next){
                 var tid = req.params.tid;
                 var page = req.query.page || 1;
-console.log('---------> topic controller page : ' + page);
                 async.waterfall([
                     function(cb){
-                        topicSvc.getFullTopic(tid, function(error, topic, author, replysInfo, forum, ftype, zans){
-                            res.locals.topic = topic;
-                            res.locals.author = author;
-                            res.locals.replys = replysInfo && replysInfo[0];
-                            res.locals.replyPage = replysInfo && replysInfo[1];
-                            res.locals.zaners = zans;
-console.log('--------> zans : ' + JSON.stringify(zans));
-                            res.locals.forum = forum;
-                            res.locals.ftype = ftype;
+                        topicSvc.getFullTopic(tid, function(error, info){
+                            res.locals.topic = info.topic;
+                            res.locals.author = info.author;
+                            res.locals.replys = info.replys;
+                            res.locals.replyPage = info.replyPage;
+                            res.locals.zaners = info.zaners;
+                            res.locals.forum = info.forum;
+                            res.locals.ftype = info.ftype;
                             cb(error, topic);
                         }, {
                             page : page
                         });
                     },
+                    /*function(topic, cb){
+                        if(topic.type == 1) {
+                            cb(null, topic);
+                        } else {
+                            cb(null, topic);
+                        }
+                    },*/
                     function(topic, cb){
                         forumSvc.getForumPath(topic.fid, function(err, forumPath){
                             res.locals.forumPath = forumPath;

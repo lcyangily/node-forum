@@ -32,8 +32,9 @@
                         <strong>{{error}}</strong>
                     </div>
                 {{else}}
-                    <form id='create_topic_form' method='post' 
+                    <form id='J_createTopicForm' method='post' 
                           class="form-horizontal" role="form"
+                          onsubmit="return false" 
                           action='{{~#eq action 'edit' ~}}
                                       /topic/edit/{{topic_id}}
                                   {{~ else ~}}
@@ -72,25 +73,68 @@
                         <div id="J_voteArea" style="display:none;">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">计票天数</label>
+                                <div class="col-sm-2">
+                                    <input type="text" name="expiration" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否多选</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="expiration">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="multiple" value="0"> 单选
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input id="J_moreOption" type="radio" name="multiple" value="1"> 多选
+                                        </label>
+                                        <span id="J_maxCount" style="margin-left:20px;">
+                                            最多选择
+                                            <input type="text" name="maxchoices" style="width:60px;" />个
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <input type="checkbox" name="overt" value="1"  /> 公开投票参与人
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="overt" value="1">
+                                            公开投票参与人
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <input type="checkbox" name="visible" value="1"  /> 投票后结果可见
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="visible" value="1">
+                                            投票后结果可见
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">选项</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="option" class="form-control" >
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" data-role="delopt" class="btn btn-default">
+                                        删除
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="J_optionsArea">
+                                
+                            </div>
+                            <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <input type="radio" name="multiple" value="0"  /> 单选
-                                    <input type="radio" name="multiple" value="1"  /> 多选
-                                    <input type="text" style="width:60px;" />
+                                    <button type="button" class="btn btn-default" id="J_addOption">
+                                        <span class="glyphicon glyphicon-plus"></span> 增加选项
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -109,13 +153,54 @@
     {{/replace}}
     {{#replace "js"}}
     <script type="text/javascript">
-        require(['jquery'], function($){
+        require(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
             $('#J_vote').on('click', function(e){
                 if($(this).prop('checked')){
                     $('#J_voteArea').show();
                 } else {
                     $('#J_voteArea').hide();
                 }
+            });
+
+            $('#J_addOption').on('click', function(e){
+                var tpl = '<div class="form-group">' +
+                    '<div class="col-sm-8 col-sm-offset-2">'+
+                        '<input type="text" name="option" class="form-control" >'+
+                    '</div>'+
+                    '<div class="col-sm-2">'+
+                        '<button type="button" data-role="delopt" class="btn btn-default">'+
+                            '删除'+
+                        '</button>'+
+                    '</div>'+
+                '</div>';
+                $('#J_optionsArea').append($(tpl));
+            });
+
+            $('#J_createTopicForm input[name=multiple]').on('change', function(){
+                var cur = $('#J_createTopicForm input[name=multiple]:checked').val();
+                if(cur == 1) {
+                    $('#J_maxCount').show();
+                } else {
+                    $('#J_maxCount').hide();
+                }
+            });
+
+            $('#J_createTopicForm').submit(function(){
+                var fj = Sib.form2json('#J_createTopicForm');
+                $.ajax({
+                    url : '/topic/create',
+                    type : 'POST',
+                    data : fj,
+                    success : function(ret){
+                        if(ret.code == 1) {
+                            Dialog.tip(ret.msg);
+                        }
+                    },
+                    error : function(err){
+                        Dialog.tip(err.responseText);
+                    }
+                });
+                return false;
             });
         });
     </script>

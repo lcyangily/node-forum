@@ -50,6 +50,36 @@ module.exports = {
     "defaultValue": null,
     "comment": null
   },
+  "type": {
+    "type": "tinyint(4)",
+    "allowNull": true,
+    "defaultValue": 0,
+    "comment": "0->普通帖，1-投票帖子，2->..."
+  },
+  "closed": {
+    "type": "tinyint(4)",
+    "allowNull": true,
+    "defaultValue": 0,
+    "comment": "是否关闭：0->正常，1->关闭（只能查看，不能回复，赞等）"
+  },
+  "status": {
+    "type": "tinyint(4)",
+    "allowNull": true,
+    "defaultValue": 0,
+    "comment": "帖子状态：0-正常，1-删除不可见，2-管理员强制删除"
+  },
+  "highlight": {
+    "type": "tinyint(4)",
+    "allowNull": true,
+    "defaultValue": 0,
+    "comment": "是否高亮"
+  },
+  "digest": {
+    "type": "tinyint(4)",
+    "allowNull": true,
+    "defaultValue": 0,
+    "comment": "是否精华"
+  },
   "top": {
     "type": "tinyint(4)",
     "allowNull": true,

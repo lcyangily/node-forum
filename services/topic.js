@@ -4,6 +4,8 @@ var Topic  = new BaseModel('forum_topic');
 var User   = new BaseModel('users');
 var Reply  = new BaseModel('forum_reply');
 var Forum  = new BaseModel('forum');
+var TopicPoll = new BaseModel('topic_poll');
+var TopicPolloption = new BaseModel('Topic_polloption');
 var UserCount    = new BaseModel('user_count');
 var TopicZanLogs = new BaseModel('topic_zan_logs');
 var replySvc = loadService('reply');
@@ -89,9 +91,22 @@ exports.getFullTopic = function (id, cb, replyPage) {
                 callback(err, topic, results && results[0], results && results[1],
                          results && results[2], results && results[3], results && results[4]);
             });
+        },
+        //获取扩展信息:如类型投票，获取投票信息
+        function(topic, author, reply, forum, ftype, zaners, callback){
+            
+            callback(err, topic, author, reply, forum, ftype, zaners);
         }
-    ], function(err, topic, author, replys, forum, froumTypes, zaners){
-        cb && cb(err, topic, author, replys, forum, froumTypes, zaners);
+    ], function(err, topic, author, reply, forum, ftype, zaners){
+        cb && cb(err, {
+            topic : topic,
+            author : author,
+            replys : reply[0],
+            replyPage : reply[1],
+            forum : forum,
+            ftype : ftype,
+            zaners : zaners
+        });
     });
 };
 
@@ -262,7 +277,6 @@ exports.increaseCount = function(topic, callback){
                 if(err || !uc){
                     return cb(err || '帖子作者不存在！');
                 }
-console.log('---------> ');
                 UserCount.clean().update({
                     topics : uc.topics + 1
                 }).where({
@@ -334,7 +348,7 @@ exports.reduceCount = function(topic, cb){
 exports.add = function (kv, callback) {
     var self = this;
     Topic.add(kv).done(function(err, topic){
-        callback && callback(err);
+        callback && callback(err, topic);
         try{
             self.increaseCount(topic);
         } catch(e) {
@@ -342,6 +356,27 @@ exports.add = function (kv, callback) {
         }
     });
 };
+exports.addVote = function(kv, callback){
+    kv.type = 1;
+    this.add(kv, function(err, topic){
+        if(err) return callback && callback(err, topic);
+        TopicPoll.add(_.extend({tid : topic.id}, kv)).done(function(err, poll){
+            if(err) return callback && callback(err, topic);
+            var options = [];
+            for(var i = 0; i < kv.options.length; i++) {
+                options.push({
+                    tid : topic.id,
+                    votes : 0,
+                    option : kv.options[i]
+                });
+            }
+
+            TopicPolloption.addBat(options).done(function(err){
+                callback && callback(err, topic, poll);
+            });
+        });
+    });
+}
 
 /**
  * 更新主题的最后回复信息
