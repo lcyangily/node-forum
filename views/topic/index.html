@@ -32,6 +32,109 @@
                     <div class="markdown-text">
                         {{ topic.content }}
                     </div>
+                    <div class="ext-info">
+                        {{#eq topic.type 1}}
+                            <div class="type-stat">
+                                <strong>
+                                    {{#eq ext.poll.multiple 1}}多选{{else}}单选{{/eq}}投票
+                                    {{#and (eq ext.poll.multiple 1) ext.poll.maxchoices}}
+                                        (做多可选{{ext.poll.maxchoices}}个)
+                                    {{/and}}
+                                </strong>
+                                <span style="margin-left:10px;">共{{#if ext.poll.voters ~}}
+                                            {{~ ext.poll.voters ~}}
+                                        {{else}}0{{/if}}人参与投票&nbsp;&nbsp;
+                                    {{#or ext.voteEnd (and ext.alreadyVote (eq ext.poll.overt 1))}}
+                                        <a href="#">查看投票参与人</a>
+                                    {{/or}}
+                                </span>
+                                {{#if ext.alreadyVote}}
+                                    <p>您已经参与投票</p>
+                                {{/if}}
+                                {{#if ext.voteEnd}}
+                                    <p>投票已结束</p>
+                                {{/if}}
+                            </div>
+                            {{#if ext.showResult}}
+                                {{#each ext.options}}
+                                    <label>{{calc @index '+1'}}. {{option}}</label>
+                                    <div class="grid-row">
+                                        <div class="grid-lg-19 grid-md-13 grid-sm-7">
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-success"
+                                                     style="width: 
+                                                    {{~#gt ../ext.poll.voters 0}}
+                                                        {{~ calc voters '*100/' ../../ext.poll.voters}}% 
+                                                    {{~ else ~}}
+                                                        0
+                                                    {{~/gt ~}}%">
+                                                    <span class="sr-only"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="grid-sm-3">
+                                            {{~#gt ../ext.poll.voters 0}}
+                                                {{~ calc voters '*100/' ../../ext.poll.voters}}
+                                            {{~ else ~}}
+                                                0
+                                            {{~/gt ~}}%
+                                            <span class="label label-default">{{voters}}</span>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            {{else}}
+                                <form id="J_voteForm" onsubmit="return false;">
+                                {{#each ext.options}}
+                                    {{#eq ../ext.poll.multiple 1}}
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="option" value="{{poid}}">
+                                                {{calc @index '+1'}}. {{option}}
+                                            </label>
+                                        </div>
+                                    {{else}}
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="option" value="{{poid}}">
+                                                {{calc @index '+1'}}. {{option}}
+                                            </label>
+                                        </div>
+                                    {{/eq}}
+                                {{/each}}
+                                <input type="submit" value="提交投票" class="btn btn-sm btn-primary">
+                                </form>
+                                <script type="text/javascript">
+                                require(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
+                                    var maxCount = 0;
+                                    {{#and (eq ext.poll.multiple 1) ext.poll.maxchoices}}
+                                        maxCount = {{ext.poll.maxchoices}};
+                                    {{/and}}
+                                    $('#J_voteForm').submit(function(){
+                                        var fj = Sib.form2json('#J_voteForm');
+                                        if(maxCount > 0 && (fj.option && fj.option.length > maxCount)) {
+                                            Dialog.tip('可选最大数量不能超过' + maxCount + '个！');
+                                            return;
+                                        }
+                                        $.ajax({
+                                            url : '/topic/{{topic.id}}/vote',
+                                            type : 'POST',
+                                            data : fj,
+                                            success : function(ret){
+                                                if(ret.code == 1) {
+                                                    Dialog.tip(ret.msg);
+                                                }
+                                            },
+                                            error : function(err){
+                                                Dialog.tip(err.responseText);
+                                            }
+                                        });
+                                        return false;
+                                    });
+                                });
+                                </script>
+                            {{/if}}
+                        {{/eq}}
+                    </div>
                 </div>
                 <div class="topic-user clearfix">
                     <div class="zans clearfix">

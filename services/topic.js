@@ -5,7 +5,8 @@ var User   = new BaseModel('users');
 var Reply  = new BaseModel('forum_reply');
 var Forum  = new BaseModel('forum');
 var TopicPoll = new BaseModel('topic_poll');
-var TopicPolloption = new BaseModel('Topic_polloption');
+var TopicPolloption = new BaseModel('topic_polloption');
+var TopicPollvoter = new BaseModel('topic_pollvoter');
 var UserCount    = new BaseModel('user_count');
 var TopicZanLogs = new BaseModel('topic_zan_logs');
 var replySvc = loadService('reply');
@@ -94,10 +95,26 @@ exports.getFullTopic = function (id, cb, replyPage) {
         },
         //获取扩展信息:如类型投票，获取投票信息
         function(topic, author, reply, forum, ftype, zaners, callback){
-            
-            callback(err, topic, author, reply, forum, ftype, zaners);
+            if(topic.type == 1) {
+                TopicPoll.find().where({
+                    tid : topic.id
+                }).done(function(err, poll){
+                    if(err || !poll) return callback(!poll ? '投票信息不存在！' : err);
+
+                    TopicPolloption.findAll().where({
+                        tid : topic.id
+                    }).done(function(err, options){
+                        callback(err, topic, author, reply, forum, ftype, zaners, {
+                            poll : poll,
+                            options : options
+                        });
+                    });
+                });
+            } else {
+                callback(null, topic, author, reply, forum, ftype, zaners);
+            }
         }
-    ], function(err, topic, author, reply, forum, ftype, zaners){
+    ], function(err, topic, author, reply, forum, ftype, zaners, ext){
         cb && cb(err, {
             topic : topic,
             author : author,
@@ -105,7 +122,8 @@ exports.getFullTopic = function (id, cb, replyPage) {
             replyPage : reply[1],
             forum : forum,
             ftype : ftype,
-            zaners : zaners
+            zaners : zaners,
+            ext : ext
         });
     });
 };
@@ -345,6 +363,7 @@ exports.reduceCount = function(topic, cb){
     //user
 }
 
+//发布帖子
 exports.add = function (kv, callback) {
     var self = this;
     Topic.add(kv).done(function(err, topic){
@@ -356,6 +375,8 @@ exports.add = function (kv, callback) {
         }
     });
 };
+
+//发布投票帖子
 exports.addVote = function(kv, callback){
     kv.type = 1;
     this.add(kv, function(err, topic){
@@ -366,13 +387,86 @@ exports.addVote = function(kv, callback){
             for(var i = 0; i < kv.options.length; i++) {
                 options.push({
                     tid : topic.id,
-                    votes : 0,
+                    voters : 0,
                     option : kv.options[i]
                 });
             }
 
             TopicPolloption.addBat(options).done(function(err){
                 callback && callback(err, topic, poll);
+            });
+        });
+    });
+}
+
+//判断是否已经投过票
+exports.isVote = function(tid, uid, callback) {
+    TopicPollvoter.find().where({
+        tid : tid,
+        uid : uid
+    }).done(function(err, voter){
+        callback && callback(err, !!voter);
+    });
+}
+
+//投票
+exports.vote = function(tid, user, poids, callback){
+
+    if(!_.isArray(poids)) {
+        poids = [poids];
+    }
+    TopicPolloption.findAll().where({
+        tid : tid,
+        poid : {
+            in : poids
+        }
+    }).done(function(err, options){
+        if(err) {
+            return callback && callback(err);
+        }
+        if(poids.length != options.length) {
+            return callback && callback('投票选项不存在或投票已经被修改，请刷新页面！');
+        }
+
+        callback && callback(err);
+
+        TopicPollvoter.add({
+            tid : tid,
+            uid : user.id,
+            username : user.name,
+            options : poids.join(',')
+        }).done(function(err, pvoter){
+            TopicPolloption.findAll().where({
+                poid : {
+                    in : poids
+                }
+            }).done(function(err, polloptions){
+                //if(err) return callback && callback('更新投票人数失败！');
+                if(err) console.error(err);
+                var i = 0;
+                var len = polloptions && polloptions.length;
+                while(i < len) {
+                    TopicPolloption.clean().update({
+                        voters : 1 + polloptions[i].voters || 0
+                    }).where({
+                        poid : polloptions[i].poid
+                    }).done(function(err, p){
+
+                    });
+                    i++;
+                }
+            });
+
+            TopicPoll.find().where({
+                tid : tid
+            }).done(function(err, poll){
+                TopicPoll.clean().update({
+                    voters : 1 + poll.voters || 0
+                }).where({
+                    tid : tid
+                }).done(function(err, p){
+
+                });
             });
         });
     });

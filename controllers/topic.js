@@ -199,18 +199,34 @@ module.exports = {
                             res.locals.zaners = info.zaners;
                             res.locals.forum = info.forum;
                             res.locals.ftype = info.ftype;
-                            cb(error, topic);
+                            res.locals.ext = info.ext;
+
+                            //投票，判断是展示投票选项还是投票结果
+                            if(info.topic.type == 1 && info.ext && info.ext.poll) {
+                                info.ext.showResult = false;
+                                if(info.ext.poll.expiration.getTime() < new Date().getTime()) {
+                                    info.ext.showResult = true;
+                                    info.ext.voteEnd = true;
+                                    cb(error, info.topic);
+                                } else if(req.session.user) {   //用户已经投过票
+                                    topicSvc.isVote(info.topic.id, req.session.user.id, function(err, isVote){
+                                        if(isVote) {
+                                            info.ext.showResult = true;
+                                            info.ext.alreadyVote = true;
+                                        }
+                                        cb(error, info.topic);
+                                    });
+                                } else {
+                                    cb(error, info.topic);
+                                }
+                            } else {
+                                cb(error, info.topic);
+                            }
+                            //cb(error, info.topic);
                         }, {
                             page : page
                         });
                     },
-                    /*function(topic, cb){
-                        if(topic.type == 1) {
-                            cb(null, topic);
-                        } else {
-                            cb(null, topic);
-                        }
-                    },*/
                     function(topic, cb){
                         forumSvc.getForumPath(topic.fid, function(err, forumPath){
                             res.locals.forumPath = forumPath;
@@ -238,6 +254,22 @@ module.exports = {
                     return res.send(200, {
                         code : 1,
                         msg : '点赞成功！'
+                    });
+                });
+            }
+        }
+    },
+    '/:tid/vote' : {
+        post : {
+            filters : ['checkLogin'],
+            controller : function(req, res, next){
+                var tid = req.params.tid;
+                var options = req.body.option;
+                topicSvc.vote(tid, req.session.user, options, function(err, poll){
+                    if(err) return next(err);
+                    return res.send(200, {
+                        code : 1,
+                        msg : '投票成功！'
                     });
                 });
             }

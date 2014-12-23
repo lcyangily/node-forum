@@ -40,7 +40,7 @@ module.exports = {
   "voters": {
     "type": "mediumint(8)",
     "allowNull": true,
-    "defaultValue": null,
+    "defaultValue": 0,
     "comment": "投票人数"
   }
 }

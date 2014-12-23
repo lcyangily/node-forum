@@ -14,10 +14,10 @@ module.exports = {
     "defaultValue": "",
     "comment": "主题id"
   },
-  "votes": {
+  "voters": {
     "type": "mediumint(9)",
     "allowNull": true,
-    "defaultValue": null,
+    "defaultValue": 0,
     "comment": "票数"
   },
   "displayorder": {
