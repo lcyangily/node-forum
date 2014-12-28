@@ -3,9 +3,10 @@ body {
     background-color: #e5e5e5;
     /* background-color: #f1f1f1; */
     padding-top: 72px;
+    font-size: 12px;
 }
 body, p, input, textarea {
-    font-size: 12px;
+    /* font-size: 12px; */
     word-break: break-word;
     font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Wenquanyi Micro Hei", "Microsoft Yahei", Arial, sans-serif;
 }
@@ -186,6 +187,7 @@ a:hover{
 .article-box {
     padding: 15px 0;
     border-bottom: 1px dashed #ddd;
+    font-size: 14px;
 }
 .article-box .a-img {
     /* float: left; */
@@ -203,15 +205,16 @@ a:hover{
     /* margin-left: 235px; */
 }
 .article-box h4 {
-    font-size: 16px;
+    font-size: 22px;
     letter-spacing: 0.1em;
     margin-top: 0;
-    margin-bottom: 4px;
+    margin-bottom: 10px;
 }
 .article-box .box-other {
     padding: 0;
     color: #999;
     font-size: 12px;
+    margin-bottom: 8px;
 }
 .box-other .source-quote {
     margin-right: 5px;
@@ -221,7 +224,6 @@ a:hover{
 }
 .article-summary {
     color: #666;
-    font-size: 12px;
 }
 .article-box .tags-box {
     margin-left: -10px;

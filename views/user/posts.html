@@ -3,7 +3,7 @@
         <div class="panel">
             <div id="topic_list" class="list-group topic-list">
                 {{#each replys}}
-                    {{sub "forum/listItem"}}
+                    {{sub "user/postItem"}}
                 {{/each}}
                 {{page totalPages = pageinfo.totalPages current=pageinfo.current }}
             </div>

@@ -18,7 +18,9 @@
     {{#replace "content"}}
         <div class="panel">
             <div class="panel-heading">
-                {{~#eq action 'edit'}}编辑话题{{else}}发布话题{{/eq~}}
+                <h3 class="panel-title">
+                    {{~#eq action 'edit'}}编辑话题{{else}}发布话题{{/eq~}}
+                </h3>
             </div>
             <div class="panel-body">
                 {{#if edit_error}}
@@ -60,7 +62,7 @@
                         <div class="form-group">
                             <label for="J_title" class="col-sm-2 control-label">内容</label>
                             <div class="col-sm-10">
-                                <textarea class='editor' class="form-control" name='content' rows='8'>
+                                <textarea class='editor ckeditor' class="form-control" name='content' rows='8'>
                                     {{~ content ~}}
                                 </textarea>
                             </div>
@@ -152,6 +154,7 @@
         {{sub "blocks/hotforums"}}
     {{/replace}}
     {{#replace "js"}}
+    <script type="text/javascript" src="/assets/c/gallery/ckeditor/ckeditor.js"></script>
     <script type="text/javascript">
         require(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
             $('#J_vote').on('click', function(e){

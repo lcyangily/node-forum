@@ -12,17 +12,35 @@
 }
 .topic-card{
     margin: 5px 0px 15px 0px;
+    margin-bottom: 0px;
+}
+.topic-card .card-logo{
+    float: left;
+    margin-right: 15px;
+    background: #f57403;
+    color: #fff;
+    width: 70px;
+    height: 70px;
+    font-size: 60px;
+    text-align: center;
+    line-height: 70px;
+    border-radius: 4px;
 }
 .topic-card a{
     color: #333;
     text-decoration: none;
 }
+.topic-card .card-name{
+    height: 47px;
+    margin-top: 5px;
+}
 .topic-card h1{
     float: left;
     margin-right: 20px;
     margin-top:0px; 
-    line-height: 42px;
-    font-size: 40px;
+    line-height: 30px;
+    font-size: 30px;
+    margin-bottom: 5px;
 }
 .topic-card .moderator{
     float: right;
@@ -30,6 +48,8 @@
 }
 .topic-card .tc-fav{
     height: 26px;
+    color: #8c8c8c;
+    margin-top: 3px;
 }
 .topic-card .tc-fav .btn{
     padding:0px 3px;
@@ -130,6 +150,9 @@
 .info em{
     font-size: 12px;
     margin-right: 20px;
+}
+.info em.last{
+    margin-right: 0px;
 }
 .info .info-label{
     color: #ccc;

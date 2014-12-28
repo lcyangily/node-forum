@@ -4,6 +4,7 @@ var forumSvc = loadService('forum');
 var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
 var userSvc  = loadService('user');
+var newsSvc  = loadService('news');
 var config   = require('../config');
 var md5      = require('MD5');
 
@@ -14,15 +15,14 @@ module.exports = {
             template : 'index/index',
             controller : function(req, res, next) {
                 console.log('-----> user : ' + req.session.user);
-                next();
-            }
-        }
-    },
-    '/hy' : {
-        get : {
-            filters : ['blocks/hotForums'], 
-            controller : function(req, res, next){
-                next();
+                newsSvc.getList(function(err, topics, page){
+                    //console.log('-----------> topics.length : ' + topics.length);
+                    res.locals.topics = topics;
+                    res.locals.page = page;
+                    next();
+                }, {
+                    page : req.query.page
+                });
             }
         }
     },

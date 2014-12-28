@@ -1,5 +1,6 @@
 .panel .nav-tabs > li > a{
     border:none;
+    font-size: 13px;
 }
 .panel .nav-tabs > li > a:hover, 
 .panel .nav-tabs > li > a:focus {
@@ -15,7 +16,40 @@
     /* background-color: #f6f6f6; */
     border: none;
     border-bottom: 3px solid #ff6f3d;
+    padding: 10px 15px 8px 15px;
 }
 .main-content .table{
     font-size: 12px;
+}
+table.tabs-panel tr:first-child td {
+    border-top: none;                                           `
+}
+div.tabs-panel{
+    padding: 10px 20px;
+}
+.tabs-panel .card-mini{
+    border:1px solid #ddd;
+    margin: 0px -10px 10px;
+    padding-left: 100px;
+    box-sizing: content-box;
+    height: 82px;
+}
+.tabs-panel .card-mini .title{
+    margin: 0px 0px 5px 0px;
+    height: 22px;
+    overflow: hidden;
+    line-height: 22px;
+}
+.tabs-panel .card-mini .avatar {
+    width: 80px;
+    height: 80px;
+    margin-left: -90px;
+}
+.tabs-panel .card-mini .avatar img{
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+}
+.tabs-panel .card-mini .info{
+    margin-top: 1px;
 }

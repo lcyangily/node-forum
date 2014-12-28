@@ -25,6 +25,12 @@ module.exports = {
             foreignKey : 'ftype_id',
             as : 'forum_type'
         }
+    },{
+        relation  : 'hasOne',
+        modelName : 'news_topic',
+        params : {
+            foreignKey : 'id'
+        }
     }],
     user_friend : [{
         relation  : 'belongsTo',
@@ -69,6 +75,13 @@ module.exports = {
     }, {
         relation : 'belongsTo',
         modelName : 'forum_topic',
+        params : {
+            foreignKey : 'id'
+        }
+    }],
+    users : [{
+        relation : 'belongsTo',
+        modelName : 'user_count',
         params : {
             foreignKey : 'id'
         }

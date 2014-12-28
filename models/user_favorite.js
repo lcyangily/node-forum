@@ -4,22 +4,22 @@ module.exports = {
     "type": "int(11)",
     "allowNull": false,
     "defaultValue": "",
-    "primaryKey": true,
-    "comment": null
+    "comment": null,
+    "primaryKey": true
   },
   "id": {
     "type": "int(11)",
     "allowNull": false,
-    "defaultValue": 0,
-    "primaryKey": true,
-    "comment": null
+    "defaultValue": "",
+    "comment": null,
+    "primaryKey": true
   },
   "type": {
     "type": "int(11)",
     "allowNull": false,
-    "defaultValue": null,
-    "primaryKey": true,
-    "comment": "收藏内容类型：1-版块，2-主题"
+    "defaultValue": "",
+    "comment": "收藏内容类型：1-版块，2-主题",
+    "primaryKey": true
   },
   "title": {
     "type": "varchar(255)",

@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var forumSvc  = loadService('forum');
 var topicSvc  = loadService('topic');
-var replaySvc = loadService('reply');
+var replySvc = loadService('reply');
 var async     = require('async');
 var sanitize  = require('html-css-sanitizer').sanitize;
 var validator = require('validator');
@@ -29,7 +29,7 @@ module.exports = {
                     return next('请先登录！');
                 }
 
-                replaySvc.add({
+                replySvc.add({
                     tid : tid,
                     content : cnt,
                     author_id : user.id,
@@ -38,6 +38,23 @@ module.exports = {
                 },function(err, reply){
                     return res.render('notify/notify', {
                         success : '回复成功！'
+                    });
+                });
+            }
+        }
+    },
+    '/:rid/zan' : {
+        post : {
+            filters : ['checkLogin'],
+            controller : function(req, res, next){
+                var rid = req.params.rid;
+                replySvc.zan(rid, req.session.user.id, function(err, zan){
+                    if(err) {
+                        return next(err);
+                    }
+                    return res.send(200, {
+                        code : 1,
+                        msg : '点赞成功！'
                     });
                 });
             }

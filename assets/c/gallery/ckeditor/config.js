@@ -20,10 +20,10 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'others' },
 		'/',
 		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		{ name: 'styles' },
 		{ name: 'colors' },
-		{ name: 'about' }
+		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+		{ name: 'styles' } /*,
+		{ name: 'about' }*/
 	];
 
 	// Remove some buttons provided by the standard plugins, which are
@@ -35,4 +35,11 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+
+	//config.filebrowserBrowseUrl = '/browser/browse.php';
+    config.filebrowserUploadUrl = '/upload/upload';
+    //config.extraPlugins = 'quicktable';//image2,
+    config.extraPlugins = 'image2,quicktable,colorbutton';
+    /*filebrowserWindowWidth: '640',
+    filebrowserWindowHeight: '480'*/
 };

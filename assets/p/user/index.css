@@ -168,48 +168,6 @@
     line-height: 35px;
 }
 
-/**user card mini begin **/
-.card-mini.panel{
-    margin-bottom: 0px;
-}
-.card-mini{
-    padding:10px;
-    padding-left: 80px;
-}
-.card-mini .avatar{
-    width: 60px;
-    height: 60px;
-    position: static;
-    float: left;
-    margin-left: -70px;
-    margin-top: 0px;
-}
-.card-mini .avatar img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-}
-.card-mini .title{
-    font-size: 16px;
-    line-height: 18px;
-    margin: 0px;
-}
-.card-mini .info {
-    font-size: 12px;
-    margin-top: 5px;
-}
-.card-mini .info em {
-    font-size: 12px;
-    margin-right: 10px;
-}
-.card-mini .info-label {
-    color: #ccc;
-}
-.card-mini .info-value {
-    color: #999;
-}
-/** user card mini end **/
-
 /** 管理 **/
 .mgr-leftnav-wrap,
 .mgr-cnt-wrap{

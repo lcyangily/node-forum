@@ -2,7 +2,6 @@
     {{#append "css"}}
         <link rel="stylesheet" href="/assets/p/forum/index.css">
         <link rel="stylesheet" href="/assets/p/topic/index.css">
-        <link rel="stylesheet" href="/assets/c/gallery/umeditor/themes/default/css/umeditor.min.css">
     {{/append}}
     {{#prepend "breadcrumbPath"}}
         <li><a href="/forum">论坛</a></li>
@@ -14,23 +13,28 @@
                     {{#if topic.top }}
                         <span class="label label-default">置顶</span>
                     {{/if}}
-                    <span class="title">{{ topic.title }}</span>
+                    <h1>{{ topic.title }}</h1>
                     <div class="info">
-                        <em>
-                            <a href="/user/{{author.id}}">{{author.name}}</a>
-                            <a href="javascript:void(0);">
-                                <img src="http://bbs.xiaomi.cn/static/image/xiaomibbs3/uvip_auth.png" class="vm" alt="论坛认证用户" title="论坛认证用户">
-                            </a>于&nbsp;&nbsp;
+                        <em class="info-label">
                             <span>
-                                {{moment create_time format='YYYY-MM-DD'}}
+                                {{moment create_time format='YYYY-MM-DD hh:mm:ss'}}
                             </span>&nbsp;&nbsp;发表在&nbsp;[&nbsp;
-                            <a href="/forum/{{forum.id}}?ftype={{ftype.id}}">{{ftype.name}}</a>&nbsp;]
+                            <a href="/forum/{{forum.id}}?ftype={{ftype.id}}"
+                                class="info-label">{{ftype.name}}</a>&nbsp;]
                         </em>
+                        <span class="pull-right">
+                            <em class="info-label">
+                                <span class="glyphicon glyphicon-eye-open"></span> {{topic.visit_count}}
+                            </em>
+                            <em class="info-label last">
+                                <span class="glyphicon glyphicon-comment"></span> {{topic.reply_count}}
+                            </em>
+                        </span>
                     </div>
                 </div>
                 <div class="topic-content">
                     <div class="markdown-text">
-                        {{ topic.content }}
+                        {{{ topic.content }}}
                     </div>
                     <div class="ext-info">
                         {{#eq topic.type 1}}
@@ -182,13 +186,18 @@
                         <div class="revert-bd">
                             <div class="revert-cnt-hd clearfix">
                                 <a class="name" href="/user/{{author_id}}">{{user.name}}</a>
-                                <span class="hd-time">{{create_time}}</span>
-                                <span class="label label-default pull-right">
-                                    {{calc ../replyPage.pageSize ' * (' ../replyPage.current '-1) + ' @index '+1'}}楼
+                                <span class="hd-time">
+                                    {{moment create_time format='YYYY-MM-DD hh:mm:ss'}}
                                 </span>
+                                {{#if position}}
+                                    <span class="label label-default pull-right">
+                                        {{!--{{calc ../replyPage.pageSize ' * (' ../replyPage.current '-1) + ' @index '+1'}}楼--}}
+                                        {{position}} 楼
+                                    </span>
+                                {{/if}}
                             </div>
                             <div class="revert-cnt">
-                                {{content}}
+                                {{{content}}}
                             </div>
                             <div class="btns">
                                 <a href="#" class="btn btn-xs">
@@ -199,9 +208,9 @@
                                     <span class="glyphicon glyphicon-retweet"></span>
                                     <em>引用</em>
                                 </a>
-                                <a href="#" class="btn btn-xs">
+                                <a href="javascript:LBL.zanReply({{id}});" class="btn btn-xs">
                                     <span class="glyphicon glyphicon-thumbs-up"></span>
-                                    <em>赞</em>
+                                    <em>赞 ({{zan_count}})</em>
                                 </a>
                             </div>
                         </div>
@@ -216,13 +225,68 @@
             </div>
             <div class="panel-body">
                 <form action="/reply/add/{{topic.id}}" method="post">
-                    <textarea class="reply-area" name="content"></textarea>
+                    <textarea class="reply-area ckeditor" name="content"></textarea>
                     <input type="submit" value="提交" class="btn btn-default" />
                 </form>
             </div>
         </div>
     {{/replace}}
     {{#replace "topicPubBtn"}}
+        <div class="panel topic-author">
+            <div class="card-mini clearfix">
+                <a class="avatar" href="#">
+                    <img src="{{#if author.head_pic ~}}
+                                {{author.head_pic}}
+                              {{~ else ~}}
+                                /assets/images/head.gif
+                              {{~/if}}">
+                </a>
+                <div class="card-wrapper">
+                    <h2 class="title">
+                        <a href="/user/{{author.id}}">{{author.name}}</a>
+                    </h2>
+                    <!-- <div class="info">
+                        <em>
+                            <span class="info-label">主题：</span>
+                            <span class="info-value">{{author.topics}}</span>
+                        </em>
+                        <em>
+                            <span class="info-label">跟帖：</span>
+                            <span class="info-value">{{author.posts}}</span>
+                        </em>
+                    </div> -->
+                    <div class="info">
+                        <button class="btn btn-xs">
+                            <span class="glyphicon glyphicon-plus"></span> 加好友
+                        </button>
+                        <button class="btn btn-xs">
+                            <span class="glyphicon glyphicon-plus"></span> 关注
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="x-grid-row topic-fast-group">
+                <div class="x-grid-1-2">
+                    <span class="topic-fast-btn">
+                        <b>
+                            {{#if author.user_count.topics}}
+                                {{author.user_count.topics}}
+                            {{else}}0{{/if}}</b>
+                        <p>主题</p>
+                    </span>
+                </div>
+                <div class="x-grid-1-2">
+                    <span class="topic-fast-btn last">
+                        <b>
+                            {{#if author.user_count.replys}}
+                                {{author.user_count.replys}}
+                            {{else}}0{{/if}}
+                        </b>
+                        <p>帖子</p>
+                    </span>
+                </div>
+            </div>
+        </div>
         <div class="panel topic-fast-btns">
             <a href="/topic/create{{#if forum}}?fid={{forum.id}}{{/if}}" 
                 class="btn btn-sm topic-pub-btn">
@@ -260,7 +324,7 @@
         </div>
     {{/replace}}
     {{#replace "js"}}
-    <script type="text/javascript" href="/assets/c/gallery/umeditor/umeditor.config.js"></script>
+    <script type="text/javascript" src="/assets/c/gallery/ckeditor/ckeditor.js"></script>
     <script type="text/javascript">
     /*require(['jquery', 'umeditor'], function($, UM){
         alert(UM);

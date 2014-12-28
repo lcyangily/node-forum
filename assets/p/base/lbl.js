@@ -127,6 +127,23 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
                 }
             });
         },
+        zanReply : function(id){
+            $.ajax({
+                type : 'post',
+                url : '/reply/'+id+'/zan',
+                dataType : 'json',
+                success : function(data){
+                    if(data && data.code == 1) {
+                        Dialog.tip('成功');
+                    } else {
+                        Dialog.tip(data.msg);
+                    }
+                },
+                error : function(err){
+                    Dialog.tip(err.responseText);
+                }
+            });
+        },
         collectTopic : function(tid){
             LBL.collect(tid, 2);
         },

@@ -17,7 +17,7 @@ module.exports = {
   "ftype_id": {
     "type": "int(11)",
     "allowNull": false,
-    "defaultValue": "",
+    "defaultValue": "0",
     "comment": null
   },
   "tid": {
@@ -115,5 +115,17 @@ module.exports = {
     "allowNull": true,
     "defaultValue": null,
     "comment": "帖子状态"
+  },
+  "zan_count": {
+    "type": "int(11)",
+    "allowNull": true,
+    "defaultValue": "0",
+    "comment": "赞数量"
+  },
+  "position": {
+    "type": "int(11)",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": "楼层"
   }
 }

@@ -437,6 +437,41 @@ console.log('-------> Model.rawAttributes : ' + self.Model.rawAttributes[k]);
                     })
             }
         }
+        return this;
+    },
+    max : function(field){
+        var self = this;
+        this.action = null;
+        this.action = function(callback) {
+            if (self.Model.db_type == 'sql') {
+                self.Model.max(field).success(function(max){
+                    callback && callback(null, max);
+                }).error(function(err){
+                    callback && callback(err);
+                });
+            } else {
+                //待实现
+            }
+        }
+
+        return this;
+    },
+    min : function(field){
+        var self = this;
+        this.action = null;
+        this.action = function(callback) {
+            if (self.Model.db_type == 'sql') {
+                self.Model.min(field).success(function(min){
+                    callback && callback(null, min);
+                }).error(function(err){
+                    callback && callback(err);
+                });
+            } else {
+                //待实现
+            }
+        }
+
+        return this;
     }
 }
 

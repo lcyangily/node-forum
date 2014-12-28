@@ -8,185 +8,230 @@
     {{/replace}}
     {{#replace "content"}}
         <div id="J_contentBody" class="panel">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#">公共服务</a>
+            <ul class="nav nav-tabs">
+                <li {{#eq type 1}}class="active"{{/eq}}><a href="/hy/1">公共服务</a></li>
+                <li {{#eq type 2}}class="active"{{/eq}}><a href="/hy/2">外卖</a></li>
+                <li {{#eq type 3}}class="active"{{/eq}}><a href="/hy/3">超市</a></li>
+                <li {{#eq type 4}}class="active"{{/eq}}><a href="/hy/4">邻里店</a></li>
+                <li {{#eq type 5}}class="active"{{/eq}}><a href="/hy/5">其他</a></li>
+                <li class="{{#eq type 'join'}}active{{/eq}} pull-right">
+                    <a href="/hy/join">登记申请</a>
                 </li>
-                <li role="presentation"><a href="#">外卖</a>
-                </li>
-                <li role="presentation"><a href="#">超市</a></li>
-                <li role="presentation"><a href="#">邻里店</a></li>
-                <li role="presentation"><a href="#">其他</a></li>
             </ul>
             <div>
-                <table class="table table-striped tabs-panel">
-                    <tbody>
-                        <tr>
-                            <td>沿江派出所</td>
-                            <td>18888888888</td>
-                            <td>紫禁城路一号</td>
-                        </tr>
-                        <tr>
-                            <td>自来水公司</td>
-                            <td>18888888888</td>
-                            <td>紫禁城路一号</td>
-                        </tr>
-                        <tr>
-                            <td>一街区物业</td>
-                            <td>18888888888</td>
-                            <td>紫禁城路一号</td>
-                        </tr>
-                        <tr>
-                            <td>二街区物业</td>
-                            <td>18888888888</td>
-                            <td>紫禁城路一号</td>
-                        </tr>
-                        <tr>
-                            <td>三街区物业</td>
-                            <td>18888888888</td>
-                            <td>紫禁城路一号</td>
-                        </tr>
-                        <tr>
-                            <td>四街区物业</td>
-                            <td>18888888888</td>
-                            <td>紫禁城路一号</td>
-                        </tr>
-                        <tr>
-                            <td>五街区物业</td>
-                            <td>18888888888</td>
-                            <td>紫禁城路一号</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-striped tabs-panel">
-                    <tbody>
-                        <tr>
-                            <td>江南人民公社</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>配送范围：整个威尼斯</td>
-                        </tr>
-                        <tr>
-                            <td>湘香乡</td>
-                            <td>18888888888</td>
-                            <td>十街区</td>
-                            <td>配送范围：整个威尼斯、辣</td>
-                        </tr>
-                        <tr>
-                            <td>江南人民公社</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>配送范围：整个威尼斯</td>
-                        </tr>
-                        <tr>
-                            <td>湘香乡</td>
-                            <td>18888888888</td>
-                            <td>十街区</td>
-                            <td>配送范围：整个威尼斯、辣</td>
-                        </tr>
-                        <tr>
-                            <td>江南人民公社</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>配送范围：整个威尼斯</td>
-                        </tr>
-                        <tr>
-                            <td>湘香乡</td>
-                            <td>18888888888</td>
-                            <td>十街区</td>
-                            <td>配送范围：整个威尼斯、辣</td>
-                        </tr>
-                        <tr>
-                            <td>江南人民公社</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>配送范围：整个威尼斯</td>
-                        </tr>
-                        <tr>
-                            <td>湘香乡</td>
-                            <td>18888888888</td>
-                            <td>十街区</td>
-                            <td>配送范围：整个威尼斯、辣</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-striped tabs-panel">
-                    <tbody>
-                        <tr>
-                            <td>易买得</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>不配送</td>
-                        </tr>
-                        <tr>
-                            <td>易买得</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>不配送</td>
-                        </tr>
-                        <tr>
-                            <td>易买得</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>不配送</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-striped tabs-panel">
-                    <tbody>
-                        <tr>
-                            <td>干洗店</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>不配送</td>
-                        </tr>
-                        <tr>
-                            <td>炒货店</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>不配送</td>
-                        </tr>
-                        <tr>
-                            <td>缝纫店</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>不配送</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-striped tabs-panel">
-                    <tbody>
-                        <tr>
-                            <td>开锁师傅</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>不配送</td>
-                        </tr>
-                        <tr>
-                            <td>出租车师傅</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>不配送</td>
-                        </tr>
-                        <tr>
-                            <td>收废品</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>不配送</td>
-                        </tr>
-                        <tr>
-                            <td>保洁</td>
-                            <td>18888888888</td>
-                            <td>十五街区</td>
-                            <td>不配送</td>
-                        </tr>
-                    </tbody>
-                </table>
+                {{#eq type 1}}
+                    <table class="table table-striped tabs-panel">
+                        <tbody>
+                            {{#each infos}}
+                                <tr>
+                                    <td>{{name}}</td>
+                                    <td>{{phone}}</td>
+                                    <td>{{addr}}</td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                {{/eq}}
+                {{#eq type 2}}
+                    <div class="tabs-panel">
+                        <div class="row">
+                            {{#each infos}}
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="panel card-mini clearfix">
+                                        <a class="avatar" href="javascript:void(0)">
+                                            <img src="{{img}}">
+                                        </a>
+                                        <div class="card-wrapper">
+                                            <h2 class="title">
+                                                <a href="/user/{{user.id}}">{{name}}</a>
+                                            </h2>
+                                            <div class="info">
+                                                <em>
+                                                    <span class="info-value">20元起送</span>
+                                                </em>
+                                                <em>
+                                                    <span class="info-label">范围:</span>
+                                                    <span class="info-value">1,2街区</span>
+                                                </em>
+                                            </div>
+                                            <div class="info">
+                                                <em>
+                                                    <span class="info-value">日本料理</span>
+                                                </em>
+                                            </div>
+                                            <div class="info">
+                                                <em>
+                                                    <span class="info-value">{{phone}}</span>
+                                                </em>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                {{/eq}}
+                {{#eq type 3}}
+                    <table class="table table-striped tabs-panel">
+                        <tbody>
+                            <tr>
+                                <td>易买得</td>
+                                <td>18888888888</td>
+                                <td>十五街区</td>
+                                <td>不配送</td>
+                            </tr>
+                            <tr>
+                                <td>易买得</td>
+                                <td>18888888888</td>
+                                <td>十五街区</td>
+                                <td>不配送</td>
+                            </tr>
+                            <tr>
+                                <td>易买得</td>
+                                <td>18888888888</td>
+                                <td>十五街区</td>
+                                <td>不配送</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {{/eq}}
+                {{#eq type 4}}
+                    <table class="table table-striped tabs-panel">
+                        <tbody>
+                            <tr>
+                                <td>干洗店</td>
+                                <td>18888888888</td>
+                                <td>十五街区</td>
+                                <td>不配送</td>
+                            </tr>
+                            <tr>
+                                <td>炒货店</td>
+                                <td>18888888888</td>
+                                <td>十五街区</td>
+                                <td>不配送</td>
+                            </tr>
+                            <tr>
+                                <td>缝纫店</td>
+                                <td>18888888888</td>
+                                <td>十五街区</td>
+                                <td>不配送</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {{/eq}}
+                {{#eq type 5}}
+                    <table class="table table-striped tabs-panel">
+                        <tbody>
+                            <tr>
+                                <td>开锁师傅</td>
+                                <td>18888888888</td>
+                                <td>十五街区</td>
+                                <td>不配送</td>
+                            </tr>
+                            <tr>
+                                <td>出租车师傅</td>
+                                <td>18888888888</td>
+                                <td>十五街区</td>
+                                <td>不配送</td>
+                            </tr>
+                            <tr>
+                                <td>收废品</td>
+                                <td>18888888888</td>
+                                <td>十五街区</td>
+                                <td>不配送</td>
+                            </tr>
+                            <tr>
+                                <td>保洁</td>
+                                <td>18888888888</td>
+                                <td>十五街区</td>
+                                <td>不配送</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {{/eq}}
+                {{#eq type 'join'}}
+                    <div class="tabs-panel">
+                        <form id='J_requestForm' method='post' 
+                              class="form-horizontal"
+                              ENCTYPE="multipart/form-data"
+                              action='/hy/join' >
+                            <div class="form-group">
+                                <label for="J_title" class="col-sm-2 control-label">名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" class="form-control" id="J_title" placeholder="名称" value="{{~title~}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">描述</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="desc" class="form-control" placeholder="描述" value="{{~title~}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图片LOGO</label>
+                                <div class="col-sm-10">
+                                    <input type="file" name="img" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">电话</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="phone" class="form-control" placeholder="电话">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">地址</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="title" class="form-control" id="J_title" placeholder="地址" value="{{~title~}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">申请类型</label>
+                                <div class="col-sm-10">
+                                    <select name="type" class="form-control">
+                                        <option value="1">公共服务</option>
+                                        <option value="2">外卖</option>
+                                        <option value="3">超市</option>
+                                        <option value="4">邻里淘宝店</option>
+                                        <option value="5">其他</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label class="col-sm-2 control-label">选项</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="option" class="form-control" >
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" data-role="delopt" class="btn btn-default">
+                                        删除
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="J_optionsArea">
+                                
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <button type="button" class="btn btn-default" id="J_addOption">
+                                        <span class="glyphicon glyphicon-plus"></span> 增加选项
+                                    </button>
+                                </div>
+                            </div> -->
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default btn-primary">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                {{/eq}}
             </div>
         </div>
     {{/replace}}
     {{#replace "js"}}
     <script type="text/javascript">
-        require(['jquery', 'sib.tabs'], function($, Tabs){
+        /*require(['jquery', 'sib.tabs'], function($, Tabs){
             new Tabs({
                 target : '#J_contentBody',
                 triggers : '.nav-tabs li',
@@ -194,7 +239,7 @@
                 triggerActiveCls : 'active',
                 addDefaultCls : false
             });
-        });
+        });*/
     </script>
     {{/replace}}
 {{/extend}}

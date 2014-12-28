@@ -17,12 +17,12 @@ module.exports = {
   "password": {
     "type": "varchar(100)",
     "allowNull": true,
-    "defaultValue": "",
-    "comment": "密码"
+    "defaultValue": null,
+    "comment": null
   },
   "head_pic": {
     "type": "varchar(255)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "",
     "comment": "用户头像"
   },

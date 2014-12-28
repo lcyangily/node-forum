@@ -72,7 +72,7 @@ module.exports = {
     "type": "int(11)",
     "allowNull": true,
     "defaultValue": "0",
-    "comment": null
+    "comment": "收藏次数"
   },
   "last_reply": {
     "type": "int(11)",

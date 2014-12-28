@@ -11,13 +11,19 @@ module.exports = {
   "tid": {
     "type": "int(11)",
     "allowNull": false,
-    "defaultValue": 0,
+    "defaultValue": "",
     "comment": null
   },
   "uid": {
     "type": "int(11)",
     "allowNull": false,
     "defaultValue": "",
+    "comment": null
+  },
+  "score": {
+    "type": "int(11)",
+    "allowNull": true,
+    "defaultValue": "0",
     "comment": null
   },
   "dateline": {

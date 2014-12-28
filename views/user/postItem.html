@@ -1,0 +1,48 @@
+<div class="cell {{#calc @index '%2 == 0' }}odd{{/calc}}">
+    <a class="user-avatar" href="/user/{{author_id }}">
+        <img src="{{#if user.head_pic ~}}
+                    {{user.head_pic}}
+                  {{~ else ~}}
+                    /assets/images/head.gif
+                  {{~/if}}" title="{{user.name }}" />
+    </a>
+    <div class="topic-title-wrapper">
+        <h2 class="topic-title">
+            <a href="/topic/{{ forum_topic.id }}" title="{{ forum_topic.title }}">
+                {{ forum_topic.title }}
+            </a>
+            <span class="tag">[
+            {{~#gt curblock.type 0}}
+                <a href="/forum/{{forum.id}}?ftype={{forum_type.id}}">
+                    {{forum_type.name}}
+                </a>
+            {{~ else ~}}
+                <a href="/forum/{{forum.id}}">{{forum.name}}</a>
+            {{/gt ~}}
+            ]</span>
+            {{#if top }}
+                <span class="label label-default">置顶</span>
+            {{/if}}
+        </h2>
+        <div class="info">
+            <em>
+                <span class="info-label">内容：</span>
+                <span class="info-value">{{ content }}</span>
+            </em>
+            <em>
+                <a href="/user/{{author_id}}" class="info-value">{{user.name}}</a>
+                <a href="javascript:void(0);" target="_blank">
+                    <img src="http://bbs.xiaomi.cn/static/image/xiaomibbs3/uvip_auth.png" class="vm" alt="论坛认证用户" title="论坛认证用户">
+                </a>
+                <span class="info-label">发表于 {{moment create_time format='YYYY-MM-DD'}}</span>
+            </em>
+            <em>
+                {{#if reply_author}}
+                    <span class="info-label">最后由</span>
+                    <a href="/user/{{last_reply_user_id}}" class="info-value">{{reply_author.name}}</a>
+                    <span class="info-label">回复于 {{moment last_reply_time fromNow=""}}</span>
+                {{/if}}
+            </em>
+        </div>
+    </div>
+</div>

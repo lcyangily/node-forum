@@ -54,7 +54,9 @@ exports.login = function(user, cb){
 exports.getById = function (id, cb){
     User.find().where({
         id : id
-    }).done(function(err, u){
+    }).include([
+        UserCount.Model
+    ]).done(function(err, u){
         cb && cb(err, u);
     });
 }
@@ -193,7 +195,7 @@ exports.unfollow = function(uid, fuid, cb){
 
 //增加收藏
 exports.addFav = function(uid, id, type, cb){
-
+    var self = this;
     UserFav.find().where({
         uid : uid,
         id : id,
@@ -207,7 +209,20 @@ exports.addFav = function(uid, id, type, cb){
             uid : uid,
             id : id,
             type : type
-        }).done(cb);
+        }).done(function(err, rfav){
+            cb && cb(err, rfav);
+
+            //增加数量
+            try{
+                self.increaseFavCount(rfav, function(err){
+                    if(err) {
+                        console.error(err);
+                    }
+                });
+            } catch(e) {
+                console.error(e);
+            }
+        });
     });
 }
 
@@ -218,6 +233,77 @@ exports.getFavForums = function(uid, cb){
     }).include([
         Forum.Model
     ]).done(cb);
+}
+
+//增加收藏数量
+exports.increaseFavCount = function(fav, callback){
+
+    async.parallel([
+        //user count
+        function(cb){
+            UserCount.find().where({
+                uid : fav.uid
+            }).done(function(err, uc){
+                if(err || !uc){
+                    return cb(err || '帖子作者不存在！');
+                }
+
+                var uObj = {};
+                if(fav.type == 2) { //主题
+                    uObj.collect_topic = 1 + uc.collect_topic || 0;
+                } else if(fav.type == 1) {  //版块
+                    uObj.collect_forum = 1 + uc.collect_forum || 0;
+                } else {
+                    return cb();
+                }
+                UserCount.clean().update(uObj).where({
+                    uid : fav.uid
+                }).done(cb);
+            });
+        },
+        //forum count
+        function(cb){
+            if(fav.type == 1) {
+                Forum.find().where({
+                    id : fav.id
+                }).done(function(err, forum){
+                    if(err || !forum) {
+                        cb(err || '论坛版块不存在！');
+                        return;
+                    }
+                    Forum.clean().update({
+                        collect_count : 1 + forum.collect_count || 0
+                    }).where({
+                        id : fav.id
+                    }).done(cb);
+                });
+            } else {
+                cb();
+            }
+        },
+        //topic count
+        function(cb){
+            if(fav.type == 2) {
+                Topic.find().where({
+                    id : fav.id
+                }).done(function(err, topic){
+                    if(err || !topic) {
+                        cb(err || '主题不存在！');
+                        return;
+                    }
+                    Topic.clean().update({
+                        collect_count : 1 + topic.collect_count || 0
+                    }).where({
+                        id : fav.id
+                    }).done(cb);
+                });
+            } else {
+                cb();
+            }
+        }
+    ], function(err, results){
+        callback && callback(err);
+    });
 }
 
 exports.update = function(){

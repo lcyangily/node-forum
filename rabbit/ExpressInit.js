@@ -37,7 +37,9 @@ module.exports = function(app) {
         }));
 
         //cookie session postbody支持
-        app.use(express.bodyParser());
+        app.use(express.bodyParser({
+            uploadDir : config.base_path + '/uploads'
+        }));
         app.use(express.cookieParser());
         app.use(express.cookieSession({
             secret: config.session_secret

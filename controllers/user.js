@@ -21,10 +21,13 @@ module.exports = {
             filters : ['getUserInHome'],
             controller : function(req, res, next) {
                 var uid = req.params.uid;
+                var page = req.query.page;
                 topicSvc.getListByUid(uid, function(err, topics, page){
                     res.locals.topics = topics;
                     res.locals.pageinfo = page;
                     next(err);
+                }, {
+                    page : page
                 });
             }
         }

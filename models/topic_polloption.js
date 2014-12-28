@@ -17,7 +17,7 @@ module.exports = {
   "voters": {
     "type": "mediumint(9)",
     "allowNull": true,
-    "defaultValue": 0,
+    "defaultValue": "0",
     "comment": "票数"
   },
   "displayorder": {
