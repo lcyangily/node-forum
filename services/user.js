@@ -7,6 +7,7 @@ var UserFriend = new BaseModel('user_friend');
 var UserFollow = new BaseModel('user_follow');
 var UserFav    = new BaseModel('user_favorite');
 var UserFriendRequest = new BaseModel('user_friend_request');
+var ForumModerator = new BaseModel('forum_moderator');
 var Forum      = new BaseModel('forum');
 /*var Topic  = new BaseModel('forum_topic');
 var Reply  = new BaseModel('forum_reply');
@@ -59,6 +60,15 @@ exports.getById = function (id, cb){
     ]).done(function(err, u){
         cb && cb(err, u);
     });
+}
+
+//得到所有版主是当前用户的所有版块
+exports.getMgrForums = function(uid, cb){
+    ForumModerator.findAll().where({
+        uid : uid
+    }).include([
+        Forum.Model
+    ]).done(cb);
 }
 
 /*exports.getFullById = function (id, cb){

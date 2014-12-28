@@ -119,8 +119,8 @@ exports.getFullTopic = function (id, cb, replyPage) {
         cb && cb(err, {
             topic : topic,
             author : author,
-            replys : reply[0],
-            replyPage : reply[1],
+            replys : reply && reply[0],
+            replyPage : reply && reply[1],
             forum : forum,
             ftype : ftype,
             zaners : zaners,

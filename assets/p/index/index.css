@@ -21,6 +21,15 @@ a:link, a:visited {
 a:hover{
     color: #ff6f3d !important;
 }
+.btn-gray{
+    background: #f3f3f3;
+    color: #8c8c8c;
+}
+.btn-gray:hover{
+    background: #fb8318;
+    color: #fff;
+}
+
 .navbar {
     margin-bottom: 0px;
     z-index: 9;

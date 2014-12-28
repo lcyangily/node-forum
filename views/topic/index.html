@@ -232,6 +232,17 @@
         </div>
     {{/replace}}
     {{#replace "topicPubBtn"}}
+        <div class="panel">
+            {{#if _s.user.is_admin}}
+                当前用户是管理员
+            {{else}}
+                {{#if _s.user}}
+                    {{#each _s.mgrForums}}
+                        {{#eq fid ../topic.fid}}当前用户是版主{{/eq}}
+                    {{/each}}
+                {{/if}}
+            {{/if}}
+        </div>
         <div class="panel topic-author">
             <div class="card-mini clearfix">
                 <a class="avatar" href="#">
@@ -256,10 +267,10 @@
                         </em>
                     </div> -->
                     <div class="info">
-                        <button class="btn btn-xs">
+                        <button class="btn btn-xs btn-gray">
                             <span class="glyphicon glyphicon-plus"></span> 加好友
                         </button>
-                        <button class="btn btn-xs">
+                        <button class="btn btn-xs btn-gray">
                             <span class="glyphicon glyphicon-plus"></span> 关注
                         </button>
                     </div>

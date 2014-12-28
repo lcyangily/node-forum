@@ -60,10 +60,16 @@ module.exports = {
         }
     }],
     forum_moderator : [{
-        relation : 'belongsTo',
+        relation : 'belongsTo', //'belongsTo',
         modelName : 'users',
         params : {
             foreignKey : 'uid'
+        }
+    },{
+        relation : 'belongsTo', //'belongsTo',
+        modelName : 'forum',
+        params : {
+            foreignKey : 'fid'
         }
     }],
     user_favorite : [{
@@ -80,7 +86,7 @@ module.exports = {
         }
     }],
     users : [{
-        relation : 'belongsTo',
+        relation : 'belongsTo',    //belongsTo
         modelName : 'user_count',
         params : {
             foreignKey : 'id'

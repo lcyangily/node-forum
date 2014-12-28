@@ -4,7 +4,7 @@ var config = require('../config');
 
 module.exports = function(req, res, next) {
     if(req.session.user) {
-        dealNext(req.session.user);
+        dealNext(req.session);
     } else {
 
         if(!req.cookies) {
@@ -22,15 +22,17 @@ module.exports = function(req, res, next) {
         var token = cInfos[1];
         userSvc.getById(uid, function(err, user){
             if(user && md5(user.weibo_token) == token) {
-                req.session.user = user;
-                dealNext(user);
+                userSvc.getMgrForums(uid, function(err, moderators){
+                    req.session.user = user;
+                    req.session.mgrForums = moderators;
+                    dealNext(req.session);
+                });
             }
         });
     }
 
-    function dealNext(user) {
-        res.locals._s = res.locals._session || {};
-        res.locals._s.user = user;
+    function dealNext(session) {
+        res.locals._s = session || {};
         next();
     }
 }

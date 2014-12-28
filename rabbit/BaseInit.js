@@ -55,6 +55,7 @@ global.loadModel = function(modelName) {
     if(dbModels[modelName]) {
         return dbModels[modelName];
     }
+console.log('------> define model : ' + modelName);
     var obj;
     var model_config = require(path.join(config.base_path, 'models', modelName + config.script_ext));
     var options = {
