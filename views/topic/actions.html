@@ -1,0 +1,67 @@
+<div class="panel panel-module mgr-oper">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{#if _s.user.is_admin}}管理员操作区{{else}}版主操作区{{/if}}</h3>
+    </div>
+    <div class="panel-body">
+        {{#ne topic.top 1}}
+            <button class="btn btn-xs btn-gray"
+                    onclick="LBL.topicChg({{topic.id}}, 'top');">顶置</button>
+        {{/ne}}
+        {{#eq topic.closed 0}}
+            <button class="btn btn-xs btn-gray"
+                    onclick="LBL.topicChg({{topic.id}}, 'closed');">关闭评论</button>
+        {{/eq}}
+        {{#eq topic.is_hot 0}}
+            <button class="btn btn-xs btn-gray"
+                    onclick="LBL.topicChg({{topic.id}}, 'hot');">设为热门</button>
+        {{/eq}}
+        {{#eq topic.digest 0}}
+            <button class="btn btn-xs btn-gray"
+                    onclick="LBL.topicChg({{topic.id}}, 'digest');">设为精华</button>
+        {{/eq}}
+        {{#eq topic.highlight 0}}
+            <button class="btn btn-xs btn-gray"
+                    onclick="LBL.topicChg({{topic.id}}, 'highlight');">高亮显示</button>
+        {{/eq}}
+
+        {{#eq topic.status 0}}
+            <button class="btn btn-xs btn-gray"
+                    onclick="LBL.topicChg({{topic.id}}, 'delete');">删除</button>
+        {{/eq}}
+        <button class="btn btn-xs btn-gray"
+                onclick="LBL.topicToNews({{topic.id}});">推荐到首页</button>
+        {{#if _s.user.is_admin}}
+            {{#ne topic.top_all 1}}
+                <button class="btn btn-xs btn-gray"
+                        onclick="LBL.topicChg({{topic.id}}, 'topall');">全局顶置</button>
+            {{/ne}}
+        {{/if}}
+        <hr>
+        {{#eq topic.top 1}}
+            <button class="btn btn-xs btn-gray" 
+                    onclick="LBL.topicChg({{topic.id}}, 'untop');">取消顶置</button>
+        {{/eq}}
+        {{#eq topic.closed 1}}
+            <button class="btn btn-xs btn-gray"
+                    onclick="LBL.topicChg({{topic.id}}, 'unclosed');">打开评论</button>
+        {{/eq}}
+        {{#eq topic.is_hot 1}}
+            <button class="btn btn-xs btn-gray"
+                    onclick="LBL.topicChg({{topic.id}}, 'unhot');">取消热门</button>
+        {{/eq}}
+        {{#eq topic.digest 1}}
+            <button class="btn btn-xs btn-gray"
+                    onclick="LBL.topicChg({{topic.id}}, 'undigest');">取消精华</button>
+        {{/eq}}
+        {{#eq topic.highlight 1}}
+            <button class="btn btn-xs btn-gray"
+                    onclick="LBL.topicChg({{topic.id}}, 'unhighlight');">取消高亮</button>
+        {{/eq}}
+        {{#if _s.user.is_admin}}
+            {{#eq topic.top_all 1}}
+                <button class="btn btn-xs btn-gray" 
+                        onclick="LBL.topicChg({{topic.id}}, 'untopall');">取消全局顶置</button>
+            {{/eq}}
+        {{/if}}
+    </div>
+</div>

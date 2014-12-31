@@ -19,19 +19,19 @@
     margin-right: 15px;
     background: #f57403;
     color: #fff;
-    width: 70px;
-    height: 70px;
-    font-size: 60px;
+    width: 60px;
+    height: 60px;
+    font-size: 55px;
     text-align: center;
-    line-height: 70px;
-    border-radius: 4px;
+    line-height: 60px;
+    border-radius: 20px;
 }
 .topic-card a{
     color: #333;
     text-decoration: none;
 }
 .topic-card .card-name{
-    height: 47px;
+    height: 38px;
     margin-top: 5px;
 }
 .topic-card h1{
@@ -47,9 +47,9 @@
     margin-top: 10px;
 }
 .topic-card .tc-fav{
-    height: 26px;
-    color: #8c8c8c;
-    margin-top: 3px;
+    /* height: 26px;
+    color: #8c8c8c; */
+    margin-top: 4px;
 }
 .topic-card .tc-fav .btn{
     padding:0px 3px;
@@ -175,18 +175,21 @@
     color: #888;
 }
 /** forum list begin **/
-
+.fclassify-wrap{
+    padding-right: 0px;
+}
 .fclassify-list {
     /* margin: 10px 0 0 10px; */
+    padding-left: 0px;
 }
 .fclassify-list li {
     float: left;
-    margin: 0 6px 6px 0;
+    margin: 0 0px 0px 0;
 }
 .fclassify-list .fclassify-box {
-    width: 296px;
-    height: 105px;
-    padding: 15px 0px 0 15px;
+    width: 225px;
+    height: 65px;
+    padding: 10px 0px 0 10px;
     border-radius: 5px;
     border: 1px solid #ffffff;
 }
@@ -196,27 +199,28 @@
 }
 .fclassify-list .fclassify-pic {
     float: left;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     text-align: center;
     background: #ff5f19;
-    border-radius: 14px;
+    border-radius: 50%;
 }
 .fclassify-list .fclassify-pic a{
     font-size: 30px;
-    line-height: 46px;
+    line-height: 42px;
     color: #fff;
 }
 .fclassify-list .fclassify-pic a:hover{
-    color: #fff;
+    color: #fff !important;
+    text-decoration: none;
 }
 .fclassify-list .fclassify-info {
-    margin-left: 65px;
+    margin-left: 50px;
 }
 .fclassify-list .fclassify-title {
-    font-size: 22px;
+    font-size: 16px;
     font-family: 'Microsoft YaHei';
-    line-height: 22px;
+    line-height: 18px;
 }
 .fclassify-list .fclassify-info .fclassify-data {
     font-size: 12px;
@@ -239,7 +243,7 @@
 }
 .fclassify-list .fclassify-nums {
     color: #999999;
-    margin-top: 3px;
+    margin-top: 5px;/*3*/
 }
 .fclassify-list .fclassify-s {
     color: #999999;

@@ -1,7 +1,0 @@
-var Handlebars = require('handlebars');
-
-Handlebars.registerHelper("json", function(obj, options){
-    return JSON.stringify(obj);
-});
-
-exports = Handlebars;

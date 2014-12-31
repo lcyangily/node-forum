@@ -1,8 +1,9 @@
 /** reset begin **/
+html,body{
+    height: 100%;
+}
 body {
-    background-color: #e5e5e5;
     /* background-color: #f1f1f1; */
-    padding-top: 72px;
     font-size: 12px;
 }
 body, p, input, textarea {
@@ -57,7 +58,7 @@ a:hover{
     /* color: #aaa; */
     color: #777;
     position: relative;
-    padding: 5px;
+    padding: 5px 1px;
     margin-left: 30px;
 }
 .navbar .nav > li a:hover {
@@ -66,7 +67,7 @@ a:hover{
     color: #FF5E52;
     background: none;
 }
-.navbar .nav > li a:before {
+/* .navbar .nav > li a:before {
     content: "";
     position: absolute;
     bottom: 0px;
@@ -86,10 +87,12 @@ a:hover{
     -webkit-transform: scaleX(1);
     -moz-transform: scaleX(1);
     transform: scaleX(1);
-}
+} */
 .navbar .nav > li .current{
     color: #FF5E52;
-    font-weight: bold;
+    padding-bottom: 1px;
+    border-bottom:2px solid #FF5E52;
+    /* font-weight: bold; */
 }
 .navbar .navbar-toggle{
     padding: 12px 0px 0px 16px;
@@ -139,8 +142,8 @@ a:hover{
     position: fixed;
     /* background-color: #fff; */
     background: #fcfcfc;
-    border-top: 3px solid #ff8500;
-    box-shadow: 1px 1px 5px rgba(0,0,0,.08);
+    /* border-top: 3px solid #ff8500; */
+    box-shadow: 0px 2px 4px rgba(0,0,0,.1);
     _position: absolute;
     top: 0;
     left: 0;
@@ -148,7 +151,8 @@ a:hover{
     width: 100%;
 }
 .header .nav{
-    font-size: 18px;
+    /* font-size: 18px; */
+    font-size: 16px;
     margin-top: 20px;
 }
 .header .btns-wrap{
@@ -300,4 +304,24 @@ a:hover{
 }
 .nav-sm > li > a{
     padding: 5px 10px;
+}
+.wrapper{
+    min-height: 100%;
+    background-color: #e5e5e5;
+}
+.wrapper-main{
+    padding-top: 72px;
+    padding-bottom: 100px;
+}
+.footer{
+    padding: 30px 0px;
+    background: #333;
+    margin-top: -100px;
+}
+.footer,.footer .link{
+    display: block;
+    font-size: 12px;
+    color: #999;
+    line-height: 20px;
+    text-align: center;
 }

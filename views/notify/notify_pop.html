@@ -1,0 +1,34 @@
+{{#extend "layout"}}
+    {{#append "css"}}
+        <style type="text/css">
+        body{
+            padding-top: 0px;
+        }
+        </style>
+    {{/append}}
+    {{#replace "navWrap"}}{{/replace}}
+    {{#replace "bodyWrap"}}
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <h4>{{#if error}}
+                    {{error}}
+                {{else}}
+                    {{success}}
+                {{/if}}
+            </h4>
+            </p>
+            <p style="margin-top:20px;">
+                <button type="button" id="J_colse" class="btn btn-danger">确定</button>
+            </p>
+        </div>
+    {{/replace}}
+    {{#replace "footer"}}{{/replace}}
+    {{#replace "js"}}
+    <script type="text/javascript">
+    require(['jquery'], function($){
+        $('#J_colse').on('click', function(e){
+            window.frameElement.trigger('close');
+        });
+    });
+    </script>
+    {{/replace}}
+{{/extend}}

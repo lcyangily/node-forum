@@ -2,9 +2,11 @@
     {{#append "css"}}
         <link rel="stylesheet" href="/assets/p/forum/index.css">
     {{/append}}
+    {{#replace "breadcrumb"}}
+    {{/replace}}
     {{#replace "content"}}
         {{#if error}}
-            <div class="alert alert-error" >    
+            <div class="alert alert-warning" >    
                 <strong>
                 {{#if error.message}}
                     {{error.message}}
@@ -14,27 +16,29 @@
                 </strong>
             </div>
         {{/if}}
-        <div class="panel index-panel">
-            <form class="form-horizontal" role="form" action="/login" method="post">
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="loginname">
+        <div class="panel">
+            <div class="panel-body">
+                <form class="form-horizontal" role="form" action="/login" method="post">
+                    <input type="hidden" name="originalUrl" value="{{originalUrl}}" />
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="loginname">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" name="passwd">
-                    </div>  
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">登录</button>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="passwd">
+                        </div>  
                     </div>
-                </div>
-
-            </form>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">登录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     {{/replace}}
     {{#append "js"}}

@@ -62,25 +62,17 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
             }
         })(),
         addFriend : function(uid){
-            /*$.ajax({
+            $.ajax({
+                type : 'post',
                 url : '/friend/add/' + uid,
-                data : data,
+                //data : data,
                 success : function(data){
-                    if(data) {
-                        if(data.result == 1) {
-                            Dialog.tip(successTip);
-                            return;
-                        } else if(data.result == 2) {
-                            Dialog.tip(repeatTip);
-                            return;
-                        }
-                    }
-                    Dialog.tip(failureTip);
+                    Dialog.tip((data && data.msg) || '操作成功！');
                 },
-                error : function(){
-                    Dialog.tip(failureTip);
+                error : function(err){
+                    Dialog.tip(err.responseText);
                 }
-            });*/
+            });
         },
         removeFriend : function(uid){
 
@@ -178,7 +170,7 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
                 }
             });
         },
-        attend : function(id, type){
+        /*attend : function(id, type){
             if(!id) {
                 return;
             }
@@ -212,7 +204,7 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
                     Dialog.tip(failureTip);
                 }
             });
-        },
+        },*/
         addFavorite : function(){
             var url = "http://www.linbilin.com/";
             var title = "邻比邻";
@@ -223,7 +215,55 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
             } else {
                 Dialog.tip("<span>对不起，您的浏览器不支持此操作！<br/>请您使用菜单栏或者Ctrl+D收藏本站。</span>");
             }
-        }
+        },
+        //'top', 'untop', 'hot', 'unhot', 'digest', 'undigest', 
+        //'highlight', 'unhighlight', 'closed', 'unclosed', 'delete'
+        topicChg : function(tid, type) {
+            $.ajax({
+                type : 'post',
+                url : '/topic/'+tid+'/'+type,
+                dataType : 'json',
+                success : function(data){
+                    Dialog.tip((data && data.msg) || '操作成功!');
+                },
+                error : function(err){
+                    Dialog.tip(err.responseText);
+                }
+            });
+        },
+        //主题推荐到首页新闻
+        topicToNews : (function (){
+            var d;
+            return function(tid){
+                var token = new Date().getTime();
+                if(!d) {
+                    d = new Dialog({
+                        content : '/topic/' + tid + '/tonews',
+                        effect : 'fade',
+                        title : '推荐到首页',
+                        width:540,
+                        modal : true
+                    });
+                }
+                d._off('iframeload');
+                d._on({
+                    iframeload : function(e){
+                        var $iframe = this.state.$iframe;
+                        if($iframe && $iframe[0]) {
+                            if($iframe[0].contentWindow) {
+                                $iframe[0].contentWindow.token = token;
+                            }
+                        }
+                    },
+                    close : function(evt, data){
+                        if(data && data.code == 'tonewssuccess') {
+                            Dialog.tip('操作成功!');
+                        }
+                    }
+                });
+                d.open();
+            }
+        })(),
     });
     
     return LBL;

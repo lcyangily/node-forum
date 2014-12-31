@@ -107,18 +107,20 @@ exports.getFriends = function(uid, cb, page){
 
 //添加好友请求
 exports.addFriendRequest = function(myid, fuid, note, cb){
-    User.getById(fuid, function(err, fuser){
+    this.getById(fuid, function(err, fuser){
         if(err || !fuser) {
-            cb && cb(!fuser ? '请求用户不存在！' : err);
-            return;
+            return cb && cb(!fuser ? '请求用户不存在！' : err);
         }
 
-        UserFriendRequest.find().where().done(function(err, r){
+        UserFriendRequest.find().where({
+            uid : myid,
+            fuid : fuid
+        }).done(function(err, r){
 
             if(err || r) {
-                cb && cb(r ? '好友请求已发送！' : err);
-                return;
+                return cb && cb(r ? '好友请求已发送，请勿重复操作！' : err);
             }
+console.log('--------------------> aaa ');
 
             UserFriendRequest.add({
                 uid : myid,

@@ -92,6 +92,12 @@ module.exports = {
     "defaultValue": "0",
     "comment": "是否精华"
   },
+  "top_all": {
+    "type": "tinyint(4)",
+    "allowNull": true,
+    "defaultValue": "0",
+    "comment": "是否全局顶置"
+  },
   "top": {
     "type": "tinyint(4)",
     "allowNull": true,

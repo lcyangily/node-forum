@@ -91,5 +91,12 @@ module.exports = {
         params : {
             foreignKey : 'id'
         }
+    }],
+    news_topic : [{
+        relation : 'hasOne',
+        modelName : 'forum_topic',
+        params : {
+            foreignKey : 'id'
+        }
     }]
 }

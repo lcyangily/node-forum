@@ -5,12 +5,11 @@ module.exports = {
     "allowNull": false,
     "defaultValue": null,
     "comment": null,
-    "primaryKey": true,
-    "autoIncrement": true
+    "primaryKey": true
   },
   "title": {
     "type": "varchar(300)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "",
     "comment": null
   },
@@ -83,7 +82,7 @@ module.exports = {
   "create_time": {
     "type": "datetime",
     "allowNull": true,
-    "defaultValue": null,
+    "defaultValue": Sequelize.NOW,
     "comment": "添加时间"
   },
   "audit_uid": {

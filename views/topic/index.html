@@ -10,10 +10,21 @@
         <div class="panel">
             <div id="topic" class="panel-body">
                 <div class="topic-title">
-                    {{#if topic.top }}
-                        <span class="label label-default">置顶</span>
-                    {{/if}}
-                    <h1>{{ topic.title }}</h1>
+                    <h1>
+                        {{ topic.title }}
+                        {{#if topic.top }}
+                            <span class="label label-default">置顶</span>
+                        {{/if}}
+                        {{#if topic.highlight }}
+                            <span class="label label-default">高亮</span>
+                        {{/if}}
+                        {{#if topic.digest }}
+                            <span class="label label-default">精华</span>
+                        {{/if}}
+                        {{#if topic.is_hot }}
+                            <span class="label label-default">热门</span>
+                        {{/if}}
+                    </h1>
                     <div class="info">
                         <em class="info-label">
                             <span>
@@ -36,8 +47,8 @@
                     <div class="markdown-text">
                         {{{ topic.content }}}
                     </div>
-                    <div class="ext-info">
-                        {{#eq topic.type 1}}
+                    {{#eq topic.type 1}}
+                        <div class="ext-info">
                             <div class="type-stat">
                                 <strong>
                                     {{#eq ext.poll.multiple 1}}多选{{else}}单选{{/eq}}投票
@@ -137,8 +148,8 @@
                                 });
                                 </script>
                             {{/if}}
-                        {{/eq}}
-                    </div>
+                        </div>
+                    {{/eq}}
                 </div>
                 <div class="topic-user clearfix">
                     <div class="zans clearfix">
@@ -153,7 +164,8 @@
                         </button>
                         <span class="zanlogs">
                             {{#each zaners}}
-                                <a href="/user/{{user.id}}" class="tooltip-trigger">
+                                <a href="/user/{{user.id}}" class="tooltip-trigger" 
+                                    data-tip-title="{{user.name}}">
                                     <img src="{{#if user.head_pic ~}}
                                                 {{user.head_pic}}
                                               {{~ else ~}}
@@ -224,25 +236,29 @@
                 <h3 class="panel-title">说几句</h3>
             </div>
             <div class="panel-body">
-                <form action="/reply/add/{{topic.id}}" method="post">
-                    <textarea class="reply-area ckeditor" name="content"></textarea>
-                    <input type="submit" value="提交" class="btn btn-default" />
-                </form>
+                {{#eq topic.closed 1}}
+                    <p class="closed-tip">已关闭评论</p>
+                {{else}}
+                    <form action="/reply/add/{{topic.id}}" method="post">
+                        <textarea class="reply-area ckeditor" name="content"></textarea>
+                        <input type="submit" value="提交" class="btn btn-default" />
+                    </form>
+                {{/eq}}
             </div>
         </div>
     {{/replace}}
     {{#replace "topicPubBtn"}}
-        <div class="panel">
-            {{#if _s.user.is_admin}}
-                当前用户是管理员
-            {{else}}
-                {{#if _s.user}}
-                    {{#each _s.mgrForums}}
-                        {{#eq fid ../topic.fid}}当前用户是版主{{/eq}}
-                    {{/each}}
-                {{/if}}
+        {{#if _s.user.is_admin}}
+            {{sub "topic/actions"}}
+        {{else}}
+            {{#if _s.user}}
+                {{#each _s.mgrForums}}
+                    {{#eq fid ../topic.fid}}
+                        {{sub "topic/actions"}}
+                    {{/eq}}
+                {{/each}}
             {{/if}}
-        </div>
+        {{/if}}
         <div class="panel topic-author">
             <div class="card-mini clearfix">
                 <a class="avatar" href="#">
@@ -267,33 +283,43 @@
                         </em>
                     </div> -->
                     <div class="info">
-                        <button class="btn btn-xs btn-gray">
+                        <button class="btn btn-xs btn-gray" onclick="LBL.addFriend({{author.id}});">
                             <span class="glyphicon glyphicon-plus"></span> 加好友
                         </button>
-                        <button class="btn btn-xs btn-gray">
+                        <button class="btn btn-xs btn-gray" onclick="LBL.follow({{author.id}});">
                             <span class="glyphicon glyphicon-plus"></span> 关注
                         </button>
                     </div>
                 </div>
             </div>
             <div class="x-grid-row topic-fast-group">
-                <div class="x-grid-1-2">
+                <div class="x-grid-1-3">
                     <span class="topic-fast-btn">
-                        <b>
+                        <b><a href="/user/{{author.id}}/topic">
                             {{#if author.user_count.topics}}
                                 {{author.user_count.topics}}
-                            {{else}}0{{/if}}</b>
+                            {{else}}0{{/if}}</a>
+                        </b>
                         <p>主题</p>
                     </span>
                 </div>
-                <div class="x-grid-1-2">
-                    <span class="topic-fast-btn last">
-                        <b>
+                <div class="x-grid-1-3">
+                    <span class="topic-fast-btn">
+                        <b><a href="/user/{{author.id}}/posts">
                             {{#if author.user_count.replys}}
                                 {{author.user_count.replys}}
-                            {{else}}0{{/if}}
+                            {{else}}0{{/if}}</a>
                         </b>
                         <p>帖子</p>
+                    </span>
+                </div>
+                <div class="x-grid-1-3">
+                    <span class="topic-fast-btn last">
+                        <b><a href="/user/{{author.id}}/friends">
+                            {{#if author.user_count.friends}}
+                                {{author.user_count.friends}}
+                            {{else}}0{{/if}}</a></b>
+                        <p>好友</p>
                     </span>
                 </div>
             </div>
@@ -335,11 +361,13 @@
         </div>
     {{/replace}}
     {{#replace "js"}}
-    <script type="text/javascript" src="/assets/c/gallery/ckeditor/ckeditor.js"></script>
+    {{#ne topic.closed 1}}
+        <script type="text/javascript" src="/assets/c/gallery/ckeditor/ckeditor.js"></script>
+    {{/ne}}
     <script type="text/javascript">
     /*require(['jquery', 'umeditor'], function($, UM){
         alert(UM);
     });*/
     </script>
     {{/replace}}
-{{/extend}}cmd
+{{/extend}}

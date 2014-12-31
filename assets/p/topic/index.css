@@ -76,6 +76,10 @@
     padding-left: 0px;
     margin-right: 5px;
 }
+.closed-tip{
+    text-align: center;
+    color: #999;
+}
 textarea.reply-area{
     display: block;
     width: 100%;
@@ -130,4 +134,12 @@ textarea.reply-area{
 .topic-author .topic-fast-group{
     padding-bottom: 15px;
     margin-top: 5px;
+}
+.mgr-oper .btn{
+    margin-bottom: 5px;
+    margin-right: 1px;
+}
+.mgr-oper hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

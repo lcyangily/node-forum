@@ -19,8 +19,8 @@
     {{#replace "contentBefore"}}
         {{#ne forum.type -1}}
             <div class="grid-row">
-                <div class="main-content grid-lg-30 grid-md-24 grid-sm-18 topic-card">
-                    <div class="moderator tc-label">版主: 
+                <div class="main-content grid-lg-30 grid-md-24 grid-sm-18">
+                    <!-- <div class="moderator tc-label">版主: 
                         <span>
                             {{#each masters}}
                                 {{#unless @first}},{{/unless}}
@@ -38,11 +38,40 @@
                         </button>
                     </div>
                     <div class="tc-label">
-                        <!-- <span>今日:<strong></strong></span>
-                        <span class="pipe">|</span> -->
+                        <span>今日:<strong></strong></span>
+                        <span class="pipe">|</span>
                         <span>主题:<strong>{{forum.topics}}</strong></span>
                         <span class="pipe">|</span>
                         <span>回复:<strong>{{forum.posts}}</strong></span>
+                    </div> -->
+
+
+                    <div class="topic-card clearfix">
+                        <div class="moderator tc-label">版主: 
+                            <span>
+                                {{#each masters}}
+                                    {{#unless @first}},{{/unless}}
+                                    <a href="/user/{{uid}}">{{user.name}}</a>
+                                {{/each}}
+                            </span>
+                        </div>
+                        <div class="card-logo iconfont">{{{forum.pic}}}</div>
+                        <div class="card-name">
+                            <a href="/forum/{{forum.id}}">
+                                <h1>{{forum.name}}</h1>
+                            </a>
+                            <button type="button" onclick="LBL.collectForum({{forum.id}})"
+                                    class="btn btn-xs tc-fav btn-gray">
+                                <span class="glyphicon glyphicon-heart"></span> 收藏本版
+                            </button>
+                        </div>
+                        <div class="tc-label">
+                            <!-- <span>今日:<strong></strong></span>
+                            <span class="pipe">|</span> -->
+                            <span>主题:<strong>{{forum.topics}}</strong></span>
+                            <span class="pipe">|</span>
+                            <span>回复:<strong>{{forum.posts}}</strong></span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,10 +1,10 @@
 <div class="cell {{#calc @index '%2 == 0' }}odd{{/calc}}">
-    <a class="user-avatar" href="/user/{{author_id }}">
+    <a class="user-avatar" href="/user/{{author_id }}" data-tip-title="{{user.name}}">
         <img src="{{#if user.head_pic ~}}
                     {{user.head_pic}}
                   {{~ else ~}}
                     /assets/images/head.gif
-                  {{~/if}}" title="{{user.name }}" />
+                  {{~/if}}" />
     </a>
     <div class="topic-title-wrapper">
         <h2 class="topic-title">
@@ -18,9 +18,18 @@
                 <a href="/forum/{{forum.id}}">{{forum.name}}</a>
             {{/gt ~}}
             ]</span>
-            {{#if top }}
-                <span class="label label-default">置顶</span>
-            {{/if}}
+            {{#and (eq curblock.type -1) (eq top_all 1)}}
+                <span class="label label-default label-primary">置顶</span>
+            {{/and}}
+            {{#ne curblock.type -1}}
+                {{#eq top_all 1}}
+                    <span class="label label-default label-primary">置顶</span>
+                {{else}}
+                    {{#eq top 1}}
+                        <span class="label label-default label-info">置顶</span>
+                    {{/eq}}
+                {{/eq}}
+            {{/ne}}
         </h2>
         <div class="info">
             {{!--<!-- <em>

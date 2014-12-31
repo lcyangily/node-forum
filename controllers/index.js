@@ -16,6 +16,7 @@ module.exports = {
             controller : function(req, res, next) {
                 console.log('-----> user : ' + req.session.user);
                 newsSvc.getList(function(err, topics, page){
+                    //console.log('-----------> topics : ' + topics);
                     //console.log('-----------> topics.length : ' + topics.length);
                     res.locals.topics = topics;
                     res.locals.page = page;
@@ -118,6 +119,7 @@ module.exports = {
             filters : [],
             //template : '',
             controller : function(req, res, next){
+                var originalUrl = req.body.originalUrl;
                 userSvc.login({
                     loginname : req.body.loginname,
                     password : req.body.passwd
@@ -130,6 +132,7 @@ module.exports = {
                             });
                         } else {
                             return res.render('login/login', {
+                                originalUrl : originalUrl,
                                 error : err
                             });
                         }
@@ -154,7 +157,7 @@ module.exports = {
                                     user : user
                                 });
                             } else {
-                                return res.redirect('/');
+                                return res.redirect(originalUrl || '/');
                             }
                         });
                     }

@@ -263,13 +263,13 @@ BaseModel.prototype = {
         this.action = null;
         this.action = function(callback) {
             if (self.Model.db_type == 'sql') {
-console.log('----> update begin done ... result : ' + self.result);
+
                 if (self.result) {
                     var fields, k, v;
                     fields = [];
                     for (k in kv) {
                         v = kv[k];
-console.log('-------> Model.rawAttributes : ' + self.Model.rawAttributes[k]);
+//console.log('-------> Model.rawAttributes : ' + self.Model.rawAttributes[k]);
                         if (self.Model.rawAttributes[k]) {
                             fields.push(k);
                         }
@@ -352,7 +352,7 @@ console.log('-------> Model.rawAttributes : ' + self.Model.rawAttributes[k]);
                     } else {
                         var obj = {}
                         obj[key] = data[key] * 1 + 1;
-                        console.log(obj)
+                        //console.log(obj)
                         data.updateAttributes(obj, [key]).success(function(data) {
                             callback(null, data);
                         }).error(function(e) {
@@ -443,8 +443,11 @@ console.log('-------> Model.rawAttributes : ' + self.Model.rawAttributes[k]);
         var self = this;
         this.action = null;
         this.action = function(callback) {
+            var where = self.params.where;
             if (self.Model.db_type == 'sql') {
-                self.Model.max(field).success(function(max){
+                self.Model.max(field, {
+                    where : where
+                }).success(function(max){
                     callback && callback(null, max);
                 }).error(function(err){
                     callback && callback(err);
@@ -460,8 +463,11 @@ console.log('-------> Model.rawAttributes : ' + self.Model.rawAttributes[k]);
         var self = this;
         this.action = null;
         this.action = function(callback) {
+            var where = self.params.where;
             if (self.Model.db_type == 'sql') {
-                self.Model.min(field).success(function(min){
+                self.Model.min(field, {
+                    where : where
+                }).success(function(min){
                     callback && callback(null, min);
                 }).error(function(err){
                     callback && callback(err);
@@ -489,7 +495,7 @@ _.extend(BaseModel.prototype, {
         return this;
     },
     page: function(p){
-console.log('======> page : ' + page + '; pageSize : ' + pageSize);
+//console.log('======> page : ' + page + '; pageSize : ' + pageSize);
         var page = (p && p.page) || 1;
         var pageSize = (p && p.pageSize) || 10;
         var start = (page - 1) * pageSize;
@@ -504,15 +510,31 @@ console.log('======> page : ' + page + '; pageSize : ' + pageSize);
         this.params.fields = fields;
         return this;
     },
+    //{a:desc}--> ['a', 'desc']
     order: function(order) {
         if (this.Model.db_type == 'sql') {
-            var order_str = '';
-            for (var i in order) {
-                order_str += i + ' ' + order[i] + ' '
+            var order_arr = [];
+            if(typeof order == 'string') {
+                order_arr.push(order);
+            } else if(_.isArray(order)) {
+                for(var i = 0; i < order.length; i++) {
+                    if(typeof order[i] == 'string' || _.isArray(order[i])) {
+                        order_arr.push(order[i]);
+                    } else {
+                        for (var i in order) {
+                            order_arr.push([i, order[i]]);
+                        }
+                    }
+                }
+            } else {
+                for (var i in order) {
+                    order_arr.push([i, order[i]]);
+                }
             }
-            this.params.order = order_str;
+            
+            this.params.order = order_arr;
         } else {
-            this.params.order = order
+            this.params.order = order;
         }
         return this;
     },

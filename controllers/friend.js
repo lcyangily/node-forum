@@ -12,8 +12,13 @@ module.exports = {
             controller : function(req, res, next){
                 var uid = req.params.uid;
                 var note = req.body.note;
-                userSvc.addFriendRequest(req.session.user.id, uid, note, function(err){
-                    next(err || '添加请求发送成功!');
+                userSvc.addFriendRequest(req.session.user.id, uid, note, function(err, uf){
+                    if(err) return next(err);
+
+                    return res.send(200, {
+                        code : 1,
+                        msg : '请求发送成功，请等待对方通过！'
+                    });
                 });
             }
         }

@@ -9,83 +9,38 @@
                 <div class="article-list">
                     <div class="clearfix article-box">
                         <a href="/topic/{{id}}" class="a-img" target="_blank">
-                            <img src="{{news_topic.img}}">
+                            <img src="{{img}}">
                         </a>
                         <div class="article-box-ctt">
                             <h4>
                                 <a href="/topic/{{id}}" target="_blank">
-                                    {{~#if news_topic.title}}
-                                        {{news_topic.title}}
-                                    {{~ else ~}}
+                                    {{~#if title}}
                                         {{title}}
+                                    {{~ else ~}}
+                                        {{forum_topic.title}}
                                     {{/if ~}}
                                 </a>
                             </h4>
                             <div class="box-other">
                                 <span class="source-quote">
-                                    <a class="hx-card" href="/user/{{user.id}}" target="_blank">
-                                        {{user.name}}
+                                    <a class="hx-card" href="/user/{{forum_topic.user.id}}" target="_blank">
+                                        {{forum_topic.user.name}}
                                     </a>
                                 </span>
-                                <time>{{moment news_topic.create_time format='YYYY-MM-DD hh:mm:ss'}}</time>
+                                <time>{{moment create_time format='YYYY-MM-DD hh:mm:ss'}}</time>
                             </div>
                             <div class="article-summary">
-                                {{#if news_topic.content}}
-                                    {{news_topic.content}}
+                                {{#if content}}
+                                    {{{string (string content 'stripTags') 'truncate' 250}}}
                                 {{else}}
-                                    {{content}}
+                                    {{{string (string forum_topic.content 'stripTags') 'truncate' 250}}}
                                 {{/if}}
                             </div>
                         </div>
                     </div>
                 </div>
             {{/each}}
-            <div class="article-list">
-                <div class="clearfix article-box ">
-                    <a href="/article/43735/1.html" class="a-img" target="_blank">
-                        <img src="#">
-                    </a>
-                    <div class="article-box-ctt">
-                        <h4><a href="#" target="_blank">爱奇艺发布Q3中国动漫指数，视频网站已成本土动漫孵化器</a>
-                        </h4>
-                        <div class="box-other">
-                            <span class="source-quote"><a class="hx-card" userid="328034" href="/member/328034.html" target="_blank">陈昌业</a>
-                                <a href="/renzheng.html?#hxtdrz" target="_blank" class="c-hxrz hxfwtd" title="虎嗅团队"></a>
-                            </span>
-                            <time>2014-10-01 20:12:42</time>
-                        </div>
-                        <div class="article-summary">包括爱奇艺在内的这些视频平台所提供的孵化机制，不仅可以为上海美影厂这样的老牌动漫制作机构找到新的未来，亦或能解决杨文艳所提出的动画电影“无解”难题。</div>
-                        <p class="tags-box"><a href="/tags/3439.html" target="_blank">视频网站</a><a href="/tags/180.html" target="_blank">爱奇艺</a><a href="/tags/3459.html" target="_blank">动漫</a><i class="i-icon-bottom"></i>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <ul class="pagination ">
-                <li class="disabled"><a>«</a>
-                </li>
-                <li class="disabled"><a>1</a>
-                </li>
-                <li><a href="?2">2</a>
-                </li>
-                <li><a href="?3">3</a>
-                </li>
-                <li><a href="?4">4</a>
-                </li>
-                <li><a href="?5">5</a>
-                </li>
-                <li><a href="?6">6</a>
-                </li>
-                <li><a href="?7">7</a>
-                </li>
-                <li><a href="?8">8</a>
-                </li>
-                <li><a href="?9">9</a>
-                </li>
-                <li><a href="?10">10</a>
-                </li>
-                <li><a href="?100">»</a>
-                </li>
-            </ul>
+            {{page totalPages=page.totalPages current=page.current}}
         </div>
     {{/replace}}
     {{#append "js"}}

@@ -233,9 +233,9 @@
     background-color: #f57403;
     color: #fff;
     display: block;
-    font-size: 15px;
-    line-height: 18px;
-    padding: 8px;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 10px;
     margin-bottom: 10px;
 }
 .topic-pub-btn:hover, 
@@ -435,3 +435,31 @@ a.topic-pub-btn:active {
     padding: 5px 10px;
     border-bottom: 2px solid #eee;
 } */
+/** tip **/
+.line-tip{
+    padding:4px 8px;
+    box-shadow: none;
+}
+.pure-tip{
+    padding:4px 8px;
+    box-shadow: none;
+    border:none;
+    background: #f57403;
+    color: #fff;
+}
+.pure-tip .sib-tip-arrow.sib-tip-top .sib-tip-above,
+.pure-tip .sib-tip-arrow.sib-tip-top .sib-tip-under{
+    border-color: transparent transparent #f57403 transparent;
+}
+.pure-tip .sib-tip-arrow.sib-tip-bottom .sib-tip-above,
+.pure-tip .sib-tip-arrow.sib-tip-bottom .sib-tip-under{
+    border-color: #f57403 transparent transparent transparent;
+}
+.pure-tip .sib-tip-arrow.sib-tip-left .sib-tip-above,
+.pure-tip .sib-tip-arrow.sib-tip-left .sib-tip-under{
+    border-color: transparent #f57403 transparent transparent;
+}
+.pure-tip .sib-tip-arrow.sib-tip-right .sib-tip-above,
+.pure-tip .sib-tip-arrow.sib-tip-right .sib-tip-under{
+    border-color: transparent transparent transparent #f57403;
+}

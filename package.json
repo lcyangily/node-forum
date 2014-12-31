@@ -37,6 +37,7 @@
     "underscore": "*",
     "validator": "^3.22.0",
     "walkdo": "^0.9.5",
-    "queuedo": "~0.9.8"
+    "queuedo": "~0.9.8",
+    "string": "~3.0.0"
   }
 }

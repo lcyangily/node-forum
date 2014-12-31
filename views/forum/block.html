@@ -5,13 +5,13 @@
     {{#replace "breadcrumbPath"}}
         <li><a href="/block">论坛板块</a></li>
     {{/replace}}
-    {{#replace "content"}}
+    {{#replace "contentWrap"}}
         {{#if favs}}
             <div class="panel">
                 <div class="panel-heading">
                     <div class="panel-title">我收藏的版块</div>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body fclassify-wrap">
                     <ul class="fclassify-list clearfix">
                         {{#each favs}}
                             <li class="clearfix">
@@ -24,7 +24,7 @@
                                             <a href="/forum/{{forum.id}}">{{forum.name}}</a>
                                             <!-- <span class="fclassify-data">1</span> -->
                                         </div>
-                                        <div class="fclassify-desc">{{forum.desc}}</div>
+                                        {{!--<div class="fclassify-desc">{{forum.desc}}</div>--}}
                                         <div class="fclassify-nums">
                                             <span class="fclassify-s">主题：</span>{{forum.topics}}
                                             <span class="pipe">|</span>
@@ -44,7 +44,7 @@
                 <div class="panel-heading">
                     <div class="panel-title">{{name}}</div>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body fclassify-wrap">
                     <ul class="fclassify-list clearfix">
                         {{#each children}}
                             <li class="clearfix">
@@ -57,7 +57,7 @@
                                             <a href="/forum/{{id}}">{{name}}</a>
                                             <!-- <span class="fclassify-data">1</span> -->
                                         </div>
-                                        <div class="fclassify-desc">{{desc}}</div>
+                                        {{!--<div class="fclassify-desc">{{desc}}</div>--}}
                                         <div class="fclassify-nums">
                                             <span class="fclassify-s">主题：</span>{{topics}}
                                             <span class="pipe">|</span>

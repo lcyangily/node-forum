@@ -242,6 +242,8 @@ define(function(require, exports, module){
                     if(typeof content === 'string') {
                         $content.html(content);
                     } else if(content) {
+                        var $cntInner = $(content).show();
+                        $cntInner.appendTo($content);
                         $content.append(content);
                     }
                     this.render();

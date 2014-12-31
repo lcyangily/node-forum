@@ -3,7 +3,11 @@ var moment = require('moment');
 var forumSvc  = loadService('forum');
 var topicSvc  = loadService('topic');
 var userSvc   = loadService('user');
+var newsSvc   = loadService('news');
+var News      = new BaseModel('news_topic');
 var async     = require('async');
+var config    = require('../config');
+var fs        = require('fs');
 var sanitize  = require('html-css-sanitizer').sanitize;
 var validator = require('validator');
 
@@ -272,6 +276,89 @@ module.exports = {
                         msg : '投票成功！'
                     });
                 });
+            }
+        }
+    },
+    '/:tid/tonews' : {
+        get : {
+            filters : ['checkLogin'],
+            template : 'topic/tonews',
+            controller : function(req, res, next){
+                var tid = req.params.tid;
+                topicSvc.getById(tid, function(error, topic){
+                    res.locals.topic = topic;
+                    News.find().where({
+                        id : tid
+                    }).done(function(err, news){
+                        if(err || news) {
+                            return res.render('notify/notify_pop', {
+                                error : news ? '已经推荐到首页，请勿重复操作！' : err
+                            });
+                        }
+                        next();
+                    });
+                });
+            }
+        },
+        post : {
+            filters : ['checkLogin'],
+            controller : function(req, res, next){
+                var tid = req.params.tid;
+                var title = req.body.title;
+                var content = req.body.content;
+
+                var iinfo = req.files.img;
+                var origName= iinfo.originalFilename;
+                var extName = origName.substring(origName.lastIndexOf('.'));
+                var tmpPath = iinfo.path;
+                var newName = new Date().getTime() + extName;
+                var newPath = config.base_path + '/uploads/' + newName;
+                var webPath = '/uploads/' + newName;
+
+                fs.rename(tmpPath, newPath, function(err){
+                    if(err) {
+                        return res.render('notify/notify_pop', {
+                            error : '图片上传失败！:' + err
+                        });
+                    }
+                    newsSvc.add({
+                        id : tid,
+                        img : webPath,
+                        title : null, //title,
+                        content : null, //content
+                    }, req.session.user, function(err, news){
+                        if(err) return res.render('notify/notify_pop', {
+                            error : err
+                        });
+
+                        return res.render('notify/notify_pop', {
+                            success : '操作成功！'
+                        });
+                    });
+                });
+            }
+        }
+    },
+    '/:tid/:type' : {
+        post : {
+            filters : ['checkLogin'],
+            controller : function(req, res, next){
+                var tid = req.params.tid;
+                var type = req.params.type;
+                //支持的操作类型
+                var all = [ 'top', 'untop', 'hot', 'unhot', 'digest', 
+                            'undigest', 'highlight', 'unhighlight', 
+                            'closed', 'unclosed', 'delete', 'topall', 'untopall'];
+
+                if(_.contains(all, type) && _.isFunction(topicSvc[type])){
+                    topicSvc[type](tid, req.session.user, function(err, ret){
+                        if(err) return next(err);
+                        return res.send(200, {
+                            code : 1,
+                            msg : '操作成功！'
+                        });
+                    });
+                }
             }
         }
     }

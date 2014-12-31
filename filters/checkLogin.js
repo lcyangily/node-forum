@@ -4,7 +4,10 @@ module.exports = function(req, res, next) {
         if(req.xhr){
             return res.send(403, '__requiredLogin-noLogin');
         } else {
-            return res.render('login', {error : '您尚未登录'});
+            return res.render('login/login', {
+                originalUrl : req.originalUrl,
+                error : '您尚未登录'
+            });
         }
         //return res.send(403, 'forbidden!');
     }

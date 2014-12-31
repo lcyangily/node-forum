@@ -14,7 +14,6 @@ var forumSvc = loadService('forum');
 var userSvc  = loadService('user');
 
 exports.getById = function (id, cb) {
-    console.log('topic getbyid ... ');
     async.waterfall([
         //得到帖子内容
         function(callback){
@@ -132,7 +131,8 @@ exports.getFullTopic = function (id, cb, replyPage) {
 //面向公众的通用查询
 exports.getListCommon = function(where, order, cb, page){
     var p = _.extend({page : 1, pageSize : 20}, page);
-    var o = _.extend({create_time : 'desc'}, order);
+    //var o = _.extend({create_time : 'desc'}, order);
+    var o = order || {create_time : 'desc'};
     var w = _.extend({
         status : 0
     }, where);
@@ -145,14 +145,23 @@ exports.getListCommon = function(where, order, cb, page){
         ]).where(w).order(o).page(p).done(cb);
 }
 
+//论坛首页列表
 exports.getList = function(cb, page){
-    this.getListCommon(null, null, cb, page);
+    this.getListCommon(null, [
+        ['top_all', 'desc'],
+        ['create_time', 'DESC']
+    ], cb, page);
 }
 
+//分版列表
 exports.getListByFid = function(fid, cb, page){
     this.getListCommon({
         fid : fid
-    }, null, cb, page);
+    }, [
+        ['top_all', 'desc'],
+        ['top', 'desc'],
+        ['create_time', 'DESC']
+    ], cb, page);
 }
 
 exports.getListByFtypeid = function(ftypeid, cb, page){
@@ -208,8 +217,7 @@ exports.zan = function(tid, uid, cb){
                     }).where({
                         id : tid
                     }).done(function(err, t){
-                        console.log('--------------> topic update err : ' + err);
-                        //callback(err);
+                        if(err) console.error(err);
                     });
                 } catch(e) {
                     console.error(e);
@@ -478,4 +486,146 @@ exports.vote = function(tid, user, poids, callback){
             });
         });
     });
+}
+
+exports.chgState = function(tid, user, key, value, prop, limit, callback){
+
+    async.waterfall([
+        function(cb){
+            Topic.findById(tid).done(function(error, topic) {
+                cb(error, topic);
+            });
+        },
+        function(topic, cb) {   //权限判断
+
+            if(limit.mgr && user.is_admin == 1) {    //管理员
+                cb(null, topic);
+            } else if(limit.author && user.id == topic.author_id) { //作者
+                cb(null, topic);
+            } else if(limit.master) {    //版主
+                forumSvc.getMasters(topic.fid, function(err, masters){
+                    if(masters && masters.length) {
+                        for(var i = 0; i < masters.length; i++) {
+                            if(masters[i].uid == user.id) {
+                                return cb(null, topic);
+                            }
+                        }
+                    }
+                    cb('您无操作权限！');
+                });
+            } else {
+                cb(null, topic);
+            }
+        },
+        function(topic, cb){
+
+            if(topic[key] == value){
+                return cb('已经更改，请勿重复操作！');
+            } else {
+                var kv = prop || {};
+                kv[key] = value;
+                Topic.clean().update(kv).where({
+                    id : tid
+                }).done(cb);
+            }
+        }
+    ], callback);
+}
+
+exports.top = function(tid, user, callback){
+    this.chgState(tid, user, 'top', 1, null, {
+        mgr : true,
+        master : true
+    }, callback);
+}
+
+exports.untop = function(tid, user, callback){
+    this.chgState(tid, user, 'top', 0, null, {
+        mgr : true,
+        master : true
+    }, callback);
+}
+
+exports.topall = function(tid, user, callback){
+    this.chgState(tid, user, 'top_all', 1, null, {
+        mgr : true
+    }, callback);
+}
+
+exports.untopall = function(tid, user, callback){
+    this.chgState(tid, user, 'top_all', 0, null, {
+        mgr : true
+    }, callback);
+}
+
+exports.hot = function(tid, user, callback){
+    this.chgState(tid, user, 'is_hot', 1, null, {
+        mgr : true,
+        master : true
+    }, callback);
+}
+
+exports.unhot = function(tid, user, callback){
+    this.chgState(tid, user, 'is_hot', 0, null, {
+        mgr : true,
+        master : true
+    }, callback);
+}
+
+exports.digest = function(tid, user, callback){
+    this.chgState(tid, user, 'digest', 1, null, {
+        mgr : true,
+        master : true
+    }, callback);
+}
+
+exports.undigest = function(tid, user, callback){
+    this.chgState(tid, user, 'digest', 0, null, {
+        mgr : true,
+        master : true
+    }, callback);
+}
+
+exports.highlight = function(tid, user, callback){
+    this.chgState(tid, user, 'highlight', 1, null, {
+        mgr : true,
+        master : true
+    }, callback);
+}
+
+exports.unhighlight = function(tid, user, callback){
+    this.chgState(tid, user, 'highlight', 0, null, {
+        mgr : true,
+        master : true
+    }, callback);
+}
+
+exports.closed = function(tid, user, callback){
+
+    this.chgState(tid, user, 'closed', 1, null, {
+        mgr : true,
+        master : true,
+        author : true
+    }, callback);
+}
+
+exports.unclosed = function(tid, user, callback){
+    //this.chgState(tid, user, 'unclosed', callback);
+    this.chgState(tid, user, 'closed', 0, null, {
+        mgr : true,
+        master : true,
+        author : true
+    }, callback);
+}
+
+exports.delete = function(tid, user, callback){
+    this.chgState(tid, user, 'status', user.is_admin == 1 ? 2 : 1, {
+        status_chg_uid : user.id,
+        status_chg_time : new Date()
+    }, {
+        mgr : true,
+        master : true,
+        author : true
+    }, callback);
+    //this.chgState(tid, user, 'delete', callback);
 }
