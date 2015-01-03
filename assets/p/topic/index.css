@@ -117,6 +117,9 @@ textarea.reply-area{
 .ext-info .tip{
     margin-bottom: 15px;
 }
+.reply-btn{
+    margin-top: 10px;
+}
 .topic-author .card-mini{
     padding: 20px 10px 10px 80px;
 }

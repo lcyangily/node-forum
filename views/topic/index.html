@@ -165,9 +165,9 @@
                         <span class="zanlogs">
                             {{#each zaners}}
                                 <a href="/user/{{user.id}}" class="tooltip-trigger" 
-                                    data-tip-title="{{user.name}}">
-                                    <img src="{{#if user.head_pic ~}}
-                                                {{user.head_pic}}
+                                    data-tip-title="{{user.nickname}}">
+                                    <img src="{{#if user.avatar ~}}
+                                                {{user.avatar}}
                                               {{~ else ~}}
                                                 /assets/images/head.gif
                                               {{~/if}}">
@@ -188,8 +188,8 @@
                     <div class="revert-it fn-clear">
                         <div class="uinfo">
                             <a href="/user/{{author_id}}" class="head-icon">
-                                <img src="{{#if user.head_pic ~}}
-                                            {{user.head_pic}}
+                                <img src="{{#if user.avatar ~}}
+                                            {{user.avatar}}
                                           {{~ else ~}}
                                             /assets/images/head.gif
                                           {{~/if}}">
@@ -197,7 +197,7 @@
                         </div>
                         <div class="revert-bd">
                             <div class="revert-cnt-hd clearfix">
-                                <a class="name" href="/user/{{author_id}}">{{user.name}}</a>
+                                <a class="name" href="/user/{{author_id}}">{{user.nickname}}</a>
                                 <span class="hd-time">
                                     {{moment create_time format='YYYY-MM-DD hh:mm:ss'}}
                                 </span>
@@ -241,7 +241,7 @@
                 {{else}}
                     <form action="/reply/add/{{topic.id}}" method="post">
                         <textarea class="reply-area ckeditor" name="content"></textarea>
-                        <input type="submit" value="提交" class="btn btn-default" />
+                        <input type="submit" value="提交" class="btn btn-default reply-btn" />
                     </form>
                 {{/eq}}
             </div>
@@ -262,15 +262,15 @@
         <div class="panel topic-author">
             <div class="card-mini clearfix">
                 <a class="avatar" href="#">
-                    <img src="{{#if author.head_pic ~}}
-                                {{author.head_pic}}
+                    <img src="{{#if author.avatar ~}}
+                                {{author.avatar}}
                               {{~ else ~}}
                                 /assets/images/head.gif
                               {{~/if}}">
                 </a>
                 <div class="card-wrapper">
                     <h2 class="title">
-                        <a href="/user/{{author.id}}">{{author.name}}</a>
+                        <a href="/user/{{author.id}}">{{author.nickname}}</a>
                     </h2>
                     <!-- <div class="info">
                         <em>
@@ -294,33 +294,34 @@
             </div>
             <div class="x-grid-row topic-fast-group">
                 <div class="x-grid-1-3">
-                    <span class="topic-fast-btn">
-                        <b><a href="/user/{{author.id}}/topic">
+                    <a class="topic-fast-btn" href="/user/{{author.id}}/topic">
+                        <b>
                             {{#if author.user_count.topics}}
                                 {{author.user_count.topics}}
-                            {{else}}0{{/if}}</a>
+                            {{else}}0{{/if}}
                         </b>
                         <p>主题</p>
-                    </span>
+                    </a>
                 </div>
                 <div class="x-grid-1-3">
-                    <span class="topic-fast-btn">
-                        <b><a href="/user/{{author.id}}/posts">
+                    <a class="topic-fast-btn" href="/user/{{author.id}}/posts">
+                        <b>
                             {{#if author.user_count.replys}}
                                 {{author.user_count.replys}}
-                            {{else}}0{{/if}}</a>
+                            {{else}}0{{/if}}
                         </b>
                         <p>帖子</p>
-                    </span>
+                    </a>
                 </div>
                 <div class="x-grid-1-3">
-                    <span class="topic-fast-btn last">
-                        <b><a href="/user/{{author.id}}/friends">
+                    <a class="topic-fast-btn last" href="/user/{{author.id}}/friends">
+                        <b>
                             {{#if author.user_count.friends}}
                                 {{author.user_count.friends}}
-                            {{else}}0{{/if}}</a></b>
+                            {{else}}0{{/if}}
+                        </b>
                         <p>好友</p>
-                    </span>
+                    </a>
                 </div>
             </div>
         </div>

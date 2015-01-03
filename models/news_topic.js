@@ -3,14 +3,14 @@ module.exports = {
   "id": {
     "type": "int(11)",
     "allowNull": false,
-    "defaultValue": null,
-    "comment": null,
+    "defaultValue": "",
+    "comment": "topic.id",
     "primaryKey": true
   },
   "title": {
     "type": "varchar(300)",
     "allowNull": true,
-    "defaultValue": "",
+    "defaultValue": null,
     "comment": null
   },
   "content": {
@@ -22,7 +22,7 @@ module.exports = {
   "img": {
     "type": "varchar(255)",
     "allowNull": true,
-    "defaultValue": "",
+    "defaultValue": null,
     "comment": "图片"
   },
   "fid": {

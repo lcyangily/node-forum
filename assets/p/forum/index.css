@@ -86,6 +86,9 @@
 }
 .topic-list .cell:hover {
 }
+.topic-list .cell-hl .topic-title a{
+    color: #FF5E52;
+}
 .topic-list .theader{
     padding: 8px 10px;
     font-size: 12px;
@@ -99,6 +102,7 @@
     padding: .2em .5em;
     position: relative;
     top: -0.1em;
+    font-size: 12px;
 }
 .user-avatar{
     width: 40px;
@@ -163,7 +167,7 @@
 .topic-title {
     line-height: 28px;
     margin: 0;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: normal;
 }
 .topic-title a{

@@ -51,7 +51,7 @@
                             <span>
                                 {{#each masters}}
                                     {{#unless @first}},{{/unless}}
-                                    <a href="/user/{{uid}}">{{user.name}}</a>
+                                    <a href="/user/{{uid}}">{{user.nickname}}</a>
                                 {{/each}}
                             </span>
                         </div>
@@ -96,7 +96,7 @@
                         <span class="post-total">回复数：{{forum.posts}}</span>
                         <span class="pipe-min">|</span>
                         {{#if lastRegUser}}
-                            <span class="post-total">欢迎新会员：{{lastRegUser.name}}</span>
+                            <span class="post-total">欢迎新会员：{{lastRegUser.nickname}}</span>
                         {{/if}}
                     </div>
                 {{else}}

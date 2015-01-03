@@ -12,7 +12,7 @@
 .panel .nav-tabs > li.active > a:focus {
     color: #ff6f3d ;
     font-weight: bold;
-    cursor: default;
+    /* cursor: default; */
     /* background-color: #f6f6f6; */
     border: none;
     border-bottom: 3px solid #ff6f3d;

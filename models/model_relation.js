@@ -91,6 +91,12 @@ module.exports = {
         params : {
             foreignKey : 'id'
         }
+    },{
+        relation : 'belongsTo',    //belongsTo
+        modelName : 'user_profile',
+        params : {
+            foreignKey : 'id'
+        }
     }],
     news_topic : [{
         relation : 'hasOne',

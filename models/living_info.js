@@ -17,7 +17,7 @@ module.exports = {
   "img": {
     "type": "varchar(255)",
     "allowNull": true,
-    "defaultValue": "",
+    "defaultValue": null,
     "comment": "图片"
   },
   "desc": {
@@ -59,7 +59,8 @@ module.exports = {
   "uid": {
     "type": "int(11)",
     "allowNull": false,
-    "comment": null
+    "defaultValue": "",
+    "comment": "用户ID"
   },
   "arg0": {
     "type": "varchar(255)",

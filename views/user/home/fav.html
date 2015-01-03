@@ -1,0 +1,40 @@
+{{#extend "user/home/info"}}
+    {{#replace "breadcrumbPath"}}
+        <li><a href="/home/topic">主题/帖子</a></li>
+    {{/replace}}
+    {{#replace "content"}}
+        <ul class="nav nav-tabs nav-sm" role="tablist">
+            <li class="active"><a href="#">收藏的板块</a></li>
+            <li><a href="#">收藏的主题</a></li>
+        </ul>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+    {{/replace}}
+{{/extend}}

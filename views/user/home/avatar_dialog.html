@@ -1,0 +1,15 @@
+{{#extend "user/ulayout"}}
+    {{#replace "navWrap"}}{{/replace}}
+    {{#replace "bodyWrap"}}
+        <form id="J_imgForm" method="post" enctype="multipart/form-data"
+              action="/home/avatar_dialog" style="margin-top:50px;">
+            <div class="form-group">
+                <input type="file" name="avatar" class="form-control">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default btn-primary">提交</button>
+            </div>
+        </form>
+    {{/replace}}
+    {{#replace "footer"}}{{/replace}}
+{{/extend}}

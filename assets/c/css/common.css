@@ -216,6 +216,9 @@
     text-align: center;
     border-right: 1px solid #ddd;
 }
+.topic-fast-btn:hover{
+    text-decoration: none;
+}
 .topic-fast-group .last{
     border-right: none;
 }
@@ -462,4 +465,77 @@ a.topic-pub-btn:active {
 .pure-tip .sib-tip-arrow.sib-tip-right .sib-tip-above,
 .pure-tip .sib-tip-arrow.sib-tip-right .sib-tip-under{
     border-color: transparent transparent transparent #f57403;
+}
+
+
+.sib-page {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+.sib-page > a{
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #428bca;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.sib-page > span{
+    padding: 6px 12px;
+}
+.sib-page > a:hover,
+.sib-page > a:focus{
+    color: #2a6496;
+    background-color: #eee;
+    border-color: #ddd;
+}
+.sib-page > a.sib-page-current,
+.sib-page > a.sib-page-current:hover,
+.sib-page > a.sib-page-current:focus {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: #428bca;
+    border-color: #428bca;
+}
+.sib-page > a.sib-page-disabled,
+.sib-page > a.sib-page-disabled:hover,
+.sib-page > a.sib-page-disabled:focus {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+}
+.sib-page-lg > a,
+.sib-page-lg > span {
+    padding: 10px 16px;
+    font-size: 18px;
+}
+.sib-page-sm > a,
+.sib-page-sm > span {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+.sib-page .sib-page-goto{
+    float: none;
+}
+.sib-page .sib-page-which{
+    padding:0px;
+}
+.sib-page-which input{
+    width: 60px;
+    padding: 4px;
+    border:1px solid #ddd;
+}
+.sib-page-info{
+    float: left;
+}
+.sib-page-which,
+.sib-page-goto{
+    display: none;
 }

@@ -1,0 +1,38 @@
+{{#extend "user/home/info"}}
+    {{#replace "breadcrumbPath"}}
+        <li><a href="/user/home/avatar">我的头像</a></li>
+    {{/replace}}
+    {{#replace "content"}}
+        {{#unless _s.user.avatar}}
+            <h4>您还没有上传头像</h4>
+            <p>如果您还没有设置自己的头像，系统会显示为默认头像，您需要自己上传一张新照片来作为自己的个人头像</p>
+        {{/unless}}
+        <img class="img-thumbnail" width="120" height="120" src="
+            {{~#if _s.user.avatar ~}}
+                {{_s.user.avatar}}
+            {{~ else ~}}
+                /assets/images/noavatar_big.gif
+            {{~/if ~}}" alt="...">
+        <hr>
+        <h4>设置我的新头像</h4>
+        <button type="submit" id="J_createNewHead" class="btn btn-default btn-primary">设置新头像</button>
+    {{/replace}}
+    {{#append "js"}}
+    <script type="text/javascript">
+    require(['jquery', 'sib.dialog'], function($, Dialog){
+        var d = new Dialog({
+            trigger : '#J_createNewHead',
+            content : '/home/avatar_dialog',
+            width : 500,
+            height : 200,
+            title : '上传头像',
+            close : function(evt, data){
+                if(data && data.success){
+                    window.location.reload();
+                }
+            }
+        });
+    });
+    </script>
+    {{/append}}
+{{/extend}}

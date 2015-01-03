@@ -12,7 +12,7 @@
                 <li {{#eq type 1}}class="active"{{/eq}}><a href="/hy/1">公共服务</a></li>
                 <li {{#eq type 2}}class="active"{{/eq}}><a href="/hy/2">外卖</a></li>
                 <li {{#eq type 3}}class="active"{{/eq}}><a href="/hy/3">超市</a></li>
-                <li {{#eq type 4}}class="active"{{/eq}}><a href="/hy/4">邻里店</a></li>
+                <li {{#eq type 4}}class="active"{{/eq}}><a href="/hy/4">邻里淘宝店</a></li>
                 <li {{#eq type 5}}class="active"{{/eq}}><a href="/hy/5">其他</a></li>
                 <li class="{{#eq type 'join'}}active{{/eq}} pull-right">
                     <a href="/hy/join">登记申请</a>
@@ -21,6 +21,13 @@
             <div>
                 {{#eq type 1}}
                     <table class="table table-striped tabs-panel">
+                        <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>电话</th>
+                                <th>地址</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             {{#each infos}}
                                 <tr>
@@ -47,16 +54,19 @@
                                             </h2>
                                             <div class="info">
                                                 <em>
-                                                    <span class="info-value">20元起送</span>
-                                                </em>
-                                                <em>
-                                                    <span class="info-label">范围:</span>
-                                                    <span class="info-value">1,2街区</span>
+                                                    <span class="info-value">{{arg3}}</span>
                                                 </em>
                                             </div>
                                             <div class="info">
+                                                {{!--{{#if arg0}}
                                                 <em>
-                                                    <span class="info-value">日本料理</span>
+                                                    <span class="info-value">{{arg0}}元起送</span>
+                                                </em>
+                                                {{/if}}--}}
+                                                <em>
+                                                    <span class="info-label">配送范围:</span>
+                                                    <span class="info-value">
+                                                        {{#if arg2}}{{arg2}}{{else}}不配送{{/if}}</span>
                                                 </em>
                                             </div>
                                             <div class="info">
@@ -72,7 +82,47 @@
                     </div>
                 {{/eq}}
                 {{#eq type 3}}
-                    <table class="table table-striped tabs-panel">
+                    <div class="tabs-panel">
+                        <div class="row">
+                            {{#each infos}}
+                                <div class="col-lg-6">
+                                    <div class="panel card-mini clearfix">
+                                        <a class="avatar" href="javascript:void(0)">
+                                            <img src="{{img}}">
+                                        </a>
+                                        <div class="card-wrapper">
+                                            <h2 class="title">
+                                                <a href="/user/{{user.id}}">{{name}}</a>
+                                            </h2>
+                                            <div class="info">
+                                                <em>
+                                                    <span class="info-value">{{addr}}</span>
+                                                </em>
+                                            </div>
+                                            <div class="info">
+                                                {{!--{{#if arg0}}
+                                                <em>
+                                                    <span class="info-value">{{arg0}}元起送</span>
+                                                </em>
+                                                {{/if}}--}}
+                                                <em>
+                                                    <span class="info-label">配送范围:</span>
+                                                    <span class="info-value">
+                                                        {{#if arg2}}{{arg2}}{{else}}不配送{{/if}}</span>
+                                                </em>
+                                            </div>
+                                            <div class="info">
+                                                <em>
+                                                    <span class="info-value">{{phone}}</span>
+                                                </em>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <!-- <table class="table table-striped tabs-panel">
                         <tbody>
                             <tr>
                                 <td>易买得</td>
@@ -93,59 +143,38 @@
                                 <td>不配送</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table> -->
                 {{/eq}}
                 {{#eq type 4}}
                     <table class="table table-striped tabs-panel">
                         <tbody>
-                            <tr>
-                                <td>干洗店</td>
-                                <td>18888888888</td>
-                                <td>十五街区</td>
-                                <td>不配送</td>
-                            </tr>
-                            <tr>
-                                <td>炒货店</td>
-                                <td>18888888888</td>
-                                <td>十五街区</td>
-                                <td>不配送</td>
-                            </tr>
-                            <tr>
-                                <td>缝纫店</td>
-                                <td>18888888888</td>
-                                <td>十五街区</td>
-                                <td>不配送</td>
-                            </tr>
+                            {{#each infos}}
+                                <tr>
+                                    <td>{{name}}</td>
+                                    <td>{{phone}}</td>
+                                    <td>{{addr}}</td>
+                                    <td>{{arg1}}</td>
+                                    <td style="text-align:right;">
+                                        {{#if arg0}}
+                                            <a href="{{arg0}}" target="_blank">去看看>></a>
+                                        {{/if}}
+                                    </td>
+                                </tr>
+                            {{/each}}
                         </tbody>
                     </table>
                 {{/eq}}
                 {{#eq type 5}}
                     <table class="table table-striped tabs-panel">
                         <tbody>
-                            <tr>
-                                <td>开锁师傅</td>
-                                <td>18888888888</td>
-                                <td>十五街区</td>
-                                <td>不配送</td>
-                            </tr>
-                            <tr>
-                                <td>出租车师傅</td>
-                                <td>18888888888</td>
-                                <td>十五街区</td>
-                                <td>不配送</td>
-                            </tr>
-                            <tr>
-                                <td>收废品</td>
-                                <td>18888888888</td>
-                                <td>十五街区</td>
-                                <td>不配送</td>
-                            </tr>
-                            <tr>
-                                <td>保洁</td>
-                                <td>18888888888</td>
-                                <td>十五街区</td>
-                                <td>不配送</td>
-                            </tr>
+                            {{#each infos}}
+                                <tr>
+                                    <td>{{name}}</td>
+                                    <td>{{phone}}</td>
+                                    <td>{{addr}}</td>
+                                    <td>{{desc}}</td>
+                                </tr>
+                            {{/each}}
                         </tbody>
                     </table>
                 {{/eq}}
@@ -182,13 +211,13 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">地址</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="title" class="form-control" id="J_title" placeholder="地址" value="{{~title~}}">
+                                    <input type="text" name="addr" class="form-control" placeholder="地址" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">申请类型</label>
                                 <div class="col-sm-10">
-                                    <select name="type" class="form-control">
+                                    <select id="J_type" name="type" class="form-control">
                                         <option value="1">公共服务</option>
                                         <option value="2">外卖</option>
                                         <option value="3">超市</option>
@@ -196,6 +225,9 @@
                                         <option value="5">其他</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div id="J_extendArea">
+                                
                             </div>
                             <!-- <div class="form-group">
                                 <label class="col-sm-2 control-label">选项</label>
@@ -225,21 +257,90 @@
                             </div>
                         </form>
                     </div>
+                    <div id="J_extendOut" class="hide">
+                        <div id="J_extend_1"></div>
+                        <div id="J_extend_2">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">配送最低消费</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="arg0" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">配送费用</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="arg1" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">配送范围</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="arg2" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">菜系类型</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="arg3" class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+                        <div id="J_extend_3">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">配送最低消费</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="arg0" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">配送费用</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="arg1" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">配送范围</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="arg2" class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+                        <div id="J_extend_4">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">店铺链接</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="arg0" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">主营类型</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="arg1" class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+                        <div id="J_extend_5">
+                            
+                        </div>
+                    </div>
                 {{/eq}}
             </div>
         </div>
     {{/replace}}
     {{#replace "js"}}
     <script type="text/javascript">
-        /*require(['jquery', 'sib.tabs'], function($, Tabs){
-            new Tabs({
-                target : '#J_contentBody',
-                triggers : '.nav-tabs li',
-                panels   : '.tabs-panel',
-                triggerActiveCls : 'active',
-                addDefaultCls : false
+        require(['jquery'], function($){
+            var ctypeid;
+            $('#J_type').on('change', function(){
+                if(ctypeid) {
+                    $('#J_extend_' + ctypeid).appendTo('#J_extendOut');
+                }
+                ctypeid = $(this).val();
+                if(ctypeid) {
+                    $('#J_extend_' + ctypeid).appendTo('#J_extendArea');
+                }
             });
-        });*/
+        });
     </script>
     {{/replace}}
 {{/extend}}

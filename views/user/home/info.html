@@ -3,88 +3,115 @@
         <li><a href="#">个人信息</a></li>
     {{/replace}}
     {{#replace "leftNav"}}
-        <h2 class="mt bbsa">设置</h2>
+        <h2 class="mt">管理中心</h2>
         <ul>
-            <li><a href="#">修改头像</a></li>
-            <li class="current"><a href="#">个人资料</a></li>
-            <li><a href="#">积分</a></li>
-            <li><a href="#">隐私</a></li>
-            <li><a href="#">密码安全</a></li>
+            <li {{#eq action 'avatar'}}class="current"{{/eq}}>
+                <a href="/home/avatar">修改头像</a>
+            </li>
+            <li {{#eq action 'info'}}class="current"{{/eq}}>
+                <a href="/home/info">个人资料</a>
+            </li>
+            <li {{#eq action 'msg'}}class="current"{{/eq}}>
+                <a href="/home/msg">消息</a>
+            </li>
+            <li {{#eq action 'topic'}}class="current"{{/eq}}>
+                <a href="/home/topic">主题/帖子</a>
+            </li>
+            <li {{#eq action 'fav'}}class="current"{{/eq}}>
+                <a href="/home/fav">收藏</a>
+            </li>
+            <li {{#eq action 'friend'}}class="current"{{/eq}}>
+                <a href="/home/friend">好友</a>
+            </li>
+            <li {{#eq action 'follow'}}class="current"{{/eq}}>
+                <a href="/home/follow">关注</a>
+            </li>
+            <li {{#eq action 'verify'}}class="current"{{/eq}}>
+                <a href="/home/verify">我的认证</a>
+            </li>
+            <!-- <li {{#eq action 'pwd'}}class="current"{{/eq}}>
+                <a href="/home/pwd">密码安全</a>
+            </li> -->
         </ul>
     {{/replace}}
     {{#replace "content"}}
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">用户名</label>
+        <form class="form-horizontal" role="form" action="/home/info" method="post">
+            <!-- <div class="form-group">
+                <label class="col-sm-2 control-label">登录名</label>
                 <div class="col-sm-8">
-                    <p class="form-control-static">八千里路</p>
+                    <p class="form-control-static">{{_s.user.loginname}}</p>
+                </div>
+            </div> -->
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">名称</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{user.nickname}}</p>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword" class="col-sm-2 control-label">真实姓名</label>
-                <div class="col-sm-8">
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                </div>
-                <div class="col-sm-2">
-                    <select class="form-control">
-                        <option>公开</option>
-                        <option>仅好友可见</option>
-                        <option>公开</option>
-                    </select>
+                <label for="mobile" class="col-sm-2 control-label">真实姓名</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="realname" value="{{user.user_profile.realname}}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="mobile" class="col-sm-2 control-label">手机</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="mobile" placeholder="手机">
-                </div>
-                <div class="col-sm-2">
-                    <select class="form-control">
-                        <option>公开</option>
-                        <option>仅好友可见</option>
-                        <option>公开</option>
-                    </select>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="mobile" value="{{user.user_profile.mobile}}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="addr" class="col-sm-2 control-label">邮寄地址</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="addr" placeholder="邮寄地址">
+                <label class="col-sm-2 control-label">固定电话</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="telephone" value="{{user.user_profile.telephone}}">
                 </div>
-                <div class="col-sm-2">
-                    <select class="form-control">
-                        <option>公开</option>
-                        <option>仅好友可见</option>
-                        <option>公开</option>
-                    </select>
+            </div>
+            <div class="form-group">
+                <label for="addr" class="col-sm-2 control-label">家庭地址</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="address" value="{{user.user_profile.address}}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="email" class="col-sm-2 control-label">邮箱</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="email" placeholder="邮箱">
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="email" value="{{user.user_profile.email}}">
                 </div>
-                <div class="col-sm-2">
-                    <select class="form-control">
-                        <option>公开</option>
-                        <option>仅好友可见</option>
-                        <option>公开</option>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">性别</label>
+                <div class="col-sm-10">
+                    <select name="gender" class="form-control">
+                        <option value="0" {{#eq user.user_profile.gender 0}}selected{{/eq}}>保密</option>
+                        <option value="1" {{#eq user.user_profile.gender 1}}selected{{/eq}}>男</option>
+                        <option value="2" {{#eq user.user_profile.gender 2}}selected{{/eq}}>女</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
-                <label for="sex" class="col-sm-2 control-label">性别</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="sex" placeholder="性别">
+                <label for="sex" class="col-sm-2 control-label">QQ</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="qq" value="{{user.user_profile.qq}}">
                 </div>
-                <div class="col-sm-2">
-                    <select class="form-control">
-                        <option>公开</option>
-                        <option>仅好友可见</option>
-                        <option>公开</option>
-                    </select>
+            </div>
+            <div class="form-group">
+                <label for="sex" class="col-sm-2 control-label">签名</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="signature" value="{{user.user_profile.signature}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button type="submit" class="btn btn-md btn-primary">提交</button>
                 </div>
             </div>
         </form>
+        {{#eq _pathvar.code 1}}
+            <script type="text/javascript">
+                require(['sib.dialog'], function(Dialog){
+                    Dialog.tip('操作成功！');
+                });
+            </script>
+        {{/eq}}
     {{/replace}}
 {{/extend}}

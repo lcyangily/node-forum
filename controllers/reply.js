@@ -33,8 +33,8 @@ module.exports = {
                     tid : tid,
                     content : cnt,
                     author_id : user.id,
-                    author_nick : user.name,
-                    author_pic : user.head_pic
+                    author_nick : user.nickname,
+                    author_pic : user.avatar
                 },function(err, reply){
                     return res.render('notify/notify', {
                         success : '回复成功！'

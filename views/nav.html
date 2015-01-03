@@ -1,5 +1,7 @@
 <div class="navbar-header">
-    <a class="navbar-brand" href=""></a>
+    <a class="navbar-brand" href="/">
+        <img src="/assets/images/logo.jpg" height="70">
+    </a>
     <a class="navbar-toggle collapsed" href="javascript:void(0);" 
         data-toggle="collapse" data-target="#J_topMainNav">
         <span class="icon-bar"></span>
@@ -12,7 +14,7 @@
         {{#if _s.user}}
             {{#if _s.user.messages_count}}
                 <li>
-                    <a href='/user/home/msg'>
+                    <a href='/home/msg'>
                         <span class='big messages_count'>
                           {{_s.user.messages_count}}
                         </span> 未读消息
@@ -22,16 +24,16 @@
             <li id="J_topUserBtn">
                 <div class="top-user-wrap">
                     <a class="user-avatar" href="/user/{{_s.user.id}}">
-                        <img src="{{#if _s.user.head_pic ~}}
-                                    {{_s.user.head_pic}}
+                        <img src="{{#if _s.user.avatar ~}}
+                                    {{_s.user.avatar}}
                                   {{~ else ~}}
                                     /assets/images/head.gif
                                   {{~/if}}" title="">
                     </a>
-                    <a href="/user/home/msg" class="msg pull-right">
+                    <a href="/home/msg" class="msg pull-right">
                         <span class="glyphicon glyphicon-envelope"></span>
                     </a>
-                    <a href="/user/{{_s.user.id}}" class="user-name">{{ _s.user.name }}
+                    <a href="/user/{{_s.user.id}}" class="user-name">{{ _s.user.nickname }}
                         <span class="caret"></span>
                     </a>
                 </div>
@@ -46,7 +48,7 @@
                             </li>
                             <li>
                                 <span class="info-label">积分：</span>
-                                <a href="/user/home/score">100</a>
+                                <a href="/home/score">100</a>
                             </li>
                         </ul>
                         <ul class="navlist clearfix" id="navlist">
@@ -69,7 +71,7 @@
                                 
                             </li>
                             <li>
-                                <a href="/user/home/info">
+                                <a href="/home/info">
                                     <span class="glyphicon glyphicon-cog"></span>
                                     <span>设置</span>
                                 </a>

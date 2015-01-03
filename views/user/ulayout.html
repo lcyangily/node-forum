@@ -2,18 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>
-        {{~#if topic ~}}
-            {{~ topic.title }} - {{ config.name ~}}
-        {{~ else ~}}
-            {{~ config.description ~}}
-        {{~/if~}}
-    </title>
+    <title>邻比邻管理中心 - {{ config.name ~}}</title>
     {{#block "css"}}
         {{sub "topcss"}}
         <link rel="stylesheet" href="/assets/p/index/index.css">
         <link rel="stylesheet" href="/assets/p/forum/index.css">
         <link rel="stylesheet" href="/assets/p/user/index.css">
+        <link rel="stylesheet" type="text/css" href="/assets/c/sib/theme/index.css">
     {{/block}}
     {{#block "topjs"}}
         {{sub "topjs"}}
@@ -23,55 +18,62 @@
 {{#block "navWrap"}}
     <div class="navbar navbar-fixed-top header">
         <div class="grid-container">
-            <div class="grid-lg-offset-3 grid-md-24 grid-sm-18" style="margin-bottom:0px">
-                {{#block "nav"}}
-                    {{sub "nav"}}
-                {{/block}}
+            <div class="grid-row">
+                <div class="grid-lg-offset-3 grid-md-24 grid-sm-18" style="margin-bottom:0px">
+                    {{#block "nav"}}
+                        {{sub "nav"}}
+                    {{/block}}
+                </div>
             </div>
         </div>
     </div>
 {{/block}}
 {{#block "bodyWrap"}}
-    <div class="grid-container main-body">
-        {{#block "body"}}
-            {{#block "breadcrumb"}}
-                <div class="grid-row">
-                    <div class="breadcrumb-wrap grid-lg-offset-3 grid-md-24 grid-sm-18"
-                         style="margin-bottom:0px">
-                        <ol class="breadcrumb">
-                            <li><a href="/">首页</a></li>
-                            {{#block "breadcrumbPath"}}
-                                {{#each forumPath}}
-                                    <li><a href="/forum/{{id}}">{{name}}</a></li>
-                                {{/each}}
-                            {{/block}}
-                        </ol>
-                    </div>
-                </div>
-            {{/block}}
-            {{#block "contentWrap"}}
-                <div class="grid-row">
-                    <div class="grid-lg-offset-3 grid-md-24 grid-sm-18">
-                        <div class="panel">
-                            <div class="grid-row">
-                                <div class="grid-sm-4 mgr-leftnav-wrap">
-                                    <div class="bm bw0 mgr-leftnav">
-                                        <div class="tbn">
-                                            {{#block "leftNav"}}{{/block}}
+    <div class="wrapper">
+        <div class="wrapper-main">
+            {{#block "body"}}
+                <div class="grid-container main-body">
+                    {{#block "breadcrumb"}}
+                        <div class="grid-row">
+                            <div class="breadcrumb-wrap grid-lg-offset-3 grid-md-24 grid-sm-18"
+                                 style="margin-bottom:0px">
+                                <ol class="breadcrumb">
+                                    <li><a href="/">首页</a></li>
+                                    <li><a href="/home/info">管理中心</a></li>
+                                    {{#block "breadcrumbPath"}}
+                                        {{#each forumPath}}
+                                            <li><a href="/forum/{{id}}">{{name}}</a></li>
+                                        {{/each}}
+                                    {{/block}}
+                                </ol>
+                            </div>
+                        </div>
+                    {{/block}}
+                    {{#block "contentWrap"}}
+                        <div class="grid-row">
+                            <div class="grid-lg-offset-3 grid-md-24 grid-sm-18">
+                                <div class="panel mgr-panel">
+                                    <div class="grid-row">
+                                        <div class="grid-sm-4 mgr-cnt-wrap">
+                                            <div class="mgr-leftnav">
+                                                {{#block "leftNav"}}{{/block}}
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="grid-sm-14 grid-md-20">
-                                    <div class="mgr-cnt-wrap">
-                                        {{#block "content"}}{{/block}}
+                                        <div class="grid-sm-14 grid-md-20 mgr-cnt-wrap">
+                                            <div class="mgr-cnt">
+                                                <div class="mgr-cnt-wrap">
+                                                    {{#block "content"}}{{/block}}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {{/block}}
                 </div>
             {{/block}}
-        {{/block}}
+        </div>
     </div>
 {{/block}}
 {{#block "footer"}}

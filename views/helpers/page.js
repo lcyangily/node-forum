@@ -57,7 +57,7 @@ Handlebars.registerHelper("page", function(){
     
     for(var i = pageShowMin; i <= pageShowMax; i++) {
         if (i == current) {
-            ret += '<li class="disabled"><a>' + i + '</a></li>';
+            ret += '<li class="active"><a>' + i + '</a></li>';
         } else {
             ret += '<li><a href="' + base + i + '">' + i + '</a></li>';
         }

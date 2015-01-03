@@ -96,13 +96,13 @@ module.exports = {
     "type": "tinyint(4)",
     "allowNull": true,
     "defaultValue": "0",
-    "comment": "是否全局顶置"
+    "comment": "全局顶置, 1-全局顶置"
   },
   "top": {
     "type": "tinyint(4)",
     "allowNull": true,
     "defaultValue": "0",
-    "comment": "是否顶置"
+    "comment": "本版顶置：0-不顶置，1-本版顶置"
   },
   "is_hot": {
     "type": "tinyint(4)",

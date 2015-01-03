@@ -449,7 +449,7 @@ exports.vote = function(tid, user, poids, callback){
         TopicPollvoter.add({
             tid : tid,
             uid : user.id,
-            username : user.name,
+            username : user.nickname,
             options : poids.join(',')
         }).done(function(err, pvoter){
             TopicPolloption.findAll().where({

@@ -1,20 +1,11 @@
-{{#extend "user/ulayout"}}
+{{#extend "user/home/info"}}
     {{#replace "breadcrumbPath"}}
-        <li><a href="#">个人信息</a></li>
-    {{/replace}}
-    {{#replace "leftNav"}}
-        <h2 class="mt bbsa">通知</h2>
-        <ul>
-            <li class="current">
-                <a href="#">消息 </a>
-            </li>
-            <li><a href="#">提醒</a></li>  
-        </ul>
+        <li><a href="/home/msg">消息</a></li>
     {{/replace}}
     {{#replace "content"}}
         <ul class="nav nav-tabs nav-sm" role="tablist">
-            <li class="active"><a href="#">私人消息</a></li>
-            <li><a href="#">公共消息</a></li>
+            <li class="active"><a href="#">接收的消息</a></li>
+            <li><a href="#">发送的消息</a></li>
         </ul>
         <table class="table table-hover">
             <thead>

@@ -20,35 +20,17 @@ module.exports = {
     "defaultValue": null,
     "comment": null
   },
-  "head_pic": {
-    "type": "varchar(255)",
-    "allowNull": true,
-    "defaultValue": "",
-    "comment": "用户头像"
-  },
-  "name": {
-    "type": "varchar(50)",
-    "allowNull": true,
-    "defaultValue": null,
-    "comment": "用户昵称"
-  },
-  "location": {
+  "nickname": {
     "type": "varchar(255)",
     "allowNull": true,
     "defaultValue": null,
-    "comment": null
+    "comment": "昵称"
   },
-  "email": {
-    "type": "varchar(100)",
-    "allowNull": true,
-    "defaultValue": null,
-    "comment": null
-  },
-  "signature": {
+  "avatar": {
     "type": "varchar(255)",
     "allowNull": true,
     "defaultValue": null,
-    "comment": null
+    "comment": "头像"
   },
   "weibo_id": {
     "type": "bigint(20)",
@@ -81,42 +63,6 @@ module.exports = {
     "comment": null
   },
   "score": {
-    "type": "int(11)",
-    "allowNull": true,
-    "defaultValue": null,
-    "comment": null
-  },
-  "topic_count": {
-    "type": "int(11)",
-    "allowNull": true,
-    "defaultValue": null,
-    "comment": null
-  },
-  "reply_count": {
-    "type": "int(11)",
-    "allowNull": true,
-    "defaultValue": null,
-    "comment": null
-  },
-  "follower_count": {
-    "type": "int(11)",
-    "allowNull": true,
-    "defaultValue": null,
-    "comment": null
-  },
-  "following_count": {
-    "type": "int(11)",
-    "allowNull": true,
-    "defaultValue": null,
-    "comment": null
-  },
-  "collect_tag_count": {
-    "type": "int(11)",
-    "allowNull": true,
-    "defaultValue": null,
-    "comment": null
-  },
-  "collect_topic_count": {
     "type": "int(11)",
     "allowNull": true,
     "defaultValue": null,

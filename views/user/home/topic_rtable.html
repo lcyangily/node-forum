@@ -1,0 +1,25 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>主题名</th>
+            <th>回复内容</th>
+            <th>回复/查看</th>
+            <th>发帖时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each list}}
+            <tr>
+                <td>{{calc '(' ../page.current ' -1)* ' ../page.pageSize '+' @index '+1'}}</td>
+                <td><a href="/topic/{{forum_topic.id}}" target="_blank">
+                        {{{string (string forum_topic.title 'stripTags') 'truncate' 50}}}
+                    </a>
+                </td>
+                <td>{{{string (string content 'stripTags') 'truncate' 100}}}</td>
+                <td>{{forum_topic.reply_count}}<br/>{{forum_topic.visit_count}}</td>
+                <td>{{moment create_time format='YYYY-MM-DD hh:mm:ss'}}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

@@ -1,0 +1,112 @@
+{{#extend "user/home/info"}}
+    {{#replace "breadcrumbPath"}}
+        <li><a href="/home/topic">主题/帖子</a></li>
+    {{/replace}}
+    {{#replace "content"}}
+        <div id="J_tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="javascript:void(0);">主题</a></li>
+                <li><a href="javascript:void(0);">回复</a></li>
+            </ul>
+            <div class="tab-cnt">
+                <div class="tab-panel">
+                    <div id="J_topicList">
+                        {{sub "user/home/topic_ttable" list=topic.list page=topic.page}}
+                    </div>
+                    <div id="J_topicPage"></div>
+                </div>
+                <div class="tab-panel">
+                    <div id="J_replyList">
+                        {{sub "user/home/topic_rtable" list=reply.list page=reply.page}}
+                    </div>
+                    <div id="J_replyPage"></div>
+                </div>
+            </div>
+        </div>
+    {{/replace}}
+    {{#append "js"}}
+    {{tplinclude "J_topicTpl" "user/home/topic_ttable"}}
+    {{tplinclude "J_replyTpl" "user/home/topic_rtable"}}
+    <script type="text/javascript">
+    require(['jquery', 'sib.pager', 'sib.dialog', 'sib.tabs', 
+             'hbs', 'hbs-helper.calc', 'hbs-helper.moment'], 
+        function($, Pager, Dialog, Tabs, Handlebars){
+
+        new Tabs({
+            target : '#J_tabs',
+            panels : '.tab-panel',
+            triggers : '.nav-tabs li',
+            addDefaultCls : false,
+            triggerActiveCls : 'active'
+        });
+
+        var ttpl = Handlebars.compile($('#J_topicTpl').text());
+        var rtpl = Handlebars.compile($('#J_replyTpl').text());
+        new Pager({
+            appendTo : '#J_topicPage',
+            //type : '',  //min
+            totalPages: {{topic.page.totalPages}},  //总页数
+            totalRecords : {{topic.page.total}},   //总记录数
+            current: {{topic.page.current}},
+            //pageSize: 10,   //每页显示条数
+            //pageList: [10,20,30,50],
+            loading: false,
+            showPageNumber : 10,//每次显示页码数量
+            //showPageList: true,
+            //showRefresh: true,
+            //clsPrefix : 'sib-page',
+            //prevLabel : '上一页',
+            //nextLabel : '下一页',
+            //firstLabel : '首页',
+            //lastLabel : '末页',
+
+            threme : null,
+            //beforePageText: '跳转到：',
+            //afterPageText: 'of {pages}',
+            //afterPageText: '页', //
+            gotoLabel : '跳转',
+            ////displayMsg: 'Displaying {from} to {to} of {total} items'
+            //displayMsg: '共{total}条/{pages}页,当前{from}~{to}'
+            displayMsg: '共{total}条/{pages}页',
+
+            selectPage: function(evt, opts){
+                $.ajax({
+                    url : '/home/topic/tdata?page=' + opts.current,
+                    success : function(data){
+                        if(data.list) {
+                            $('#J_topicList').html(ttpl(data));
+                        }
+                    },
+                    error : function(data){
+                        Dialog.tip(data.responseText);
+                    }
+                });
+            }
+        });
+
+        new Pager({
+            appendTo : '#J_replyPage',
+            //type : '',  //min
+            totalPages: {{reply.page.totalPages}},  //总页数
+            totalRecords : {{reply.page.total}},   //总记录数
+            current: {{reply.page.current}},
+            displayMsg: '共{total}条/{pages}页',
+
+            selectPage: function(evt, opts){
+                $.ajax({
+                    url : '/home/topic/rdata?page=' + opts.current,
+                    success : function(data){
+                        if(data.list) {
+                            $('#J_replyList').html(rtpl(data));
+                        }
+                    },
+                    error : function(data){
+                        Dialog.tip(data.responseText);
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    {{/append}}
+{{/extend}}

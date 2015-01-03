@@ -24,7 +24,7 @@
                     <div class="col-sm-10" id="J_masters">
                         {{#each masters}}
                             <label class="checkbox-inline">
-                                <input type="checkbox" checked=checked name="masters" value="{{uid}}">{{user.name}}
+                                <input type="checkbox" checked=checked name="masters" value="{{uid}}">{{user.nickname}}
                             </label>
                         {{/each}}
                     </div>
@@ -72,7 +72,7 @@
                     formatter : function(col, row, $td){
                         var $a = $('<a href="javascript:void(0);">增加</a>').appendTo($td);
                         $a.click(function(e){
-                            addMaster(row.id, row.name);
+                            addMaster(row.id, row.nickname);
                             e.stopPropagation();
                         });
                     }

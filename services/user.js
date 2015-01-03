@@ -3,6 +3,7 @@ var async  = require('async');
 
 var User       = new BaseModel('users');
 var UserCount  = new BaseModel('user_count');
+var UserProfile= new BaseModel('user_profile');
 var UserFriend = new BaseModel('user_friend');
 var UserFollow = new BaseModel('user_follow');
 var UserFav    = new BaseModel('user_favorite');
@@ -30,7 +31,13 @@ exports.register = function (user, cb){
             UserCount.add({
                 uid : user.id
             }).done(function(err, uc){
-                cb && cb(err);
+                if(err) return cb && cb(err);
+
+                UserProfile.add({
+                    uid : user.id
+                }).done(function(err, up){
+                    cb && cb(err, user);
+                });
             });
         });
     });
@@ -39,7 +46,10 @@ exports.register = function (user, cb){
 exports.login = function(user, cb){
     User.find().where({
         loginname : user.loginname
-    }).done(function(err, u){
+    }).include([
+        UserCount.Model,
+        UserProfile.Model
+    ]).done(function(err, u){
         if(err) {
             cb(err);
         } else if(!u) {
@@ -56,7 +66,8 @@ exports.getById = function (id, cb){
     User.find().where({
         id : id
     }).include([
-        UserCount.Model
+        UserCount.Model,
+        UserProfile.Model
     ]).done(function(err, u){
         cb && cb(err, u);
     });
@@ -82,27 +93,40 @@ exports.getMgrForums = function(uid, cb){
 exports.getByName = function (name, cb){
     User.find().where({
         loginname : name
-    }).done(cb);
+    }).include([
+        UserCount.Model,
+        UserProfile.Model
+    ]).done(cb);
 }
 
 exports.getList = function(cb, page){
     var p = _.extend({page : 1, pageSize : 20}, page);
-    User.findAll().page(p).done(cb);
+    User.findAll().include([
+        UserCount.Model,
+        UserProfile.Model
+    ]).page(p).done(cb);
 }
 
 exports.getLastRegUser = function(cb){
     User.find().order({
         create_time : 'desc'
-    }).done(cb);
+    }).include([
+        UserCount.Model,
+        UserProfile.Model
+    ]).done(cb);
 }
 
 exports.getFriends = function(uid, cb, page){
     var p = _.extend({page : 1, pageSize : 20}, page);
     UserFriend.findAll().where({
         uid : uid
-    }).include([
-        User.Model
-    ]).page(p).done(cb);
+    }).include([{
+        model : User.Model,
+        include : [
+            UserCount.Model,
+            UserProfile.Model
+        ]
+    }]).page(p).done(cb);
 }
 
 //添加好友请求
@@ -120,12 +144,11 @@ exports.addFriendRequest = function(myid, fuid, note, cb){
             if(err || r) {
                 return cb && cb(r ? '好友请求已发送，请勿重复操作！' : err);
             }
-console.log('--------------------> aaa ');
 
             UserFriendRequest.add({
                 uid : myid,
                 fuid : fuser.id,
-                friend_name : fuser.name,
+                friend_name : fuser.nickname,
                 note : note
             }).done(cb);
         });
@@ -327,7 +350,114 @@ exports.updateScoreCount = function(uid, modVal, cb){
     cb();
 }
 
-
 //增加关注数
 //增加被关注数
 //增加收藏数
+
+//只有微博，QQ登录，暂无修改密码
+exports.chgPwd = function(user, oldpwd, newpwd, callback){
+
+}
+//修改用户信息
+exports.chgInfo = function(user, info, callback){
+    //这些字段可以修改，防止前端传入不能修改的字段，如id, loginname, weibo_id 等
+    var canChgFields = ['nickname', 'avatar', 'update_time'];
+    var nInfo = {};
+    _.map(canChgFields, function(name){
+        if(!_.isUndefined(info[name])){
+            nInfo[name] = info[name];
+        }
+    });
+
+    if(_.isEmpty(nInfo)) {
+        return callback('没有需要修改的数据。');
+    }
+    this.chgInfoCommon(user.id, user, info, {
+        user : true
+    }, callback);
+}
+
+//修改头像
+exports.chgAvatar = function(user, picUrl, callback){
+    this.chgInfoCommon(user.id, user, {
+        'avatar' : picUrl
+    }, {
+        user : true
+    }, callback);
+}
+
+/** 修改用户详细信息 **/
+exports.chgProfile = function(user, prop, callback){
+
+    async.waterfall([
+        function(cb){
+            User.findById(user.id).done(function(error, user) {
+                cb(error, user);
+            });
+        },
+        function(user, cb){
+
+            if(_.isEmpty(prop)){
+                return cb('没有需要修改的数据！');
+            } else {
+                prop = prop || {};
+                if(_.has(prop, 'id')){
+                    delete prop.id;
+                }
+                prop.update_time = new Date();
+                UserProfile.clean().update(prop).where({
+                    uid : user.id
+                }).done(cb);
+            }
+        }
+    ], callback);
+}
+
+//修改用户资料后处理：刷新session等
+exports.chgInfoAfterDeal = function(session, uid, cb) {
+    //如果是管理员操作则不修改session
+    if(session && session.user && session.user.id === uid) {
+        this.getById(uid, function(err, user){
+            if(!err && user) {
+                session.user = user;
+            }
+            cb && cb(err, user);
+        });
+    } else {
+        cb && cb();
+    }
+}
+
+/** private **/
+/** 修改用户通用方法 **/
+exports.chgInfoCommon = function(uid, oper, prop, limit, callback){
+
+    async.waterfall([
+        function(cb){
+            User.findById(uid).done(function(error, user) {
+                cb(error, user);
+            });
+        },
+        function(user, cb) {   //权限判断
+
+            if(limit.mgr && oper.is_admin == 1) {    //管理员
+                cb(null, user);
+            } else if(limit.user && oper.id == user.id) { //自己
+                cb(null, user);
+            } else {
+                cb(null, user);
+            }
+        },
+        function(user, cb){
+
+            if(_.isEmpty(prop)){
+                return cb('没有需要修改的数据！');
+            } else {
+                prop.update_time = new Date();
+                User.clean().update(prop).where({
+                    id : uid
+                }).done(cb);
+            }
+        }
+    ], callback);
+}

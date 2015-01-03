@@ -26,7 +26,10 @@
     <script type="text/javascript">
     require(['jquery'], function($){
         $('#J_colse').on('click', function(e){
-            window.frameElement.trigger('close');
+            window.frameElement.trigger('close', {
+                success : {{#if success}}true{{else}}false{{/if}},
+                error : {{#if error}}true{{else}}false{{/if}}
+            });
         });
     });
     </script>

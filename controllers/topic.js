@@ -140,7 +140,7 @@ module.exports = {
                                     fid : fid,
                                     ftype_id : ftype_id,
                                     author_id : req.session.user.id,
-                                    author_nick : req.session.user.name,
+                                    author_nick : req.session.user.nickname,
                                     vote : vote,
                                     multiple : multiple,
                                     overt : overt,
@@ -158,7 +158,7 @@ module.exports = {
                                     fid : fid,
                                     ftype_id : ftype_id,
                                     author_id : req.session.user.id,
-                                    author_nick : req.session.user.name
+                                    author_nick : req.session.user.nickname
                                 }, function(error){
                                     callback(error);
                                 });
