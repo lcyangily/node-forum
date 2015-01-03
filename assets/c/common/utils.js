@@ -5,7 +5,7 @@ define(['cryptojs.sha256'], function(CryptoJS){
     var Utils = {
         crypto : function( source ){
             source = CryptoJS.SHA256(source).toString();
-            return CryptoJS.HmacSHA256(source, 'vipjll@517').toString();
+            return CryptoJS.HmacSHA256(source, 'linbilin@linbilin.com').toString();
         },
         valid : {
             isEmail : function(str){
