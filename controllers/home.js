@@ -178,9 +178,22 @@ module.exports = {
                 ], function(err, results){
                     res.locals.forum = results && results[0];
                     res.locals.topic = results && results[1];
-console.log('-------------> topic.list :' + JSON.stringify(res.locals.forum.list));
-console.log('-------------> topic.list :' + JSON.stringify(res.locals.topic.list));
                     next(err);
+                });
+            }
+        }
+    },
+    '/fav/tdata' : {    //获取分页数据
+        get : {
+            controller : function(req, res, next){
+                userSvc.getFavTopics(req.session.user.id, function(err, favs, page){
+                    if(err) return next(err);
+                    return res.send({
+                        page : page,
+                        list : favs
+                    });
+                }, {
+                    page : req.query.page
                 });
             }
         }
@@ -190,7 +203,77 @@ console.log('-------------> topic.list :' + JSON.stringify(res.locals.topic.list
             template : 'user/home/friend',
             controller : function(req, res, next){
                 res.locals.action = 'friend';
-                next();
+                async.parallel([
+                    function(cb){
+                        userSvc.getFriends(req.session.user.id, function(err, friends, page){
+                            cb(err, {
+                                list : friends,
+                                page : page
+                            });
+                        });
+                    },
+                    function(cb){
+                        userSvc.getReceiveFriendsRequest(req.session.user.id, function(err, friends, page){
+                            cb(err, {
+                                list : friends,
+                                page : page
+                            });
+                        });
+                    },
+                    function(cb){
+                        userSvc.getSendFriendsRequest(req.session.user.id, function(err, friends, page){
+                            cb(err, {
+                                list : friends,
+                                page : page
+                            });
+                        });
+                    }
+                ], function(err, results){
+                    res.locals.friend = results && results[0];
+                    res.locals.receive = results && results[1];
+                    res.locals.send = results && results[2];
+                    next(err);
+                });
+            }
+        }
+    },
+    '/friend/data/:type' : {    //获取分页数据
+        get : {
+            controller : function(req, res, next){
+                var type = req.params.type;
+                if(type == 'friend') {
+                    userSvc.getFriends(req.session.user.id, function(err, friends, page){
+                        if(err) return next(err);
+                        return res.send({
+                            page : page,
+                            list : friends
+                        });
+                    }, {
+                        page : req.query.page
+                    });
+                } else if(type == 'receive'){
+                    userSvc.getReceiveFriendsRequest(req.session.user.id, function(err, friends, page){
+                        if(err) return next(err);
+                        return res.send({
+                            page : page,
+                            list : friends
+                        });
+                    }, {
+                        page : req.query.page
+                    });
+                } else if(type == 'send'){
+                    userSvc.getSendFriendsRequest(req.session.user.id, function(err, friends, page){
+                        if(err) return next(err);
+                        return res.send({
+                            page : page,
+                            list : friends
+                        });
+                    }, {
+                        page : req.query.page
+                    });
+                } else {
+
+                }
             }
         }
     },

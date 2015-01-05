@@ -13,12 +13,12 @@
         {{#each list}}
             <tr>
                 <td>{{calc '(' ../page.current ' -1)* ' ../page.pageSize '+' @index '+1'}}</td>
-                <td><a href="/topic/{{id}}" target="_blank">{{topic.title}}</a></td>
-                <td>{{forum.name}}</td>
-                <td>{{topic.reply_count}}<br/>{{topic.visit_count}}</td>
-                <td>{{moment topic.create_time format='YYYY-MM-DD hh:mm:ss'}}</td>
-                <td>{{reply_author.nickname}}<br/>
-                    {{moment topic.last_reply_time format='YYYY-MM-DD hh:mm:ss'}}
+                <td><a href="/topic/{{id}}" target="_blank">{{forum_topic.title}}</a></td>
+                <td>{{forum_topic.forum.name}}</td>
+                <td>{{forum_topic.reply_count}}<br/>{{forum_topic.visit_count}}</td>
+                <td>{{moment forum_topic.create_time format='YYYY-MM-DD hh:mm:ss'}}</td>
+                <td>{{forum_topic.reply_author.nickname}}<br/>
+                    {{moment forum_topic.last_reply_time format='YYYY-MM-DD hh:mm:ss'}}
                 </td>
             </tr>
         {{/each}}

@@ -556,6 +556,7 @@ _.extend(BaseModel.prototype, {
     },
     clean : function(){
         this.result = null;
+        this.params.include = null;
         return this;
     }
 });
@@ -570,6 +571,7 @@ _.extend(BaseModel.prototype, {
             this.params.order = '';
             this.params.raw = false;
             this.params.is_page = false;
+            this.params.include = null;
             this.result = null;
             this.action = null;
         } else {

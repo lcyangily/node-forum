@@ -16,7 +16,7 @@
                         {{{string (string forum_topic.title 'stripTags') 'truncate' 50}}}
                     </a>
                 </td>
-                <td>{{{string (string content 'stripTags') 'truncate' 100}}}</td>
+                <td>{{{string (string content 'stripTags') 'truncate' 80}}}</td>
                 <td>{{forum_topic.reply_count}}<br/>{{forum_topic.visit_count}}</td>
                 <td>{{moment create_time format='YYYY-MM-DD hh:mm:ss'}}</td>
             </tr>

@@ -17,6 +17,7 @@
                                 <th>板块名</th>
                                 <th>描述</th>
                                 <th>主题/帖子</th>
+                                <th>最后回复</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,6 +28,11 @@
                                     <td>{{forum.desc}}</td>
                                     <td>{{#if forum.topic}}{{forum.topic}}{{else}}0{{/if}}<br/>
                                         {{#if forum.posts}}{{forum.posts}}{{else}}0{{/if}}</td>
+                                    <td>
+                                        {{last_reply_user_nick}}
+                                        <br/>
+                                        {{moment last_reply_time format='YYYY-MM-DD hh:mm:ss'}}
+                                    </td>
                                 </tr>
                             {{/each}}
                         </tbody>

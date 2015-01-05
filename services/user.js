@@ -117,12 +117,43 @@ exports.getLastRegUser = function(cb){
     ]).done(cb);
 }
 
+/** 得到用户的所有好友 **/
 exports.getFriends = function(uid, cb, page){
     var p = _.extend({page : 1, pageSize : 20}, page);
     UserFriend.findAll().where({
         uid : uid
     }).include([{
         model : User.Model,
+        include : [
+            UserCount.Model,
+            UserProfile.Model
+        ]
+    }]).page(p).done(cb);
+}
+
+/** 得到用户接受到的好友请求 **/
+exports.getReceiveFriendsRequest = function(uid, cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    UserFriendRequest.findAll().where({
+        fuid : uid
+    }).include([{
+        model : User.Model,
+        as : 'send',
+        include : [
+            UserCount.Model,
+            UserProfile.Model
+        ]
+    }]).page(p).done(cb);
+}
+
+/** 得到用户接收到的好友请求 **/
+exports.getSendFriendsRequest = function(uid, cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    UserFriendRequest.findAll().where({
+        uid : uid
+    }).include([{
+        model : User.Model,
+        as : 'receive',
         include : [
             UserCount.Model,
             UserProfile.Model
@@ -182,6 +213,20 @@ exports.removeFriend = function(myid, fuid, cb) {
         fuid : fuid
     }).done(cb);
 }
+
+/* 得到我关注的人 */
+exports.getFollowers = function(uid, cb){
+    UserFollow.findAll().where({
+        uid : uid,
+        status : 0
+    }).done(cb);
+}
+
+/* 得到关注我的人 */
+exports.getFollowersMe = function(uid, cb){
+
+}
+
 
 //关注
 exports.follow = function(myid, fuid, cb) {
@@ -277,9 +322,14 @@ exports.getFavTopics = function(uid, cb, page){
     UserFav.findAll().where({
         uid : uid,
         type : 2
-    }).include([
-        Topic.Model
-    ]).page(p).done(cb);
+    }).include([{
+        model : Topic.Model,
+        include : [
+            Forum.Model, 
+            {model : User.Model, as : 'reply_author'},
+            {model : Forum.Model, as : 'forum_type'}
+        ]
+    }]).page(p).done(cb);
 }
 
 //增加收藏数量

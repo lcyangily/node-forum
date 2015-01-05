@@ -39,6 +39,21 @@ module.exports = {
             foreignKey : 'fuid'
         }
     }],
+    user_friend_request : [{
+        relation  : 'belongsTo',
+        modelName : 'users',
+        params : {
+            foreignKey : 'fuid',
+            as : 'receive'
+        }
+    }, {
+        relation  : 'belongsTo',
+        modelName : 'users',
+        params : {
+            foreignKey : 'uid',
+            as : 'send'
+        }
+    }],
     forum_reply : [{
         relation : 'belongsTo',
         modelName : 'users',
