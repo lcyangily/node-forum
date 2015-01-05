@@ -18,5 +18,6 @@ glob.sync(helpersDir + '/**/*.+(js|coffee)').forEach(function(file) {
     require(file);
 })
 
-var jsonHelper = require('hbs-json');
-Handlebars.registerHelper('json', jsonHelper);
+//escapehtml的时候很慢很慢。。。
+//var jsonHelper = require('hbs-json');
+//Handlebars.registerHelper('json', jsonHelper);

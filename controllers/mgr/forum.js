@@ -39,7 +39,7 @@ module.exports = {
     '/create' : {
         get : function (req, res, next) {
             forumSvc.getAll(function(err, forums){
-                res.render('mgr/forum/edit', {
+                return res.render('mgr/forum/edit', {
                     forums : forums
                 });
             });
@@ -53,12 +53,9 @@ module.exports = {
                 pic  : req.body.pic
             }, function(err, t){
                 if(err) {
-                    res.render('notify/notify', {
-                        error : err
-                    });
-                    return;
+                    return next(err);
                 }
-                res.redirect('mgr/forum/create', {
+                res.render('notify/notify', {
                     success : '添加成功!'
                 });
             });

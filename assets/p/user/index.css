@@ -49,7 +49,6 @@
     z-index: 1;
     background: #fff;
     opacity: 0.1;
-    opacity:10;
     filter:alpha(opacity=10);
     -moz-opacity:0.1;
     -khtml-opacity: 0.1;
@@ -59,7 +58,6 @@
 }
 .upage-uinfo-bg-2{
     opacity: 0.3;
-    opacity:30;
     filter:alpha(opacity=30);
     -moz-opacity:0.3;
     -khtml-opacity: 0.3;
