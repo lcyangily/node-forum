@@ -10,7 +10,8 @@ var UserFav    = new BaseModel('user_favorite');
 var UserFriendRequest = new BaseModel('user_friend_request');
 var ForumModerator = new BaseModel('forum_moderator');
 var Forum      = new BaseModel('forum');
-/*var Topic  = new BaseModel('forum_topic');
+var Topic      = new BaseModel('forum_topic');
+/*
 var Reply  = new BaseModel('forum_reply');
 var Forum  = new BaseModel('forum');
 var replySvc = loadService('reply');
@@ -261,6 +262,7 @@ exports.addFav = function(uid, id, type, cb){
     });
 }
 
+//得到
 exports.getFavForums = function(uid, cb){
     UserFav.findAll().where({
         uid : uid,
@@ -268,6 +270,16 @@ exports.getFavForums = function(uid, cb){
     }).include([
         Forum.Model
     ]).done(cb);
+}
+
+exports.getFavTopics = function(uid, cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    UserFav.findAll().where({
+        uid : uid,
+        type : 2
+    }).include([
+        Topic.Model
+    ]).page(p).done(cb);
 }
 
 //增加收藏数量

@@ -159,7 +159,29 @@ module.exports = {
             template : 'user/home/fav',
             controller : function(req, res, next){
                 res.locals.action = 'fav';
-                next();
+                async.parallel([
+                    function(cb){
+                        userSvc.getFavForums(req.session.user.id, function(err, favs){
+                            cb(err, {
+                                list : favs
+                            });
+                        });
+                    },
+                    function(cb){
+                        userSvc.getFavTopics(req.session.user.id, function(err, favs, page){
+                            cb(err, {
+                                list : favs,
+                                page : page
+                            });
+                        });
+                    }
+                ], function(err, results){
+                    res.locals.forum = results && results[0];
+                    res.locals.topic = results && results[1];
+console.log('-------------> topic.list :' + JSON.stringify(res.locals.forum.list));
+console.log('-------------> topic.list :' + JSON.stringify(res.locals.topic.list));
+                    next(err);
+                });
             }
         }
     },

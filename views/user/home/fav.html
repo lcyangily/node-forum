@@ -3,38 +3,85 @@
         <li><a href="/home/topic">主题/帖子</a></li>
     {{/replace}}
     {{#replace "content"}}
-        <ul class="nav nav-tabs nav-sm" role="tablist">
-            <li class="active"><a href="#">收藏的板块</a></li>
-            <li><a href="#">收藏的主题</a></li>
-        </ul>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="J_tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="javascript:void(0);">收藏的板块</a></li>
+                <li><a href="javascript:void(0);">收藏的主题</a></li>
+            </ul>
+            <div class="tab-cnt">
+                <div class="tab-panel">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>板块名</th>
+                                <th>描述</th>
+                                <th>主题/帖子</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each forum.list}}
+                                <tr>
+                                    <td>{{calc @index '+1'}}</td>
+                                    <td><a href="/forum/{{id}}" target="_blank">{{forum.name}}</a></td>
+                                    <td>{{forum.desc}}</td>
+                                    <td>{{#if forum.topic}}{{forum.topic}}{{else}}0{{/if}}<br/>
+                                        {{#if forum.posts}}{{forum.posts}}{{else}}0{{/if}}</td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-panel">
+                    <div id="J_topicList">
+                        {{sub "user/home/fav_ttable" list=topic.list page=topic.page}}
+                    </div>
+                    <div id="J_topicPage"></div>
+                </div>
+            </div>
+        </div>
     {{/replace}}
+    {{#append "js"}}
+    {{tplinclude "J_topicTpl" "user/home/fav_ttable"}}
+    <script type="text/javascript">
+    require(['jquery', 'sib.pager', 'sib.dialog', 'sib.tabs', 
+             'hbs', 'hbs-helper.calc', 'hbs-helper.moment'], 
+        function($, Pager, Dialog, Tabs, Handlebars){
+
+        new Tabs({
+            target : '#J_tabs',
+            panels : '.tab-panel',
+            triggers : '.nav-tabs li',
+            addDefaultCls : false,
+            triggerActiveCls : 'active'
+        });
+
+        var ttpl = Handlebars.compile($('#J_topicTpl').text());
+        new Pager({
+            appendTo : '#J_topicPage',
+            totalPages: {{topic.page.totalPages}},  //总页数
+            totalRecords : {{topic.page.total}},   //总记录数
+            current: {{topic.page.current}},
+            loading: false,
+            showPageNumber : 10,//每次显示页码数量
+            threme : null,
+            gotoLabel : '跳转',
+            displayMsg: '共{total}条/{pages}页',
+            selectPage: function(evt, opts){
+                $.ajax({
+                    url : '/home/topic/tdata?page=' + opts.current,
+                    success : function(data){
+                        if(data.list) {
+                            $('#J_topicList').html(ttpl(data));
+                        }
+                    },
+                    error : function(data){
+                        Dialog.tip(data.responseText);
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    {{/append}}
 {{/extend}}

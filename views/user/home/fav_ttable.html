@@ -1,0 +1,26 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>主题名</th>
+            <th>板块</th>
+            <th>回复/查看</th>
+            <th>发布时间</th>
+            <th>最后发帖</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each list}}
+            <tr>
+                <td>{{calc '(' ../page.current ' -1)* ' ../page.pageSize '+' @index '+1'}}</td>
+                <td><a href="/topic/{{id}}" target="_blank">{{topic.title}}</a></td>
+                <td>{{forum.name}}</td>
+                <td>{{topic.reply_count}}<br/>{{topic.visit_count}}</td>
+                <td>{{moment topic.create_time format='YYYY-MM-DD hh:mm:ss'}}</td>
+                <td>{{reply_author.nickname}}<br/>
+                    {{moment topic.last_reply_time format='YYYY-MM-DD hh:mm:ss'}}
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

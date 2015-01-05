@@ -48,19 +48,31 @@
                         <div class="x-grid-row topic-fast-group">
                             <div class="x-grid-1-3">
                                 <a class="topic-fast-btn" href="/user/{{user.id}}/topic">
-                                    <b>0</b>
+                                    <b>
+                                        {{#if _s.user.user_count.topics}}
+                                            {{_s.user.user_count.topics}}
+                                        {{else}}0{{/if}}
+                                    </b>
                                     <p>主题</p>
                                 </a>
                             </div>
                             <div class="x-grid-1-3">
                                 <a class="topic-fast-btn" href="/user/{{user.id}}/posts">
-                                    <b>4</b>
+                                    <b>
+                                    {{#if _s.user.user_count.replys}}
+                                        {{_s.user.user_count.replys}}
+                                    {{else}}0{{/if}}
+                                    </b>
                                     <p>帖子</p>
                                 </a>
                             </div>
                             <div class="x-grid-1-3">
                                 <a class="topic-fast-btn last" href="/user/{{user.id}}/friends">
-                                    <b>0</b>
+                                    <b>
+                                        {{#if _s.user.user_count.friends}}
+                                            {{_s.user.user_count.friends}}
+                                        {{else}}0{{/if}}
+                                    </b>
                                     <p>好友</p>
                                 </a>
                             </div>
