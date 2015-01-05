@@ -17,6 +17,15 @@
 .upage-base .header .nav > li a{
     color: #fff;
 }
+.upage-base .header .user-detail-con{
+    opacity:0.9;
+    filter:alpha(opacity=90);
+    -moz-opacity:0.9;
+    -khtml-opacity: 0.9;
+}
+.upage-base .header .user-detail-con li a{
+    color: #777;
+}
 
 .upage-base .wrapper-main{
     padding-top: 0px;
@@ -40,7 +49,7 @@
     z-index: 1;
     background: #fff;
     opacity: 0.1;
-    filter:opacity(10);
+    opacity:10;
     filter:alpha(opacity=10);
     -moz-opacity:0.1;
     -khtml-opacity: 0.1;
@@ -50,7 +59,7 @@
 }
 .upage-uinfo-bg-2{
     opacity: 0.3;
-    filter:opacity(30);
+    opacity:30;
     filter:alpha(opacity=30);
     -moz-opacity:0.3;
     -khtml-opacity: 0.3;

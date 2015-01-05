@@ -50,7 +50,7 @@ a:hover{
     padding: 0px;
     float: left;
     display: block;
-    background: url(../../images/logo.png) left 0px;
+    /* background: url(../../images/logo.png) left 0px; */
     /* background: #FF5E52; */
 }
 .navbar .nav > li a {
@@ -89,7 +89,7 @@ a:hover{
     transform: scaleX(1);
 } */
 .navbar .nav > li .current{
-    color: #FF5E52;
+    color: #FF5E52 !important;
     padding-bottom: 1px;
     border-bottom:2px solid #FF5E52;
     /* font-weight: bold; */

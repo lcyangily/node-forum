@@ -80,10 +80,12 @@ module.exports = {
             controller : function(req, res, next){
                 var uname = req.body.loginname;
                 var passwd = req.body.passwd;
+                var nickname = req.body.nickname;
 
                 userSvc.register({
                     loginname : uname,
-                    password : passwd
+                    password : passwd,
+                    nickname : nickname
                 }, function(err, user){
                     next(err || '注册成功!');                 
                 });
