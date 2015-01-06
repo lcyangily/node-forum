@@ -3,39 +3,82 @@
         <li><a href="/home/topic">主题/帖子</a></li>
     {{/replace}}
     {{#replace "content"}}
-        <ul class="nav nav-tabs nav-sm" role="tablist">
-            <li class="active"><a href="#">我的好友</a></li>
-            <li><a href="#">好友请求</a></li>
-            <li><a href="#">我的申请</a></li>
-        </ul>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="J_tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="javascript:void(0);">我的好友</a></li>
+                <li><a href="javascript:void(0);">好友请求</a></li>
+                <li><a href="javascript:void(0);">我的申请</a></li>
+            </ul>
+            <div class="tab-cnt">
+                <div class="tab-panel">
+                    <div id="J_friendList">
+                        {{sub "user/home/friend_friend" list=friend.list page=friend.page}}
+                    </div>
+                    <div id="J_friendPage"></div>
+                </div>
+                <div class="tab-panel fn-hide">
+                    <div id="J_receiveList">
+                        {{sub "user/home/friend_receive" list=receive.list page=receive.page}}
+                    </div>
+                    <div id="J_receivePage"></div>
+                </div>
+                <div class="tab-panel fn-hide">
+                    <div id="J_sendList">
+                        {{sub "user/home/friend_send" list=send.list page=send.page}}
+                    </div>
+                    <div id="J_sendPage"></div>
+                </div>
+            </div>
+        </div>
     {{/replace}}
+    {{#append "js"}}
+    {{tplinclude "J_friendTpl" "user/home/friend_friend"}}
+    {{tplinclude "J_receiveTpl" "user/home/friend_receive"}}
+    {{tplinclude "J_sendTpl" "user/home/friend_send"}}
+    <script type="text/javascript">
+    require(['jquery', 'sib.sib', 'sib.pager', 'sib.dialog', 'sib.tabs', 
+             'hbs', 'hbs-helper.calc', 'hbs-helper.moment'], 
+        function($, Sib, Pager, Dialog, Tabs, Handlebars){
+
+        new Tabs({
+            target : '#J_tabs',
+            panels : '.tab-panel',
+            triggers : '.nav-tabs li',
+            addDefaultCls : false,
+            triggerActiveCls : 'active'
+        });
+
+        var ftpl = Handlebars.compile($('#J_friendTpl').text());
+        var rtpl = Handlebars.compile($('#J_reveiveTpl').text());
+        var stpl = Handlebars.compile($('#J_sendTpl').text());
+
+        var tabData = [{
+            type : '/home/friend/data/friend',
+            tplId : '#J_friendTpl',
+            pageId : '#J_friendPage',
+            listId : '#J_friendList',
+            totalPages : {{friend.page.totalPages}},
+            totalRecords : {{friend.page.total}}
+        }, {
+            type : '/home/friend/data/receive',
+            tplId : '#J_reveiveTpl',
+            pageId : '#J_receivePage',
+            listId : '#J_receiveList',
+            totalPages : {{receive.page.totalPages}},
+            totalRecords : {{receive.page.total}}
+        }, {
+            type : '/home/friend/data/send',
+            tplId : '#J_sendTpl',
+            pageId : '#J_sendPage',
+            listId : '#J_sendList',
+            totalPages : {{send.page.totalPages}},
+            totalRecords : {{send.page.total}}
+        }];
+
+        for(var i = 0; i < tabData.length; i++) {
+            Sib.publish('createPager', tabData[i]);
+        }
+    });
+    </script>
+    {{/append}}
 {{/extend}}

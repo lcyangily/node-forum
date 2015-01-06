@@ -13,6 +13,20 @@ module.exports = {
             template : 'user/index',
             filters : ['getUserInHome'],
             controller : function(req, res, next) {
+                var uid = req.params.uid;
+                if(req.session && req.session.user && req.session.user.id == uid) {
+                    res.redirect('/user/' + uid + '/follow');
+                } else {
+                    next();
+                }
+            }
+        }
+    },
+    "/:uid/follow": {
+        get: { 
+            template : 'user/follow',
+            filters : ['getUserInHome'],
+            controller : function(req, res, next) {
                 next();
             }
         }
@@ -44,6 +58,8 @@ module.exports = {
                     res.locals.replys = replys;
                     res.locals.pageinfo = page;
                     next(err);
+                }, {
+                    page : req.query.page
                 });
             }
         }

@@ -254,7 +254,7 @@
             {{#if _s.user}}
                 {{#each _s.mgrForums}}
                     {{#eq fid ../topic.fid}}
-                        {{sub "topic/actions"}}
+                        {{sub "topic/actions" topic=../../topic}}
                     {{/eq}}
                 {{/each}}
             {{/if}}

@@ -1,0 +1,20 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>好友名</th>
+            <th>添加时间</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each list}}
+            <tr>
+                <td>{{calc '(' ../page.current ' -1)* ' ../page.pageSize '+' @index '+1'}}</td>
+                <td><a href="/user/{{fuid}}" target="_blank">{{user.nickname}}</a></td>
+                <td>{{moment dateline format='YYYY-MM-DD hh:mm:ss'}}</td>
+                <td></td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

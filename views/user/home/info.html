@@ -5,15 +5,20 @@
     {{#replace "leftNav"}}
         <h2 class="mt">管理中心</h2>
         <ul>
+            {{#eq _s.user.is_admin 1}}
+                <li {{#eq action 'audit'}}class="current"{{/eq}}>
+                    <a href="/home/audit">审核管理</a>
+                </li>
+            {{/eq}}
             <li {{#eq action 'avatar'}}class="current"{{/eq}}>
                 <a href="/home/avatar">修改头像</a>
             </li>
             <li {{#eq action 'info'}}class="current"{{/eq}}>
                 <a href="/home/info">个人资料</a>
             </li>
-            <li {{#eq action 'msg'}}class="current"{{/eq}}>
+            <!-- <li {{#eq action 'msg'}}class="current"{{/eq}}>
                 <a href="/home/msg">消息</a>
-            </li>
+            </li> -->
             <li {{#eq action 'topic'}}class="current"{{/eq}}>
                 <a href="/home/topic">主题/帖子</a>
             </li>
@@ -114,4 +119,42 @@
             </script>
         {{/eq}}
     {{/replace}}
+    {{#append "js"}}
+        <script type="text/javascript">
+        require(['jquery', 'sib.sib', 'sib.pager', 'hbs', 'hbs-helper.calc', 'hbs-helper.moment'], 
+            function($, Sib, Pager, Handlebars){
+
+            Sib.subscribe('createPager', function(info){
+                createPager(info);
+            });
+            function createPager(info){
+                var tpl = Handlebars.compile($(info.tplId).text());
+                new Pager({
+                    appendTo : info.pageId,
+                    totalPages: info.totalPages,  //总页数
+                    totalRecords : info.totalRecords,   //总记录数
+                    current: info.current || 1,
+                    loading: false,
+                    showPageNumber : 10,//每次显示页码数量
+                    threme : null,
+                    gotoLabel : '跳转',
+                    displayMsg: '共{total}条/{pages}页',
+                    selectPage: function(evt, opts){
+                        $.ajax({
+                            url : info.url + '?page=' + opts.current,
+                            success : function(data){
+                                if(data.list) {
+                                    $(info.listId).html(tpl(data));
+                                }
+                            },
+                            error : function(data){
+                                Dialog.tip(data.responseText);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        </script>
+    {{/append}}
 {{/extend}}

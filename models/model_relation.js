@@ -54,6 +54,21 @@ module.exports = {
             as : 'send'
         }
     }],
+    user_follow : [{
+        relation : 'belongsTo',
+        modelName : 'users',
+        params : {
+            foreignKey : 'follow_uid',
+            as : 'follow'
+        }
+    }, {
+        relation : 'belongsTo',
+        modelName : 'users',
+        params : {
+            foreignKey : 'uid',
+            as : 'fans'
+        }
+    }],
     forum_reply : [{
         relation : 'belongsTo',
         modelName : 'users',
@@ -118,6 +133,20 @@ module.exports = {
         modelName : 'forum_topic',
         params : {
             foreignKey : 'id'
+        }
+    }],
+    living_info : [{
+        relation : 'belongsTo',
+        modelName : 'users',
+        params : {
+            foreignKey : 'uid'
+        }
+    },{
+        relation : 'belongsTo',
+        modelName : 'users',
+        params : {
+            foreignKey : 'audit_uid',
+            as : 'auditer'
         }
     }]
 }

@@ -28,9 +28,9 @@
     {{tplinclude "J_topicTpl" "user/home/topic_ttable"}}
     {{tplinclude "J_replyTpl" "user/home/topic_rtable"}}
     <script type="text/javascript">
-    require(['jquery', 'sib.pager', 'sib.dialog', 'sib.tabs', 
+    require(['jquery', 'sib.sib', 'sib.pager', 'sib.dialog', 'sib.tabs', 
              'hbs', 'hbs-helper.calc', 'hbs-helper.moment', 'hbs-helper.string'], 
-        function($, Pager, Dialog, Tabs, Handlebars){
+        function($, Sib, Pager, Dialog, Tabs, Handlebars){
 
         new Tabs({
             target : '#J_tabs',
@@ -40,72 +40,25 @@
             triggerActiveCls : 'active'
         });
 
-        var ttpl = Handlebars.compile($('#J_topicTpl').text());
-        var rtpl = Handlebars.compile($('#J_replyTpl').text());
-        new Pager({
-            appendTo : '#J_topicPage',
-            //type : '',  //min
-            totalPages: {{topic.page.totalPages}},  //总页数
-            totalRecords : {{topic.page.total}},   //总记录数
-            current: {{topic.page.current}},
-            //pageSize: 10,   //每页显示条数
-            //pageList: [10,20,30,50],
-            loading: false,
-            showPageNumber : 10,//每次显示页码数量
-            //showPageList: true,
-            //showRefresh: true,
-            //clsPrefix : 'sib-page',
-            //prevLabel : '上一页',
-            //nextLabel : '下一页',
-            //firstLabel : '首页',
-            //lastLabel : '末页',
+        var tabData = [{
+            url : '/home/topic/tdata',
+            tplId : '#J_topicTpl',
+            pageId : '#J_topicPage',
+            listId : '#J_topicList',
+            totalPages : {{topic.page.totalPages}},
+            totalRecords : {{topic.page.total}}
+        }, {
+            url : '/home/topic/rdata',
+            tplId : '#J_replyTpl',
+            pageId : '#J_replyPage',
+            listId : '#J_replyList',
+            totalPages : {{reply.page.totalPages}},
+            totalRecords : {{reply.page.total}}
+        }];
 
-            threme : null,
-            //beforePageText: '跳转到：',
-            //afterPageText: 'of {pages}',
-            //afterPageText: '页', //
-            gotoLabel : '跳转',
-            ////displayMsg: 'Displaying {from} to {to} of {total} items'
-            //displayMsg: '共{total}条/{pages}页,当前{from}~{to}'
-            displayMsg: '共{total}条/{pages}页',
-
-            selectPage: function(evt, opts){
-                $.ajax({
-                    url : '/home/topic/tdata?page=' + opts.current,
-                    success : function(data){
-                        if(data.list) {
-                            $('#J_topicList').html(ttpl(data));
-                        }
-                    },
-                    error : function(data){
-                        Dialog.tip(data.responseText);
-                    }
-                });
-            }
-        });
-
-        new Pager({
-            appendTo : '#J_replyPage',
-            //type : '',  //min
-            totalPages: {{reply.page.totalPages}},  //总页数
-            totalRecords : {{reply.page.total}},   //总记录数
-            current: {{reply.page.current}},
-            displayMsg: '共{total}条/{pages}页',
-
-            selectPage: function(evt, opts){
-                $.ajax({
-                    url : '/home/topic/rdata?page=' + opts.current,
-                    success : function(data){
-                        if(data.list) {
-                            $('#J_replyList').html(rtpl(data));
-                        }
-                    },
-                    error : function(data){
-                        Dialog.tip(data.responseText);
-                    }
-                });
-            }
-        });
+        for(var i = 0; i < tabData.length; i++) {
+            Sib.publish('createPager', tabData[i]);
+        }
     });
     </script>
     {{/append}}

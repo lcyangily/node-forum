@@ -38,7 +38,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-panel">
+                <div class="tab-panel fn-hide">
                     <div id="J_topicList">
                         {{sub "user/home/fav_ttable" list=topic.list page=topic.page}}
                     </div>
@@ -50,9 +50,9 @@
     {{#append "js"}}
     {{tplinclude "J_topicTpl" "user/home/fav_ttable"}}
     <script type="text/javascript">
-    require(['jquery', 'sib.pager', 'sib.dialog', 'sib.tabs', 
+    require(['jquery', 'sib.sib', 'sib.pager', 'sib.dialog', 'sib.tabs', 
              'hbs', 'hbs-helper.calc', 'hbs-helper.moment'], 
-        function($, Pager, Dialog, Tabs, Handlebars){
+        function($, Sib, Pager, Dialog, Tabs, Handlebars){
 
         new Tabs({
             target : '#J_tabs',
@@ -62,31 +62,16 @@
             triggerActiveCls : 'active'
         });
 
-        var ttpl = Handlebars.compile($('#J_topicTpl').text());
-        new Pager({
-            appendTo : '#J_topicPage',
-            totalPages: {{topic.page.totalPages}},  //总页数
-            totalRecords : {{topic.page.total}},   //总记录数
-            current: {{topic.page.current}},
-            loading: false,
-            showPageNumber : 10,//每次显示页码数量
-            threme : null,
-            gotoLabel : '跳转',
-            displayMsg: '共{total}条/{pages}页',
-            selectPage: function(evt, opts){
-                $.ajax({
-                    url : '/home/topic/tdata?page=' + opts.current,
-                    success : function(data){
-                        if(data.list) {
-                            $('#J_topicList').html(ttpl(data));
-                        }
-                    },
-                    error : function(data){
-                        Dialog.tip(data.responseText);
-                    }
-                });
-            }
-        });
+        var tabData = [{
+            url : '/home/topic/tdata',
+            tplId : '#J_topicTpl',
+            pageId : '#J_topicPage',
+            listId : '#J_topicList',
+            totalPages : {{topic.page.totalPages}},
+            totalRecords : {{topic.page.total}}
+        }];
+
+        Sib.publish('createPager', tabData[0]);
     });
     </script>
     {{/append}}

@@ -22,27 +22,30 @@ exports.getList = function(cb, page){
                 {model : Forum.Model, as : 'forum_type'}
             ]
         }
-    ]).order({
+    ]).where({
+        status : 0
+    }).order({
         create_time : 'desc'
     }).page(p).done(cb);
-    /*Topic.findAll()
-        .include([
-            News.Model,
-            User.Model, 
-            Forum.Model, 
-            {model : User.Model, as : 'reply_author'},
-            {model : Forum.Model, as : 'forum_type'}
-        ]).where({
-            'news_topic.id' : {
-                ne : null
-            }
-        }).order({
-            'news_topic.create_time' : 'desc'
-        }).page(p).done(function(err, topics, page){
-//console.log('======> topics : ' + JSON.stringify(topics));
-console.log('======> page : ' + JSON.stringify(page));
-            cb(err, topics, page);
-        });*/
+}
+
+exports.getAuditRequests = function(cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    News.findAll().include([
+        {
+            model : Topic.Model,
+            include : [
+                User.Model, 
+                Forum.Model, 
+                {model : User.Model, as : 'reply_author'},
+                {model : Forum.Model, as : 'forum_type'}
+            ]
+        }
+    ]).where({
+        status : 3
+    }).order({
+        create_time : 'desc'
+    }).page(p).done(cb);
 }
 
 //发布帖子

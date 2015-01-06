@@ -6,8 +6,70 @@ var userSvc  = loadService('user');
 var forumSvc = loadService('forum');
 var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
+var newsSvc  = loadService('news');
+var livingSvc= loadService('hy');
 
 module.exports = {
+    '/audit' : {
+        get : {
+            filters : ['checkAdmin'], 
+            template : 'user/home/audit',
+            controller : function(req, res, next){
+                res.locals.action = 'audit';
+                async.parallel([
+                    function(cb){
+                        newsSvc.getAuditRequests(function(err, news, page){
+                            cb(err, {
+                                list : news,
+                                page : page
+                            });
+                        });
+                    },
+                    function(cb){
+                        livingSvc.getAuditRequests(function(err, living, page){
+                            cb(err, {
+                                list : living,
+                                page : page
+                            });
+                        });
+                    }
+                ], function(err, results){
+                    res.locals.news = results && results[0];
+                    res.locals.living = results && results[1];
+                    next(err);
+                });
+            }
+        }
+    },
+    '/audit/data/:type' : {  //获取分页信息
+        get : {
+            filters : ['checkAdmin'], 
+            controller : function(req, res, next){
+                var type = req.params.type;
+                if(type == 'living') {
+                    livingSvc.getAuditRequests(function(err, living, page){
+                        res.send({
+                            list : living,
+                            page : page
+                        });
+                    }, {
+                        page : req.query.page
+                    });
+                } else if(type == 'news') {
+                    newsSvc.getAuditRequests(function(err, news, page){
+                        res.send({
+                            list : news,
+                            page : page
+                        });
+                    }, {
+                        page : req.query.page
+                    });
+                } else {
+                    return res.send(502, '获取数据失败，请指定获取哪种类型数据');
+                }
+            }
+        }
+    },
     '/avatar' : {
         get : {
             template : 'user/home/avatar',
@@ -82,15 +144,6 @@ module.exports = {
                 }, function(err){
                     res.redirect('/home/info?code='+1);
                 });
-            }
-        }
-    },
-    '/msg' : {
-        get : {
-            template : 'user/home/msg',
-            controller : function(req, res, next){
-                res.locals.action = 'msg';
-                next();
             }
         }
     },
@@ -272,7 +325,7 @@ module.exports = {
                         page : req.query.page
                     });
                 } else {
-
+                    return res.send(502, '获取数据失败，请指定获取哪种类型数据');
                 }
             }
         }
@@ -282,7 +335,58 @@ module.exports = {
             template : 'user/home/follow',
             controller : function(req, res, next){
                 res.locals.action = 'follow';
-                next();
+                async.parallel([
+                    function(cb){
+                        userSvc.getFollowers(req.session.user.id, function(err, follows, page){
+                            cb(err, {
+                                list : follows,
+                                page : page
+                            });
+                        });
+                    },
+                    function(cb){
+                        userSvc.getFollowersMe(req.session.user.id, function(err, fans, page){
+                            cb(err, {
+                                list : fans,
+                                page : page
+                            });
+                        });
+                    }
+                ], function(err, results){
+                    res.locals.follow = results && results[0];
+                    res.locals.fans = results && results[1];
+                    next(err);
+                });
+            }
+        }
+    },
+    '/follow/data/:type' : {    //获取分页数据
+        get : {
+            controller : function(req, res, next){
+                var type = req.params.type;
+                if(type == 'follow') {
+                    userSvc.getFollowers(req.session.user.id, function(err, follows, page){
+                        if(err) return next(err);
+                        return res.send({
+                            page : page,
+                            list : follows
+                        });
+                    }, {
+                        page : req.query.page
+                    });
+                } else if(type == 'fans'){
+                    userSvc.getFollowersMe(req.session.user.id, function(err, fans, page){
+                        if(err) return next(err);
+                        return res.send({
+                            page : page,
+                            list : fans
+                        });
+                    }, {
+                        page : req.query.page
+                    });
+                } else {
+                    return res.send(502, '获取数据失败，请指定获取哪种类型数据');
+                }
             }
         }
     },

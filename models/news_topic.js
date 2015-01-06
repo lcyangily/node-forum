@@ -47,7 +47,7 @@ module.exports = {
     "type": "tinyint(4)",
     "allowNull": true,
     "defaultValue": "0",
-    "comment": "帖子状态：0-正常，1-删除不可见，2-管理员强制删除"
+    "comment": "帖子状态：0-正常，1-删除不可见，2-管理员强制删除，3-申请到首页，4-审核不通过"
   },
   "status_chg_uid": {
     "type": "int(11)",

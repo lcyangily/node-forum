@@ -26,7 +26,14 @@ exports.getListByUid = function(uid, cb, page){
     var p = _.extend({page : 1, pageSize : 20}, page);
     Reply.findAll().where({
         author_id : uid
-    }).include([Topic.Model]).page(p).done(cb);
+    }).include([
+        {
+            model : Topic.Model,
+            include : [
+                Forum.Model
+            ]
+        }
+    ]).page(p).done(cb);
 }
 
 /** 增加回复数量 **/

@@ -295,7 +295,7 @@ a.topic-pub-btn:active {
 #J_topUserBtn .user-name{
     display: block;
     padding-left: 45px;
-    padding-right: 30px;
+    padding-right: 0px;
 }
 #J_topUserBtn .msg{
     margin-top: 2px;

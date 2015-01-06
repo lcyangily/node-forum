@@ -1,0 +1,42 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>图片</th>
+            <th>标题</th>
+            <th>板块</th>
+            <th>申请人</th>
+            <th>申请时间</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each list}}
+            <tr>
+                <td>{{calc '(' ../page.current ' -1)* ' ../page.pageSize '+' @index '+1'}}</td>
+                <td>{{#if img}}<img src="{{img}}" width="100" />{{else}}无{{/if}}</td>
+                <td>
+                    <span data-tip-title="{{~#if title ~}}
+                                                {{string title 'stripTags'}}
+                                            {{~ else ~}}
+                                                {{string forum_topic.title 'stripTags'}}
+                                            {{~/if}}">
+                        {{#if title}}
+                            {{string (string name 'stripTags') 'truncate' 20}}
+                        {{else}}
+                            {{string (string forum_topic.title 'stripTags') 'truncate' 20}}
+                        {{/if}}
+                    </span>
+                </td>
+                <th><a href="/forum/{{topic.forum.id}}" target="_blank">{{topic.forum.name}}</a></th>
+                <th><a href="/forum/{{topic.user.id}}" target="_blank">{{topic.user.loginname}}</a></th>
+                <td>{{moment create_time format='YYYY-MM-DD hh:mm:ss'}}</td>
+                <td>
+                    <button class="btn btn-xs btn-primary">审核通过</button><br/>
+                    <button class="btn btn-xs btn-primary">不通过</button><br/>
+                    <button class="btn btn-xs btn-primary">删除</button>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

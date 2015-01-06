@@ -5,28 +5,28 @@
     {{#replace "content"}}
         <div id="J_tabs">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="javascript:void(0);">我关注的</a></li>
-                <li><a href="javascript:void(0);">我的粉丝</a></li>
+                <li class="active"><a href="javascript:void(0);">生活信息</a></li>
+                <li><a href="javascript:void(0);">首页新闻</a></li>
             </ul>
             <div class="tab-cnt">
                 <div class="tab-panel">
-                    <div id="J_followList">
-                        {{sub "user/home/follow_follow" list=follow.list page=friend.page}}
+                    <div id="J_livingList">
+                        {{sub "user/home/audit_living" list=living.list page=living.page}}
                     </div>
-                    <div id="J_followPage"></div>
+                    <div id="J_livingPage"></div>
                 </div>
                 <div class="tab-panel fn-hide">
-                    <div id="J_fansList">
-                        {{sub "user/home/follow_fans" list=fans.list page=receive.page}}
+                    <div id="J_newsList">
+                        {{sub "user/home/audit_news" list=news.list page=news.page}}
                     </div>
-                    <div id="J_fansPage"></div>
+                    <div id="J_newsPage"></div>
                 </div>
             </div>
         </div>
     {{/replace}}
     {{#append "js"}}
-    {{tplinclude "J_followTpl" "user/home/follow_follow"}}
-    {{tplinclude "J_fansTpl" "user/home/follow_fans"}}
+    {{tplinclude "J_livingTpl" "user/home/audit_living"}}
+    {{tplinclude "J_newsTpl" "user/home/audit_news"}}
     <script type="text/javascript">
     require(['jquery', 'sib.sib', 'sib.pager', 'sib.dialog', 'sib.tabs', 
              'hbs', 'hbs-helper.calc', 'hbs-helper.moment'], 
@@ -41,19 +41,19 @@
         });
 
         var tabData = [{
-            url : '/home/follow/data/follow',
-            tplId : '#J_followTpl',
-            pageId : '#J_followPage',
-            listId : '#J_followList',
-            totalPages : {{follow.page.totalPages}},
-            totalRecords : {{follow.page.total}}
+            type : '/home/audit/data/living',
+            tplId : '#J_livingTpl',
+            pageId : '#J_livingPage',
+            listId : '#J_livingList',
+            totalPages : {{living.page.totalPages}},
+            totalRecords : {{living.page.total}}
         }, {
-            url : '/home/follow/data/fans',
-            tplId : '#J_fansTpl',
-            pageId : '#J_fansPage',
-            listId : '#J_fansList',
-            totalPages : {{fans.page.totalPages}},
-            totalRecords : {{fans.page.total}}
+            type : '/home/audit/data/news',
+            tplId : '#J_newsTpl',
+            pageId : '#J_newsPage',
+            listId : '#J_newsList',
+            totalPages : {{news.page.totalPages}},
+            totalRecords : {{news.page.total}}
         }];
 
         for(var i = 0; i < tabData.length; i++) {

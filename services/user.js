@@ -215,16 +215,25 @@ exports.removeFriend = function(myid, fuid, cb) {
 }
 
 /* 得到我关注的人 */
-exports.getFollowers = function(uid, cb){
+exports.getFollowers = function(uid, cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
     UserFollow.findAll().where({
         uid : uid,
         status : 0
-    }).done(cb);
+    }).include([
+        {model : User.Model, as : 'follow'}
+    ]).page(p).done(cb);
 }
 
 /* 得到关注我的人 */
-exports.getFollowersMe = function(uid, cb){
-
+exports.getFollowersMe = function(uid, cb, page){
+    var p = _.extend({page : 1, pageSize : 20}, page);
+    UserFollow.findAll().where({
+        follow_uid : uid,
+        status : 0
+    }).include([
+        {model : User.Model, as : 'fans'}
+    ]).page(p).done(cb);
 }
 
 

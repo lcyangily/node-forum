@@ -62,6 +62,24 @@ module.exports = {
     "defaultValue": "",
     "comment": "用户ID"
   },
+  "status": {
+    "type": "tinyint(4)",
+    "allowNull": true,
+    "defaultValue": "0",
+    "comment": "0-正常，1-删除不可见，2-管理员强制删除，3-申请待审核，4-审核不通过"
+  },
+  "audit_uid": {
+    "type": "int(11)",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": "审核人员"
+  },
+  "audit_time": {
+    "type": "datetime",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": "审核通过时间"
+  },
   "arg0": {
     "type": "varchar(255)",
     "allowNull": true,

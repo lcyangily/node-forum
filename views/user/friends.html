@@ -3,7 +3,7 @@
         <div class="grid-row">
             {{#each friends}}
                 <div class="grid-md-8 grid-sm-9">
-                    <div class="panel card-mini">
+                    <div class="panel card-mini clearfix">
                         <a class="avatar" href="#">
                             <img src="{{user.avatar}}">
                         </a>
@@ -11,24 +11,33 @@
                             <h2 class="title">
                                 <a href="/user/{{user.id}}">{{user.nickname}}</a>
                             </h2>
+                            {{!--{{#eq ../user.id ../_s.user.id}}
+                                <div class="info">
+                                    {{#if user.user_profile.signature}}
+                                    {{string (string user.user_profile.signature 'stripTags') 'truncate' 20}}
+                                    {{/if}}
+                                </div>
+                            {{/eq}}--}}
                             <div class="info">
                                 <em>
                                     <span class="info-label">主题：</span>
-                                    <span class="info-value">{{user.topic_count}}</span>
+                                    <span class="info-value">{{user.user_count.topics}}</span>
                                 </em>
                                 <em>
                                     <span class="info-label">跟帖：</span>
-                                    <span class="info-value">{{user.reply_count}}</span>
+                                    <span class="info-value">{{user.user_count.replys}}</span>
                                 </em>
                             </div>
-                            <div class="info">
-                                <button class="btn btn-success btn-xs">
-                                    <span class="glyphicon glyphicon-plus"></span> 加好友
-                                </button>
-                                <button class="btn btn-success btn-xs">
-                                    <span class="glyphicon glyphicon-plus"></span> 关注
-                                </button>
-                            </div>
+                            {{#ne ../user.id ../_s.user.id}}
+                                <div class="info">
+                                    <button class="btn btn-success btn-xs">
+                                        <span class="glyphicon glyphicon-plus"></span> 加好友
+                                    </button>
+                                    <button class="btn btn-success btn-xs">
+                                        <span class="glyphicon glyphicon-plus"></span> 关注
+                                    </button>
+                                </div>
+                            {{/ne}}
                         </div>
                     </div>
                 </div>

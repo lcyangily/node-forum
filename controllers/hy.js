@@ -79,6 +79,9 @@ module.exports = {
                         //fid : fid,
                         //tid : tid,
                         uid : user.id,
+                        status : req.session.user.is_admin ? 0 : 3,
+                        audit_uid : req.session.user.is_admin ? req.session.user.id : null,
+                        audit_time : req.session.user.is_admin ? new Date() : null,
                         arg0 : arg0,
                         arg1 : arg1,
                         arg2 : arg2,
@@ -93,7 +96,7 @@ module.exports = {
                     }, function(err, linfo){
                         if(err) return next(err);
                         return res.render('notify/notify', {
-                            success : '申请成功，等待管理员审核！'
+                            success : req.session.user.is_admin ? '操作成功！' : '申请成功，等待管理员审核！'
                         });
                     });
                 });
