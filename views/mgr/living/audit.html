@@ -1,0 +1,50 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>图片</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>电话</th>
+            <th>类型</th>
+            <th>申请人</th>
+            <th>申请时间</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each list}}
+            <tr>
+                <td>{{calc '(' ../page.current ' -1)* ' ../page.pageSize '+' @index '+1'}}</td>
+                <td>{{#if img}}<img src="{{img}}" width="40" height="40" />{{else}}无{{/if}}</td>
+                <td>
+                    <span data-tip-title="{{string name 'stripTags'}}">
+                        {{string (string name 'stripTags') 'truncate' 10}}
+                    </span>
+                </td>
+                <td>
+                    <span data-tip-title="{{string desc 'stripTags'}}">
+                        {{string (string desc 'stripTags') 'truncate' 10}}
+                    </span>
+                </td>
+                <td>{{phone}}</td>
+                <td>
+                    {{#eq type 1}}公共服务{{/eq}}
+                    {{#eq type 2}}外卖{{/eq}}
+                    {{#eq type 3}}超市{{/eq}}
+                    {{#eq type 4}}邻里淘宝店{{/eq}}
+                    {{#eq type 5}}其他{{/eq}}
+                </td>
+                <td><a href="/user/{{uid}}" target="_blank">{{user.nickname}}</a></td>
+                <td>{{moment create_time format='YYYY-MM-DD'}}</td>
+                <td><button class="btn btn-xs btn-primary" 
+                        data-role="yes" data-id="{{id}}">审核通过</button><br/>
+                    <button class="btn btn-xs btn-primary"
+                        data-role="no" data-id="{{id}}">不通过</button><br/>
+                    <button class="btn btn-xs btn-primary"
+                        data-role="del" data-id="{{id}}">删除</button>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

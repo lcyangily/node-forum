@@ -1,0 +1,120 @@
+{{#extend "user/ulayout"}}
+    {{#replace "breadcrumbFirst"}}
+        <li><a href="/mgr/living">系统管理中心</a></li>
+    {{/replace}}
+    {{#replace "breadcrumbPath"}}
+        <li><a href="/mgr/living">生活信息管理</a></li>
+    {{/replace}}
+    {{#replace "leftNav"}}
+        <h2 class="mt">系统管理中心</h2>
+        <ul>
+            <li {{#eq action 'living'}}class="current"{{/eq}}>
+                <a href="/mgr/living">生活信息管理</a>
+            </li>
+            <li {{#eq action 'news'}}class="current"{{/eq}}>
+                <a href="/mgr/news">新闻帖管理</a>
+            </li>
+            <li {{#eq action 'topic'}}class="current"{{/eq}}>
+                <a href="/mgr/topic">主题管理</a>
+            </li>
+            <li {{#eq action 'user'}}class="current"{{/eq}}>
+                <a href="/mgr/user">用户管理</a>
+            </li>
+            <li {{#eq action 'forum'}}class="current"{{/eq}}>
+                <a href="/mgr/forum">论坛版块管理</a>
+            </li>
+            <li {{#eq action 'verify'}}class="current"{{/eq}}>
+                <a href="/mgr/verify">认证管理</a>
+            </li>
+        </ul>
+    {{/replace}}
+    {{#replace "content"}}
+        <div id="J_tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="javascript:void(0);">待审核信息</a></li>
+                <li><a href="javascript:void(0);">已审核信息</a></li>
+            </ul>
+            <div class="tab-cnt">
+                <div class="tab-panel">
+                    <div id="J_requestList">
+                        {{sub "mgr/living/request" list=request.list page=request.page}}
+                    </div>
+                    <div id="J_requestPage"></div>
+                </div>
+                <div class="tab-panel fn-hide">
+                    <div id="J_auditList">
+                        {{sub "mgr/living/audit" list=audit.list page=audit.page}}
+                    </div>
+                    <div id="J_auditPage"></div>
+                </div>
+            </div>
+        </div>
+    {{/replace}}
+    {{#append "js"}}
+    {{tplinclude "J_requestTpl" "mgr/living/request"}}
+    {{tplinclude "J_auditTpl" "mgr/living/audit"}}
+    <script type="text/javascript">
+    require(['jquery', 'sib.sib', 'sib.pager', 'sib.dialog', 'sib.tabs', 
+             'hbs', 'hbs-helper.calc', 'hbs-helper.moment'], 
+        function($, Sib, Pager, Dialog, Tabs, Handlebars){
+
+        new Tabs({
+            target : '#J_tabs',
+            panels : '.tab-panel',
+            triggers : '.nav-tabs li',
+            addDefaultCls : false,
+            triggerActiveCls : 'active'
+        });
+
+        var tabData = [{
+            url : '/mgr/living/data/request',
+            tplId : '#J_requestTpl',
+            pageId : '#J_requestPage',
+            listId : '#J_requestList',
+            totalPages : {{request.page.totalPages}},
+            totalRecords : {{request.page.total}}
+        }, {
+            url : '/mgr/living/data/audit',
+            tplId : '#J_auditTpl',
+            pageId : '#J_auditPage',
+            listId : '#J_auditList',
+            totalPages : {{audit.page.totalPages}},
+            totalRecords : {{audit.page.total}}
+        }];
+
+        for(var i = 0; i < tabData.length; i++) {
+            Sib.publish('createPager', tabData[i]);
+        }
+
+        //审核通过
+        $('#J_requestList').on('click', '[data-role=yes]', function(){
+            var $wrap = $(this).parent();
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url : '/mgr/living/audit',
+                data : {
+                    id : id
+                },
+                type : 'post',
+                success : function(data){
+                    Dialog.tip(data.msg);
+                    $wrap.find('[data-role=yes]').remove();
+                    $wrap.find('[data-role=no]').remove();
+                },
+                error : function(data){
+                    Dialog.tip(data.responseText);
+                }
+            });
+        });
+        //审核不通过
+        $('#J_livingList').on('click', '[data-role=no]', function(){
+
+        });
+        //删除
+        $('#J_livingList').on('click', '[data-role=del]', function(){
+
+        });
+    });
+    </script>
+    {{/append}}
+{{/extend}}
