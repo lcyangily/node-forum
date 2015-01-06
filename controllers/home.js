@@ -7,7 +7,7 @@ var forumSvc = loadService('forum');
 var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
 var newsSvc  = loadService('news');
-var livingSvc= loadService('hy');
+var livingSvc= loadService('living');
 
 module.exports = {
     '/audit' : {

@@ -41,14 +41,14 @@
         });
 
         var tabData = [{
-            type : '/home/audit/data/living',
+            url : '/home/audit/data/living',
             tplId : '#J_livingTpl',
             pageId : '#J_livingPage',
             listId : '#J_livingList',
             totalPages : {{living.page.totalPages}},
             totalRecords : {{living.page.total}}
         }, {
-            type : '/home/audit/data/news',
+            url : '/home/audit/data/news',
             tplId : '#J_newsTpl',
             pageId : '#J_newsPage',
             listId : '#J_newsList',
@@ -59,6 +59,31 @@
         for(var i = 0; i < tabData.length; i++) {
             Sib.publish('createPager', tabData[i]);
         }
+
+        //审核通过
+        $('#J_livingList').on('click', '[data-role=yes]', function(){
+            var $wrap = $(this).parent();
+            $.ajax({
+                url : '',
+                type : 'post',
+                success : function(data){
+                    Dailog.tip(data.msg);
+                    $wrap.find('[data-role=yes]').remove();
+                    $wrap.find('[data-role=no]').remove();
+                },
+                error : function(data){
+                    Dialog.tip(data.responseText);
+                }
+            });
+        });
+        //审核不通过
+        $('#J_livingList').on('click', '[data-role=no]', function(){
+
+        });
+        //删除
+        $('#J_livingList').on('click', '[data-role=del]', function(){
+
+        });
     });
     </script>
     {{/append}}

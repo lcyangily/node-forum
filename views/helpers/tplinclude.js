@@ -12,7 +12,7 @@ Handlebars.registerHelper('tplinclude', function(id, file, options){
         }
     }
 
-    tpl += '<script id="' + id + '" type="text/x-handlebars">';
+    tpl += '<script id="' + id + '" type="text/x-handlebars" data-file="'+file+'">';
     tpl += source;
     tpl += '</script>';
     return new Handlebars.SafeString(tpl);

@@ -53,21 +53,21 @@
         var stpl = Handlebars.compile($('#J_sendTpl').text());
 
         var tabData = [{
-            type : '/home/friend/data/friend',
+            url : '/home/friend/data/friend',
             tplId : '#J_friendTpl',
             pageId : '#J_friendPage',
             listId : '#J_friendList',
             totalPages : {{friend.page.totalPages}},
             totalRecords : {{friend.page.total}}
         }, {
-            type : '/home/friend/data/receive',
+            url : '/home/friend/data/receive',
             tplId : '#J_reveiveTpl',
             pageId : '#J_receivePage',
             listId : '#J_receiveList',
             totalPages : {{receive.page.totalPages}},
             totalRecords : {{receive.page.total}}
         }, {
-            type : '/home/friend/data/send',
+            url : '/home/friend/data/send',
             tplId : '#J_sendTpl',
             pageId : '#J_sendPage',
             listId : '#J_sendList',

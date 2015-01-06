@@ -62,6 +62,12 @@ module.exports = {
     "defaultValue": "",
     "comment": "用户ID"
   },
+  "create_time": {
+    "type": "datetime",
+    "allowNull": true,
+    "defaultValue": Sequelize.NOW,
+    "comment": null
+  },
   "status": {
     "type": "tinyint(4)",
     "allowNull": true,
