@@ -39,13 +39,15 @@ exports.getAuditedList = function(cb, page){
 }
 
 exports.audit = function(id, cb){
-    LivingInfo.find().where().done(function(err, info){
+    LivingInfo.find().where({
+        id : id
+    }).done(function(err, info){
         if(err || !info) return cb(!info ? '审核信息不存在!' : err);
         if(info.status != 3) {
             return cb('内容不是待审核状态！');
         }
 
-        LivingInfo.update({
+        LivingInfo.clean().update({
             status : 0
         }).where({
             id : id
