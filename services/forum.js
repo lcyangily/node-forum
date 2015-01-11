@@ -89,8 +89,8 @@ module.exports = {
         });
     },
     update : function(f, cb){
-        Forum.update(f).where({id : f.id}).done(function(error, teacher) {
-            cb && cb(error, teacher);
+        Forum.update(f).where({id : f.id}).done(function(error, rows) {
+            cb && cb(error, rows && rows[0]);
         });
     },
 

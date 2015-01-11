@@ -145,6 +145,7 @@ BaseModel.prototype = {
                     raw: self.params.raw,
                     include : self.params.include
                 }).success(function(data) {
+                    self.result = data;
                     callback(null, data);
                 }).error(function(e) {
                     callback(e);
@@ -281,7 +282,7 @@ BaseModel.prototype = {
                     });
                 } else {
                     self.Model.update(kv, {where : self.params.where}).success(function(num, rows) {
-                        callback();
+                        callback(null, num, rows);
                     }).error(function(e){
                         callback(e);
                     });

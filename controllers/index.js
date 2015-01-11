@@ -86,7 +86,7 @@ module.exports = {
                     loginname : uname,
                     password : passwd,
                     nickname : nickname
-                }, function(err, user){
+                }, 0, function(err, user){
                     next(err || '注册成功!');                 
                 });
             }
@@ -144,8 +144,8 @@ module.exports = {
                             req.session.user = user;
                             req.session.mgrForums = moderators;
 
-                            console.log('---> weibo token : ' + user.weibo_token);
-                            var alToken = user.id + ':' + md5(user.weibo_token); // 以后可能会存储更多信息，用 $$$$ 来分隔
+                            console.log('---> weibo token : ' + user.auth_token);
+                            var alToken = user.id + ':' + md5(user.auth_token); // 以后可能会存储更多信息，用 $$$$ 来分隔
                             res.cookie(config.auth_cookie_name, alToken, {
                                 path: '/', 
                                 maxAge: 1000 * 60 * 60 * 24 * 30, 

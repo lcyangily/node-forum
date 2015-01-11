@@ -21,7 +21,7 @@ module.exports = function(req, res, next) {
         var uid   = cInfos[0];
         var token = cInfos[1];
         userSvc.getById(uid, function(err, user){
-            if(user && md5(user.weibo_token) == token) {
+            if(user && md5(user.auth_token) == token) {
                 userSvc.getMgrForums(uid, function(err, moderators){
                     req.session.user = user;
                     req.session.mgrForums = moderators;

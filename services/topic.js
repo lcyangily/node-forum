@@ -132,7 +132,7 @@ exports.getFullTopic = function (id, cb, replyPage) {
 exports.getListCommon = function(where, order, cb, page){
     var p = _.extend({page : 1, pageSize : 20}, page);
     //var o = _.extend({create_time : 'desc'}, order);
-    var o = order || {create_time : 'desc'};
+    var o = order || {last_reply_time : 'desc'};
     var w = _.extend({
         status : 0
     }, where);

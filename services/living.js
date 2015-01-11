@@ -51,6 +51,8 @@ exports.audit = function(id, cb){
             status : 0
         }).where({
             id : id
-        }).done(cb);
+        }).done(function(error, num, rows){
+            cb && cb(error, rows && rows[0]);
+        });
     });
 }

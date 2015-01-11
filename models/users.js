@@ -10,7 +10,7 @@ module.exports = {
   },
   "loginname": {
     "type": "varchar(50)",
-    "allowNull": false,
+    "allowNull": true,
     "defaultValue": "",
     "comment": "登录名"
   },
@@ -32,26 +32,50 @@ module.exports = {
     "defaultValue": null,
     "comment": "头像"
   },
-  "weibo_id": {
+  "type": {
+    "type": "tinyint(4)",
+    "allowNull": false,
+    "defaultValue": 0,
+    "comment": '用户类型：0-本站注册用户，1-微博用户，2-QQ用户'
+  },
+  "auth_id": {
     "type": "bigint(20)",
     "allowNull": true,
     "defaultValue": null,
     "comment": null
   },
-  "weibo_token": {
-    "type": "varchar(100)",
+  "auth_token": {
+    "type": "varchar(255)",
     "allowNull": true,
     "defaultValue": null,
     "comment": null
   },
-  "weibo_refresh": {
-    "type": "varchar(100)",
+  "auth_name": {
+    "type": "varchar(255)",
     "allowNull": true,
     "defaultValue": null,
     "comment": null
   },
-  "weibo_name": {
-    "type": "varchar(50)",
+  "auth_refresh": {
+    "type": "varchar(255)",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": null
+  },
+  "auth_arg0": {
+    "type": "varchar(255)",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": null
+  },
+  "auth_arg1": {
+    "type": "varchar(255)",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": null
+  },
+  "auth_arg2": {
+    "type": "varchar(255)",
     "allowNull": true,
     "defaultValue": null,
     "comment": null

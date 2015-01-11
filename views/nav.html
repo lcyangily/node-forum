@@ -94,9 +94,9 @@
                 </script>
             </li>
         {{else}}
-            <li><a href='/reg'>注册</a></li>
-            <li><span class="separator">/</span></li>
-            <li><a href='/login' id="J_loginBtn">登录</a></li>
+            {{!--<li><a href='/reg'>注册</a></li>
+            <li><span class="separator">/</span></li>--}}
+            <li><a href='javascript:LBL.login();' id="J_loginBtn">登录</a></li>
         {{/if}}
     </ul>
     <ul class="nav navbar-nav">

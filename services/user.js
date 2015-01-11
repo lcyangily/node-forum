@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var async  = require('async');
+var Sina   = require('../common/auth/sina');
 
 var User       = new BaseModel('users');
 var UserCount  = new BaseModel('user_count');
@@ -11,36 +12,54 @@ var UserFriendRequest = new BaseModel('user_friend_request');
 var ForumModerator = new BaseModel('forum_moderator');
 var Forum      = new BaseModel('forum');
 var Topic      = new BaseModel('forum_topic');
-/*
-var Reply  = new BaseModel('forum_reply');
-var Forum  = new BaseModel('forum');
-var replySvc = loadService('reply');
-var forumSvc = loadService('forum');*/
 
-
-exports.register = function (user, cb){
-    this.getByName(user.loginname, function(err, u){
-        if(err || u) {
-            return cb && cb(err || '用户已经存在！');
-        }
-        user.weibo_token = 'test';
-        User.add(user).done(function(err, user){
-
-            if(err) {
-                return cb && cb(err);
+exports.register = function (user, type, cb){
+    var self = this;
+    var profile = user.profile || {};
+    async.waterfall([
+        function(callback){
+            if(type === 0) {    //论坛注册用户，校验用户名的唯一性
+                if(!user.loginname) {
+                    return callback('登录名不能为空！');
+                }
+                if(!user.password) {
+                    return callback('密码不能为空！');
+                }
+                self.getByName(user.loginname, function(err, u){
+                    if(err || u) {
+                        return callback(err || '用户已经存在！');
+                    }
+                    user.auth_token = user.loginname;
+                    callback(null, user);
+                });
+            } else if(type === 1) {    //第三方平台用户校验对应属性
+                if(!user.auth_token) {
+                    return callback('缺省关键数据！');
+                }
+                user.loginname = null;
+                callback(null, user);
+            } else {
+                callback('不支持的用户来源！');
             }
-            UserCount.add({
-                uid : user.id
-            }).done(function(err, uc){
-                if(err) return cb && cb(err);
-
-                UserProfile.add({
+        },
+        function(user, callback){
+            User.add(user).done(function(err, user){
+                if(err) return callback(err);
+                UserCount.add({
                     uid : user.id
-                }).done(function(err, up){
-                    cb && cb(err, user);
+                }).done(function(err, uc){
+                    if(err) return callback(err);
+
+                    UserProfile.add(_.extend(profile, {
+                        uid : user.id
+                    })).done(function(err, up){
+                        callback(err, user);
+                    });
                 });
             });
-        });
+        }
+    ], function(error, user){
+        cb && cb(error, user);
     });
 }
 
@@ -63,9 +82,68 @@ exports.login = function(user, cb){
     });
 }
 
+/** 微博授权回调 **/
+exports.sinaAuthCallback = function(code, cb){
+
+    var self = this;
+    if(!code) {
+        return cb && cb('微博返回编码不存在！');
+    }
+
+    var sina = new Sina();
+    sina.accesstoken(code, function(error, data){
+        if(error) return cb && cb(error);
+
+        var access_token = data.access_token;
+        self.getByAuthId(data.uid, function(error, user){
+            if(user) {  //已注册，登录
+                User.update({
+                    auth_token : access_token
+                }).done(function(error, user){
+                    if(error) return cb && cb('更新用户信息失败！');
+                    cb && cb(null, user);
+                });
+            } else {    //未注册，注册
+                sina.post('users/show', {
+                    access_token : access_token,
+                    uid : data.uid,
+                    method : 'get'
+                }, function(error, data){
+                    if(error) return cb && cb(error);
+
+                    self.register({
+                        nickname:data.screen_name,
+                        auth_id:data.id,
+                        auth_token:access_token,
+                        auth_name : data.screen_name,
+                        avatar:data.profile_image_url,
+                        profile : {
+                            gender : data.gender == 'm' ? 1 : (data.gender == 'w' ? 2 : 0)
+                        }
+                    }, 1, function(err, user){
+                        cb && cb(err, user);
+                        //加论坛官方微博好友等操作。。。
+                    });
+                });
+            }
+        });
+    });
+}
+
 exports.getById = function (id, cb){
     User.find().where({
         id : id
+    }).include([
+        UserCount.Model,
+        UserProfile.Model
+    ]).done(function(err, u){
+        cb && cb(err, u);
+    });
+}
+
+exports.getByAuthId = function(aid, cb){
+    User.find().where({
+        auth_id : aid
     }).include([
         UserCount.Model,
         UserProfile.Model
@@ -431,7 +509,7 @@ exports.chgPwd = function(user, oldpwd, newpwd, callback){
 }
 //修改用户信息
 exports.chgInfo = function(user, info, callback){
-    //这些字段可以修改，防止前端传入不能修改的字段，如id, loginname, weibo_id 等
+    //这些字段可以修改，防止前端传入不能修改的字段，如id, loginname, auth_id 等
     var canChgFields = ['nickname', 'avatar', 'update_time'];
     var nInfo = {};
     _.map(canChgFields, function(name){

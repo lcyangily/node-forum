@@ -167,7 +167,7 @@ module.exports = {
   "last_reply_time": {
     "type": "datetime",
     "allowNull": true,
-    "defaultValue": null,
+    "defaultValue": Sequelize.NOW,
     "comment": null
   }
 }

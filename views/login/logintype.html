@@ -1,0 +1,47 @@
+{{#extend "layout"}}
+    {{#append "css"}}
+        <link rel="stylesheet" href="/assets/p/login/logintype.css">
+    {{/append}}
+    {{#replace "navWrap"}}{{/replace}}
+    {{#replace "bodyWrap"}}
+        <div id="J_loginBox" class="logintype-wrap">
+            <ul class="clearfix">
+                <li class="first">
+                    <a href="/auth/weibo" target="_top" class="avatar">
+                        <span class="login-icons">
+                            <span class="login-icon">
+                                <i class="iconfont">&#xe644;</i>
+                                <i class="iconfont iconfont-active">&#xe644;</i>
+                            </span>
+                        </span>
+                    </a>
+                    <span class="login_type">微博</span>
+                </li>
+                <li class="disabled">
+                    <a href="javascript:void(0);" target="_top" class="avatar">
+                        <!-- <a href="javascript:;" class="avatar"> -->
+                        <span class="login-icons">
+                            <span>
+                                <i class="iconfont">&#xe646;</i>
+                                <i class="iconfont iconfont-active">&#xe646;</i>
+                            </span>
+                        </span>
+                    </a>
+                    <span class="login_type">QQ</span>
+                </li>
+                <li class="disabled">
+                    <a href="javascript:void(0);" target="_top" class="avatar">
+                        <span class="login-icons">
+                            <span>
+                                <i class="iconfont">&#xe647;</i>
+                                <i class="iconfont iconfont-active">&#xe647;</i>
+                            </span>
+                        </span>
+                    </a>
+                    <span class="login_type">微信</span>
+                </li>
+            </ul>
+        </div>
+    {{/replace}}
+    {{#replace "footer"}}{{/replace}}
+{{/extend}}

@@ -1,0 +1,68 @@
+.logintype-wrap{
+    width: 230px;
+    margin:0px auto;
+}
+.logintype-wrap ul{
+    padding:0px;
+}
+.logintype-wrap li {
+    float: left;
+    display: inline-block;
+    width: 70px;
+    margin-left: 10px;
+    font-size: 12px;
+    text-align: center;
+}
+.logintype-wrap li.first{
+    margin-left: 0px;
+}
+.logintype-wrap .avatar {
+    display: inline-block;
+    position: relative;
+    height: 79px;
+}
+.logintype-wrap .login-icons {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    vertical-align: middle;
+    width: 54px;
+    height: 50px;
+    overflow: hidden;
+}
+.logintype-wrap .login-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 120px;
+    width: 54px;
+    -webkit-transition: top 0.3s ease-out;
+    -moz-transition: top 0.3s ease-out;
+    -ms-transition: top 0.3s ease-out;
+    -o-transition: top 0.3s ease-out;
+    transition: top 0.3s ease-out;
+}
+.logintype-wrap .iconfont {
+    font-size: 40px;
+    display: block;
+    height: 45px;
+    width: 54px;
+    text-align: center;
+    line-height: 40px;
+    padding-top: 7px;
+    color: #000;
+}
+.logintype-wrap .iconfont-active {
+    color: #ff4900;
+}
+.logintype-wrap .avatar:hover .login-icon {
+    top: -54px;
+}
+.logintype-wrap .login_type {
+    width: 50px;
+    display: inline-block;
+}
+.logintype-wrap li.disabled,
+.logintype-wrap li.disabled .iconfont{
+    color: #E2E2E2;
+}

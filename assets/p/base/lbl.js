@@ -32,6 +32,29 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
                 var token = new Date().getTime();
                 if(!d) {
                     d = new Dialog({
+                        content : '/auth',
+                        effect : 'fade',
+                        title : '请选择登陆方式',
+                        width: 340,
+                        height : 110,
+                        modal : true,
+                        closeTpl : '<i class="iconfont">&#xe649;</i>',
+                        position : {
+                            my : 'center center-80',
+                            at : 'center center'
+                        },
+                        effect : 'effect'
+                    });
+                }
+                d.open();
+            }
+        })(),
+        /*login : (function(){
+            var d;
+            return function(successFunc, failureFunc, errorFunc){
+                var token = new Date().getTime();
+                if(!d) {
+                    d = new Dialog({
                         content : '/loginpop',
                         effect : 'fade',
                         title : '登录',
@@ -60,7 +83,7 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
                 });
                 d.open();
             }
-        })(),
+        })(),*/
         addFriend : function(uid){
             $.ajax({
                 type : 'post',

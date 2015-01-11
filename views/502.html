@@ -5,12 +5,10 @@
         </style>
     </head>
     <body id="404">
-        错误：
-        {{error}}============
         {{#if error.msg}}
-            {{error.msg}}
+            {{{error.msg}}}
         {{else}}
-            {{error}}
+            {{{error}}}
         {{/if}}
     </body>
 </html>

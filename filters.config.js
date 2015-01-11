@@ -13,10 +13,10 @@ module.exports = {
         '/home*' : ['checkLogin'],
         '/friend*' : ['checkLogin'],
         '/follow*' : ['checkLogin']
-    },
+    }/*,
     afterFilters : {
         '/*': {
             get: ['afterTest']
         }
-    }
+    }*/
 }
