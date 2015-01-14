@@ -454,7 +454,7 @@ define(function(require, exports, module){
                 });
                 // iframe不支持0级DOM的onload事件绑定，所以 IE 下 onload 无法触发
                 // 用 $().one 函数来代替 onload,只执行一次
-                state.$iframe.one("load", function(e) {
+                state.$iframe.on("load", function(e) {
                     that._trigger('iframeload', e);
                     // 如果 dialog 已经隐藏了，就不需要触发 onload
                     if (!$dialog.is(":visible")) {
@@ -531,7 +531,7 @@ define(function(require, exports, module){
                     h;
                 // 如果未传 height，才会自动获取
                 try {
-                    h = getIframeHeight(state.$iframe) + "px";
+                    h = getIframeHeight(state.$iframe);// + "px";
                 } catch (err) {
                     // 页面跳转也会抛错，最多失败6次
                     state._errCount = (state._errCount || 0) + 1;
@@ -543,10 +543,17 @@ define(function(require, exports, module){
                         delete state._interval;
                     }
                 }
-                $content.css("height", h);
-                // force to reflow in ie6
-                // http://44ux.com/blog/2011/08/24/ie67-reflow-bug/
-                $el[0].className = $el[0].className;
+
+                if(h && h != state._iframe_h) {
+                    state._iframe_h = h;
+                    //$content.css("height", h);
+                    $content.stop(true, false).animate({
+                        height : h + 'px'
+                    });
+                    // force to reflow in ie6
+                    // http://44ux.com/blog/2011/08/24/ie67-reflow-bug/
+                    $el[0].className = $el[0].className;
+                }
                 
                 // 获取 iframe 内部的高度
                 function getIframeHeight($iframe) {
@@ -571,6 +578,7 @@ define(function(require, exports, module){
                     // iframe 还未请求完，先设置一个固定高度
                     //!this.get("height") && this.contentElement.css("height", this.get("initialHeight"));
                     $content.height(opts.height || 300);
+                    state._iframe_h = null;
                     this._showIframe();
                 }
 

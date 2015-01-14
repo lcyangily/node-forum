@@ -6,7 +6,6 @@ var userSvc  = loadService('user');
 var forumSvc = loadService('forum');
 var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
-var Sina     = require('../common/auth/sina');
 
 module.exports = {
     "/:uid": {

@@ -34,16 +34,16 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
                     d = new Dialog({
                         content : '/auth',
                         effect : 'fade',
-                        title : '请选择登陆方式',
-                        width: 340,
-                        height : 110,
+                        title : '请选择登录方式',
+                        //width: 340,
+                        //height : 110,
                         modal : true,
                         closeTpl : '<i class="iconfont">&#xe649;</i>',
                         position : {
-                            my : 'center center-80',
+                            my : 'center center-50',
                             at : 'center center'
                         },
-                        effect : 'effect'
+                        effect : 'fade'
                     });
                 }
                 d.open();

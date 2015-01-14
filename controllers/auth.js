@@ -7,7 +7,7 @@ var userSvc  = loadService('user');
 var newsSvc  = loadService('news');
 var config   = require('../config');
 var md5      = require('MD5');
-var Sina     = require('../common/auth/Sina');
+var auth     = require('../common/auth/auth');
 
 module.exports = {
     '/': {
@@ -26,21 +26,25 @@ module.exports = {
     '/:type' : {
         get : {
             controller : function(req, res, next) {
+console.log('================> ' + auth);
                 var type = req.params.type;
-                if(type == 'weibo') {
-                    var sina = new Sina()
-                    return res.redirect(sina.getAuthUrl());
+                var Auth = auth.get(type);
+                if(Auth != null) {
+                    var mAuth = new Auth();
+                    return res.redirect(mAuth.getAuthUrl());
+                } else{
+                    res.render(404);
                 }
             }
         }
     },
-    '/cb/weibo' : {   //新浪微博登录回调
+    '/cb/:type' : {   //第三方平台登录回调
         get : {
             afterFilters : ['dealAfterLogin'],
             controller : function(req, res, next){
                 var code = req.query.code;
                 if(!code) return next(getErrorStr('回调参数错误！'));
-                userSvc.sinaAuthCallback(code, function(error, user){
+                userSvc.authCallback(code, req.params.type, function(error, user){
                     if(error || !user) return next(getErrorStr(error ? error : '用户不存在！'));
                     //注册/登录成功 进行写cookie 和 session 操作
                     res.locals.auth_success_user = user;

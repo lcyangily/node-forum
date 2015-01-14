@@ -39,7 +39,7 @@ module.exports = {
     "comment": '用户类型：0-本站注册用户，1-微博用户，2-QQ用户'
   },
   "auth_id": {
-    "type": "bigint(20)",
+    "type": "varchar(255)",
     "allowNull": true,
     "defaultValue": null,
     "comment": null

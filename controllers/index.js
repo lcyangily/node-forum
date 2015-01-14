@@ -109,10 +109,12 @@ module.exports = {
     '/login' : {
         get : {
             filters : [],
-            template : 'login/login',
+            template : 'login/logintype',
             controller : function(req, res, next){
                 if(req.session.user) {
-                    console.log('用户已登录！');
+                    return res.render('notify/notify', {
+                        success : '您已登录，请勿重复操作！'
+                    })
                 }
                 next();
             }

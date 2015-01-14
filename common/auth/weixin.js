@@ -23,9 +23,9 @@ var apisParam = {
     }
 };
 
-var Weibo = function(options) {
+var Weixin = function(options) {
     this.options = {
-        app_key: null,
+        app_id: null,
         app_secret: null,
         access_token: null,
         user_id: 0,
@@ -38,57 +38,82 @@ var Weibo = function(options) {
 }
 
 //static attr
-_.extend(Weibo, {
-    API_BASE_URL: 'https://api.weibo.com/',
-    API_URI_PREFIX: '2/',
-    API_URI_SUFFIX : '.json'
+_.extend(Weixin, {
+    API_BASE_URL: 'https://open.weixin.qq.com/',
+    API_URI_PREFIX: '',
+    API_URI_SUFFIX : ''
 });
 
 //获取登录URL
-Weibo.prototype.getAuthUrl = function(){
+Weixin.prototype.getAuthUrl = function(){
     var options = {
-        client_id: this.options.app_key,
+        appid: this.options.app_id,
         redirect_uri: this.options.redirect_uri,
         response_type: 'code',
         state: null,
-        display: 'default',
-        forcelogin: this.options.forcelogin || "false"
+        scope : 'snsapi_login'
     };
-    return Weibo.API_BASE_URL + 'oauth2/authorize?' + querystring.stringify(options);
+    return Weixin.API_BASE_URL + 'connect/qrconnect?' + querystring.stringify(options);
 }
 
 //直接重定向到登录URL
-Weibo.prototype.authorize = function(cb){
-    this.post('oauth2/authorize', {
-        client_id: this.options.app_key,
+Weixin.prototype.authorize = function(cb){
+    this.post('connect/qrconnect', {
+        appid: this.options.app_id,
         redirect_uri: this.options.redirect_uri,
         response_type: 'code',
         state: null,
-        display: 'default',
-        forcelogin: this.options.forcelogin || "false"
+        scope : 'snsapi_login'
     }, cb);
 }
 
 //用authorize的回调code 获取 accesstoken
-Weibo.prototype.accesstoken = function(code, cb){
+Weixin.prototype.getAccessToken = function(code, cb){
+    var self = this;
     var options = {
         grant_type: "authorization_code",
         code: code,
-        client_id: this.options.app_key,
-        client_secret: this.options.app_secret,
-        redirect_uri: this.options.redirect_uri
+        appid: this.options.app_id,
+        secret: this.options.app_secret,
+        method : 'get'
     };
 
-    this.post('oauth2/access_token', options, cb);
+    this.post('sns/oauth2/access_token', options, function(err, data){
+        self.options.access_token = data.access_token;
+        self.options.expires_in = data.expires_in;
+        self.options.refresh_token = data.refresh_token;
+        self.options.uid = data.uid = data.openid;
+
+        cb(err, data);
+    });
+}
+
+Weixin.prototype.refreshToken = function(refresh_token, cb){
+    var self = this;
+    var options = {
+        refresh_token : refresh_token,
+        grant_type: "refresh_token",
+        appid: this.options.app_id,
+        method : 'get'
+    };
+
+    this.post('sns/oauth2/refresh_token', options, function(err, data){
+        self.options.access_token = data.access_token;
+        self.options.expires_in = data.expires_in;
+        self.options.refresh_token = data.refresh_token;
+        self.options.uid = data.uid = data.openid;
+
+        cb(err, data);
+    });
 }
 
 /** api 通用调用方法 **/
-Weibo.prototype.post = function(url, options, callback) {
+Weixin.prototype.post = function(url, options, callback) {
     /*if(_.indexOf(apis, url) <= 0){
         return callback('请求URL : ' + url + ' 不可用！');
     }*/
     var apiParam = apisParam && apisParam[url];
-    var param = _.extend({}, Weibo, apiParam || {});
+    var param = _.extend({}, Weixin, apiParam || {});
     var nurl = param.API_BASE_URL + param.API_URI_PREFIX + url + param.API_URI_SUFFIX;//+ '.json';
 
     //POST表单内容上传
@@ -154,23 +179,23 @@ Weibo.prototype.post = function(url, options, callback) {
         if (options.method) {
             options.method = options.method.toUpperCase()
         }
-console.log('url : ' + nurl + ((options.method == "GET") ? ("?" + post_body) : ""));
-console.log('body : ' + post_body);
-console.log('method : ' + options.method);
+// console.log('url : ' + nurl + ((options.method == "GET") ? ("?" + post_body) : ""));
+// console.log('body : ' + post_body);
+// console.log('method : ' + options.method);
         request({
             url: nurl + ((options.method == "GET") ? ("?" + post_body) : ""),
             method: options.method || "POST",
             headers: headers,
             body: ((options.method == "GET") ? "" : post_body)
         }, function(e, r, body) {
-console.log('-----> e : ' + e); 
-console.log('-----> r : ' + JSON.stringify(r)); 
-console.log('-----> body : ' + body); 
+// console.log('-----> e : ' + e); 
+// console.log('-----> r : ' + JSON.stringify(r)); 
+// console.log('-----> body : ' + body); 
             if (!e) {
                 try {
                     body = JSON.parse(body)
-                    if (body.error) {
-                        e = new Error(snserror.sina[body.error_code] ? snserror.sina[body.error_code].cn : body.error)
+                    if (body.errcode) {
+                        e = new Error(body.errmsg || body.errcode)
                     }
                 } catch (error) {
                     e = error;
@@ -181,4 +206,4 @@ console.log('-----> body : ' + body);
     }
 };
 
-module.exports = Weibo;
+module.exports = Weixin;

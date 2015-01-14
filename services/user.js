@@ -1,6 +1,6 @@
 var _ = require('lodash');
 var async  = require('async');
-var Sina   = require('../common/auth/sina');
+var auth   = require('../common/auth/auth');
 
 var User       = new BaseModel('users');
 var UserCount  = new BaseModel('user_count');
@@ -32,14 +32,13 @@ exports.register = function (user, type, cb){
                     user.auth_token = user.loginname;
                     callback(null, user);
                 });
-            } else if(type === 1) {    //第三方平台用户校验对应属性
+            } else {    //第三方平台用户校验对应属性
                 if(!user.auth_token) {
                     return callback('缺省关键数据！');
                 }
+                user.type = type;
                 user.loginname = null;
                 callback(null, user);
-            } else {
-                callback('不支持的用户来源！');
             }
         },
         function(user, callback){
@@ -82,20 +81,24 @@ exports.login = function(user, cb){
     });
 }
 
-/** 微博授权回调 **/
-exports.sinaAuthCallback = function(code, cb){
-
+exports.authCallback = function(code, type, cb){
+    type = (""+type).toLowerCase();
     var self = this;
     if(!code) {
-        return cb && cb('微博返回编码不存在！');
+        return cb && cb('平台登录返回编码不存在！');
     }
 
-    var sina = new Sina();
-    sina.accesstoken(code, function(error, data){
+    var Auth = auth.get(type);
+    if(!Auth) {
+        cb('回调类型：' + type + ' 不存在！');
+    }
+    var mAuth = new Auth();
+    mAuth.getAccessToken(code, function(error, data){
         if(error) return cb && cb(error);
 
         var access_token = data.access_token;
-        self.getByAuthId(data.uid, function(error, user){
+        var uid = data.uid;
+        self.getByAuthId(uid, function(error, user){
             if(user) {  //已注册，登录
                 User.update({
                     auth_token : access_token
@@ -104,28 +107,92 @@ exports.sinaAuthCallback = function(code, cb){
                     cb && cb(null, user);
                 });
             } else {    //未注册，注册
-                sina.post('users/show', {
-                    access_token : access_token,
-                    uid : data.uid,
-                    method : 'get'
-                }, function(error, data){
-                    if(error) return cb && cb(error);
-
-                    self.register({
-                        nickname:data.screen_name,
-                        auth_id:data.id,
-                        auth_token:access_token,
-                        auth_name : data.screen_name,
-                        avatar:data.profile_image_url,
-                        profile : {
-                            gender : data.gender == 'm' ? 1 : (data.gender == 'w' ? 2 : 0)
-                        }
-                    }, 1, function(err, user){
-                        cb && cb(err, user);
-                        //加论坛官方微博好友等操作。。。
-                    });
-                });
+                if(typeof self[type + 'AuthCallback'] === 'function') {
+                    this[type + 'AuthCallback'](myAuth, access_token, uid, cb);
+                } else {
+                    cb('回调类型：' + type + ', 回调注册不存在！');
+                }
             }
+        });
+    });
+} 
+
+/** 微博授权回调注册 **/
+exports.weiboAuthCallback = function(weibo, access_token, uid, cb){
+    var self = this;
+    weibo.post('users/show', {
+        access_token : access_token,
+        uid : uid,
+        method : 'get'
+    }, function(error, data){
+        if(error) return cb && cb(error);
+
+        self.register({
+            nickname:data.screen_name,
+            auth_id:data.id,
+            auth_token:access_token,
+            auth_name : data.screen_name,
+            avatar:data.profile_image_url,
+            profile : {
+                gender : data.gender == 'm' ? 1 : (data.gender == 'w' ? 2 : 0)
+            }
+        }, 1, function(err, user){
+            cb && cb(err, user);
+            //加论坛官方微博好友等操作。。。
+        });
+    });
+}
+
+
+/** qq 回调注册 **/
+exports.qqAuthCallback = function(qq, access_token, uid, cb){
+    var self = this;
+    qq.post('user/get_user_info', {
+        access_token : access_token,
+        oauth_consumer_key : qq.options.app_id,
+        openid : uid,
+        method : 'get'
+    }, function(error, data){
+        if(error) return cb && cb(error);
+
+        self.register({
+            nickname:data.nickname,
+            auth_id:uid,
+            auth_token:access_token,
+            auth_name : data.nickname,
+            auth_refresh : qq.options.refresh_token,
+            avatar:data.figureurl_qq_2,
+            profile : {
+                //gender : data.gender == 'm' ? 1 : (data.gender == 'w' ? 2 : 0)
+            }
+        }, 2, function(err, user){
+            cb && cb(err, user);
+        });
+    });
+}
+
+/** weixin 回调注册 **/
+exports.weixinAuthCallback = function(weixin, access_token, uid, cb){
+    var self = this;
+    weixin.post('sns/userinfo', {
+        access_token : access_token,
+        openid : uid,
+        method : 'get'
+    }, function(error, data){
+        if(error) return cb && cb(error);
+
+        self.register({
+            nickname:data.nickname,
+            auth_id:uid,
+            auth_token:access_token,
+            auth_name : data.nickname,
+            auth_refresh : weixin.options.refresh_token,
+            avatar:data.headimgurl,
+            profile : {
+                gender : data.sex
+            }
+        }, 2, function(err, user){
+            cb && cb(err, user);
         });
     });
 }

@@ -21,7 +21,7 @@ config = {
     //
     auth : {
         sina : {
-            app_key:"****",
+            app_id:"****",
             app_secret:"***",
             redirect_uri : 'http://153e2244.ngrok.com/auth/cb/weibo'
         }
