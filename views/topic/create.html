@@ -190,6 +190,29 @@
 
             $('#J_createTopicForm').submit(function(){
                 var fj = Sib.form2json('#J_createTopicForm');
+                var cnt = null;
+                if(CKEDITOR && CKEDITOR.instances.content) {
+                    cnt = CKEDITOR.instances.content.getData();
+                } else {
+                    cnt = $('textarea[name=content]').val();
+                }
+
+                fj.content = cnt;
+
+                var errormsg = null;
+                if(!fj.title || fj.title.length < 5 || fj.title.length > 300) {
+                    errormsg = '标题长度须在5-300之间，不能太长或太短！';
+                } else if(!fj.ftype_id) {
+                    errormsg = '请选择分类！';
+                } else if(!cnt) {
+                    errormsg = '内容不能为空！';
+                }
+
+                if(errormsg) {
+                    Dialog.tip(errormsg);
+                    return;
+                }
+
                 $.ajax({
                     url : '/topic/create',
                     type : 'POST',

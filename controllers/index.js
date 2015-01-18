@@ -106,10 +106,22 @@ module.exports = {
             }
         }
     },
+    '/login-lcy' : {
+        get : {
+            template : 'login/login_old',
+            controller : function(req, res, next){
+                if(req.session.user) {
+                    return res.render('notify/notify', {
+                        success : '您已登录，请勿重复操作！'
+                    })
+                }
+                next();
+            }
+        }
+    },
     '/login' : {
         get : {
-            filters : [],
-            template : 'login/logintype',
+            template : 'login/login',
             controller : function(req, res, next){
                 if(req.session.user) {
                     return res.render('notify/notify', {

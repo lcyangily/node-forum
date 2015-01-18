@@ -106,7 +106,7 @@ module.exports = {
                     edit_error = '标题不能是空的。';
                 }
                 
-                if(!validator.isLength(title, 10, 300)) {
+                if(!validator.isLength(title, 5, 300)) {
                     edit_error = '标题字数太多或太少';
                 }
 

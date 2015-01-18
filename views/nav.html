@@ -1,6 +1,6 @@
 <div class="navbar-header">
     <a class="navbar-brand" href="/">
-        <img src="/assets/images/logo.jpg" height="70">
+        <!-- <img src="/assets/images/logo.png" height="60"> -->
     </a>
     <a class="navbar-toggle collapsed" href="javascript:void(0);" 
         data-toggle="collapse" data-target="#J_topMainNav">
@@ -59,18 +59,26 @@
                                     <span>好友</span>
                                 </a>
                             </li>
-                            <li><a href="#">
+                            {{!--<li><a href="#">
                                     <span class="glyphicon glyphicon-retweet"></span>
                                     <span>关注</span>
                                 </a>
                                 
-                            </li>
+                            </li>--}}
                             <li>
                                 <a href="/home/info">
                                     <span class="glyphicon glyphicon-cog"></span>
-                                    <span>管理中心</span>
+                                    <span>个人中心</span>
                                 </a>
                             </li>
+                            {{#if _s.user.is_admin}}
+                                <li>
+                                    <a href="/mgr/forum">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                        <span>管理员中心</span>
+                                    </a>
+                                </li>
+                            {{/if}}
                             <li>
                                 <a href="/logout">
                                     <span class="glyphicon glyphicon-off"></span> 退出
@@ -102,7 +110,16 @@
     <ul class="nav navbar-nav">
         <li><a href="/" class="{{#eq _page_gnavCode 'index'}}current{{/eq}}">首页</a></li>
         <li><a href="/living" class="{{#eq _page_gnavCode 'living'}}current{{/eq}}">生活信息</a></li>
-        <li><a href="/forum/" class="{{#eq _page_gnavCode 'forum'}}current{{/eq}}">论坛</a></li>
+        <li><a href="/forum" class="{{#eq _page_gnavCode 'forum'}}current{{/eq}}">论坛</a></li>
+        {{#if _globalvar.mainmenus}}
+            {{#each _globalvar.mainmenus}}
+                {{#eq param_1 1}}
+                    <li><a href="/forum/{{param_value}}" 
+                            class="{{#eq ../../_page_gnavCode param_value}}current{{/eq}}"
+                            {{#if param_2}}target="{{param_2}}"{{/if}}>{{param_name}}</a></li>
+                {{/eq}}
+            {{/each}}
+        {{/if}}
         <li><a href="/block" class="{{#eq _page_gnavCode 'block'}}current{{/eq}}">版块</a></li>
     </ul>
 </div>

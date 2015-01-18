@@ -1,0 +1,61 @@
+{{#extend "forum/index" _page_gnavCode=forum.id}}
+    {{#replace "content"}}
+        <div class="panel">
+            <div id="J_topicList" class="list-group topic-list">
+                <ul class="nav nav-tabs tabs-1">
+                    <li class="active"><a href="javascript:void(0);">最新</a></li>
+                    <li><a href="javascript:void(0);">子版块</a></li>
+                </ul>
+                <div class="topic-cnt">
+                    <div class="topic-panel">
+                        {{#each topics}}
+                            {{sub "forum/listItem" topic=this curblock=../forum}}
+                        {{/each}}
+                        {{page totalPages=page.totalPages current=page.current}}
+                    </div>
+                    <div class="topic-panel" style="display:none;">
+                        <div class="panel-body fclassify-wrap">
+                            <ul class="fclassify-list clearfix">
+                                {{#each subs}}
+                                    <li class="clearfix">
+                                        <div class="fclassify-box">
+                                            <div class="fclassify-pic">
+                                                <a href="/forum/{{id}}" class="iconfont">{{{pic}}}</a>
+                                            </div>
+                                            <div class="fclassify-info">
+                                                <div class="fclassify-title">
+                                                    <a href="/forum/{{id}}">{{name}}</a>
+                                                    <!-- <span class="fclassify-data">1</span> -->
+                                                </div>
+                                                {{!--<div class="fclassify-desc">{{desc}}</div>--}}
+                                                <div class="fclassify-nums">
+                                                    <span class="fclassify-s">主题：</span>{{topics}}
+                                                    <span class="pipe">|</span>
+                                                    <span class="fclassify-s">帖数：</span>
+                                                    <span title="{{posts}}">{{posts}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/replace}}
+    {{#append "js"}}
+    <script type="text/javascript">
+    require(['jquery', 'sib.tabs'], function($, Tabs){
+        new Tabs({
+            target : '#J_topicList',
+            triggers : '.nav-tabs li',
+            panels : '.topic-panel',
+            triggerActiveCls : 'active',
+            addDefaultCls : false
+        });
+    });
+    </script>
+    {{/append}}
+{{/extend}}

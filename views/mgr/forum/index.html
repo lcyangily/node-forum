@@ -1,0 +1,217 @@
+{{#extend "mgr/mlayout" action="forum"}}
+    {{!--{{#append "css"}}
+        <link rel="stylesheet" href="/assets/p/forum/index.css">
+        <style type="text/css">
+        .action{
+            padding:0px 5px;
+        }
+        </style>
+    {{/append}}--}}
+    {{#replace "breadcrumbPath"}}
+        <li><a href="/mgr/forum">板块管理</a></li>
+    {{/replace}}
+    {{#replace "content"}}
+        <div id="J_tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="javascript:void(0);">板块管理</a></li>
+                <li><button id="J_addBtn" class="btn btn-md btn-default" style="margin-top: 2px;">
+                        <span class="glyphicon glyphicon-plus"></span> 新增论坛版块</button>
+                </li>
+            </ul>
+            <div class="tab-cnt">
+                <div class="tab-panel">
+                    <table class="table table-hover" id='J_fList'>
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th>Parent</th>
+                                <th>名称</th>
+                                <th>类型</th>
+                                <th>描述</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each forums}}
+                                <tr>
+                                    <td>{{id}}</td>
+                                    <td>{{parent_id}}</td>
+                                    <td>{{name}}</td>
+                                    <td>
+                                        {{#eq type 0}}分组{{/eq}}
+                                        {{#eq type 1}}版块{{/eq}}
+                                        {{#and (ne type 1) (ne type 0)}}主题分类{{/and}}
+                                    </td>
+                                    <td>{{desc}}</td>
+                                    <td>
+                                        <a href="javascript:void(0);" data-id="{{id}}" data-name="{{name}}"
+                                            data-role="del" class="action">删除</a>
+                                        {{#eq type 1}}
+                                            <a href="javascript:void(0);" data-id="{{id}}" 
+                                                data-role="mgr" class="action">版主管理</a>
+                                        {{/eq}}
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-panel">
+                    <form class="form-horizontal" id="J_form" role="form" name="forumForm" method="post" action="/mgr/forum/create">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">类型</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="type" value="0" checked> 分类
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="type" value="1"> 普通模块
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="type" value="2"> 子模块
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="parentArea" style="display:none;">
+                            <label for="J_parentId" class="col-sm-2 control-label">父分类</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="parent_id" id="J_parentId" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="J_parentId" class="col-sm-2 control-label">名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="J_parentId" class="col-sm-2 control-label">描述</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="desc" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="J_ico" class="col-sm-2 control-label">图标</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="pic" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {{/replace}}
+
+    {{#append "js"}}
+    <script type="text/javascript">
+    var d = {{{json forums}}};
+    require(['jquery', 'sib.datagrid', 'sib.dialog', 'sib.tabs', 'sib.combobox'], 
+        function($, DataGrid, Dialog, Tabs, ComboBox){
+
+        var mDialog, addDialog;
+        $('#J_fList').on('click', '[data-role=del]', function(){
+            var $t = $(this);
+            var id = $t.attr('data-id');
+            var name = $t.attr('data-name');
+            delForum(id, name);
+        });
+        $('#J_fList').on('click', '[data-role=mgr]', function(){
+            var $t = $(this);
+            var id = $t.attr('data-id');
+            moderatorMgr(id);
+        });
+
+        $('#J_addBtn').click(function(){
+            addForum();
+        });
+
+        function delForum(id, name){
+            Dialog.confirm('确定删除版块' + name + '?', '温馨提示', function(){
+                $.ajax({
+                    url : '/mgr/forum/delete',
+                    type : 'POST',
+                    data : {
+                        id : id
+                    },
+                    success : function(){
+                        //d.reload();
+                        //Dialog.tip('删除成功!');
+                    }
+                });
+            });
+        };
+
+        function moderatorMgr(id){
+            if(!mDialog) {
+                mDialog = new Dialog({
+                    title : '分配版主',
+                    content : '/mgr/forum/master?',
+                    modal : true,
+                    zIndex : 10000,
+                    height : 500,
+                    close : function(evt, data){
+                        if(data && data.msg) {
+                            Dialog.tip(data.msg);
+                            d.reload();
+                        }
+                    }
+                });
+            }
+            mDialog.option('content', '/mgr/forum/master?fid=' + id);
+            mDialog.open();
+        }
+
+        function addForum(){
+            if(!addDialog) {
+                addDialog = new Dialog({
+                    title : '新增板块',
+                    content : '/mgr/forum/create',
+                    modal : true,
+                    zIndex : 10000,
+                    width : 500,
+                    close : function(evt, data){
+                        if(data && data.msg) {
+                            Dialog.tip(data.msg);
+                            d.reload();
+                        }
+                    }
+                });
+            }
+            addDialog.open();
+        }
+
+        /********* 表单提交 ********/
+        /*$('#J_form input[name=type]').click(function(){
+            var val = $(this).val();
+            if(val == 0) {
+                cb.value(null);
+                cb.hide();
+                cb.option({
+                    source : []
+                });
+                $('#parentArea').hide();
+            } else {
+                cb.option({
+                    source : $.grep(d, function(item, index){
+                        return item.type == (val - 1);
+                    })
+                });
+                $('#parentArea').show();
+            }
+        });
+
+        var cb = new ComboBox({
+            target : '#J_form input[name=parent_id]',
+            source : [],
+            labelName : 'name',
+            valueName : 'id'
+        });*/
+    });
+    </script>
+    {{/append}}
+{{/extend}}

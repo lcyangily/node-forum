@@ -26,6 +26,9 @@
 .upage-base .header .user-detail-con li a{
     color: #777;
 }
+.upage-base .navbar-brand{
+    background: url(../../images/logo_white.png) left 10px no-repeat;
+}
 
 .upage-base .wrapper-main{
     padding-top: 0px;
@@ -35,6 +38,9 @@
     overflow: hidden;
     margin-bottom: 20px;
     padding-top: 120px;
+}
+.upage-uinfo a{
+    color: #fff;
 }
 .upage-intro{
     margin-top: 4px;
@@ -260,7 +266,7 @@
     margin-right: -1px;
     background: #FFF;
     position: relative;
-    z-index: 1000;
+    z-index: 100;
 }
 .bbsa {
     border-bottom: 1px solid #e6e6e6;

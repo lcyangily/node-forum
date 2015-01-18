@@ -54,7 +54,7 @@ requirejs.config({
         'sib.countdown.timer'  : 'sib/countdown/1.0/timer',
         'sib.datagrid'       : 'sib/datagrid/1.0/DataGrid',
         'sib.datagrid.detail': 'sib/datagrid/1.0/plugins/detail',
-        'sib.dialog'         : 'sib/dialog/1.0/Dialog',
+        'sib.dialog.core'    : 'sib/dialog/1.0/Dialog',
         'sib.dialog.mask'    : 'sib/dialog/1.0/Mask',
         'sib.imagezoom'      : 'sib/imagezoom/1.0/ImageZoom',
         'sib.lazyload'       : 'sib/lazyload/1.0/LazyLoad',
@@ -77,6 +77,8 @@ requirejs.config({
         
         'sib.calendar.i18n.en'    : 'sib/calendar/1.0/i18n/en',
         'sib.calendar.i18n.zh-cn' : 'sib/calendar/1.0/i18n/zh-cn',
+        /** sib proxy **/
+        'sib.dialog'         : '../p/base/dialog.cfg',
         
         /** services components & utils **/
         'utils'           : 'common/utils',

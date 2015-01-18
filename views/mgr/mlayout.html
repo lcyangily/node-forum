@@ -1,0 +1,28 @@
+{{#extend "user/ulayout"}}
+    {{#replace "breadcrumbFirst"}}
+        <li><a href="/mgr/living">系统管理中心</a></li>
+    {{/replace}}
+    {{#replace "leftNav"}}
+        <h2 class="mt">系统管理中心</h2>
+        <ul>
+            <li {{#eq action 'living'}}class="current"{{/eq}}>
+                <a href="/mgr/living">生活信息管理</a>
+            </li>
+            <li {{#eq action 'news'}}class="current"{{/eq}}>
+                <a href="/mgr/news">新闻帖管理</a>
+            </li>
+            <li {{#eq action 'topic'}}class="current"{{/eq}}>
+                <a href="/mgr/topic">主题管理</a>
+            </li>
+            <li {{#eq action 'user'}}class="current"{{/eq}}>
+                <a href="/mgr/user">用户管理</a>
+            </li>
+            <li {{#eq action 'forum'}}class="current"{{/eq}}>
+                <a href="/mgr/forum">论坛版块管理</a>
+            </li>
+            <li {{#eq action 'verify'}}class="current"{{/eq}}>
+                <a href="/mgr/verify">认证管理</a>
+            </li>
+        </ul>
+    {{/replace}}
+{{/extend}}

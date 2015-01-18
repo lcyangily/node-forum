@@ -63,7 +63,8 @@ BaseModel.prototype = {
                         },
                         function(cb){
                             self.Model.count({
-                                where: self.params.where
+                                where: self.params.where,
+                                include : include
                             }).success(function(count) {
                                 cb(null, count);
                             }).error(function(e) {

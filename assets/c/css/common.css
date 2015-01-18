@@ -125,6 +125,7 @@
 }
 .revert-cnt img{
     max-width: 100%;
+    height: auto;
 }
 .revert-cnt dl {
     padding: 2px 0;
@@ -202,7 +203,37 @@
 /** 回复 end **/
 .side-hotforums{
     font-size: 13px;
+    overflow: hidden;
 }
+.side-hotforums ul{
+    list-style: none;
+    overflow: hidden;
+}
+.side-hotforums a{
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    overflow: hidden;
+    /* border-top: 1px solid #f3f3f3;
+    border-right: 1px solid #f3f3f3; */
+}
+.side-hotforums a:hover{
+    background: #fbfbfb;
+    color: #33ac0a;
+    text-decoration: none;
+}
+.side-hotf-gname a,.side-hotf-gname a:hover{
+    text-align: left;
+    text-indent: 10px;
+    font-weight: bold;
+    background: #F8F8F8;
+    line-height: 34px;
+    height: 34px;  
+}
+/* .side-hotforums a.even{
+    border-right:none;
+} */
 /** 快捷回复 begin **/
 .topic-fast-btns{
     padding-bottom: 10px;
@@ -569,4 +600,23 @@ a.topic-pub-btn:active {
 .sib-page-which,
 .sib-page-goto{
     display: none;
+}
+
+.tabs-1 > li > a{
+    border:none;
+    font-size: 13px;
+}
+.tabs-1 > li > a:hover, 
+.tabs-1 > li > a:focus {
+    background-color: #fff;
+    border:#fff;
+}
+.tabs-1 > li.active > a, 
+.tabs-1 > li.active > a:hover, 
+.tabs-1 > li.active > a:focus {
+    color: #ff6f3d ;
+    font-weight: bold;
+    border: none;
+    border-bottom: 3px solid #ff6f3d;
+    padding: 10px 15px 8px 15px;
 }

@@ -381,6 +381,56 @@ exports.getFollowersMe = function(uid, cb, page){
     ]).page(p).done(cb);
 }
 
+exports.getFollowFeeds = function(uid, callback, page){
+    var sql = 'select topic.* ' +
+            'from user_follow uf,' +
+            '     user_follow_feed uff ' +
+            'LEFT OUTER JOIN `forum_topic` AS `topic` ON `topic`.`id` = uff.tid ' +
+            'where uff.uid = uf.follow_uid '+
+            'and uf.uid = ? ' +
+            'order by dateline limit ?, 20 ';
+
+    var countSql = 'select count(1) as total from user_follow uf, user_follow_feed uff '+
+                   'where uff.uid=uf.follow_uid and uf.uid = ? ';
+
+    var pageSize = (page && page.pageSize) || 20;
+    var curPage  = (page && page.page) || 1;
+    async.parallel([
+        function(cb){
+            sequelize.query(
+                sql,
+                null, 
+                {logging : true, raw : true}, 
+                [uid, (curPage -1)*pageSize]
+            ).success(function(feeds){
+                cb(null, feeds);
+            }).error(function(err){
+                cb(err);
+            });
+        },
+        function(cb){
+            sequelize.query(
+                countSql,
+                null,
+                {logging : true, plain : true,  raw : true}, 
+                [uid]
+            ).success(function(count){
+                cb(null, (count && count.total) || 0);
+            }).error(function(err){
+                cb(err);
+            });
+        }
+    ], function(err, results){
+        var total = (results && results[1]) || 0;
+        callback && callback(err, results && results[0], {
+            total    : total,
+            current  : curPage,
+            pageSize : pageSize,
+            totalPages : Math.ceil(total / pageSize)
+        });
+    });
+}
+
 
 //关注
 exports.follow = function(myid, fuid, cb) {

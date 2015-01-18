@@ -8,7 +8,7 @@ module.exports = {
         /*'/*': {
             get: ['autoLogin', 'beforeTest']
         },*/
-        '/*' : ['autoLogin', 'pathvar'],
+        '/*' : ['autoLogin', 'pathvar', 'globalvar'],
         '/mgr*' : ['checkAdmin'],
         '/home*' : ['checkLogin'],
         '/friend*' : ['checkLogin'],

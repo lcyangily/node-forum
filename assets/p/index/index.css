@@ -50,7 +50,7 @@ a:hover{
     padding: 0px;
     float: left;
     display: block;
-    /* background: url(../../images/logo.png) left 0px; */
+    background: url(../../images/logo.png) left 10px no-repeat;
     /* background: #FF5E52; */
 }
 .navbar .nav > li a {
@@ -296,27 +296,6 @@ a:hover{
     .article-box-ctt {
         margin-left: 235px;
     }
-}
-.side-hotforums ul{
-    list-style: none;
-    overflow: hidden;
-}
-.side-hotforums a{
-    display: block;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    overflow: hidden;
-    border-top: 1px solid #f3f3f3;
-    border-right: 1px solid #f3f3f3;
-}
-.side-hotforums a:hover{
-    background: #fbfbfb;
-    color: #33ac0a;
-    text-decoration: none;
-}
-.side-hotforums a.even{
-    border-right:none;
 }
 .pagination {
     height: 40px;

@@ -1,16 +1,32 @@
 {{#if hotForums }}
     <div class="panel side-hotforums">
-        <div class="panel-heading">
-            <h3 class="panel-title">常用模块</h3>
-        </div>
-        <div class="x-grid-row">
+        <!-- <div class="panel-heading">
+            <h3 class="panel-title">所有模块</h3>
+        </div> -->
+        <!-- <div class="x-grid-row"> -->
             {{#each hotForums}}
-                <div class="x-grid-1-2">
+                {{#eq type 0}}
+                    <div class="side-hotf-gname">
+                        <a href="/forum/{{id}}">{{name}}</a>
+                    </div>
+                    <div class="x-grid-row">
+                        {{#each ../../../hotForums}}
+                            {{#eq parent_id ../../id}}
+                                <div class="x-grid-1-2">
+                                    <a href="/forum/{{id}}" 
+                                        class="{{#calc @index '%2 != 0'}}even{{/calc}}" 
+                                        title="{{ name }}">{{ name }}</a>
+                                </div>
+                            {{/eq}}
+                        {{/each}}
+                    </div>
+                {{/eq}}
+                {{!--<div class="x-grid-1-2">
                     <a href="/forum/{{id}}" 
                         class="{{#calc @index '%2 != 0'}}even{{/calc}}" 
                         title="{{ name }}">{{ name }}</a>
-                </div>
+                </div>--}}
             {{/each}}
-        </div>
+        <!-- </div> -->
     </div>
 {{/if}}

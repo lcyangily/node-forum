@@ -21,7 +21,7 @@
     color: #fff;
     width: 60px;
     height: 60px;
-    font-size: 55px;
+    font-size: 45px;
     text-align: center;
     line-height: 60px;
     border-radius: 20px;
@@ -103,6 +103,9 @@
     position: relative;
     top: -0.1em;
     font-size: 12px;
+}
+.topic-list .post-total.first{
+    padding-left: 0px;
 }
 .user-avatar{
     width: 40px;

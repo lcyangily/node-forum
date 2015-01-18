@@ -12,7 +12,7 @@ var auth     = require('../common/auth/auth');
 module.exports = {
     '/': {
         get: {
-            template : 'login/logintype',
+            template : 'login/loginpop',
             controller : function(req, res, next) {
                 if(req.session.user) {
                     return res.render('notify/notify_pop', {

@@ -30,7 +30,8 @@ exports.getListByUid = function(uid, cb, page){
         {
             model : Topic.Model,
             include : [
-                Forum.Model
+                Forum.Model,
+                User.Model
             ]
         }
     ]).page(p).done(cb);

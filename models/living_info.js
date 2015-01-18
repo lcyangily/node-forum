@@ -66,12 +66,12 @@ module.exports = {
     "type": "datetime",
     "allowNull": true,
     "defaultValue": Sequelize.NOW,
-    "comment": null
+    "comment": "申请时间"
   },
   "status": {
     "type": "tinyint(4)",
     "allowNull": true,
-    "defaultValue": "0",
+    "defaultValue": "3",
     "comment": "0-正常，1-删除不可见，2-管理员强制删除，3-申请待审核，4-审核不通过"
   },
   "audit_uid": {

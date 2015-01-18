@@ -1,0 +1,70 @@
+{{#extend "layout"}}
+    {{#append "css"}}
+        <link rel="stylesheet" href="/assets/p/forum/index.css">
+    {{/append}}
+    {{#replace "navWrap"}}{{/replace}}
+    {{#replace "bodyWrap"}}
+        <div class="panel index-panel">
+            <form class="form-horizontal" id="J_loginForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="loginname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" name="passwd">
+                    </div>  
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">登录</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {{/replace}}
+    {{#replace "footer"}}{{/replace}}
+    {{#append "js"}}
+        <script type="text/javascript">
+            require(['jquery', 'sib.sib', 'lbl'], function($, Sib, LBL){
+                var goUrl = function(data){
+                    window.frameElement.trigger('close', {
+                        code : 'loginsuccess', 
+                        user : data.user
+                    });
+                }
+
+                $('#J_loginForm').submit(function(){
+                    var fj = Sib.form2json('#J_loginForm');
+                    $.ajax({
+                        type : 'POST',
+                        url  : '/login',
+                        /*async: false,*/
+                        data : fj,
+                        dataType : 'json',
+                        success : function(data) {
+                            if(data && data.success){
+                                //进行成功的跳转
+                                goUrl(data);
+                            } else {
+                                var msg = (data && data.errorMsg) || data;
+                                alert(msg);
+                            }
+                        },
+                        error : function(err) {
+                            var data = JSON.parse(err.responseText);
+                            var msg = (data && data.errorMsg) || "不好意思，系统繁忙，请稍后再试！";
+                            alert(msg);
+                        },
+                        complete : function(){
+                            Dialog.unblockUI();
+                        }
+                    });
+                });
+            });
+        </script>
+    {{/append}}
+{{/extend}}

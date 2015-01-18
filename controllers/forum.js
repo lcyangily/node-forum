@@ -46,47 +46,66 @@ module.exports = {
             controller : function(req, res, next){
                 var fid = req.params.fid;
                 var ftypeid = req.query.ftype;
-                async.parallel([
+                async.waterfall([
                     function(cb){
                         forumSvc.getById(fid, function(error, forum){
                             res.locals.forum = forum;
-                            cb(error || ((!forum || forum.type !=1 )? '论坛版块不存在或已删除！' : null));
+                            cb(error || ((!forum || forum.type < 0 )? '论坛版块不存在或已删除！' : null), forum);
                         });
                     },
-                    function(cb){   //版主
-                        forumSvc.getMasters(fid, function(error, masters){
-                            res.locals.masters = masters;
-                            cb();   //忽略错误
-                        });
+                    function(forum, cb){   //版主
+                        if(forum.type > 0) {
+                            forumSvc.getMasters(fid, function(error, masters){
+                                res.locals.masters = masters;
+                                cb(null, forum);   //忽略错误
+                            });
+                        } else {
+                            cb(null, forum);
+                        }
                     },
-                    function(cb){ //帖子分类
-                        forumSvc.getSub(fid, function(error, forums){
+                    function(forum, cb){ //帖子分类 | 子版块
+                        forumSvc.getByParent(fid, function(error, forums){
                             res.locals.ftypes = forums;
-                            cb(error);
+                            res.locals.subs = forums;
+                            cb(error, forum);
                         });
                     },
-                    function(cb){
-                        if(ftypeid) {
+                    function(forum, cb){
+                        if(forum.type == 1 && ftypeid) {
                             topicSvc.getListByFtypeid(ftypeid, function(err, topics, page){
                                 res.locals.topics = topics;
                                 res.locals.page = page;
-                                cb(err);
+                                cb(err, forum);
+                            }, {
+                                pageSize : req.query.pageSize,
+                                page : req.query.page
+                            });
+                        } else if(forum.type == 1) {
+                            topicSvc.getListByFid(fid, function(err, topics, page){
+                                res.locals.topics = topics;
+                                res.locals.page = page;
+                                cb(err, forum);
+                            }, {
+                                pageSize : req.query.pageSize,
+                                page : req.query.page
+                            });
+                        } else if(forum.type == 0) {    //分类
+                            topicSvc.getListByGid(forum.id, function(err, topics, page){
+                                res.locals.topics = topics;
+                                res.locals.page = page;
+                                cb(err, forum);
                             }, {
                                 pageSize : req.query.pageSize,
                                 page : req.query.page
                             });
                         } else {
-                            topicSvc.getListByFid(fid, function(err, topics, page){
-                                res.locals.topics = topics;
-                                res.locals.page = page;
-                                cb(err);
-                            }, {
-                                pageSize : req.query.pageSize,
-                                page : req.query.page
-                            });
+                            cb('论坛版块不存在或已关闭！');
                         }
                     }
-                ], function(err, results){
+                ], function(err, forum){
+                    if(!err && forum && forum.type == 0){
+                        return res.render('forum/group');
+                    }
                     next(err);
                 });
             }

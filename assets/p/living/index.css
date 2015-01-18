@@ -1,4 +1,4 @@
-.panel .nav-tabs > li > a{
+/* .panel .nav-tabs > li > a{
     border:none;
     font-size: 13px;
 }
@@ -12,12 +12,10 @@
 .panel .nav-tabs > li.active > a:focus {
     color: #ff6f3d ;
     font-weight: bold;
-    /* cursor: default; */
-    /* background-color: #f6f6f6; */
     border: none;
     border-bottom: 3px solid #ff6f3d;
     padding: 10px 15px 8px 15px;
-}
+} */
 .main-content .table{
     font-size: 12px;
 }

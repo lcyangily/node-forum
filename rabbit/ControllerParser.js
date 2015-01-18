@@ -39,7 +39,6 @@ var parser = function(orig, path, method){
 
     //如果都没有则进入约定的模板（文件路径）
     filters.push(function(req, res, next){
-
         var viewPath = path;
         if('/' == path) {
             viewPath = 'index';

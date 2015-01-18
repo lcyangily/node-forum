@@ -2,10 +2,14 @@
     {{#replace "content"}}
         <div class="panel">
             <div id="topic_list" class="list-group topic-list">
-                {{#each replys}}
-                    {{sub "user/postItem"}}
-                {{/each}}
-                {{page totalPages = pageinfo.totalPages current=pageinfo.current }}
+                {{#if ftopics}}
+                    {{#each ftopics}}
+                        {{author_nick}} 于 {{create_time}} 发表主题：{{title}}<br/>
+                    {{/each}}
+                    {{page totalPages = pageinfo.totalPages current=pageinfo.current }}
+                {{else}}
+                    <div class="tip">没有关注信息</div>
+                {{/if}}
             </div>
         </div>
     {{/replace}}

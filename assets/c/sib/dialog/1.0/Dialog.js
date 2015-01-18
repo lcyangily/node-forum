@@ -528,6 +528,7 @@ define(function(require, exports, module){
                     opts = state.options,
                     $el = this.$element,
                     $content = state.$content,
+                    self = this,
                     h;
                 // 如果未传 height，才会自动获取
                 try {
@@ -549,6 +550,8 @@ define(function(require, exports, module){
                     //$content.css("height", h);
                     $content.stop(true, false).animate({
                         height : h + 'px'
+                    }, 'fast', function(){
+                        self.position();
                     });
                     // force to reflow in ie6
                     // http://44ux.com/blog/2011/08/24/ie67-reflow-bug/
@@ -730,6 +733,9 @@ define(function(require, exports, module){
                 this._position();
                 return this;
             },
+            position : function(){
+                this._position();
+            },
             refresh : function(){
                 var state = this.state,
                     opts = state.options;
@@ -745,51 +751,56 @@ define(function(require, exports, module){
         }
     });
 
-    $.extend(D, {
-        tipDefault : {
-            title : null,
-            closeTpl : null,
-            minHeight : 50,
-            minWidth : 350,
-            maxWidth : 550,
-            effect : 'fade',
-            modal : true,
-            afterclose : function(){
-                this.destroy();
-            },
-            tipTpl : '<div class="{clsPrefix}-tip-inner">'+
-                         '<div class="{clsPrefix}-tip-icon">'+
-                             '<i class="iconfont" title="提示">{icon}</i>'+    
-                         '</div>'+
-                         '<div class="{clsPrefix}-tip-content">'+
-                             '<h3 class="{clsPrefix}-tip-title">{msg}</h3>'+
-                         '</div>'+
-                     '</div>',
-            alert:{
-                title : '温馨提示',
-                btnTpl : '<a href="javascript:;" class="sib-btn sib-btn-confirm">确定</a>'
-            },
-            confirm:{
-                title : '请确认',
-                confirmBtnTpl : '<a href="javascript:;" class="sib-btn sib-btn-confirm">确定</a>',
-                cancelBtnTpl : '<a href="javascript:;" class="sib-btn sib-btn-cancel">取消</a>'
-            },
-            tip : {
-                title : '温馨提示'
-            }
+    var tipDefault = {
+        title : null,
+        closeTpl : null,
+        minHeight : 50,
+        minWidth : 350,
+        maxWidth : 550,
+        effect : 'fade',
+        modal : true,
+        afterclose : function(){
+            this.destroy();
         },
+        tipTpl : '<div class="{clsPrefix}-tip-inner">'+
+                     '<div class="{clsPrefix}-tip-icon">'+
+                         '<i class="iconfont" title="提示">{icon}</i>'+    
+                     '</div>'+
+                     '<div class="{clsPrefix}-tip-content">'+
+                         '<h3 class="{clsPrefix}-tip-title">{msg}</h3>'+
+                     '</div>'+
+                 '</div>',
+        alert:{
+            title : '温馨提示',
+            btnTpl : '<a href="javascript:;" class="sib-btn sib-btn-confirm">确定</a>',
+            icon : '&#xe687;'
+        },
+        confirm:{
+            title : '请确认',
+            confirmBtnTpl : '<a href="javascript:;" class="sib-btn sib-btn-confirm">确定</a>',
+            cancelBtnTpl : '<a href="javascript:;" class="sib-btn sib-btn-cancel">取消</a>',
+            icon : '&#xe681;'
+        },
+        tip : {
+            title : '温馨提示',
+            icon : '&#xe686;'
+        }
+    };
+    $.extend(D, {
+        tipDefault : {},
         alert : function(msg, callback, options){
-            var content = SIB.unite(D.tipDefault.tipTpl, $.extend(true, {
-                icon : '&#xe687;',
+            var cfg = $.extend(true, {}, tipDefault, D.tipDefault);
+            var content = SIB.unite(cfg.tipTpl, $.extend(true, {
+                icon : cfg.alert.icon,
                 msg : msg,
                 clsPrefix : D.clsPrefix
             }, options));
             var defaults = {
-                title : D.tipDefault.alert.title,
+                title : cfg.alert.title,
                 content : content,
                 theme : '{clsPrefix}-alert',
                 btns : [{
-                    tpl : D.tipDefault.alert.btnTpl,
+                    tpl : cfg.alert.btnTpl,
                     autoFocus : true,
                     click : function(e){
                         callback && callback();
@@ -797,50 +808,52 @@ define(function(require, exports, module){
                     }
                 }]
             };
-            return new Dialog($.extend(true, {}, D.tipDefault, defaults, options)).open();
+            return new Dialog($.extend(true, {}, cfg, defaults, options)).open();
         },
         confirm : function(msg, title, onConfirm, onCancel, options){
-            var content = SIB.unite(D.tipDefault.tipTpl, $.extend(true, {
-                icon : '&#xe681;',
+            var cfg = $.extend(true, {}, tipDefault, D.tipDefault);
+            var content = SIB.unite(cfg.tipTpl, $.extend(true, {
+                icon : cfg.alert.icon,
                 msg : msg,
                 clsPrefix : D.clsPrefix
             }, options));
 
             var defaults = {
-                title : D.tipDefault.confirm.title || '请确认',
+                title : cfg.confirm.title || '请确认',
                 content : content,
                 theme : '{clsPrefix}-confirm',
                 btns : [{
-                    tpl : D.tipDefault.confirm.confirmBtnTpl,
+                    tpl : cfg.confirm.confirmBtnTpl,
                     autoFocus : true,
                     click : function(e){
                         $.isFunction(onConfirm) && onConfirm();
                         this.close();
                     }
                 }, {
-                    tpl : D.tipDefault.confirm.cancelBtnTpl,
+                    tpl : cfg.confirm.cancelBtnTpl,
                     click : function(){
                         $.isFunction(onCancel) && onCancel();
                         this.close();
                     }
                 }]
             }
-            return new Dialog($.extend(true, {}, D.tipDefault, defaults, options)).open();
+            return new Dialog($.extend(true, {}, cfg, defaults, options)).open();
         },
         tip : function(msg, timeout, callback, options){
-            var content = SIB.unite(D.tipDefault.tipTpl, $.extend(true, {
-                icon : '&#xe686;',
+            var cfg = $.extend(true, {}, tipDefault, D.tipDefault);
+            var content = SIB.unite(cfg.tipTpl, $.extend(true, {
+                icon : cfg.alert.icon,
                 msg : msg,
                 clsPrefix : D.clsPrefix
             }, options));
 
             var defaults = {
-                title : D.tipDefault.tip.title,
+                title : cfg.tip.title,
                 theme : '{clsPrefix}-tip',
                 modal : false,
                 content : content
             }
-            var d = new Dialog($.extend(true, {}, D.tipDefault, defaults, options));
+            var d = new Dialog($.extend(true, {}, cfg, defaults, options));
             d.open();
             setTimeout(function(){
                 d.close();

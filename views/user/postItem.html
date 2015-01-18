@@ -1,11 +1,11 @@
 <div class="cell {{#calc @index '%2 == 0' }}odd{{/calc}}">
-    <!-- <a class="user-avatar" href="/user/{{author_id }}">
-        <img src="{{#if user.avatar ~}}
-                    {{user.avatar}}
+    <a class="user-avatar" href="/user/{{author_id }}" data-tip-title="{{forum_topic.user.nickname}}">
+        <img src="{{#if forum_topic.user.avatar ~}}
+                    {{forum_topic.user.avatar}}
                   {{~ else ~}}
                     /assets/images/head.gif
-                  {{~/if}}" title="{{user.nickname }}" />
-    </a> -->
+                  {{~/if}}" title="{{forum_topic.user.nickname }}" />
+    </a>
     <div class="topic-title-wrapper">
         <h2 class="topic-title">
             <span class="tag">主题：</span>

@@ -3,11 +3,31 @@ var Forum = new BaseModel('forum');
 var ForumModerator = new BaseModel('forum_moderator');
 var User = new BaseModel('users');
 
+function getDefaultWhere(isMgr){
+    var w = {};
+    if(!isMgr) {
+        w.status = {
+            ne : 0
+        }
+    }
+    return w;
+}
 module.exports = {
-    getAll: function(cb) {
+    getSideForums : function(cb){
         Forum.findAll().order({
-            create_time: 'desc'
-        }).done(function(error, datas) {
+            displayorder : 'asc'
+        }).where({
+            status : 1
+        }).done(function(error, datas){
+            cb && cb(error, datas);
+        });
+    },
+    getAll: function(cb, isMgr) {
+        
+        Forum.findAll().order({
+            displayorder : 'asc',
+            create_time: 'asc'
+        }).where(getDefaultWhere(isMgr)).done(function(error, datas) {
             cb && cb(error, datas);
         });
     },
@@ -19,33 +39,39 @@ module.exports = {
             cb && cb(error, forum);
         });
     },
-    getGroup: function(cb) {
-        Forum.findAll().where({
-            type : 0
-        }).done(function(error, forums) {
+    getGroup: function(cb, isMgr) {
+        var w = getDefaultWhere(isMgr);
+        w.type = 0;
+        Forum.findAll().where(w).done(function(error, forums) {
             cb && cb(error, forums);
         });
     },
-    getForum: function(cb) {
-        //console.log('forum service getForum ... ');
-        Forum.findAll().where({
-            type : 1
-        }).done(function(error, forums) {
+    getForum: function(cb, isMgr) {
+        var w = getDefaultWhere(isMgr);
+        w.type = 1;
+        Forum.findAll().where(w).done(function(error, forums) {
             cb && cb(error, forums);
         });
     },
-    getAllSub: function(cb) {
-        Forum.findAll().where({
-            type : 2
-        }).done(function(error, forums) {
+    getAllSub: function(cb, isMgr) {
+        var w = getDefaultWhere(isMgr);
+        w.type = 2;
+        Forum.findAll().where(w).done(function(error, forums) {
             cb && cb(error, forums);
         });
     },
-    getSub: function(fid, cb) {
-        Forum.findAll().where({
-            type : 2,
-            parent_id : fid
-        }).done(function(error, forums) {
+    getSub: function(fid, cb, isMgr) {
+        var w = getDefaultWhere(isMgr);
+        w.type = 2;
+        w.parent_id = fid;
+        Forum.findAll().where(w).done(function(error, forums) {
+            cb && cb(error, forums);
+        });
+    },
+    getByParent: function(pid, cb, isMgr) {
+        var w = getDefaultWhere(isMgr);
+        w.parent_id = pid;
+        Forum.findAll().where(w).done(function(error, forums) {
             cb && cb(error, forums);
         });
     },
@@ -73,9 +99,9 @@ module.exports = {
             cb && cb(err, path);
         });
     },
-    getPage : function(param, page, cb){
+/*    getPage : function(param, page, cb){
         Forum.findAll().page(page).done(cb);
-    },
+    },*/
     getMasters : function(fid, cb){
         ForumModerator.findAll().where({
             fid : fid
@@ -93,7 +119,6 @@ module.exports = {
             cb && cb(error, rows && rows[0]);
         });
     },
-
     remove : function(id, cb){
         if(!id) {
             cb && cb('没有指定删除板块!');

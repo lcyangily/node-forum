@@ -1,4 +1,11 @@
 module.exports = {
+    forum : [{
+        relation  : 'belongsTo',
+        modelName : 'forum',
+        params : {
+            foreignKey : 'parent_id'
+        }
+    }],
     forum_topic: [{
         relation  : 'belongsTo',
         modelName : 'users',

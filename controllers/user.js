@@ -27,7 +27,11 @@ module.exports = {
             template : 'user/follow',
             filters : ['getUserInHome'],
             controller : function(req, res, next) {
-                next();
+                userSvc.getFollowFeeds(req.params.uid, function(err, ftopics, pageinfo){
+                    res.locals.ftopics = ftopics;
+                    res.locals.pageinfo = pageinfo;
+                    next();
+                });
             }
         }
     },

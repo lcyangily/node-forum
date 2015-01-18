@@ -4,14 +4,15 @@ var async = require('async');
 module.exports = {
     "/": {
         get: {
-            template : 'mgr/forum/list',
             controller : function(req, res, next){
-                next();
-                //res.render('mgr/forum/list');
+                forumSvc.getAll(function(err, forums){
+                    res.locals.forums = forums;
+                    next();
+                }, true);
             }
         }
     },
-    '/getdata' : {
+    /*'/getdata' : {
         get : {
             controller : function(req, res, next){
                 console.log('----> getdata;');
@@ -23,7 +24,7 @@ module.exports = {
                 });
             }
         }
-    },
+    },*/
     '/delete' : {
         post : {
             controller : function(req, res, next){
@@ -39,10 +40,9 @@ module.exports = {
     '/create' : {
         get : function (req, res, next) {
             forumSvc.getAll(function(err, forums){
-                return res.render('mgr/forum/edit', {
-                    forums : forums
-                });
-            });
+                res.locals.forums = forums;
+                next();
+            }, true);
         },
         post : function (req, res, next) {
             forumSvc.add({
@@ -55,7 +55,7 @@ module.exports = {
                 if(err) {
                     return next(err);
                 }
-                res.render('notify/notify', {
+                res.render('notify/notify_pop', {
                     success : '添加成功!'
                 });
             });
@@ -92,7 +92,7 @@ module.exports = {
                         return next((!forum || forum.type != 1) ? '版块不存在！': err);
                     }
                     res.locals.forum = forum;
-                    forumSvc.getMaster(fid, function(err, masters){
+                    forumSvc.getMasters(fid, function(err, masters){
                         res.locals.masters = masters;
                         next(err);
                     });

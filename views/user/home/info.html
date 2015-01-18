@@ -5,11 +5,11 @@
     {{#replace "leftNav"}}
         <h2 class="mt">管理中心</h2>
         <ul>
-            {{#eq _s.user.is_admin 1}}
+            {{!--{{#eq _s.user.is_admin 1}}
                 <li {{#eq action 'audit'}}class="current"{{/eq}}>
                     <a href="/home/audit">审核管理</a>
                 </li>
-            {{/eq}}
+            {{/eq}}--}}
             <li {{#eq action 'avatar'}}class="current"{{/eq}}>
                 <a href="/home/avatar">修改头像</a>
             </li>

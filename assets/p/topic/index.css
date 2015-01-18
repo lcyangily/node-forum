@@ -36,6 +36,8 @@
 }
 .topic-content{
     padding:10px 0px;
+    max-width: 100%;
+    height: auto;
 }
 #topic .zans .action {
     color: #666;

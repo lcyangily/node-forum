@@ -9,9 +9,19 @@ var TopicPolloption = new BaseModel('topic_polloption');
 var TopicPollvoter = new BaseModel('topic_pollvoter');
 var UserCount    = new BaseModel('user_count');
 var TopicZanLogs = new BaseModel('topic_zan_logs');
+var UserFollow   = new BaseModel('user_follow');
+var UserFollowFeed = new BaseModel('user_follow_feed');
 var replySvc = loadService('reply');
 var forumSvc = loadService('forum');
 var userSvc  = loadService('user');
+
+// mergeInto = { a: 1}
+// toMerge = {a : undefined, b:undefined}
+// lodash.extend({}, mergeInto, toMerge) // => {a: undefined, b:undefined}
+// lodash.merge({}, mergeInto, toMerge)  // => {a: 1, b:undefined}
+var getPageWithDef = function(p){
+    return _.merge({page : 1, pageSize : 20}, p);
+}
 
 exports.getById = function (id, cb) {
     async.waterfall([
@@ -130,16 +140,23 @@ exports.getFullTopic = function (id, cb, replyPage) {
 
 //面向公众的通用查询
 exports.getListCommon = function(where, order, cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    //var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     //var o = _.extend({create_time : 'desc'}, order);
     var o = order || {last_reply_time : 'desc'};
     var w = _.extend({
-        status : 0
+        status : 0, //0-正常
+        'forum.status' : {
+            ne : 0  //0-删除
+        },
+        'forum.forum.status' : {
+            ne : 0
+        }
     }, where);
     Topic.findAll()
         .include([
             User.Model, 
-            Forum.Model, 
+            {model : Forum.Model, include : [Forum.Model]}, 
             {model : User.Model, as : 'reply_author'},
             {model : Forum.Model, as : 'forum_type'}
         ]).where(w).order(o).page(p).done(cb);
@@ -147,7 +164,10 @@ exports.getListCommon = function(where, order, cb, page){
 
 //论坛首页列表
 exports.getList = function(cb, page){
-    this.getListCommon(null, [
+    this.getListCommon({
+        'forum.forum.status' : 1,
+        'forum.status' : 1
+    }, [
         ['top_all', 'desc'],
         ['create_time', 'DESC']
     ], cb, page);
@@ -173,6 +193,12 @@ exports.getListByFtypeid = function(ftypeid, cb, page){
 exports.getListByUid = function(uid, cb, page){
     this.getListCommon({
         author_id : uid
+    }, null, cb, page);
+}
+
+exports.getListByGid = function(gid, cb, page){
+    this.getListCommon({
+        'forum.parent_id' : gid
     }, null, cb, page);
 }
 
@@ -371,6 +397,25 @@ exports.increaseCount = function(topic, callback){
     });
 }
 
+exports.addFollowFeed = function(topic, cb){
+    if(topic && topic.author_id){
+        UserFollow.find().where({
+            follow_uid : topic.author_id
+        }).done(function(err, userFollow){
+            if(err || !userFollow) return cb && cb(err || '没有被关注');
+            UserFollowFeed.add({
+                uid : topic.author_id,
+                username : topic.author_nick,
+                tid : topic.id
+            }).done(function(err, feed){
+                cb && cb(err, feed);
+            });
+        });
+    } else {
+        cb && cb();
+    }
+}
+
 /** 减少主题数量 **/
 exports.reduceCount = function(topic, cb){
     //forum
@@ -386,6 +431,7 @@ exports.add = function (kv, callback) {
         callback && callback(err, topic);
         try{
             self.increaseCount(topic);
+            self.addFollowFeed(topic);
         } catch(e) {
             console.error(e);
         }
