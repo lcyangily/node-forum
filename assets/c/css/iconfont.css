@@ -20,6 +20,14 @@
 
 .icon-gaoerfugan:before { content: "\e601"; }
 
+.icon-jinzhi:before { content: "\e64e"; }
+
+.icon-bangzhu:before { content: "\e64f"; }
+
+.icon-cuowu:before { content: "\e650"; }
+
+.icon-zhengque:before { content: "\e651"; }
+
 .icon-tuan:before { content: "\e602"; }
 
 .icon-chongwu:before { content: "\e603"; }
@@ -32,6 +40,8 @@
 
 .icon-pai:before { content: "\e606"; }
 
+.icon-shuaxin:before { content: "\e652"; }
+
 .icon-zuche:before { content: "\e607"; }
 
 .icon-tuan1:before { content: "\e608"; }
@@ -39,6 +49,10 @@
 .icon-zuche1:before { content: "\e609"; }
 
 .icon-diannao:before { content: "\e60a"; }
+
+.icon-shuaxin1:before { content: "\e653"; }
+
+.icon-tishi:before { content: "\e654"; }
 
 .icon-yumaoqiu:before { content: "\e60b"; }
 
@@ -56,6 +70,8 @@
 
 .icon-yundonghuwai01:before { content: "\e612"; }
 
+.icon-pinpai:before { content: "\e655"; }
+
 .icon-jingyuan:before { content: "\e63b"; }
 
 .icon-huo:before { content: "\e648"; }
@@ -68,11 +84,15 @@
 
 .icon-wuye:before { content: "\e638"; }
 
+.icon-tishi1:before { content: "\e656"; }
+
 .icon-meishi:before { content: "\e616"; }
 
 .icon-danchuguanbi:before { content: "\e649"; }
 
 .icon-lvyou:before { content: "\e617"; }
+
+.icon-tishi2:before { content: "\e657"; }
 
 .icon-fangzi:before { content: "\e618"; }
 
@@ -85,6 +105,8 @@
 .icon-huwaiyundongzhishu:before { content: "\e61c"; }
 
 .icon-f3:before { content: "\e61d"; }
+
+.icon-huanyipi:before { content: "\e658"; }
 
 .icon-renzhengv:before { content: "\e63c"; }
 
@@ -128,6 +150,8 @@
 
 .icon-tiyu02:before { content: "\e62c"; }
 
+.icon-jian:before { content: "\e659"; }
+
 .icon-unie61c:before { content: "\e62d"; }
 
 .icon-unie641:before { content: "\e62e"; }
@@ -148,6 +172,8 @@
 
 .icon-tuan2:before { content: "\e632"; }
 
+.icon-guanbi:before { content: "\e65a"; }
+
 .icon-shangye:before { content: "\e633"; }
 
 .icon-qunzuduoren:before { content: "\e634"; }
@@ -162,9 +188,11 @@
 
 .icon-ysxingbienan:before { content: "\e63e"; }
 
+.icon-v:before { content: "\e65b"; }
+
 .icon-qq1:before { content: "\e646"; }
 
-.icon-guanbi:before { content: "\e64c"; }
+.icon-guanbi1:before { content: "\e64c"; }
 
 .icon-jingmao:before { content: "\e643"; }
 
