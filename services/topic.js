@@ -153,7 +153,34 @@ exports.getListCommon = function(where, order, cb, page){
             ne : 0
         }
     }, where);
+    //指定fields 去掉conent 速度更快
     Topic.findAll()
+        .fields([
+            'id',
+            'title',
+            'fid',
+            'ftype_id',
+            'author_id',
+            'type',
+            'closed',
+            'status',
+            'status_chg_uid',
+            'status_chg_time',
+            'highlight',
+            'digest',
+            'top_all',
+            'top',
+            'is_hot',
+            'reply_count',
+            'visit_count',
+            'collect_count',
+            'zan_count',
+            'create_time',
+            'update_time',
+            'last_reply',
+            'last_reply_user_id',
+            'last_reply_time'
+        ])
         .include([
             User.Model, 
             {model : Forum.Model, include : [Forum.Model]}, 
@@ -461,6 +488,45 @@ exports.addVote = function(kv, callback){
     });
 }
 
+exports.update = function(t, user, callback){
+    var self = this;
+    var tt = {};
+    var tid = t.id;
+    tt.title = t.title;
+    tt.content = t.content;
+    tt.fid = t.fid;
+    tt.ftype_id = t.ftype_id;
+    tt.update_time = new Date();
+
+    async.waterfall([
+        function(cb){
+            Topic.findById(tid).done(function(error, topic) {
+                cb(error, topic);
+            });
+        },
+        function(topic, cb) {   //权限判断
+            self._permission(topic, user, {
+                admin : true,
+                author : true,
+                master : true
+            }, function(ret){
+                if(ret){
+                    cb(null, topic);
+                } else {
+                    cb('您无操作权限！');
+                }
+            });
+        },
+        function(topic, cb){
+            Topic.clean().update(tt).where({
+                id : tid
+            }).done(function(err, num, datas){
+                cb(err, datas && datas[0]);
+            });
+        }
+    ], callback);
+}
+
 //判断是否已经投过票
 exports.isVote = function(tid, uid, callback) {
     TopicPollvoter.find().where({
@@ -535,7 +601,7 @@ exports.vote = function(tid, user, poids, callback){
 }
 
 exports.chgState = function(tid, user, key, value, prop, limit, callback){
-
+    var self = this;
     async.waterfall([
         function(cb){
             Topic.findById(tid).done(function(error, topic) {
@@ -544,24 +610,31 @@ exports.chgState = function(tid, user, key, value, prop, limit, callback){
         },
         function(topic, cb) {   //权限判断
 
-            if(limit.mgr && user.is_admin == 1) {    //管理员
-                cb(null, topic);
-            } else if(limit.author && user.id == topic.author_id) { //作者
-                cb(null, topic);
-            } else if(limit.master) {    //版主
-                forumSvc.getMasters(topic.fid, function(err, masters){
-                    if(masters && masters.length) {
-                        for(var i = 0; i < masters.length; i++) {
-                            if(masters[i].uid == user.id) {
-                                return cb(null, topic);
-                            }
-                        }
-                    }
+            // if(limit.admin && user.is_admin == 1) {    //管理员
+            //     cb(null, topic);
+            // } else if(limit.author && user.id == topic.author_id) { //作者
+            //     cb(null, topic);
+            // } else if(limit.master) {    //版主
+            //     forumSvc.getMasters(topic.fid, function(err, masters){
+            //         if(masters && masters.length) {
+            //             for(var i = 0; i < masters.length; i++) {
+            //                 if(masters[i].uid == user.id) {
+            //                     return cb(null, topic);
+            //                 }
+            //             }
+            //         }
+            //         cb('您无操作权限！');
+            //     });
+            // } else {
+            //     cb(null, topic);
+            // }
+            self._permission(topic, user, limit, function(ret){
+                if(ret){
+                    cb(null, topic);
+                } else {
                     cb('您无操作权限！');
-                });
-            } else {
-                cb(null, topic);
-            }
+                }
+            });
         },
         function(topic, cb){
 
@@ -580,68 +653,68 @@ exports.chgState = function(tid, user, key, value, prop, limit, callback){
 
 exports.top = function(tid, user, callback){
     this.chgState(tid, user, 'top', 1, null, {
-        mgr : true,
+        admin : true,
         master : true
     }, callback);
 }
 
 exports.untop = function(tid, user, callback){
     this.chgState(tid, user, 'top', 0, null, {
-        mgr : true,
+        admin : true,
         master : true
     }, callback);
 }
 
 exports.topall = function(tid, user, callback){
     this.chgState(tid, user, 'top_all', 1, null, {
-        mgr : true
+        admin : true
     }, callback);
 }
 
 exports.untopall = function(tid, user, callback){
     this.chgState(tid, user, 'top_all', 0, null, {
-        mgr : true
+        admin : true
     }, callback);
 }
 
 exports.hot = function(tid, user, callback){
     this.chgState(tid, user, 'is_hot', 1, null, {
-        mgr : true,
+        admin : true,
         master : true
     }, callback);
 }
 
 exports.unhot = function(tid, user, callback){
     this.chgState(tid, user, 'is_hot', 0, null, {
-        mgr : true,
+        admin : true,
         master : true
     }, callback);
 }
 
 exports.digest = function(tid, user, callback){
     this.chgState(tid, user, 'digest', 1, null, {
-        mgr : true,
+        admin : true,
         master : true
     }, callback);
 }
 
 exports.undigest = function(tid, user, callback){
     this.chgState(tid, user, 'digest', 0, null, {
-        mgr : true,
+        admin : true,
         master : true
     }, callback);
 }
 
 exports.highlight = function(tid, user, callback){
     this.chgState(tid, user, 'highlight', 1, null, {
-        mgr : true,
+        admin : true,
         master : true
     }, callback);
 }
 
 exports.unhighlight = function(tid, user, callback){
     this.chgState(tid, user, 'highlight', 0, null, {
-        mgr : true,
+        admin : true,
         master : true
     }, callback);
 }
@@ -649,7 +722,7 @@ exports.unhighlight = function(tid, user, callback){
 exports.closed = function(tid, user, callback){
 
     this.chgState(tid, user, 'closed', 1, null, {
-        mgr : true,
+        admin : true,
         master : true,
         author : true
     }, callback);
@@ -658,7 +731,7 @@ exports.closed = function(tid, user, callback){
 exports.unclosed = function(tid, user, callback){
     //this.chgState(tid, user, 'unclosed', callback);
     this.chgState(tid, user, 'closed', 0, null, {
-        mgr : true,
+        admin : true,
         master : true,
         author : true
     }, callback);
@@ -669,9 +742,35 @@ exports.delete = function(tid, user, callback){
         status_chg_uid : user.id,
         status_chg_time : new Date()
     }, {
-        mgr : true,
+        admin : true,
         master : true,
         author : true
     }, callback);
     //this.chgState(tid, user, 'delete', callback);
+}
+
+/** 对帖子操作的权限判断 
+ * topic - 帖子
+ * user - 操作者
+ * limit - 可以操作的角色 author-本人, master-版主，admin-管理员
+ **/
+exports._permission = function(topic, user, limit, cb){
+    if(limit.admin && user.is_admin == 1) {    //管理员
+        cb && cb(true);
+    } else if(limit.author && user.id == topic.author_id) { //作者
+        cb && cb(true);
+    } else if(limit.master) {    //版主
+        forumSvc.getMasters(topic.fid, function(err, masters){
+            if(masters && masters.length) {
+                for(var i = 0; i < masters.length; i++) {
+                    if(masters[i].uid == user.id) {
+                        return cb && cb(true);
+                    }
+                }
+            }
+            cb(false);
+        });
+    } else {
+        cb(false);
+    }
 }

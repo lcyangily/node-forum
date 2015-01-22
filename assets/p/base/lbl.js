@@ -242,17 +242,29 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
         //'top', 'untop', 'hot', 'unhot', 'digest', 'undigest', 
         //'highlight', 'unhighlight', 'closed', 'unclosed', 'delete'
         topicChg : function(tid, type) {
-            $.ajax({
-                type : 'post',
-                url : '/topic/'+tid+'/'+type,
-                dataType : 'json',
-                success : function(data){
-                    Dialog.tip((data && data.msg) || '操作成功!');
-                },
-                error : function(err){
-                    Dialog.tip(err.responseText);
-                }
-            });
+            var tipMsg;
+            if(type == 'delete') {
+                tipMsg = '确认删除当前主题？';
+                Dialog.confirm(tipMsg, function(){
+                    process(tid, type);
+                });
+            } else {
+                process(tid, type);
+            }
+
+            function process(tid, type){
+                $.ajax({
+                    type : 'post',
+                    url : '/topic/'+tid+'/'+type,
+                    dataType : 'json',
+                    success : function(data){
+                        Dialog.tip((data && data.msg) || '操作成功!');
+                    },
+                    error : function(err){
+                        Dialog.tip(err.responseText);
+                    }
+                });
+            }
         },
         //主题推荐到首页新闻
         topicToNews : (function (){
@@ -264,7 +276,7 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
                         content : '/topic/' + tid + '/tonews',
                         effect : 'fade',
                         title : '推荐到首页',
-                        width:540,
+                        width:760,
                         modal : true
                     });
                 }

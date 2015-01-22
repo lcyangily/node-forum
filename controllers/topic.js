@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var moment = require('moment');
+var cheerio = require('cheerio');
 var forumSvc  = loadService('forum');
 var topicSvc  = loadService('topic');
 var userSvc   = loadService('user');
@@ -110,9 +111,9 @@ module.exports = {
                     edit_error = '标题字数太多或太少';
                 }
 
-                if(!ftype_id) {
+                /*if(!ftype_id) {
                     edit_error = '请先选择论坛模块';
-                }
+                }*/
 
                 if(vote == 1) {
                     if(!options || !options.length || options.length < 2) {
@@ -124,15 +125,34 @@ module.exports = {
                     return res.send(502, edit_error);
                 } else {
                     async.waterfall([
+                        //forum
                         function(callback){
-                            forumSvc.getById(ftype_id, function(err, forum){
+                            forumSvc.getById(fid, function(err, forum){
                                 if(err || !forum) {
                                     return callback(err || new Error('此话题不存在或已被删除。'));
                                 }
+
+                                if(forum.status != 1){
+                                    return callback('板块已被删除！');
+                                }
+
                                 callback(err, forum);
                             })
                         },
+                        //forum_type
                         function(forum, callback){
+                            if(ftype_id && ftype_id > 0){
+                                forumSvc.getById(ftype_id, function(err, forumType){
+                                    if(err || !forumType) {
+                                        return callback(err || new Error('此话题不存在或已被删除。'));
+                                    }
+                                    callback(err, ftype_id);
+                                })
+                            } else {
+                                callback(null, -1);
+                            }
+                        },
+                        function(ftype_id, callback){
                             if(vote == 1) {
                                 topicSvc.addVote({
                                     title : title,
@@ -148,8 +168,8 @@ module.exports = {
                                     options : options,
                                     maxchoices : maxchoices,
                                     expiration : moment(new Date()).add(expiration, 'days').toDate()
-                                }, function(error){
-                                    callback(error);
+                                }, function(error, topic){
+                                    callback(error, topic);
                                 });
                             } else {
                                 topicSvc.add({
@@ -159,30 +179,137 @@ module.exports = {
                                     ftype_id : ftype_id,
                                     author_id : req.session.user.id,
                                     author_nick : req.session.user.nickname
-                                }, function(error){
-                                    callback(error);
+                                }, function(error, topic){
+                                    callback(error, topic);
                                 });
                             }
                         }
-                    ], function(error, forum){
+                    ], function(error, topic){
                         if(error) {
                             return next(error);
                         }
 
                         res.send(200, {
                             code : 1,
-                            msg  : '发布成功!'
+                            msg  : '发布成功!',
+                            tid : topic.id
                         });
                     });
                 }
             }
         }
     },
-    'edit' : {
+    '/:tid/edit' : {
         get : {
-            filters : [],
+            filters : ['checkLogin', 'blocks/hotForums'],
+            template : 'topic/create',
             controller : function(req, res, next){
+                var tid = req.params.tid;
+                res.locals.action = 'edit';
+                res.locals.edit_error = '注意：修改话题暂只能修改主题、内容和分类。如需修改投票等信息请重新发帖。';
+                async.waterfall([
+                    function(cb){
+                        topicSvc.getById(tid, function(error, topic){
+                            if(error) return cb(error);
+                            if(!topic) return cb('帖子不存在！');
+                            if(topic.status != 0) return cb('帖子已被删除');
+                            //res.locals.forum = info.forum;
+                            //res.locals.ftype = info.ftype;
 
+                            cb(error, topic);
+                        });
+                    },
+                    //forum
+                    function(topic, cb){
+                        forumSvc.getById(topic.fid, function(err, forum){
+                            cb(err, topic, forum);
+                        })
+                    },
+                    //forum_type
+                    function(topic, forum, cb){
+                        forumSvc.getSub(forum.id, function(error, forums){
+                            cb(error, topic, forum, forums);
+                        });
+                    }
+                ], function(err, topic, forum, forums){
+                    res.locals.topic = topic;
+                    res.locals.forum = forum;
+                    res.locals.forums = forums;
+                    next(err);
+                });
+            }
+        },
+        post : {
+            controller : function(req, res, next){
+                var tid = req.params.tid;
+                var title = trimxss(req.body.title);
+                var content = req.body.content;
+                var fid = req.body.fid;
+                var ftype_id = req.body.ftype_id;
+
+                var edit_error;
+                if(title === '') {
+                    edit_error = '标题不能是空的。';
+                }
+                
+                if(!validator.isLength(title, 5, 300)) {
+                    edit_error = '标题字数太多或太少';
+                }
+
+                if (edit_error) {
+                    return res.send(502, edit_error);
+                }
+
+                async.waterfall([
+                    //forum
+                    function(callback){
+                        forumSvc.getById(fid, function(err, forum){
+                            if(err || !forum) {
+                                return callback(err || new Error('此话题不存在或已被删除。'));
+                            }
+
+                            if(forum.status != 1){
+                                return callback('板块已被删除！');
+                            }
+
+                            callback(err, forum);
+                        })
+                    },
+                    //forum_type
+                    function(forum, callback){
+                        if(ftype_id && ftype_id > 0){
+                            forumSvc.getById(ftype_id, function(err, forumType){
+                                if(err || !forumType) {
+                                    return callback(err || new Error('此话题不存在或已被删除。'));
+                                }
+                                callback(err, ftype_id);
+                            })
+                        } else {
+                            callback(null, -1);
+                        }
+                    },
+                    function(ftype_id, callback){
+                        topicSvc.update({
+                            id : tid,
+                            title : title,
+                            content : content,
+                            fid : fid,
+                            ftype_id : ftype_id
+                        }, req.session.user, function(error, topic){
+                            callback(error, topic);
+                        });
+                    }
+                ], function(error){
+                    if(error) {
+                        return next(error);
+                    }
+
+                    res.send(200, {
+                        code : 1,
+                        msg  : '修改成功!',
+                        tid : tid
+                    });
+                });
             }
         }
     },
@@ -196,6 +323,10 @@ module.exports = {
                 async.waterfall([
                     function(cb){
                         topicSvc.getFullTopic(tid, function(error, info){
+                            if(error) return cb(error);
+                            if(!info || !info.topic) return cb('帖子不存在！');
+                            if(info.topic.status != 0) return cb('帖子已被删除');
+
                             res.locals.topic = info.topic;
                             res.locals.author = info.author;
                             res.locals.replys = info.replys;
@@ -295,6 +426,19 @@ module.exports = {
                                 error : news ? '已经推荐到首页，请勿重复操作！' : err
                             });
                         }
+
+                        //获取图片供选择
+                        if(topic.content) {
+                            var $ = cheerio.load(topic.content);
+                            var images = [];
+                            $('img').each(function(){
+                                var $t = $(this);
+                                var src = $t.attr('src') || $t.attr('data-src');
+                                images.push(src);
+                            });
+                        }
+
+                        res.locals.images = images;
                         next();
                     });
                 });
@@ -302,10 +446,12 @@ module.exports = {
         },
         post : {
             filters : ['checkLogin'],
+            template : 'notify/notify_pop',
             controller : function(req, res, next){
                 var tid = req.params.tid;
                 var title = req.body.title;
                 var content = req.body.content;
+                var picUrl = req.body.picUrl;
 
                 var iinfo = req.files.img;
                 var origName= iinfo.originalFilename;
@@ -315,26 +461,39 @@ module.exports = {
                 var newPath = config.base_path + '/uploads/' + newName;
                 var webPath = '/uploads/' + newName;
 
-                fs.rename(tmpPath, newPath, function(err){
-                    if(err) {
-                        return res.render('notify/notify_pop', {
-                            error : '图片上传失败！:' + err
+                // console.log('-----> picUrl : ' + picUrl);
+                // console.log('-----> iinfo : ' + iinfo);
+                // console.log('-----> origName : ' + origName);
+                // console.log('-----> tmpPath : ' + tmpPath);
+                // console.log('-----> size : ' + iinfo.size);
+
+                async.waterfall([
+                    function(cb){
+                        if(origName && iinfo.size > 0) {
+                            fs.rename(tmpPath, newPath, function(err){
+                                cb(err ? ('图片上传失败！:' + err) : null, webPath);
+                            });
+                        } else {
+                            cb(null, picUrl);
+                        }
+                    },
+                    function(picUrl, cb){
+                        newsSvc.add({
+                            id : tid,
+                            img : picUrl,
+                            title : title || null, //title,
+                            content : content || null, //content
+                        }, req.session.user, function(err, news){
+                            cb(err);
                         });
                     }
-                    newsSvc.add({
-                        id : tid,
-                        img : webPath,
-                        title : null, //title,
-                        content : null, //content
-                    }, req.session.user, function(err, news){
-                        if(err) return res.render('notify/notify_pop', {
-                            error : err
-                        });
-
-                        return res.render('notify/notify_pop', {
-                            success : '操作成功！'
-                        });
-                    });
+                ], function(err){
+                    if(err){
+                        res.locals.error = err;
+                    } else {
+                        res.locals.success = '操作成功！';
+                    }
+                    next();
                 });
             }
         }

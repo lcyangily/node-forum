@@ -66,7 +66,7 @@ Handlebars.registerHelper("page", function(){
     if (current >= totalPages) {
         ret += '<li class="disabled"><a>»</a></li>';
     } else {
-        ret += '<li><a href="' + base + (current + 1) + '">»</a></li>';
+        ret += '<li><a href="' + base + totalPages + '">»</a></li>';
     }
 
     if(options.fn) {

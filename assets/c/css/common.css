@@ -124,7 +124,7 @@
     overflow: hidden;
 }
 .revert-cnt img{
-    max-width: 100%;
+    max-width: 100% !important;
     height: auto;
 }
 .revert-cnt dl {
@@ -325,7 +325,7 @@ a.topic-pub-btn:active {
 }
 #J_topUserBtn .user-name{
     display: block;
-    padding-left: 45px;
+    padding-left: 15px;
     padding-right: 0px;
 }
 #J_topUserBtn .msg{

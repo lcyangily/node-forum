@@ -8,16 +8,16 @@
     </a>
     <div class="topic-title-wrapper">
         <h2 class="topic-title">
-            <a href="/topic/{{ id }}" title="{{ title }}">{{ title }}</a>
-            <span class="tag">[
+            <a href="/topic/{{ id }}" title="{{ title }}">{{{ title }}}</a>
+            <span class="tag">
             {{~#gt curblock.type 0}}
-                <a href="/forum/{{forum.id}}?ftype={{forum_type.id}}">
-                    {{forum_type.name}}
-                </a>
+                {{#if forum_type}}
+                    [<a href="/forum/{{forum.id}}?ftype={{forum_type.id}}">{{forum_type.name}}</a>]
+                {{/if}}
             {{~ else ~}}
-                <a href="/forum/{{forum.id}}">{{forum.name}}</a>
+                [<a href="/forum/{{forum.id}}">{{forum.name}}</a>]
             {{/gt ~}}
-            ]</span>
+            </span>
             {{#and (eq curblock.type -1) (eq top_all 1)}}
                 <span class="label label-default label-primary">置顶</span>
             {{/and}}

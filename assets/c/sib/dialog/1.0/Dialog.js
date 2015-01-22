@@ -545,13 +545,17 @@ define(function(require, exports, module){
                     }
                 }
 
+                var oldIframeH = state._iframe_h;
+
                 if(h && h != state._iframe_h) {
                     state._iframe_h = h;
                     //$content.css("height", h);
                     $content.stop(true, false).animate({
                         height : h + 'px'
                     }, 'fast', function(){
-                        self.position();
+                        if(oldIframeH == null) {  //iframe加载完第一次重新计算位置,后面改变高度，不计算
+                            self.position();
+                        }
                     });
                     // force to reflow in ie6
                     // http://44ux.com/blog/2011/08/24/ie67-reflow-bug/
@@ -810,7 +814,7 @@ define(function(require, exports, module){
             };
             return new Dialog($.extend(true, {}, cfg, defaults, options)).open();
         },
-        confirm : function(msg, title, onConfirm, onCancel, options){
+        confirm : function(msg, onConfirm, onCancel, options){
             var cfg = $.extend(true, {}, tipDefault, D.tipDefault);
             var content = SIB.unite(cfg.tipTpl, $.extend(true, {
                 icon : cfg.alert.icon,

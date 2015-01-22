@@ -9,7 +9,7 @@
                     <li><a href="/">首页</a></li>
                     <li><a href="/forum/{{forum.id}}">{{forum.name}}</a></li>
                     <li class='active'>
-                        {{~#eq action 'edit'}}编辑话题{{else}}发布话题{{/eq~}}
+                        {{~#eq action 'edit'}}修改话题{{else}}发布话题{{/eq~}}
                     </li>
                 </ol>
             </div>
@@ -19,13 +19,13 @@
         <div class="panel">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    {{~#eq action 'edit'}}编辑话题{{else}}发布话题{{/eq~}}
+                    {{~#eq action 'edit'}}修改话题{{else}}发布话题{{/eq~}}
                 </h3>
             </div>
             <div class="panel-body">
                 {{#if edit_error}}
                     <div class="alert alert-error">
-                        <a class="close" data-dismiss="alert" href="#">&times;</a>
+                        <!-- <a class="close" data-dismiss="alert" href="#">&times;</a> -->
                         <strong>{{edit_error}}</strong>
                     </div>
                 {{/if}}
@@ -37,112 +37,126 @@
                     <form id='J_createTopicForm' method='post' 
                           class="form-horizontal" role="form"
                           onsubmit="return false" 
-                          action='{{~#eq action 'edit' ~}}
-                                      /topic/edit/{{topic_id}}
+                          action='{{~#eq action "edit" ~}}
+                                      /topic/{{topic.id}}/edit
                                   {{~ else ~}}
                                       /topic/create
                                   {{~/eq ~}}' >
                         <input type="hidden" name="fid" value="{{forum.id}}" />
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">分类</label>
+                            <label class="col-sm-2 control-label">板块</label>
                             <div class="col-sm-10">
-                                <select name="ftype_id" class="form-control">
-                                    {{#each forums}}
-                                        <option value="{{id}}">{{name}}</option>
-                                    {{/each}}
-                                </select>
+                                <p class="form-control-static">{{forum.name}}</p>
                             </div>
                         </div>
+                        {{#if forums}}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分类</label>
+                                <div class="col-sm-10">
+                                    <select name="ftype_id" class="form-control">
+                                        {{#each forums}}
+                                            <option value="{{id}}" 
+                                                {{#eq id ../topic.ftype_id}}selected{{/eq}}>
+                                                {{name}}
+                                            </option>
+                                        {{/each}}
+                                        <option value="-1">其他</option>
+                                    </select>
+                                </div>
+                            </div>
+                        {{/if}}
                         <div class="form-group">
                             <label for="J_title" class="col-sm-2 control-label">标题</label>
                             <div class="col-sm-10">
-                                <input type="text" name="title" class="form-control" id="J_title" placeholder="标题" value="{{~title~}}">
+                                <input type="text" name="title" class="form-control" id="J_title" placeholder="标题" value="{{ topic.title }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="J_title" class="col-sm-2 control-label">内容</label>
                             <div class="col-sm-10">
-                                <textarea class='editor ckeditor' class="form-control" name='content' rows='8'>
-                                    {{~ content ~}}
-                                </textarea>
+                                <textarea class='editor ckeditor' class="form-control" name='content' rows='8'>{{ topic.content }}</textarea>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-10 col-sm-offset-2">
-                                <input type="checkbox" id="J_vote" name="vote" value="1"  /> 增加投票
-                            </div>
-                        </div>
-                        <div id="J_voteArea" style="display:none;">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">计票天数</label>
-                                <div class="col-sm-2">
-                                    <input type="text" name="expiration" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">是否多选</label>
-                                <div class="col-sm-10">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="multiple" value="0"> 单选
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input id="J_moreOption" type="radio" name="multiple" value="1"> 多选
-                                        </label>
-                                        <span id="J_maxCount" style="margin-left:20px;">
-                                            最多选择
-                                            <input type="text" name="maxchoices" style="width:60px;" />个
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                        {{#ne action 'edit'}}
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="overt" value="1">
-                                            公开投票参与人
-                                        </label>
+                                    <input type="checkbox" id="J_vote" name="vote" value="1"  /> 增加投票
+                                </div>
+                            </div>
+                            <div id="J_voteArea" style="display:none;">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">计票天数</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" name="expiration" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">是否多选</label>
+                                    <div class="col-sm-10">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="multiple" value="0"> 单选
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input id="J_moreOption" type="radio" name="multiple" value="1"> 多选
+                                            </label>
+                                            <span id="J_maxCount" style="margin-left:20px;">
+                                                最多选择
+                                                <input type="text" name="maxchoices" style="width:60px;" />个
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="overt" value="1">
+                                                公开投票参与人
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="visible" value="1">
+                                                投票后结果可见
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">选项</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="option" class="form-control" >
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-default">
+                                            删除
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="J_optionsArea">
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <button type="button" class="btn btn-default" id="J_addOption">
+                                            <span class="glyphicon glyphicon-plus"></span> 增加选项
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-10 col-sm-offset-2">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="visible" value="1">
-                                            投票后结果可见
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">选项</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="option" class="form-control" >
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="button" data-role="delopt" class="btn btn-default">
-                                        删除
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="J_optionsArea">
-                                
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-10 col-sm-offset-2">
-                                    <button type="button" class="btn btn-default" id="J_addOption">
-                                        <span class="glyphicon glyphicon-plus"></span> 增加选项
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        {{/ne}}
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default btn-primary">提交</button>
+                                <button type="submit" id="J_submitBtn" class="btn btn-primary">
+                                    {{#eq action 'edit'}}修改{{else}}增加{{/eq}}
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -202,9 +216,9 @@
                 var errormsg = null;
                 if(!fj.title || fj.title.length < 5 || fj.title.length > 300) {
                     errormsg = '标题长度须在5-300之间，不能太长或太短！';
-                } else if(!fj.ftype_id) {
+                } /*else if(!fj.ftype_id) {
                     errormsg = '请选择分类！';
-                } else if(!cnt) {
+                } */else if(!cnt) {
                     errormsg = '内容不能为空！';
                 }
 
@@ -213,21 +227,39 @@
                     return;
                 }
 
+                disabledBtn();
                 $.ajax({
-                    url : '/topic/create',
+                    url : '/topic/{{#eq action "edit"}}{{topic.id}}/edit{{else}}create{{/eq}}',
                     type : 'POST',
                     data : fj,
                     success : function(ret){
                         if(ret.code == 1) {
                             Dialog.tip(ret.msg);
+                            setTimeout(function(){
+                                window.location = '/topic/' + ret.tid;
+                            }, 2000);
                         }
                     },
                     error : function(err){
                         Dialog.tip(err.responseText);
+                        enabledBtn();
                     }
                 });
                 return false;
             });
+
+            function disabledBtn(){
+
+                var $t = $('#J_submitBtn');
+                $t.prop('disabled', true);
+                
+                $t.attr('label-ext', $t.text());
+                $t.html('提交中... ');
+            }
+
+            function enabledBtn(){
+                $('#J_submitBtn').prop('disabled', false).html($('#J_sumbitBtn').attr('label-ext'));
+            }
         });
     </script>
     {{/replace}}

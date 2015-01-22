@@ -1,9 +1,10 @@
 {{#extend "layout"}}
     {{#append "css"}}
         <link rel="stylesheet" href="/assets/p/forum/index.css">
+        <link rel="stylesheet" href="/assets/p/topic/index.css">
         <style type="text/css">
-        body{
-            padding-top: 0px;
+        html,body{
+            height: auto;
         }
         </style>
     {{/append}}
@@ -11,44 +12,83 @@
     {{#replace "bodyWrap"}}
         <div class="panel">
             <div class="panel-body">
-                
                 <form id='J_createTopicForm' method='post' 
                       class="form-horizontal" 
                       ENCTYPE="multipart/form-data"
                       action='/topic/{{topic.id}}/tonews' >
                     <input type="hidden" name="tid" value="{{topic.id}}" />
+                    <input type="hidden" name="picUrl" />
                     <div class="form-group">
                         <label class="col-sm-2 control-label">显示在首页图片</label>
-                        <div class="col-sm-10">
-                            <input type="file" name="img" class="form-control" />
+                        <div class="col-sm-10 clearfix">
+                            {{#each images}}
+                                <span class="img-thumb-wrap">
+                                    <img src="{{this}}" class="img-rounded" />
+                                </span>
+                            {{/each}}
+                            <div class="tonew-extbtn">
+                                <button type="button" data-ext-id="J_img" class="btn btn-default btn-sm">没有合适的自己上传？</button>
+                            </div>
+                            <input type="file" name="img" style="display:none;" id="J_img" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="J_title" class="col-sm-2 control-label">标题</label>
                         <div class="col-sm-10">
-                            <input type="text" name="title" class="form-control" id="J_title" placeholder="标题" value="{{topic.title}}">
+                            <label>{{topic.title}}</label>
+                            <div class="tonew-extbtn">
+                                <button type="button" data-ext-id="J_title"  class="btn btn-default btn-sm">重修输入标题</button>
+                            </div>
+                            <input type="text" name="title" style="display:none;" class="form-control" id="J_title">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="J_title" class="col-sm-2 control-label">内容</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" rows="3">{{topic.content}}</textarea>
+                            <label>
+                                {{~#if topic.content ~}}
+                                    {{string (string (string topic.content 'stripTags') 'trim') 'truncate' 250}}
+                                {{~/if ~}}
+                            </label>
+                            <div class="tonew-extbtn">
+                                <button type="button" data-ext-id="J_content" class="btn btn-default btn-sm">重新输入内容</button>
+                            </div>
+                            <textarea class="form-control" rows="3" id="J_content" style="display:none;"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default btn-primary">提交</button>
+                            <button type="button" id="J_submit" class="btn btn-default btn-primary">提交</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     {{/replace}}
+    {{#replace "footer"}}{{/replace}}
     {{#replace "js"}}
     <script type="text/javascript">
         require(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
             
-            
+            $('button[data-ext-id]').click(function(){
+                var id = $(this).attr('data-ext-id');
+                $('#' + id).toggle();
+            });
+
+            $('.img-thumb-wrap').click(function(){
+                $('.img-thumb-wrap').removeClass('active');
+                var $t = $(this);
+                $t.addClass('active');
+                $('#J_createTopicForm input[name=picUrl]').val($t.find('img').attr('src'));
+            });
+
+            $('#J_submit').click(function(){
+                /*if(!$('#J_createTopicForm input[name=picUrl]').val()) {
+                    Dialog.tip('请选择或上传图片！');
+                    return false;
+                }*/
+                $('#J_createTopicForm').submit();
+            });
         });
     </script>
     {{/replace}}

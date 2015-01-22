@@ -11,7 +11,7 @@
             <div id="topic" class="panel-body">
                 <div class="topic-title">
                     <h1>
-                        {{ topic.title }}
+                        {{{ topic.title }}}
                         {{#if topic.top }}
                             <span class="label label-default">置顶</span>
                         {{/if}}
@@ -28,10 +28,12 @@
                     <div class="info">
                         <em class="info-label">
                             <span>
-                                {{moment create_time format='YYYY-MM-DD hh:mm:ss'}}
-                            </span>&nbsp;&nbsp;发表在&nbsp;[&nbsp;
-                            <a href="/forum/{{forum.id}}?ftype={{ftype.id}}"
-                                class="info-label">{{ftype.name}}</a>&nbsp;]
+                                {{moment topic.create_time format='YYYY-MM-DD hh:mm:ss'}}
+                            </span>&nbsp;&nbsp;
+                            {{#if ftype}}发表在&nbsp;[&nbsp;
+                                <a href="/forum/{{forum.id}}?ftype={{ftype.id}}"
+                                    class="info-label">{{ftype.name}}</a>&nbsp;]
+                            {{/if}}
                         </em>
                         <span class="pull-right">
                             <em class="info-label">
@@ -42,6 +44,18 @@
                             </em>
                         </span>
                     </div>
+                    {{#eq _s.user.id author.id}}
+                        <div class="info">
+                            {{#eq topic.status 0}}
+                                <a class="btn btn-xs btn-gray" href="/topic/{{topic.id}}/edit">
+                                    <span class="glyphicon glyphicon-edit"></span> 编辑
+                                </a>
+                                <button class="btn btn-xs btn-gray"
+                                        onclick="LBL.topicChg({{topic.id}}, 'delete');">
+                                    <span class="glyphicon glyphicon-trash"></span> 删除</button>
+                            {{/eq}}
+                        </div>
+                    {{/eq}}
                 </div>
                 <div class="topic-content">
                     <div class="markdown-text">
@@ -232,6 +246,7 @@
             </div>
         </div>
         <div class="panel panel-module topic-comments">
+            <a name="J_replyArea" id="J_replyArea"></a>
             <div class="panel-heading">
                 <h3 class="panel-title">说几句</h3>
             </div>
@@ -240,7 +255,7 @@
                     <p class="closed-tip">已关闭评论</p>
                 {{else}}
                     <form action="/reply/add/{{topic.id}}" method="post">
-                        <textarea class="reply-area ckeditor" name="content"></textarea>
+                        <textarea class="reply-area ckeditor" id="content" name="content"></textarea>
                         <input type="submit" value="提交" class="btn btn-default reply-btn" />
                     </form>
                 {{/eq}}
@@ -261,7 +276,7 @@
         {{/if}}
         <div class="panel topic-author">
             <div class="card-mini clearfix">
-                <a class="avatar" href="#">
+                <a class="avatar" href="/user/{{author.id}}">
                     <img src="{{#if author.avatar ~}}
                                 {{author.avatar}}
                               {{~ else ~}}
@@ -333,7 +348,7 @@
             </a>
             <div class="x-grid-row topic-fast-group">
                 <div class="x-grid-1-4">
-                    <a href="#" class="topic-fast-btn">
+                    <a href="#J_replyArea" class="topic-fast-btn">
                         <span class="glyphicon glyphicon-share"></span>
                         <p>回复</p>
                     </a>
@@ -366,9 +381,11 @@
         <script type="text/javascript" src="/assets/c/gallery/ckeditor/ckeditor.js"></script>
     {{/ne}}
     <script type="text/javascript">
-    /*require(['jquery', 'umeditor'], function($, UM){
-        alert(UM);
-    });*/
+    require(['jquery'], function($){
+        $('img[data-src]').each(function(){
+            $(this).attr('src', $(this).attr('data-src'));
+        });
+    });
     </script>
     {{/replace}}
 {{/extend}}

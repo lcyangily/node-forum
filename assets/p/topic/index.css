@@ -38,6 +38,11 @@
     padding:10px 0px;
     max-width: 100%;
     height: auto;
+    font-size: 14px;
+}
+#topic img{
+    max-width: 100% !important;
+    height: auto;
 }
 #topic .zans .action {
     color: #666;
@@ -147,4 +152,28 @@ textarea.reply-area{
 .mgr-oper hr{
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.img-thumb-wrap{
+    width: 220px;
+    height: 150px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+    padding: 4px;
+    background-color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.img-thumb-wrap img{
+    max-width: 100%;
+}
+.img-thumb-wrap:hover, .img-thumb-wrap.active{
+    border:3px solid #fb8318;
+    padding: 1px;
+}
+.tonew-extbtn{
+    margin-top: 10px;
+    margin-bottom: 5px;
 }

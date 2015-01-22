@@ -41,6 +41,10 @@
     "string": "~3.0.0",
     "request": "~2.51.0",
     "form-data": "~0.2.0",
-    "snserror": "0.0.2"
+    "snserror": "0.0.2",
+    "cheerio": "~0.18.0",
+    "xml2js": "~0.4.4",
+    "charset": "~1.0.0",
+    "he": "~0.5.0"
   }
 }

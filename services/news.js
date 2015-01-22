@@ -23,7 +23,8 @@ exports.getList = function(cb, page){
             ]
         }
     ]).where({
-        status : 0
+        status : 0,
+        'forum_topic.status' : 0
     }).order({
         create_time : 'desc'
     }).page(p).done(cb);

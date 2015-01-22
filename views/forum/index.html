@@ -83,18 +83,20 @@
                     </ul>
                 {{/eq}}
                 {{#eq forum.type 1}}
-                    <div class="cell theader">
-                        <span class="post-total first">
-                            <a class="{{#unless _pathvar.ftype}}current{{/unless}}" href="/forum/{{../forum.id}}">全部</a>
-                        </span>
-                        {{#each ftypes}}
-                            <span class="post-total">
-                                <a href="/forum/{{../forum.id}}?ftype={{id}}"
-                                   class="{{#eq ../_pathvar.ftype id}}current{{/eq}}">
-                                   {{name}}({{topics}})</a>
+                    {{#if ftypes}}
+                        <div class="cell theader">
+                            <span class="post-total first">
+                                <a class="{{#unless _pathvar.ftype}}current{{/unless}}" href="/forum/{{../forum.id}}">全部</a>
                             </span>
-                        {{/each}}
-                    </div>
+                            {{#each ftypes}}
+                                <span class="post-total">
+                                    <a href="/forum/{{../forum.id}}?ftype={{id}}"
+                                       class="{{#eq ../_pathvar.ftype id}}current{{/eq}}">
+                                       {{name}}({{topics}})</a>
+                                </span>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 {{/eq}}
                 {{#each topics}}
                     {{sub "forum/listItem" topic=this curblock=../forum}}

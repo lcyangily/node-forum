@@ -19,9 +19,9 @@
                             <h4>
                                 <a href="/topic/{{id}}" target="_blank">
                                     {{~#if title}}
-                                        {{title}}
+                                        {{{title}}}
                                     {{~ else ~}}
-                                        {{forum_topic.title}}
+                                        {{{forum_topic.title}}}
                                     {{/if ~}}
                                 </a>
                             </h4>
@@ -35,9 +35,9 @@
                             </div>
                             <div class="article-summary">
                                 {{#if content}}
-                                    {{{string (string content 'stripTags') 'truncate' 250}}}
+                                    {{{string (string (string content 'stripTags') 'trim') 'truncate' 230}}}
                                 {{else}}
-                                    {{{string (string forum_topic.content 'stripTags') 'truncate' 250}}}
+                                    {{{string (string (string forum_topic.content 'stripTags') 'trim')  'truncate' 205}}}
                                 {{/if}}
                             </div>
                         </div>

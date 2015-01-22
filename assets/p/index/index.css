@@ -28,7 +28,7 @@ a:hover{
 }
 .btn-gray:hover{
     background: #fb8318;
-    color: #fff;
+    color: #fff !important;
 }
 
 .navbar {
@@ -95,11 +95,12 @@ a:hover{
     /* font-weight: bold; */
 }
 .navbar .navbar-toggle{
-    padding: 12px 0px 0px 16px;
+    padding: 18px 0px 0px 16px;
     margin-right: 0px;
+    color: #333;
 }
 .navbar .navbar-toggle .icon-bar {
-    background-color: #fff;
+    background-color: #333;
 }
 .breadcrumb {
     padding: 8px 0px;
