@@ -45,7 +45,7 @@ a:hover{
 }
 .navbar-brand{
     /* padding:10px 0px; */
-    width: 210px;
+    width: 170px;
     height: 70px;
     padding: 0px;
     float: left;
@@ -233,10 +233,13 @@ a:hover{
     margin-left:auto;
     margin-right: auto;
     margin-bottom:10px;
+    /* width: 220px;
+    height: 146px; */
+    overflow: hidden;
 }
 .article-box .a-img img {
-    width: 220px;
-    height: 146px;
+    width: 100%;
+    max-width: 100%;
 }
 .article-box-ctt {
     /* margin-left: 235px; */
@@ -288,9 +291,11 @@ a:hover{
     padding:10px 20px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .article-box .a-img {
         float:left;
+        width: 220px;
+        height: 150px;
         margin-bottom:0px;
         display: inline;
     }
@@ -326,5 +331,9 @@ a:hover{
     font-size: 12px;
     color: #999;
     line-height: 20px;
+    text-align: center;
+}
+.notify-notify{
+    padding:80px 0px 120px 0px;
     text-align: center;
 }

@@ -35,25 +35,28 @@
                     <div class="form-group">
                         <label for="J_title" class="col-sm-2 control-label">标题</label>
                         <div class="col-sm-10">
-                            <label>{{topic.title}}</label>
+                            {{!--<label>{{topic.title}}</label>
                             <div class="tonew-extbtn">
-                                <button type="button" data-ext-id="J_title"  class="btn btn-default btn-sm">重修输入标题</button>
-                            </div>
-                            <input type="text" name="title" style="display:none;" class="form-control" id="J_title">
+                                <button type="button" data-ext-id="J_title" class="btn btn-default btn-sm">重修输入标题</button>
+                            </div>--}}
+                            <input type="text" name="title" class="form-control" id="J_title" value="{{topic.title}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="J_title" class="col-sm-2 control-label">内容</label>
                         <div class="col-sm-10">
-                            <label>
+                            {{!--<label>
                                 {{~#if topic.content ~}}
                                     {{string (string (string topic.content 'stripTags') 'trim') 'truncate' 250}}
                                 {{~/if ~}}
                             </label>
                             <div class="tonew-extbtn">
                                 <button type="button" data-ext-id="J_content" class="btn btn-default btn-sm">重新输入内容</button>
-                            </div>
-                            <textarea class="form-control" rows="3" id="J_content" style="display:none;"></textarea>
+                            </div>--}}
+                            <textarea class="form-control" name="content" rows="3" id="J_content">
+                                {{~#if topic.content ~}}
+                                    {{string (string (string topic.content 'stripTags') 'trim') 'truncate' 110}}
+                                {{~/if ~}}</textarea>
                         </div>
                     </div>
                     <div class="form-group">

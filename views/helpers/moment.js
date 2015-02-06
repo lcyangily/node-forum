@@ -12,7 +12,16 @@ Handlebars.registerHelper('moment', function(dateOrig) {
         m = moment(dateOrig);
     }
 
-    if('format' in opts.hash) {
+    if('mix' in opts.hash){
+        var mNow = moment();
+        var mix = opts.hash.mix || 4;
+        mNow.add(mix * -1, 'd'); 
+        if(mNow.isBefore(m)){
+            return m.fromNow();
+        } else { 
+            return m.format(opts.hash.format || 'YYYY-MM-DD');
+        }
+    } else if('format' in opts.hash) {
         return m.format(opts.hash.format);
     } else if('fromNow' in opts.hash) {
         return m.fromNow(opts.hash.fromNow);

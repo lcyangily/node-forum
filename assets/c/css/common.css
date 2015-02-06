@@ -2,6 +2,18 @@
     background:#eb7350;
     color:#fff;
 }
+.error-tip{
+    color: #eb7350;
+}
+.tag-hot, .tag-digest, .tag-top{
+    font-size: 20px;
+    color: #FF5E52;
+    cursor:default;
+}
+.tag-digest{
+    position: relative;
+    top: 1px;
+}
 /** 回复 begin **/
 .revert-list{
     margin-top:10px;
@@ -288,7 +300,7 @@ a.topic-pub-btn:active {
 
 /** login begin **/
 #J_topUserBtn{
-    min-width: 150px;
+    /* min-width: 150px; */
     padding:0px;
 }
 #J_topUserBtn a:before{
@@ -327,6 +339,14 @@ a.topic-pub-btn:active {
     display: block;
     padding-left: 15px;
     padding-right: 0px;
+}
+/*
+@screen-sm:                  768px;
+@screen-md:                  992px;*/
+@media (min-width: 768px) and (max-width: 992px) {
+    #J_topUserBtn .user-name{
+        display: none;
+    }
 }
 #J_topUserBtn .msg{
     margin-top: 2px;
@@ -369,7 +389,7 @@ a.topic-pub-btn:active {
     width: 20px;
     height: 10px;
     position: absolute;
-    right: 35px;
+    right: 15px;
     top:0px;
 }
 .user-detail .arrow em,
@@ -416,7 +436,7 @@ a.topic-pub-btn:active {
 }
 .navlist{
     padding: 5px 0px;
-    border-top: 1px solid #ccc;
+    /* border-top: 1px solid #ccc; */
 }
 .navlist li {
     height: 30px;
@@ -619,4 +639,36 @@ a.topic-pub-btn:active {
     border: none;
     border-bottom: 3px solid #ff6f3d;
     padding: 10px 15px 8px 15px;
+}
+
+.sib-calendar{
+    width: 280px;
+    font-size: 14px;
+    font-family: 'Microsoft Yahei', Arial, sans-serif;
+}
+.sib-calendar th,
+.sib-calendar td,
+.sib-calendar td{
+    font-family: 'Microsoft Yahei', Arial, sans-serif;
+}
+.sib-calendar-day-row{
+    background: none;
+    color: #666;
+}
+.sib-calendar-day-row th,
+.sib-calendar-date-item{
+    text-align: center;
+    padding:8px 0px;
+}
+.sib-calendar-pannel{
+    padding:5px 0px;
+    height: auto;
+}
+.sib-calendar-control{
+}
+.sib-calendar-year, .sib-calendar-month{
+    width: 100%;
+}
+.sib-calendar-date td{
+    font-size: 14px;
 }

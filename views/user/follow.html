@@ -4,11 +4,33 @@
             <div id="topic_list" class="list-group topic-list">
                 {{#if ftopics}}
                     {{#each ftopics}}
-                        {{author_nick}} 于 {{create_time}} 发表主题：{{title}}<br/>
+                        <div class="cell {{#calc @index '%2 == 0' }}odd{{/calc}}">
+                            <div class="topic-title-wrapper">
+                                <div class="info">
+                                    <em>
+                                        <span class="info-value">
+                                            <a href="/user/{{author_id}}" target="_blank">
+                                                {{author_nickname}}
+                                            </a>
+                                        </span>
+                                        <span class="info-label">&nbsp;&nbsp;于 
+                                            {{moment create_time format='YYYY-MM-DD hh:mm:ss'}} 发表主题：
+                                        </span>
+                                        <span class="info-value">
+                                            <a href="/topic/{{id}}" target="_blank">{{title}}</a>
+                                        </span>
+                                    </em>
+                                </div>
+                            </div>
+                        </div>
                     {{/each}}
                     {{page totalPages = pageinfo.totalPages current=pageinfo.current }}
                 {{else}}
-                    <div class="tip">没有关注信息</div>
+                    {{#gt _pathvar.page 0}}
+                        <div class="list-nodata">没有更多记录了</div>
+                    {{else}}
+                        <div class="list-nodata">没有关注信息</div>
+                    {{/gt}}
                 {{/if}}
             </div>
         </div>

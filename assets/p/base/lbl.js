@@ -37,6 +37,7 @@ define(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
                         title : '请选择登录方式',
                         //width: 340,
                         //height : 110,
+                        iframeDefaultHeight : 150,
                         modal : true,
                         closeTpl : '<i class="iconfont">&#xe649;</i>',
                         position : {

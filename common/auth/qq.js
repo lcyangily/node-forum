@@ -67,6 +67,9 @@ QQ.prototype.getAccessToken = function(code, cb) {
     self._getAccessToken(code, function(err, data){
         if(err) return cb(err);
         self._getOpenId(data.access_token, function(err, d){
+console.log('---------> QQ.accessToken data : ' + JSON.stringify(data));
+console.log('---------> QQ.accessToken d : ' + JSON.stringify(d));
+            self.options.openid = self.options.uid = data.uid = d.openid;
             cb(err, data);
         });
     });
@@ -88,7 +91,7 @@ QQ.prototype._getAccessToken = function(code, cb){
         self.options.access_token = data.access_token;
         self.options.expires_in = data.expires_in;
         self.options.refresh_token = data.refresh_token;
-        self.options.uid = data.uid = data.openid;
+        //self.options.uid = data.uid = data.openid;
 
         if(data.code) {
             err = new Error(data.msg || ('错误编码：' + data.code));
@@ -105,7 +108,6 @@ QQ.prototype._getOpenId = function(accesstoken, cb){
     };
 
     this.post('oauth2.0/me', options, function(err, data){
-        self.options.openid = data.openid;
         if(data.code) {
             err = new Error(data.msg || ('错误编码：' + data.code));
         }

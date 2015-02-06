@@ -54,7 +54,6 @@
     color: #fff;
 }
 .sib-calendar-day{
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: bold;
 	padding:5px;
 }
@@ -127,7 +126,6 @@
 .sib-calendar-currenttime{
 	margin:0px 40px;
 	text-align: center;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: bold;
 }
 .sib-calendar-cur-year, 

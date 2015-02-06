@@ -170,7 +170,7 @@
     {{#replace "js"}}
     <script type="text/javascript" src="/assets/c/gallery/ckeditor/ckeditor.js"></script>
     <script type="text/javascript">
-        require(['jquery', 'sib.sib', 'sib.dialog'], function($, Sib, Dialog){
+        require(['jquery', 'sib.sib', 'sib.dialog', 'jquery.validate'], function($, Sib, Dialog){
             $('#J_vote').on('click', function(e){
                 if($(this).prop('checked')){
                     $('#J_voteArea').show();
@@ -220,6 +220,26 @@
                     errormsg = '请选择分类！';
                 } */else if(!cnt) {
                     errormsg = '内容不能为空！';
+                }
+
+                if($('#J_vote').prop('checked')) {
+                    var numreg = /^[0-9]+.?[0-9]*$/;
+                    var expiration = fj.expiration;
+                    var options = fj.option;
+                    if(!expiration || !numreg.test(expiration)) {
+                        errormsg = '计票天数不能为空且为数字！';
+                    }
+
+                    if(!options || options.length <= 0) {
+                        errormsg = '投票选项至少有一项！';
+                    } else {
+                        for (var oindex = 0; oindex < options.length; oindex++) {
+                            if(!options[oindex]) {
+                                errormsg = '投票选项内容不能为空！';
+                                break;
+                            }
+                        }
+                    }
                 }
 
                 if(errormsg) {

@@ -34,18 +34,18 @@
                         <em></em>
                     </div>
                     <div class="user-detail-con">
-                        <ul class="uinfo-horizontal">
+                        {{!--<ul class="uinfo-horizontal">
                             <li>
                                 <!-- <a href="#">业主
                                     <img src="http://bbs.xiaomi.cn/static/image/xiaomibbs3/uvip_auth.png" class="vm" alt="论坛认证用户" title="论坛认证用户">
                                 </a> -->
                                 <a href="#">尚未认证，认证申请</a>
                             </li>
-                            {{!--<li>
+                            <li>
                                 <span class="info-label">积分：</span>
                                 <a href="/home/score">100</a>
-                            </li>--}}
-                        </ul>
+                            </li>
+                        </ul>--}}
                         <ul class="navlist clearfix" id="navlist">
                             <li>
                                 <a href="/user/{{_s.user.id}}/topic">
@@ -109,7 +109,7 @@
     </ul>
     <ul class="nav navbar-nav">
         <li><a href="/" class="{{#eq _page_gnavCode 'index'}}current{{/eq}}">首页</a></li>
-        <li><a href="/living" class="{{#eq _page_gnavCode 'living'}}current{{/eq}}">生活信息</a></li>
+        <li><a href="/living" class="{{#eq _page_gnavCode 'living'}}current{{/eq}}">周边生活</a></li>
         <li><a href="/forum" class="{{#eq _page_gnavCode 'forum'}}current{{/eq}}">论坛</a></li>
         {{#if _globalvar.mainmenus}}
             {{#each _globalvar.mainmenus}}
@@ -120,6 +120,7 @@
                 {{/eq}}
             {{/each}}
         {{/if}}
+        <li><a href="/cleaning" class="{{#eq _page_gnavCode 'cleaning'}}current{{/eq}}">邻里帮</a></li>
         <li><a href="/block" class="{{#eq _page_gnavCode 'block'}}current{{/eq}}">版块</a></li>
     </ul>
 </div>

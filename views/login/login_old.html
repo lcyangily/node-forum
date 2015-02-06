@@ -9,18 +9,18 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="loginname">
+                        <input type="text" class="form-control" name="loginname" data-rule-required="true" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" name="passwd">
+                        <input type="password" class="form-control" name="passwd" data-rule-required="true" >
                     </div>  
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">登录</button>
+                        <button type="submit" class="btn btn-default">登 录</button>
                     </div>
                 </div>
             </form>
@@ -29,7 +29,8 @@
     {{#replace "footer"}}{{/replace}}
     {{#append "js"}}
         <script type="text/javascript">
-            require(['jquery', 'sib.sib', 'lbl'], function($, Sib, LBL){
+            require(['jquery', 'sib.sib', 'sib.dialog', 'lbl', 'utils', 'jquery.validate'], 
+                function($, Sib, Dialog, LBL, utils){
                 var goUrl = function(data){
                     window.frameElement.trigger('close', {
                         code : 'loginsuccess', 
@@ -37,8 +38,20 @@
                     });
                 }
 
-                $('#J_loginForm').submit(function(){
+                $('#J_loginForm').validate({
+                    focusInvalid : true, // 校验不通过，是否设置为焦点
+                    errorClass : 'help-block error-tip',
+                    errorElement : 'span',
+                    // 校验通过后的提交事件
+                    submitHandler : function(form) {
+                        submitForm();
+                    }
+                });
+
+                function submitForm(){
                     var fj = Sib.form2json('#J_loginForm');
+                    fj.passwd = utils.crypto(fj.passwd);
+                    Dialog.blockUI();
                     $.ajax({
                         type : 'POST',
                         url  : '/login',
@@ -63,7 +76,7 @@
                             Dialog.unblockUI();
                         }
                     });
-                });
+                }
             });
         </script>
     {{/append}}

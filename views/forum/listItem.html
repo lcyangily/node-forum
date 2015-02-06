@@ -19,22 +19,27 @@
             {{/gt ~}}
             </span>
             {{#and (eq curblock.type -1) (eq top_all 1)}}
-                <span class="label label-default label-primary">置顶</span>
+                <!-- <span class="label label-default label-primary">置顶</span> -->
+                <i class="iconfont tag-top" data-tip-title="顶置">&#xe67f;</i>
             {{/and}}
             {{#ne curblock.type -1}}
                 {{#eq top_all 1}}
-                    <span class="label label-default label-primary">置顶</span>
+                    <!-- <span class="label label-default label-primary">置顶</span> -->
+                    <i class="iconfont tag-top" data-tip-title="顶置">&#xe67f;</i>
                 {{else}}
                     {{#eq top 1}}
-                        <span class="label label-default label-info">置顶</span>
+                        <!-- <span class="label label-default label-info">置顶</span> -->
+                        <i class="iconfont tag-top" data-tip-title="顶置">&#xe67f;</i>
                     {{/eq}}
                 {{/eq}}
             {{/ne}}
             {{#eq digest 1}}
-                <span class="label label-default label-primary">精华</span>
+                <!-- <span class="label label-default label-primary">精华</span> -->
+                <i class="iconfont tag-digest" data-tip-title="精品">&#xe667;</i>
             {{/eq}}
             {{#eq is_hot 1}}
-                <span class="label label-default label-primary">热门</span>
+                <!-- <span class="label label-default label-primary">热门</span> -->
+                <i class="iconfont tag-hot" data-tip-title="热门">&#xe648;</i>
             {{/eq}}
         </h2>
         <div class="info">
@@ -54,16 +59,16 @@
             </em>
             <em>
                 <a href="/user/{{author_id}}" class="info-value">{{user.nickname}}</a>
-                <a href="javascript:void(0);" target="_blank">
+                {{!--<a href="javascript:void(0);" target="_blank">
                     <img src="http://bbs.xiaomi.cn/static/image/xiaomibbs3/uvip_auth.png" class="vm" alt="论坛认证用户" title="论坛认证用户">
-                </a>
-                <span class="info-label">发表于 {{moment create_time format='YYYY-MM-DD'}}</span>
+                </a>--}}
+                <span class="info-label">发表于 {{moment create_time mix="" format='YYYY-MM-DD'}}</span>
             </em>
             <em>
                 {{#if reply_author}}
                     <span class="info-label">最后由</span>
                     <a href="/user/{{last_reply_user_id}}" class="info-value">{{reply_author.nickname}}</a>
-                    <span class="info-label">回复于 {{moment last_reply_time fromNow=""}}</span>
+                    <span class="info-label">回复于 {{moment last_reply_time mix format='YYYY-MM-DD HH:mm:ss' }}</span>
                 {{/if}}
             </em>
         </div>

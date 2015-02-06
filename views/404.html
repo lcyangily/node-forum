@@ -1,10 +1,26 @@
-<html>
-    <head>
-        <style>
-            body{text-align:center;padding-top:100px;}
-        </style>
-    </head>
-    <body id="404">
-        建设中，请<a href="/">返回</a>
-    </body>
-</html>
+{{#extend "notify"}}
+    {{#replace "notify-content"}}
+        <strong>内容不存在或正在建设中。</strong><br/>
+        <p>
+            <span id="J_second"></span>&nbsp;&nbsp;秒后将自动转入 &nbsp;&nbsp;<a href="/">首页</a>
+        </p>
+    {{/replace}}
+    {{#replace "js"}}
+    <script type="text/javascript">
+    //require(['jquery'], function($){
+        function time(s){
+            if(s && s > 0) {
+                s -= 1;
+                document.getElementById('J_second').innerHTML = s;
+                setTimeout(function(){
+                    time(s);
+                }, 1000);
+            } else {
+                window.location.href = '/';
+            }
+        }
+        time(10);
+    //});
+    </script>
+    {{/replace}}
+{{/extend}}

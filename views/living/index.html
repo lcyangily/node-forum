@@ -187,13 +187,17 @@
                             <div class="form-group">
                                 <label for="J_title" class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="name" class="form-control" id="J_title" placeholder="名称" value="{{~title~}}">
+                                    <input type="text" name="name" class="form-control" id="J_title"
+                                           data-rule-required="true" data-msg-required="名称不能为空"
+                                           data-rule-rangelength="[2, 100]" data-msg-rangelength="名称长度在{0}-{1}之间" 
+                                           placeholder="名称" value="{{~title~}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">描述</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="desc" class="form-control" placeholder="描述" value="{{~title~}}">
+                                    <input type="text" name="desc" class="form-control" placeholder="描述" 
+                                        data-rule-maxlength="200" data-msg-maxlength="描述内容长度不能超过200" >
                                 </div>
                             </div>
                             <div class="form-group">
@@ -203,15 +207,19 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">电话</label>
+                                <label class="col-sm-2 control-label">手机</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="phone" class="form-control" placeholder="电话">
+                                    <input type="text" name="phone" class="form-control" placeholder="手机号"
+                                        data-rule-required="true" data-msg-required="手机号不能为空" 
+                                        data-rule-mobile="200" data-msg-mobile="请输入有效的电话号码！">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">地址</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="addr" class="form-control" placeholder="地址" value="">
+                                    <input type="text" name="addr" class="form-control" placeholder="地址"
+                                        data-rule-required="true" data-msg-required="地址不能为空" 
+                                        data-rule-maxlength="200" data-msg-maxlength="地址内容长度不能超过200！">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -263,19 +271,22 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">配送最低消费</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="arg0" class="form-control" >
+                                    <input type="text" name="arg0" class="form-control" 
+                                        data-rule-number="true" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">配送费用</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="arg1" class="form-control" >
+                                    <input type="text" name="arg1" class="form-control" 
+                                        data-rule-number="true">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">配送范围</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="arg2" class="form-control" >
+                                    <span class="help-block">输入街区编号，如有多个用逗号隔开，如：1,2 表示配送1,2街区</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -288,20 +299,23 @@
                         <div id="J_extend_3">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">配送最低消费</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="arg0" class="form-control" >
+                                <div class="col-sm-10">
+                                    <input type="text" name="arg0" class="form-control"
+                                        data-rule-number="true" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">配送费用</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="arg1" class="form-control" >
+                                <div class="col-sm-10">
+                                    <input type="text" name="arg1" class="form-control"
+                                        data-rule-number="true" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">配送范围</label>
-                                <div class="col-sm-8">
+                                <div class="col-sm-10">
                                     <input type="text" name="arg2" class="form-control" >
+                                    <span class="help-block">输入街区编号，如有多个用逗号隔开，如：1,2 表示配送1,2街区</span>
                                 </div>
                             </div>
                         </div>
@@ -329,7 +343,7 @@
     {{/replace}}
     {{#replace "js"}}
     <script type="text/javascript">
-        require(['jquery'], function($){
+        require(['jquery', 'jquery.validate'], function($){
             var ctypeid;
             $('#J_type').on('change', function(){
                 if(ctypeid) {
@@ -338,6 +352,33 @@
                 ctypeid = $(this).val();
                 if(ctypeid) {
                     $('#J_extend_' + ctypeid).appendTo('#J_extendArea');
+                }
+            });
+
+            $('#J_requestForm').validate({
+                focusInvalid : true, // 校验不通过，是否设置为焦点
+                errorClass : 'help-block error-tip',
+                errorElement : 'span',
+                //errorContainer : $("#J_piaoForm .ui-tiptext-container-error"),
+                //errorLabelContainer: $("#J_piaoForm .ui-tiptext-container-error .ui-tiptext-labels"),
+                //wrapper : 'p',
+                /*rules : {
+                    fp_companyName : {
+                        required : {
+                            depends : function(){
+                                return $('#J_piaoForm input:radio[name=fp_who]:checked').val() == 1;
+                            }
+                        }
+                    }
+                },
+                messages : {
+                    fp_companyName : {
+                        required : '公司名不能为空!'
+                    }
+                },*/
+                // 校验通过后的提交事件
+                submitHandler : function(form) {
+                    form.submit();
                 }
             });
         });

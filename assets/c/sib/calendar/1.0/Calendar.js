@@ -54,6 +54,10 @@ define(function(require, exports, module){
         startDay : 0,
         hideOnSelect : true,
         output : null, //element 默认同trigger
+        position : {
+            at : 'left bottom',
+            my : 'left top'
+        },
         
         showOtherMonths: true,
         selectOtherMonths: true,
@@ -381,15 +385,14 @@ define(function(require, exports, module){
                 
             },
             show : function(){
+                var state = this.state,
+                    opts = state.options;
                 this.render();
                 this.$element.show();
                 if(this.state.$trigger) {
-                    this.$element.position({
-                        of : this.state.$trigger,
-                        //within : element.parent(),
-                        my : 'left top', 
-                        at : 'left bottom'
-                    });
+                    this.$element.position($.extend({
+                        of : state.$trigger
+                    }, opts.position));
                 }
             },
             hide : function(){
@@ -399,6 +402,7 @@ define(function(require, exports, module){
             output : function( value ){
                 var state = this.state;
                     opts = state.options;
+
                 // send value to output
                 var $output = $(opts.output);
                 if (!$output.length) {

@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>邻比邻管理中心</title>
+    {{#block "meta"}}
+        {{sub "meta"}}
+    {{/block}}
+    <title>{{#if user.nickname}}{{user.nickname}}的首页{{else}}邻比邻管理中心{{/if}}</title>
     {{#block "css"}}
         {{sub "topcss"}}
         <link rel="stylesheet" href="/assets/p/forum/index.css">

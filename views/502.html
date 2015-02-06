@@ -1,14 +1,12 @@
-<html>
-    <head>
-        <style>
-            body{text-align:center;padding-top:100px;}
-        </style>
-    </head>
-    <body id="404">
-        {{#if error.msg}}
-            {{{error.msg}}}
-        {{else}}
-            {{{error}}}
-        {{/if}}
-    </body>
-</html>
+{{#extend "notify"}}
+    {{#replace "notify-content"}}
+        <strong>
+            {{#if error.msg}}
+                {{{error.msg}}}
+            {{else}}
+                {{{error}}}
+            {{/if}}
+        </strong>，
+        <a href="/">去首页</a>
+    {{/replace}}
+{{/extend}}

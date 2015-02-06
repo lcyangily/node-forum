@@ -14,7 +14,7 @@ define(['jquery', 'sib.tip'], function($, Tip){
                 my : 'center top',
                 at : 'center bottom'
             };
-            var p = $t.attr('data-tip-place') || 'b';
+            var p = $t.attr('data-tip-place') || 't';
             
             switch(p) {
                 case 't' :

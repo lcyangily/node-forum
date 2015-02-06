@@ -142,14 +142,6 @@
     content: '\2022';
     padding: 0px 10px;
 }
-/* .S_bg2, blockquote, .W_btn_b, .W_input, .SW_fun_bg {
-    background-color: #fff;
-} */
-.WB_cardwrap {
-}
-.W_person_info {
-
-}
 .upage-cover{
     position: relative;
     z-index: 5;
@@ -215,6 +207,10 @@
     .upage-uinfo .topic-fast-group{
         display: none;
     }
+}
+.list-nodata{
+    padding: 100px 20px;
+    text-align: center;
 }
 
 /** 管理 **/

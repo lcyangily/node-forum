@@ -21,11 +21,23 @@
                             <div class="info">
                                 <em>
                                     <span class="info-label">主题：</span>
-                                    <span class="info-value">{{user.user_count.topics}}</span>
+                                    <span class="info-value">
+                                        {{#if user.user_count.topics}}
+                                            {{user.user_count.topics}}
+                                        {{else}}
+                                            0
+                                        {{/if}}
+                                    </span>
                                 </em>
                                 <em>
                                     <span class="info-label">跟帖：</span>
-                                    <span class="info-value">{{user.user_count.replys}}</span>
+                                    <span class="info-value">
+                                        {{#if user.user_count.replys}}
+                                            {{user.user_count.replys}}
+                                        {{else}}
+                                            0
+                                        {{/if}}
+                                    </span>
                                 </em>
                             </div>
                             {{#ne ../user.id ../_s.user.id}}

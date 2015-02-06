@@ -31,6 +31,8 @@ module.exports = {
                     res.locals.ftopics = ftopics;
                     res.locals.pageinfo = pageinfo;
                     next();
+                }, {
+                    page : req.query.page
                 });
             }
         }

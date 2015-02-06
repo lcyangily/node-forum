@@ -169,5 +169,23 @@ module.exports = {
     "allowNull": true,
     "defaultValue": Sequelize.NOW,
     "comment": null
+  },
+  "source": {
+    "type": "varchar(100)",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": null
+  },
+  "source_home_url": {
+    "type": "varchar(255)",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": null
+  },
+  "source_url": {
+    "type": "varchar(255)",
+    "allowNull": true,
+    "defaultValue": null,
+    "comment": null
   }
 }

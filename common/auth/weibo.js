@@ -83,7 +83,8 @@ Weibo.prototype.getAccessToken = function(code, cb){
     this.post('oauth2/access_token', options, function(err, data){
         self.options.access_token = data.access_token;
         self.options.expires_in = data.expires_in;
-        self.options.uid = data.uid = data.openid;
+        self.options.uid = data.uid;
+console.log('---------> Weibo.accessToken data : ' + JSON.stringify(data));
         cb(err, data);
     });
 }

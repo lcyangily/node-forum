@@ -1,0 +1,320 @@
+{{#extend "layout" _page_gnavCode="cleaning"}}
+    {{#append "css"}}
+        <link rel="stylesheet" href="/assets/c/css/tipbox.css">
+        <link rel="stylesheet" href="/assets/p/forum/index.css">
+        <link rel="stylesheet" href="/assets/p/cleaning/index.css">
+        <style type="text/css">
+            .error-tip{
+                margin-top: 0px;
+            }
+        </style>
+    {{/append}}
+    {{!--{{#replace "breadcrumbPath"}}{{/replace}}--}}
+    {{#replace "body"}}
+        <div class="grid-row">
+            <div class="grid-sm-10">
+                <div class="panel svc-order">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">邻里帮家政服务预约</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" onsubmit="return false;" id="J_cleanBooking">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">选择服务</label>
+                                <div class="x-grid-row svc-item-list">
+                                    <div class="x-grid-1-3">
+                                        <div class="svc-item-wrap">
+                                            <div class="svc-item">
+                                                <i class="iconfont">&#xe661;</i>
+                                                <h2>家庭保洁</h2>
+                                                <b>￥25/H</b>
+                                                <em class="iconfont">&#xe651;</em>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="x-grid-1-3">
+                                        <div class="svc-item-wrap">
+                                            <div class="svc-item">
+                                                <i class="iconfont">&#xe660;</i>
+                                                <h2>租房大扫除</h2>
+                                                <b>￥25/H</b>
+                                                <em></em>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="x-grid-1-3">
+                                        <div class="svc-item-wrap">
+                                            <div class="svc-item">
+                                                <i class="iconfont">&#xe663;</i>
+                                                <h2>新居开荒</h2>
+                                                <b>￥5/㎡起</b>
+                                                <em></em>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="J_time">服务时间</label>
+                                <div class="x-grid-row svc-item-list">
+                                    <div class="x-grid-7-12">
+                                        <div class="form-control-wrap clearfix" id="J_timeWrap">
+                                            <input type="text" class="form-control" 
+                                                id="J_time" placeholder="服务时间" readonly
+                                                name="time" 
+                                                data-rule-required="true">
+                                            <i class="iconfont">&#xe66d;</i>
+                                        </div>
+                                    </div>
+                                    <div class="x-grid-5-12">
+                                        <div class="form-control-wrap clearfix" id="J_hourWrap">
+                                            <div style="width:90%;float:right;" class="clearfix" >
+                                                <input type="text" 
+                                                    class="form-control" id="J_hour" 
+                                                    name="hour" 
+                                                    placeholder="服务时间" readonly
+                                                    data-rule-required="true">
+                                            </div>
+                                            <i class="iconfont">&#xe66f;</i>
+                                        </div>
+                                        <div id="J_hourPanel" class="x-grid-row svc-time-hour">
+                                            <div class="x-grid-1-3">
+                                                <span>上午</span>
+                                                <a href="javascript:void(0);" data-val="8:00">8:00</a>
+                                                <a href="javascript:void(0);" data-val="8:30">8:30</a>
+                                                <a href="javascript:void(0);" data-val="9:00">9:00</a>
+                                                <a href="javascript:void(0);" data-val="9:30">9:30</a>
+                                                <a href="javascript:void(0);" data-val="10:00">10:00</a>
+                                                <a href="javascript:void(0);" data-val="10:30">10:30</a>
+                                                <a href="javascript:void(0);" data-val="11:00">11:00</a>
+                                                <a href="javascript:void(0);" data-val="11:30">11:30</a>
+                                                <a href="javascript:void(0);" data-val="12:00">12:00</a>
+                                                <a href="javascript:void(0);" data-val="12:30">12:30</a>
+                                            </div>
+                                            <div class="x-grid-1-3">
+                                                <span>下午</span>
+                                                <a href="javascript:void(0);" data-val="13:00">13:00</a>
+                                                <a href="javascript:void(0);" data-val="13:30">13:30</a>
+                                                <a href="javascript:void(0);" data-val="14:00">14:00</a>
+                                                <a href="javascript:void(0);" data-val="14:30">14:30</a>
+                                                <a href="javascript:void(0);" data-val="15:00">15:00</a>
+                                                <a href="javascript:void(0);" data-val="15:30">15:30</a>
+                                                <a href="javascript:void(0);" data-val="16:00">16:00</a>
+                                                <a href="javascript:void(0);" data-val="16:30">16:30</a>
+                                                <a href="javascript:void(0);" data-val="17:00">17:00</a>
+                                                <a href="javascript:void(0);" data-val="17:30">17:30</a>
+                                            </div>
+                                            <div class="x-grid-1-3">
+                                                <span>傍晚</span>
+                                                <a href="javascript:void(0);" data-val="18:00">18:00</a>
+                                                <a href="javascript:void(0);" data-val="18:30">18:30</a>
+                                                <a href="javascript:void(0);" data-val="19:00">19:00</a>
+                                                <a href="javascript:void(0);" data-val="19:30">19:30</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="J_addr">服务地址</label>
+                                <input type="text" class="form-control" id="J_addr" 
+                                    placeholder="服务地址"
+                                    data-rule-required="true" 
+                                    data-rule-rangelength="[5, 200]" >
+                            </div>
+                            <div class="form-group">
+                                <label for="J_remark">其他要求</label>
+                                <input type="text" class="form-control" id="J_remark" placeholder="你可以在这告诉我们更多要求">
+                            </div>
+                            <button type="submit" id="J_nextBtn" class="btn btn-primary btn-block">下一步</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="hide">
+                    <div id="J_orderForm2" class="svc-order">
+                        <form role="form" onsubmit="return false;" id="J_cleanBooking2">
+                            <div class="form-group">
+                                <label for="J_phone">您的手机</label>
+                                <input type="text" class="form-control" id="J_phone"
+                                    placeholder="您的手机号"
+                                    data-rule-required="true"
+                                    data-rule-mobile="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="J_time">验证码</label>
+                                <div class="x-grid-row svc-item-list">
+                                    <div class="x-grid-2-3">
+                                        <input type="text" class="form-control" id="J_time"
+                                             placeholder="验证码"
+                                             data-rule-required="true">
+                                    </div>
+                                    <div class="x-grid-1-3">
+                                        <input type="text" style="width:90%;float:right;" class="form-control" id="J_time" placeholder="服务时间">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" id="J_submitBtn" class="btn btn-primary btn-block">预约</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="main-content grid-lg-18 grid-md-14 grid-sm-8">
+                <div class="panel panel-module">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">为什么邻里帮？</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>在找保洁阿姨时，您是否遇到过如下问题：</p>
+                        <p>1.找个保洁，家里东西被顺手牵羊？</p>
+                        <p>2.保洁时，家里没人，钥匙交给陌生人不放心。</p>
+                        <p>3.保洁后，发现有些地方没有打扫干净，又找不到人了。</p>
+                        <p>邻里帮-免费为您找到自己小区里的保洁阿姨，您与阿姨直接沟通，免去中介，一键预约，阿姨到家。</p>
+                        <p>别问我是谁，请叫我雷锋！</p>
+                        <div class="tipbox tipbox-white">
+                            <div class="tipbox-icon">
+                                <i class="iconfont" title="提示">&#xe67d;</i>
+                            </div>
+                            <div class="tipbox-content">
+                                <h3 class="tipbox-title">安全</h3>
+                                <p class="tipbox-explain">阿姨全都来自小区业主或业主亲属，绝对安全。</p>
+                            </div>
+                        </div>
+                        <div class="tipbox tipbox-white">
+                            <div class="tipbox-icon">
+                                <i class="iconfont" title="提示">&#xe67b;</i>
+                            </div>
+                            <div class="tipbox-content">
+                                <h3 class="tipbox-title">专业</h3>
+                                <p class="tipbox-explain">阿姨都是多年从事保洁工作，经验丰富。</p>
+                            </div>
+                        </div>
+                        <div class="tipbox tipbox-white">
+                            <div class="tipbox-icon">
+                                <i class="iconfont" title="提示">&#xe67a;</i>
+                            </div>
+                            <div class="tipbox-content">
+                                <h3 class="tipbox-title">便捷</h3>
+                                <p class="tipbox-explain">一键预约，阿姨当面沟通，方便快捷。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-module">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">为什么邻里帮？</h3>
+                    </div>
+                    <div class="panel-body">
+                        
+                    </div>
+                </div>
+                <div class="panel panel-module">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">为什么邻里帮？</h3>
+                    </div>
+                    <div class="panel-body">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/replace}}
+    {{#replace "js"}}
+    <script type="text/javascript">
+    require(['jquery', 'sib.popup', 'sib.calendar', 'sib.dialog', 'sib.calendar.i18n.zh-cn', 'jquery.validate'], 
+        function($, Popup, Calendar, Dialog, calLang) {
+
+        var cal, hourPop, d;
+        $('.svc-order .svc-item-list').on('click', '.svc-item-wrap', function(){
+            var $c = $(this);
+            $('.svc-order .svc-item-list .svc-item-wrap').removeClass('current');
+            $c.addClass('current');
+        })
+
+        cal = new Calendar({
+            trigger : '#J_timeWrap',
+            output : '#J_time',
+            lang : calLang,
+            position : {
+                at : 'left bottom-1',
+                my : 'left top',
+                of : $('#J_time')[0]
+            }
+        });
+
+        hourPop = new Popup({
+            target : '#J_hourPanel',
+            trigger : '#J_hourWrap',
+            triggerType : 'click',
+            position :{
+                at : 'left bottom-1',
+                my : 'left top',
+                of : $('#J_hour')[0]
+            }
+        });
+
+        $('#J_hourPanel a').click(function(){
+            var $t = $(this);
+            var val = $t.attr('data-val');
+            if(val) {
+                $('#J_hour').val(val);
+                hourPop.hide();
+            }
+        });
+
+        //$('#J_nextBtn').click(function(){
+        function nextForm() {
+            if(!validateForm1()) return false;
+            if(!d){
+                d = new Dialog({
+                    title : '确认信息',
+                    content : $('#J_orderForm2'),
+                    width:400,
+                    modal : true
+                });
+            }
+
+            d.open();
+        }
+
+        function validateForm1(){
+            var $selSvc = $('.svc-order .svc-item-list .current');
+
+            if($selSvc.length < 1) {
+                Dialog.tip('请选择服务类型。');
+                return false;
+            }
+
+            return true;
+        }
+
+        //验证
+        $('#J_cleanBooking').validate({
+            focusInvalid : true, // 校验不通过，是否设置为焦点
+            errorClass : 'help-block error-tip',
+            errorElement : 'span',
+            //errorContainer : $("#J_piaoForm .ui-tiptext-container-error"),
+            //errorLabelContainer: $("#J_piaoForm .ui-tiptext-container-error .ui-tiptext-labels"),
+            //wrapper : 'p',
+            /*rules : {
+                fp_companyName : {
+                    required : {
+                        depends : function(){
+                            return $('#J_piaoForm input:radio[name=fp_who]:checked').val() == 1;
+                        }
+                    }
+                }
+            },
+            messages : {
+                fp_companyName : {
+                    required : '公司名不能为空!'
+                }
+            },*/
+            // 校验通过后的提交事件
+            submitHandler : function(form) {
+                nextForm();
+            }
+        });
+    });
+    </script>
+    {{/replace}}
+{{/extend}}

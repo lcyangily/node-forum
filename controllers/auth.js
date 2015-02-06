@@ -43,8 +43,9 @@ console.log('================> ' + auth);
             afterFilters : ['dealAfterLogin'],
             controller : function(req, res, next){
                 var code = req.query.code;
+                var type = req.params.type;
                 if(!code) return next(getErrorStr('回调参数错误！'));
-                userSvc.authCallback(code, req.params.type, function(error, user){
+                userSvc.authCallback(code, type, function(error, user){
                     if(error || !user) return next(getErrorStr(error ? error : '用户不存在！'));
                     //注册/登录成功 进行写cookie 和 session 操作
                     res.locals.auth_success_user = user;
@@ -52,8 +53,16 @@ console.log('================> ' + auth);
                 });
 
                 function getErrorStr(msg){
-                    var sina = new Sina();
-                    return '绑定错误: '+msg+'，请<a href='+ sina.getAuthUrl() +'>重新绑定</a>';
+                    var Auth = auth.get(type);
+                    var url;
+                    if(Auth != null) {
+                        var mAuth = new Auth();
+                        url = mAuth.getAuthUrl();
+                    }
+                    if(!url) {
+                        url = '/';
+                    }
+                    return '绑定错误: '+msg+'，请 <a href="'+ url +'">重新绑定</a>';
                 }
             }
         }

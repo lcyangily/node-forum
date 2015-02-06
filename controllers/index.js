@@ -81,10 +81,22 @@ module.exports = {
                 var uname = req.body.loginname;
                 var passwd = req.body.passwd;
                 var nickname = req.body.nickname;
+                var errorMsg;
 
+                if(!uname) {
+                    errorMsg = '用户名不能为空！';
+                } else if(!passwd){
+                    errorMsg = '密码不能为空！';
+                }
+
+                if(errorMsg) {
+                    return res.render('notify/notify', {
+                        error : errorMsg
+                    });
+                }
                 userSvc.register({
                     loginname : uname,
-                    password : passwd,
+                    password : md5(passwd),
                     nickname : nickname
                 }, 0, function(err, user){
                     next(err || '注册成功!');                 
@@ -138,7 +150,7 @@ module.exports = {
                 var originalUrl = req.body.originalUrl;
                 userSvc.login({
                     loginname : req.body.loginname,
-                    password : req.body.passwd
+                    password : md5(req.body.passwd)
                 },function(err, user){
 
                     if(err) {
@@ -197,6 +209,14 @@ module.exports = {
                 req.session = null;
                 res.clearCookie(config.auth_cookie_name, { path: '/' });
                 res.redirect('/');
+            }
+        }
+    },
+    '/update-browser' : {
+        get : {
+            template : 'notify/update-browser',
+            controller : function (req, res, next) {
+                next();
             }
         }
     }

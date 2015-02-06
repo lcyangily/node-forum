@@ -300,58 +300,6 @@ exports.increaseVisitCount = function(tid, cb){
     });
 }
 
-/*exports.reduceVisitCount = function(tid, cb){
-    cb();
-}*/
-//增加收藏数
-/*exports.increaseCollectCount = function(tid, cb){
-    cb();
-}
-exports.reduceCollectCount = function(tid, cb){
-    cb();
-}*/
-//增加赞数
-/*exports.increaseZanCount = function(zlog, cb){
-
-
-    //更新数量
-    Topic.clean().update({
-        zan_count : topic.zan_count + 1
-    }).where({
-        id : zlog.tid
-    }).done(function(err, t){
-        console.log('--------------> topic update err : ' + err);
-        //callback(err);
-    });
-    cb();
-}*/
-/*exports.reduceZanCount = function(tid, cb){
-    cb();
-}*/
-
-
-/**
- * 将当前主题的回复计数减1，删除回复时用到
- * @param {String} id 主题ID
- * @param {Function} callback 回调函数
- */
-/*exports.reduceCount = function (id, callback) {
-
-    Topic.findById(id).done(function(error, topic) {
-        
-        if(error) {
-            return callback(error);
-        }
-        if (!topic) {
-            return callback(new Error('该主题不存在'));
-        }
-        topic.reply_count -= 1;
-        Topic.update(topic).done(function(err, topic){
-            callback(err, topic);
-        });
-    });
-};*/
-
 /** 增加主题数量 **/
 exports.increaseCount = function(topic, callback){
 

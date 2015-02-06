@@ -1,0 +1,120 @@
+.tipbox {
+    position: relative;
+    zoom: 1;
+    font-size: 12px;
+    line-height: 22px;
+}
+
+.tipbox .tipbox-icon {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 12px;
+    left: 30px;
+}
+
+.tipbox-icon .iconfont {
+    font-size: 36px;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-shadow: 0 1px 0 #fff;
+    text-align: center;
+}
+
+.tipbox-message {
+    border: 1px solid #b2e2ea;
+    background: #e5f2f8;
+}
+
+.tipbox-message .tipbox-icon .iconfont {
+    color: #68b5e2;
+}
+
+.tipbox-success {
+    border: 1px solid #E1E1CA;
+    background: #edfed0;
+}
+
+.tipbox-success .tipbox-icon .iconfont {
+    color: #b5de70;
+}
+
+.tipbox-error {
+    background: #FDEEE9;
+    border: 1px solid #fadcd3;
+}
+
+.tipbox-error .tipbox-icon .iconfont {
+    color: #f17975;
+}
+
+.tipbox-warning {
+    background: #fefea4;
+    border: 1px solid #e6e098;
+}
+
+.tipbox-warning .tipbox-icon .iconfont {
+    color: #ff9966;
+}
+
+.tipbox-question {
+    border: 1px solid #b2e2ea;
+    background: #e0f4ff;
+}
+
+.tipbox-question .tipbox-icon .iconfont {
+    color: #66cae2;
+}
+
+.tipbox-stop {
+    background: #FDEEE9;
+    border: 1px solid #fadcd3;
+}
+
+.tipbox-stop .tipbox-icon .iconfont {
+    color: #f17975;
+}
+
+.tipbox-wait {
+    border: 1px solid #fae3cc;
+    background: #FFF9D9;
+}
+
+.tipbox-wait .tipbox-icon .iconfont {
+    color: #d1a066;
+}
+
+.tipbox-content {
+    margin: 14px 0 14px 87px;
+}
+
+.tipbox-content .tipbox-title {
+    margin: 0;
+    padding: 0;
+}
+
+.tipbox-content h3.tipbox-title,
+.tipbox-content-simple h3.tipbox-title {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.tipbox-content-simple {
+    margin: 22px 0 22px 88px;
+}
+
+.tipbox-explain {
+    margin: 0;
+    padding: 0;
+    color: #808080;
+}
+
+.tipbox-white  {
+    background: #fff;
+    border: 1px solid transparent;
+    _border-color:tomato;   /* fix ie6 dont support border transparent */
+    _filter:chroma(color=tomato);
+}

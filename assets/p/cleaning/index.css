@@ -1,0 +1,127 @@
+.svc-order .panel-body{
+    padding:10px;
+}
+.svc-order .svc-item-list{
+
+}
+.svc-order .panel-title{
+    text-align: center;
+    font-size: 18px;
+    padding: 5px;
+}
+.svc-item-wrap {
+    border: solid 1px #e6e6e6;
+    background: #fff;
+    margin: 10px;
+    cursor: pointer;
+    text-align: center;
+    height: 103px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+.svc-item-wrap em{
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 5px;
+    background: #FF5E52;
+    display: none;
+}
+.svc-item-wrap i{
+    font-size: 35px;
+    line-height: 42px;
+}
+.svc-item {
+    /* height: 170px; */
+    overflow: hidden;
+    margin-top: 10px;
+}
+.svc-item img {
+    width: 148px;
+    height: 100px;
+}
+.svc-item h2 {
+    font-size: 15px;
+    margin: 0px;
+    font-weight: bold;
+}
+.svc-item p {
+    font-size: 14px;
+    color: #777;
+    margin: 10px 8px 0 8px;
+    height: 38px;
+    overflow: hidden;
+}
+.svc-item b {
+    font-size: 14px;
+    color: #ff9100;
+    margin-bottom: 8px;
+}
+.svc-item-wrap:hover{
+    border:1px solid #FF5E52;
+}
+.svc-item-wrap.current{
+    color: #FF5E52;
+    border:2px solid #FF5E52;
+    margin: 9px;
+}
+.svc-item-wrap.current em{
+    display: block;
+}
+.svc-item-wrap:hover i,
+.svc-item-wrap.current i{
+    color: #FF5E52;
+}
+
+.svc-order .form-control{
+    border-radius:0px;
+    box-shadow:0px;
+}
+.svc-order .form-control-wrap{
+    position: relative;
+}
+.svc-order .form-control-wrap i{
+    position: absolute;
+    right: 8px;
+    top: 1px;
+    font-size: 24px;
+}
+.svc-order .form-control[readonly]{
+    background: #fff;
+    cursor: default;
+}
+.svc-order .svc-time-hour{
+    width: 300px;
+    background: #fff;
+    border:1px solid #ccc;
+    font-size: 14px;
+    position: absolute;
+    z-index: 100;
+    display: none;
+}
+.svc-order .svc-time-hour span,
+.svc-order .svc-time-hour a{
+    display: block;
+    padding:5px;
+    text-align: center;
+    text-decoration: none;
+}
+.svc-order .svc-time-hour span{
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+.svc-order .svc-time-hour a:hover{
+    background: #eee;
+}
+
+.tipbox .iconfont{
+    color:#88d1b4;
+}
+.tipbox-content h3.tipbox-title{
+    font-size: 15px;
+}
+.tipbox-explain{
+    font-size: 14px;
+}

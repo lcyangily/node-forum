@@ -221,8 +221,12 @@ define(function(require, exports, module){
                 function getCrossRange(rect1, rect2) {
                     var ha = [rect1.left, rect1.right, rect2.left, rect2.right];
                     var va = [rect1.top, rect1.bottom, rect2.top, rect2.bottom];
-                    ha = ha.sort();
-                    va = va.sort();
+                    //sort 排序以值为字符串来排序，而不是认为是数字，只能自己写比较函数
+                    var ascFunc = function(x, y){
+                        return x > y ? 1 : -1;
+                    };
+                    ha = ha.sort(ascFunc);
+                    va = va.sort(ascFunc);
                     return {
                         left : ha[1],
                         right : ha[2],

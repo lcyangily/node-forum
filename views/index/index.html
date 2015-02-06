@@ -1,7 +1,8 @@
 {{#extend "layout" _page_gnavCode="index"}}
     {{#append "meta"}}
         <meta property="wb:webmaster" content="4fb73a45414f9d33" />
-        <meta property="qc:admins" content="5517223404314306672736375" />
+        <!-- <meta property="qc:admins" content="5517223404314306672736375" /> -->
+        <meta property="qc:admins" content="55172234376416214166375" />
     {{/append}}
     {{#append "css"}}
         <link rel="stylesheet" href="/assets/p/forum/index.css">
@@ -33,13 +34,7 @@
                                 </span>
                                 <time>{{moment create_time format='YYYY-MM-DD hh:mm:ss'}}</time>
                             </div>
-                            <div class="article-summary">
-                                {{#if content}}
-                                    {{{string (string (string content 'stripTags') 'trim') 'truncate' 230}}}
-                                {{else}}
-                                    {{{string (string (string forum_topic.content 'stripTags') 'trim')  'truncate' 205}}}
-                                {{/if}}
-                            </div>
+                            <div class="article-summary">{{{content}}}</div>
                         </div>
                     </div>
                 </div>

@@ -28,12 +28,17 @@
                     <div class="info">
                         <em class="info-label">
                             <span>
-                                {{moment topic.create_time format='YYYY-MM-DD hh:mm:ss'}}
-                            </span>&nbsp;&nbsp;
-                            {{#if ftype}}发表在&nbsp;[&nbsp;
+                                {{moment topic.create_time format='YYYY-MM-DD HH:mm:ss'}}
+                                {{topic.create_time}}
+                            </span>&nbsp;&nbsp;发表在&nbsp;[&nbsp;
+                            {{#if ftype}}
                                 <a href="/forum/{{forum.id}}?ftype={{ftype.id}}"
-                                    class="info-label">{{ftype.name}}</a>&nbsp;]
+                                    class="info-label">{{ftype.name}}</a>
+                            {{else}}
+                                <a href="/forum/{{forum.id}}"
+                                    class="info-label">{{forum.name}}</a>
                             {{/if}}
+                            &nbsp;]
                         </em>
                         <span class="pull-right">
                             <em class="info-label">

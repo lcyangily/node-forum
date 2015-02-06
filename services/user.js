@@ -13,6 +13,13 @@ var ForumModerator = new BaseModel('forum_moderator');
 var Forum      = new BaseModel('forum');
 var Topic      = new BaseModel('forum_topic');
 
+//第三方类型对应数据库值
+var type2Int = {
+    weibo : 1,
+    qq : 2,
+    weixin : 3
+};
+
 exports.register = function (user, type, cb){
     var self = this;
     var profile = user.profile || {};
@@ -98,17 +105,23 @@ exports.authCallback = function(code, type, cb){
 
         var access_token = data.access_token;
         var uid = data.uid;
-        self.getByAuthId(uid, function(error, user){
-            if(user) {  //已注册，登录
-                User.update({
+
+        if(!uid) {
+            return cb && cb('回调参数错误：没有用户ID.');
+        }
+        self.getByAuthId(uid, type2Int[type], function(error, user){
+            if(user && user.id) {  //已注册，登录
+                User.clean().update({
                     auth_token : access_token
-                }).done(function(error, user){
+                }).where({
+                    id : user.id
+                }).done(function(error, uu){
                     if(error) return cb && cb('更新用户信息失败！');
-                    cb && cb(null, user);
+                    return cb && cb(null, user);
                 });
             } else {    //未注册，注册
                 if(typeof self[type + 'AuthCallback'] === 'function') {
-                    this[type + 'AuthCallback'](myAuth, access_token, uid, cb);
+                    self[type + 'AuthCallback'](mAuth, access_token, uid, cb);
                 } else {
                     cb('回调类型：' + type + ', 回调注册不存在！');
                 }
@@ -191,7 +204,7 @@ exports.weixinAuthCallback = function(weixin, access_token, uid, cb){
             profile : {
                 gender : data.sex
             }
-        }, 2, function(err, user){
+        }, 3, function(err, user){
             cb && cb(err, user);
         });
     });
@@ -208,9 +221,10 @@ exports.getById = function (id, cb){
     });
 }
 
-exports.getByAuthId = function(aid, cb){
+exports.getByAuthId = function(aid, type, cb){
     User.find().where({
-        auth_id : aid
+        auth_id : aid,
+        type : type
     }).include([
         UserCount.Model,
         UserProfile.Model
@@ -382,11 +396,13 @@ exports.getFollowersMe = function(uid, cb, page){
 }
 
 exports.getFollowFeeds = function(uid, callback, page){
-    var sql = 'select topic.* ' +
+    var sql = 'select topic.*, u.nickname as `author_nickname` ' +
             'from user_follow uf,' +
             '     user_follow_feed uff ' +
             'LEFT OUTER JOIN `forum_topic` AS `topic` ON `topic`.`id` = uff.tid ' +
+            'LEFT OUTER JOIN users as u on u.id = topic.author_id ' +
             'where uff.uid = uf.follow_uid '+
+            'and topic.id is not null ' +
             'and uf.uid = ? ' +
             'order by dateline limit ?, 20 ';
 

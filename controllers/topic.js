@@ -467,6 +467,10 @@ module.exports = {
                 // console.log('-----> tmpPath : ' + tmpPath);
                 // console.log('-----> size : ' + iinfo.size);
 
+                if(!content) {
+                    return next('内容不能为空！');
+                }
+
                 async.waterfall([
                     function(cb){
                         if(origName && iinfo.size > 0) {
@@ -478,11 +482,12 @@ module.exports = {
                         }
                     },
                     function(picUrl, cb){
+                        fs.unlink(tmpPath);
                         newsSvc.add({
                             id : tid,
                             img : picUrl,
                             title : title || null, //title,
-                            content : content || null, //content
+                            content : content, //content
                         }, req.session.user, function(err, news){
                             cb(err);
                         });

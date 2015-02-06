@@ -15,6 +15,32 @@ exports.getList = function(cb, page){
     News.findAll().include([
         {
             model : Topic.Model,
+            attributes : [  //除去content 
+                'id',
+                'title',
+                'fid',
+                'ftype_id',
+                'author_id',
+                'type',
+                'closed',
+                'status',
+                'status_chg_uid',
+                'status_chg_time',
+                'highlight',
+                'digest',
+                'top_all',
+                'top',
+                'is_hot',
+                'reply_count',
+                'visit_count',
+                'collect_count',
+                'zan_count',
+                'create_time',
+                'update_time',
+                'last_reply',
+                'last_reply_user_id',
+                'last_reply_time'
+            ],
             include : [
                 User.Model, 
                 Forum.Model, 

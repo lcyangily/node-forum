@@ -34,6 +34,7 @@ define(function(require, exports, module){
         maxWidth : null,
         minHeight : 100,
         minWidth : 150,
+        iframeDefaultHeight : 300,  //iframe 加载完成前，设置的默认高度
         modal : false,
         position : {
             my : 'center',
@@ -584,7 +585,8 @@ define(function(require, exports, module){
                 if (state.contentType === "iframe") {
                     // iframe 还未请求完，先设置一个固定高度
                     //!this.get("height") && this.contentElement.css("height", this.get("initialHeight"));
-                    $content.height(opts.height || 300);
+                    var defalutHeight = opts.height == 'auto' ? opts.iframeDefaultHeight : opts.height;
+                    $content.height(defalutHeight || 300);
                     state._iframe_h = null;
                     this._showIframe();
                 }

@@ -1,0 +1,24 @@
+{{#extend "layout"}}
+    {{#replace "body"}}
+        <div class='panel panel-module'>
+            <div class="panel-heading">
+                <h3 class="panel-title">温馨提示</h3>
+            </div>
+            {{#block "notify-body"}}
+                <div class="panel-body notify-notify">
+                    {{#block "notify-content"}}
+                        <strong>
+                            {{#if error}}
+                                {{{ error }}}
+                            {{/if}}
+                            {{#if success }}
+                                {{{ success }}}
+                            {{/if}}
+                        </strong>&nbsp;&nbsp;
+                        <a href="/">返回首页</a>
+                    {{/block}}
+                </div>
+            {{/block}}
+        </div>
+    {{/replace}}
+{{/extend}}
