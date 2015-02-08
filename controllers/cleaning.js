@@ -4,7 +4,8 @@ var forumSvc = loadService('forum');
 var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
 var userSvc  = loadService('user');
-var livingSvc    = loadService('living');
+var livingSvc= loadService('living');
+var uploadSvc= loadService('upload');
 var config   = require('../config');
 var fs       = require('fs');
 

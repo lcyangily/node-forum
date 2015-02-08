@@ -16,7 +16,7 @@ Handlebars.registerHelper('string', function() {
         }
     }
 
-    return null;
+    return sFn;//length ... 
 });
 
 module.exports = Handlebars;

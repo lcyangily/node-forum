@@ -17,14 +17,22 @@
 .topic-card .card-logo{
     float: left;
     margin-right: 15px;
-    background: #f57403;
+    background: #fff;
     color: #fff;
     width: 60px;
     height: 60px;
-    font-size: 45px;
     text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.topic-card .card-logo.iconfont{
+    background: #f57403;
+    font-size: 45px;
     line-height: 60px;
     border-radius: 20px;
+}
+.topic-card .card-logo img{
+    width: 60px;
 }
 .topic-card a{
     color: #333;
@@ -209,13 +217,21 @@
     width: 40px;
     height: 40px;
     text-align: center;
+}
+.fclassify-list .fclassify-pic a{
+    color: #fff;
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+.fclassify-list .fclassify-pic a.iconfont{
+    font-size: 30px;
+    line-height: 42px;
     background: #ff5f19;
     border-radius: 50%;
 }
-.fclassify-list .fclassify-pic a{
-    font-size: 30px;
-    line-height: 42px;
-    color: #fff;
+.fclassify-list .fclassify-pic a img{
+    width: 40px;
 }
 .fclassify-list .fclassify-pic a:hover{
     color: #fff !important;

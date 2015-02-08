@@ -12,7 +12,6 @@
                     {{/ge}}
                 {{/if}}
             {{/replace}}
-
             {{sub "blocks/breadcrumb"}}
         {{/ge}}
     {{/replace}}
@@ -31,7 +30,14 @@
                                 </span>
                             </div>
                         {{/if}}
-                        <div class="card-logo iconfont">{{{forum.pic}}}</div>
+                        {{#and  (eq (string forum.pic 'length') 8) 
+                                (eq (string forum.pic 'left' 2) '&#')}}
+                            <div class="card-logo iconfont">{{{forum.pic}}}</div>
+                        {{else}}
+                            <div class="card-logo">
+                                <img src="{{forum.pic}}" />
+                            </div>
+                        {{/and}}
                         <div class="card-name">
                             <a href="/forum/{{forum.id}}">
                                 <h1>{{forum.name}}</h1>

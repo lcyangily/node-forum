@@ -14,6 +14,7 @@ module.exports = {
     "/add/:tid": {
         post: {
             //filters : ['blocks/hotForums'],
+            filters : ['checkLogin', 'limitInterval'],
             controller : function(req, res, next) {
                 var tid = req.params.tid;
                 var cnt = req.body.content;
@@ -24,9 +25,6 @@ module.exports = {
                 }
                 if(!cnt) {
                     return next('内容不能为空！');
-                }
-                if(!user) {
-                    return next('请先登录！');
                 }
 
                 replySvc.add({

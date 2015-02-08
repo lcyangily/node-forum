@@ -17,7 +17,14 @@
                             <li class="clearfix">
                                 <div class="fclassify-box">
                                     <div class="fclassify-pic">
-                                        <a href="/forum/{{forum.id}}" class="iconfont">{{{forum.pic}}}</a>
+                                        {{#and  (eq (string forum.pic 'length') 8) 
+                                                (eq (string forum.pic 'left' 2) '&#')}}
+                                            <a href="/forum/{{forum.id}}" class="iconfont">{{{forum.pic}}}</a>
+                                        {{else}}
+                                            <div class="iconfont">
+                                                <img src="{{forum.pic}}" />
+                                            </div>
+                                        {{/and}}
                                     </div>
                                     <div class="fclassify-info">
                                         <div class="fclassify-title">
@@ -50,7 +57,14 @@
                             <li class="clearfix">
                                 <div class="fclassify-box">
                                     <div class="fclassify-pic">
-                                        <a href="/forum/{{id}}" class="iconfont">{{{pic}}}</a>
+                                        {{#and  (eq (string pic 'length') 8) 
+                                                (eq (string pic 'left' 2) '&#')}}
+                                            <a href="/forum/{{id}}" class="iconfont">{{{pic}}}</a>
+                                        {{else}}
+                                            <a href="/forum/{{id}}">
+                                                <img src="{{pic}}" />
+                                            </a>
+                                        {{/and}}
                                     </div>
                                     <div class="fclassify-info">
                                         <div class="fclassify-title">

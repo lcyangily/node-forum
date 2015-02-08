@@ -254,7 +254,7 @@
                     data : fj,
                     success : function(ret){
                         if(ret.code == 1) {
-                            Dialog.tip(ret.msg);
+                            Dialog.tip(ret.msg, 5000);
                             setTimeout(function(){
                                 window.location = '/topic/' + ret.tid;
                             }, 2000);
@@ -270,6 +270,9 @@
 
             function disabledBtn(){
 
+                Dialog.blockUI({
+                    content : '提交中，请稍后 ... '
+                });
                 var $t = $('#J_submitBtn');
                 $t.prop('disabled', true);
                 
@@ -278,6 +281,7 @@
             }
 
             function enabledBtn(){
+                Dialog.blockUI();
                 $('#J_submitBtn').prop('disabled', false).html($('#J_sumbitBtn').attr('label-ext'));
             }
         });

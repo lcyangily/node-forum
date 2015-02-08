@@ -407,7 +407,9 @@ exports.getFollowFeeds = function(uid, callback, page){
             'order by dateline limit ?, 20 ';
 
     var countSql = 'select count(1) as total from user_follow uf, user_follow_feed uff '+
-                   'where uff.uid=uf.follow_uid and uf.uid = ? ';
+                   'LEFT OUTER JOIN `forum_topic` AS `topic` ON `topic`.`id` = uff.tid ' +
+                   'where uff.uid=uf.follow_uid and uf.uid = ? ' + 
+                   'and topic.id is not null ';
 
     var pageSize = (page && page.pageSize) || 20;
     var curPage  = (page && page.page) || 1;

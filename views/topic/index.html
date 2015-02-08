@@ -13,23 +13,22 @@
                     <h1>
                         {{{ topic.title }}}
                         {{#if topic.top }}
-                            <span class="label label-default">置顶</span>
+                            <i class="iconfont tag-top" data-tip-title="顶置">&#xe67f;</i>
                         {{/if}}
                         {{#if topic.highlight }}
                             <span class="label label-default">高亮</span>
                         {{/if}}
                         {{#if topic.digest }}
-                            <span class="label label-default">精华</span>
+                            <i class="iconfont tag-digest" data-tip-title="精品">&#xe667;</i>
                         {{/if}}
                         {{#if topic.is_hot }}
-                            <span class="label label-default">热门</span>
+                            <i class="iconfont tag-hot" data-tip-title="热门">&#xe648;</i>
                         {{/if}}
                     </h1>
                     <div class="info">
                         <em class="info-label">
                             <span>
                                 {{moment topic.create_time format='YYYY-MM-DD HH:mm:ss'}}
-                                {{topic.create_time}}
                             </span>&nbsp;&nbsp;发表在&nbsp;[&nbsp;
                             {{#if ftype}}
                                 <a href="/forum/{{forum.id}}?ftype={{ftype.id}}"
@@ -387,7 +386,7 @@
     {{/ne}}
     <script type="text/javascript">
     require(['jquery'], function($){
-        $('img[data-src]').each(function(){
+        $('[data-src]').each(function(){
             $(this).attr('src', $(this).attr('data-src'));
         });
     });

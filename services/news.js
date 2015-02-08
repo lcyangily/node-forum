@@ -9,7 +9,6 @@ var forumSvc = loadService('forum');
 var topicSvc = loadService('topic');
 
 exports.getList = function(cb, page){
-
     var p = _.extend({page : 1, pageSize : 20}, page);
 
     News.findAll().include([

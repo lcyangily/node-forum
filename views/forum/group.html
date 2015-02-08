@@ -20,7 +20,14 @@
                                     <li class="clearfix">
                                         <div class="fclassify-box">
                                             <div class="fclassify-pic">
-                                                <a href="/forum/{{id}}" class="iconfont">{{{pic}}}</a>
+                                                {{#and  (eq (string pic 'length') 8) 
+                                                        (eq (string pic 'left' 2) '&#')}}
+                                                    <a href="/forum/{{id}}" class="iconfont">{{{pic}}}</a>
+                                                {{else}}
+                                                    <a href="/forum/{{id}}">
+                                                        <img src="{{pic}}" />
+                                                    </a>
+                                                {{/and}}
                                             </div>
                                             <div class="fclassify-info">
                                                 <div class="fclassify-title">

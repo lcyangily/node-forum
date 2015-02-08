@@ -4,6 +4,7 @@ var forumSvc = loadService('forum');
 var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
 var userSvc  = loadService('user');
+var uploadSvc = loadService('upload');
 var livingSvc    = loadService('living');
 var config   = require('../config');
 var fs       = require('fs');
@@ -32,7 +33,7 @@ module.exports = {
             }
         },
         post : {
-            filters : ['checkLogin'], 
+            filters : ['checkLogin', 'limitInterval'],
             controller : function(req, res, next){
                 var type = req.body.type;
                 var name = req.body.name;
@@ -59,19 +60,9 @@ module.exports = {
                     function(callback){
                         //图片
                         var iinfo = req.files.img;
-                        var origName= iinfo.originalFilename;
-                        var extName = origName.substring(origName.lastIndexOf('.'));
-                        var tmpPath = iinfo.path;
-                        var newName = new Date().getTime() + extName;
-                        var newPath = config.base_path + '/uploads/' + newName;
-                        var webPath = '/uploads/' + newName;
-
-                        if(iinfo){
-                            fs.rename(tmpPath, newPath, function(err){
-                                if(err) {
-                                    return callback('图片上传失败！:' + err);
-                                }
-                                callback(null, webPath);
+                        if(iinfo && iinfo.size > 0 && iinfo.originalFilename){
+                            uploadSvc.up2qn(iinfo, {prefix : 'living/'}, function(err, url, data){
+                                callback(err ? ('图片上传失败！:' + err) : null, url);
                             });
                         } else {
                             callback(null);

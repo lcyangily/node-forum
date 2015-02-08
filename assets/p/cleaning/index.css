@@ -115,7 +115,57 @@
 .svc-order .svc-time-hour a:hover{
     background: #eee;
 }
-
+.svc-intro{
+    font-size: 13px;
+}
+.svc-intro ol.normal{
+    list-style-type: decimal;
+}
+.svc-intro ol.normal li{
+    margin-bottom: 5px;
+}
+.svc-intro .nav > li > a{
+    padding:14px 15px 9px;
+}
+.svc-intro .tabs-1 > li.active > a, 
+.svc-intro .tabs-1 > li.active > a:hover, 
+.svc-intro .tabs-1 > li.active > a:focus{
+    padding: 13px 15px 10px 15px;
+    border-width: 1px;
+    font-weight: normal;
+}
+.svc-intro-tit{
+    font-size: 30px;
+    color: #42c076;
+    text-align: center;
+}
+.svc-price-table{
+    /* width: 545px; */
+    margin: 0 auto;
+}
+.svc-price-table .table td {
+    text-align: center;
+    width: 25%;
+    padding:20px 0px;
+    font-size: 18px;
+    color: #666;
+    vertical-align: middle;
+}
+.svc-tip{
+    padding-left: 30px;
+    font-size: 14px;
+}
+.svc-tip label{
+    float: left;
+    margin-left: -30px;
+    width: 30px;
+}
+.svc-tip ul{
+    list-style-type: decimal;
+}
+.svc-tip ul li{
+    margin-bottom: 5px;
+}
 .tipbox .iconfont{
     color:#88d1b4;
 }

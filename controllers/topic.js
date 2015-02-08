@@ -5,6 +5,7 @@ var forumSvc  = loadService('forum');
 var topicSvc  = loadService('topic');
 var userSvc   = loadService('user');
 var newsSvc   = loadService('news');
+var uploadSvc = loadService('upload');
 var News      = new BaseModel('news_topic');
 var async     = require('async');
 var config    = require('../config');
@@ -88,7 +89,7 @@ module.exports = {
             }
         },
         post : {
-            filters : ['checkLogin'],
+            filters : ['checkLogin', 'limitInterval'],
             controller : function(req, res, next){
                 var title = trimxss(req.body.title);
                 var content = req.body.content;
@@ -240,6 +241,7 @@ module.exports = {
             }
         },
         post : {
+            filters : ['checkLogin', 'limitInterval'],
             controller : function(req, res, next){
                 var tid = req.params.tid;
                 var title = trimxss(req.body.title);
@@ -452,20 +454,7 @@ module.exports = {
                 var title = req.body.title;
                 var content = req.body.content;
                 var picUrl = req.body.picUrl;
-
                 var iinfo = req.files.img;
-                var origName= iinfo.originalFilename;
-                var extName = origName.substring(origName.lastIndexOf('.'));
-                var tmpPath = iinfo.path;
-                var newName = new Date().getTime() + extName;
-                var newPath = config.base_path + '/uploads/' + newName;
-                var webPath = '/uploads/' + newName;
-
-                // console.log('-----> picUrl : ' + picUrl);
-                // console.log('-----> iinfo : ' + iinfo);
-                // console.log('-----> origName : ' + origName);
-                // console.log('-----> tmpPath : ' + tmpPath);
-                // console.log('-----> size : ' + iinfo.size);
 
                 if(!content) {
                     return next('内容不能为空！');
@@ -473,9 +462,9 @@ module.exports = {
 
                 async.waterfall([
                     function(cb){
-                        if(origName && iinfo.size > 0) {
-                            fs.rename(tmpPath, newPath, function(err){
-                                cb(err ? ('图片上传失败！:' + err) : null, webPath);
+                        if(iinfo && iinfo.originalFilename && iinfo.size > 0) {
+                            uploadSvc.up2qn(iinfo, {prefix : 'index/news/'}, function(err, url, data){
+                                cb(err ? ('图片上传失败！:' + err) : null, url);
                             });
                         } else {
                             cb(null, picUrl);

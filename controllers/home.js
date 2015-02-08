@@ -8,6 +8,7 @@ var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
 var newsSvc  = loadService('news');
 var livingSvc= loadService('living');
+var uploadSvc= loadService('upload');
 
 module.exports = {
     '/audit' : {
@@ -90,19 +91,13 @@ module.exports = {
             template : 'notify/notify_pop',
             controller : function(req, res, next){
                 var finfo = req.files.avatar;
-                var origName= finfo.originalFilename;
-                var extName = origName.substring(origName.lastIndexOf('.'));
-                var tmpPath = finfo.path;
-                var newName = new Date().getTime() + extName;
-                var newPath = config.base_path + '/uploads/' + newName;
-                var webPath = '/uploads/' + newName;
 
-                fs.rename(tmpPath, newPath, function(err){
+                uploadSvc.up2qn(finfo, {prefix : 'avatar/'}, function(err, url, data){
                     if(err) {
                         res.locals.error = '上传失败！';
                         next();
                     } else {
-                        userSvc.chgAvatar(req.session.user, webPath, function(err){
+                        userSvc.chgAvatar(req.session.user, url, function(err){
                             if(err) {
                                 res.locals.error = '修改资料失败！' + err;
                             } else {
