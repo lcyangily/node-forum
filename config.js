@@ -18,12 +18,26 @@ config = {
     },
     //如果需要使用mysql，则去掉mysql_config的注释并修改为自己的数据库信息
     //如果需要使用mongo，则去掉mongo_config的注释并修改为自己的配置。
-    //
+    post_interval: 2000,    //表单提交最小间隔时间，防止重复提交
     auth : {
         sina : {
             app_id:"****",
             app_secret:"***",
             redirect_uri : 'http://153e2244.ngrok.com/auth/cb/weibo'
+        }
+    },
+    upload : {
+        //七牛上传配置
+        qn : {
+            accessKey: '**********',
+            secretKey: '****************',
+            bucket: '*******',
+            domain: '************'
+        },
+        //本地上传路径配置
+        path : '/uploads/',
+        param : {
+            max : 1024*1024*2
         }
     },
     mysql_config: {
