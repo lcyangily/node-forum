@@ -31,6 +31,7 @@ define(function(require, exports, module){
         duration  : 500,    //动画持续时间
         easing : 'swing',
         hoverStop : true,       //鼠标悬停在面板上是否停止自动播放，默认为true
+        touchSupport : true,    //默认可触摸设备支持触摸切换，如果false，mobile/pad不能触摸切换
         triggerActiveCls : '{clsPrefix}-trigger-active',    //导航选中时的className
         activeIndex : 0, //默认定位在某个帧，默认为0，即第一帧
         colspan : 1,    //滑块窗口的跨度，比如滑块中包含2帧，则指定为2
@@ -175,6 +176,7 @@ define(function(require, exports, module){
                     $el = this.$element, 
                     $triggers = state.$triggers,
                     $panels = state.$panels,
+                    $body   = state.$body,
                     opts = state.options,
                     self = this;
                 if( $.inArray(opts.triggerType, ['click','hover'] ) != -1 ) {
@@ -314,6 +316,9 @@ define(function(require, exports, module){
 
                 if(index + opts.colspan > $panels.size()){
                     index = $panels.size() - opts.colspan;
+                    if(index < 0) { //如果总数小于 colspan 会是负值
+                        index = 0;
+                    }
                 }
 
                 var ret = this._trigger('beforeChange', null, {

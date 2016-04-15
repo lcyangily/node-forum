@@ -3,6 +3,7 @@ var async  = require('async');
 var qn = require('qn');
 var config = require('../config');
 var fs = require('fs');
+var uuid = require('node-uuid');
 
 exports.up2qn = function(tmpFile, param, callback){
     this.upload(tmpFile, 'qn', param, callback);
@@ -15,7 +16,7 @@ exports.up2local = function(tmpFile, type, param, callback){
 /**
  *  param
  *    |- prefix //topic_
- *    |- max    //1024*4
+ *    |- max    //1024*1024*4  >>>  4M
  *    |- limit  //jpg,png,jpeg...
  *
  */
@@ -26,7 +27,7 @@ exports.upload = function(tmpFile, type, param, callback){
     var origName= tmpFile.originalFilename;
     var extName = origName.substring(origName.lastIndexOf('.'));
     var tmpPath = tmpFile.path;
-    var newName = new Date().getTime() + extName;
+    var newName = uuid.v1() + extName;
 
     param = _.extend({}, config.upload.param, param);
     if(param && param.prefix) {
@@ -45,7 +46,7 @@ exports.upload = function(tmpFile, type, param, callback){
     if(type === 'qn') {
         var client = qn.create(config.upload.qn);
         client.uploadFile(tmpPath, {key: newName}, function (err, result) {
-console.log('------> ' + JSON.stringify(result));
+//console.log('------> ' + JSON.stringify(result));
             callback && callback(err, result && result.url, result);
             fs.unlink(tmpPath);
         });

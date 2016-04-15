@@ -26,6 +26,7 @@ define(function(require, exports, module){
         skipHidden : true,  //忽略隐藏的
         placeholder : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC",
         //callback
+        render : null,  //function  自定义每一个元素的渲染 function($el){}
         load : null,    //function  每加载一个元素就会触发一次这个回调
         complete : null //function  所有元素加载完成后会触发此回调
     };
@@ -35,7 +36,8 @@ define(function(require, exports, module){
         static : {
             widgetName : 'SIBLazyLoad',
             require  : require,
-            defaults : defaults
+            defaults : defaults,
+            template : null
         },
         private : {
             _prepareOption : function() {
@@ -129,10 +131,6 @@ define(function(require, exports, module){
                     $el.trigger(eventName);
                     return;
                 }
-
-                this._trigger('load', null, {
-                    element : $el
-                });
                 /*if (typeof(load) == "function") {
                     load.call(this, el);
                 }*/
@@ -166,7 +164,15 @@ define(function(require, exports, module){
                         return;
                     }
                     if (self._inViewport($el)) {
-                        self._renderElement($el);
+                        if($.isFunction(opts.render)) {    //自定义渲染元素
+                            opts.render.call(self, $el);
+                        } else {
+                            self._renderElement($el);
+                        }
+
+                        self._trigger('load', null, {
+                            element : $el
+                        });
                         $lazyElements = state.$lazyElements = $lazyElements.not($el[0]);
                     }
                 });

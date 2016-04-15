@@ -244,7 +244,7 @@ define(function(require, exports, module){
                     } else if(content) {
                         var $cntInner = $(content).show();
                         $cntInner.appendTo($content);
-                        $content.append(content);
+                        //$content.append(content);
                     }
                     this.render();
                 }

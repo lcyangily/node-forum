@@ -18,7 +18,6 @@ define(function(require, exports, module) {
 
     var defaults = {
         appendTo : null,
-        type : '',  //min
         totalPages: 0,  //总页数
         totalRecords : 0,   //总记录数
         current: 1,
@@ -26,16 +25,21 @@ define(function(require, exports, module) {
         pageList: [10,20,30,50],
         loading: false,
         showPageNumber : 10,//每次显示页码数量
-        showPageList: true,
-        showRefresh: true,
+        //showPageList: true,
+        //showRefresh: true,
         clsPrefix : 'sib-page',
-        prevLabel : '上一页',
-        nextLabel : '下一页',
-        firstLabel : '首页',
-        lastLabel : '末页',
+        prevTpl : '上一页',
+        nextTpl : '下一页',
+        firstTpl : '首页',
+        lastTpl : '末页',
 
-        threme : null,
-        beforePageText: '跳转到：',
+        theme : null,  //样式主题
+        //类型：min full stand ellipsis
+        //f-首页, p-上一页, page-页码，n-下一页，l-最后一页，info-displayMsg，inout输入框，gobtn-goto Btn
+        type : 'stand', 
+        //items : null,//'f-p-page-n-l-info-input-gobtn',
+        showPageType : 'list',
+        //beforePageText: '跳转到：',
         //afterPageText: 'of {pages}',
         //afterPageText: '页', //
         gotoLabel : '跳转',
@@ -47,10 +51,18 @@ define(function(require, exports, module) {
     };
 
     var tmpl =  '<div class="{clsPrefix}"></div>';
-    var itemTmpl = '<a href="javascript:;" class="{cls}" value={value}>{label}</a>';
-    var itTmpl   = '<a href="javascript:;" class="{cls}"><i></i></a>';
+    var itemTmpl = '<a href="javascript:void(0);" class="{cls}" value={value}>{label}</a>';
+    var itTmpl   = '<a href="javascript:void(0);" class="{cls}"><i></i></a>';
     var infoTmpl = '<span class="{cls}"></span>';
     var textTmpl = '<span class="{cls}"><input value="{value}" type="text"></span>';
+
+    var ALL_TYPES= {
+        'stand' : 'p-page-n',
+        'min' : 'p-n',
+        'full' : 'f-p-page-n-l-info-input-gobtn', 
+        'fullellipsis' : 'f-p-pe-n-l-info-input-gobtn',
+        'ellipsis' : 'p-pe-n'
+    };
 
     var Pager = Widget.extend({
         static : {
@@ -68,78 +80,78 @@ define(function(require, exports, module) {
                 var state = this.state,
                     opts  = state.options,
                     $page = state.$page,
-                    self  = this;
+                    pageCount = state.totalPages,
+                    self  = this,
+                    $first, $prev, $next, $last, $inWrap, $goBtn;
 
                 $page.empty();
-                /** 分页展示页码个数begin 规则：展示最靠近当前页的指定个数 **/
-                var pageCount = state.totalPages;
-                var pageShowMax = opts.showPageNumber % 2 == 0 ? opts.current - 1 : opts.current;
-                var pageShowMin = opts.current;
 
-                for(var i = 0; i < Math.floor(opts.showPageNumber/2); i++) {
-                    pageShowMax++;
-                    pageShowMin--;
-                    if(pageShowMax > pageCount) {
-                        pageShowMax = pageCount;
-                        if(pageShowMin > 1) {
-                            pageShowMin--;
-                        }
+                var items = ALL_TYPES[opts.type] ? ALL_TYPES[opts.type] : opts.type;
+                items = $.isArray(items) ? items : (items || ALL_TYPES.stand).split('-');
+
+                var hasPage = false; //配置中如果配置了多次 page/pe 则将忽略，只第一次有效
+                $(items).each(function(i, it){
+                    switch(it) {
+                        case 'f' : 
+                            $first = $(Sib.unite(itTmpl, {cls : state.ALL_CLASS.FIRST})).appendTo($page).append(opts.firstTpl);
+                            break;
+                        case 'p' : 
+                            $prev  = $(Sib.unite(itTmpl, {cls : state.ALL_CLASS.PREV })).appendTo($page).append(opts.prevTpl);
+                            break;
+                        case 'n' : 
+                            $next = $(Sib.unite(itTmpl, {cls : state.ALL_CLASS.NEXT})).appendTo($page).append(opts.nextTpl);
+                            break;
+                        case 'l' : 
+                            $last = $(Sib.unite(itTmpl, {cls : state.ALL_CLASS.LAST})).appendTo($page).append(opts.lastTpl);
+                            break;
+                        case 'info' : 
+                            $(Sib.unite(infoTmpl, {cls : state.ALL_CLASS.INFO}))
+                                .html(Sib.unite(opts.displayMsg, {
+                                    total : opts.totalRecords || (pageCount * opts.pageSize),
+                                    pages : pageCount,
+                                    from : (opts.current-1) * opts.pageSize,
+                                    to : opts.current * opts.pageSize
+                                }))
+                                .appendTo($page);
+                            break;
+                        case 'input' : 
+                            //input 
+                            $inWrap = $(Sib.unite(textTmpl, {
+                                value : opts.current,
+                                cls : state.ALL_CLASS.WHICH
+                            })).appendTo($page);
+                            break;
+                        case 'gobtn' : 
+                            //goto btn
+                            $goBtn = $(Sib.unite(itTmpl, {
+                                cls : state.ALL_CLASS.GOTO
+                            })).html(opts.gotoLabel).appendTo($page);
+                            break;
+                        case 'page' : 
+                            !hasPage && createStandItems();
+                            hasPage = true;
+                            break;
+                        case 'pe' : 
+                            !hasPage && createEllipsisItems();
+                            hasPage = true;
+                            break;
                     }
-                    if(pageShowMin < 1) {
-                        pageShowMin = 1;
-                        if(pageShowMax < pageCount) {
-                            pageShowMax++;
-                        }
-                    }
-                }
+                });
 
-                //first
-                var $first = $(Sib.unite(itTmpl, {cls : state.ALL_CLASS.FIRST})).appendTo($page).append(opts.firstLabel);
-                var $prev  = $(Sib.unite(itTmpl, {cls : state.ALL_CLASS.PREV })).appendTo($page).append(opts.prevLabel);
+                //bind event begin
+                var $fp = $([]);
+                if($first && $first[0]) $fp.pushStack($first[0]);
+                if($prev && $prev[0]) $fp.pushStack($prev[0]);
 
-                /** 分页展示页码个数end **/
-                for(var i = pageShowMin; i <= pageShowMax; i++) {
-                    var cls = state.ALL_CLASS.ITEM + ' ' + (i == opts.current ? state.ALL_CLASS.CURRENT : '');
-                    var itemData = {
-                        value : i, 
-                        label : i,
-                        cls : cls
-                    };
-                    $(Sib.unite(itemTmpl, itemData)).appendTo($page);
-                }
-                var $next = $(Sib.unite(itTmpl, {cls : state.ALL_CLASS.NEXT})).appendTo($page).append(opts.nextLabel);
-                var $last = $(Sib.unite(itTmpl, {cls : state.ALL_CLASS.LAST})).appendTo($page).append(opts.lastLabel);
-
-                $(Sib.unite(infoTmpl, {cls : state.ALL_CLASS.INFO}))
-                    .html(Sib.unite(opts.displayMsg, {
-                        total : opts.totalRecords || (pageCount * opts.pageSize),
-                        pages : pageCount,
-                        from : (opts.current-1) * opts.pageSize,
-                        to : opts.current * opts.pageSize
-                    }))
-                    .appendTo($page);
-                //跳转到输入开始 begin
-                //input 
-                var $inWrap = $(Sib.unite(textTmpl, {
-                    value : opts.current,
-                    cls : state.ALL_CLASS.WHICH
-                })).appendTo($page);
-                //goto btn
-                var $goto = $(Sib.unite(itTmpl, {
-                    cls : state.ALL_CLASS.GOTO
-                })).html(opts.gotoLabel).appendTo($page);
-                //跳转到输入开始 end
-
-                var $fp = $([]).pushStack([$first[0], $prev[0]]);
                 $fp.off('.page');
 
                 if(opts.current == 1) {
                     $fp.addClass(state.ALL_CLASS.DISABLED);
                 } else {
-                    $first.on('click.page', function(){
+                    $first && $first.on('click.page', function(){
                         if (opts.current > 1) self.selectPage(1);
                     });
-                    $prev.on('click.page', function(){
+                    $prev && $prev.on('click.page', function(){
                         if (opts.current > 1) self.selectPage(opts.current - 1);
                     });
                 }
@@ -148,28 +160,113 @@ define(function(require, exports, module) {
                 $page.find(itemSelector).off('.page').on('click.page', function(){
                     self.selectPage(parseInt($(this).attr('value')) || 1);
                 });
-                var $nl = $([]).pushStack([$next[0], $last[0]]);
+
+                var $nl = $([]);
+                $next && $next[0] && $nl.pushStack($next[0]);
+                $last && $last[0] && $nl.pushStack($last[0]);
                 if(opts.current == pageCount) {
                     $nl.addClass(state.ALL_CLASS.DISABLED);
                 } else {
-                    $next.off('.page').on('click.page', function(){
+                    $next && $next.off('.page').on('click.page', function(){
                         if (opts.current < state.totalPages) self.selectPage(opts.current + 1);
                     });
-                    $last.off('.page').on('click.page', function(){
+                    $last && $last.off('.page').on('click.page', function(){
                         if (opts.current < state.totalPages) self.selectPage(state.totalPages);
                     });
                 }
 
-                $inWrap.find('input:text').off('.page').on('keydown.page', function(e){
+                $inWrap && $inWrap.find('input:text').off('.page').on('keydown.page', function(e){
                     if (e.keyCode == 13){
                         var val = parseInt($(this).val()) || 1;
                         self.selectPage(val);
                     }
                 });
-                $goto.off('.page').on('click.page', function(e){
+                $goBtn && $inWrap && $goBtn.off('.page').on('click.page', function(e){
                     var val = parseInt($inWrap.find('input:text').val()) || 1;
                     self.selectPage(val);
                 });
+
+
+                function createStandItems(){
+                    renderItem(getPageNums());
+                }
+
+                function createEllipsisItems(){
+                    renderItem(getPageNums('e'));
+                }
+
+                function getPageNums(type){
+                    var pageNums = [];
+                    var num = opts.showPageNumber;
+                    if(type == 'e') {
+                        var num = num - 2;
+                        num = num > 2 ? num : 2;
+                    }
+
+                    /** 分页展示页码个数begin 规则：展示最靠近当前页的指定个数 **/
+                    var pageShowMax = num % 2 == 0 ? opts.current - 1 : opts.current;
+                    var pageShowMin = opts.current;
+
+                    for(var i = 0; i < Math.floor(num/2); i++) {
+                        pageShowMax++;
+                        pageShowMin--;
+                        if(pageShowMax > pageCount) {
+                            pageShowMax = pageCount;
+                            if(pageShowMin > 1) {
+                                pageShowMin--;
+                            }
+                        }
+                        if(pageShowMin < 1) {
+                            pageShowMin = 1;
+                            if(pageShowMax < pageCount) {
+                                pageShowMax++;
+                            }
+                        }
+                    }
+
+                    for(var n = pageShowMin; n <= pageShowMax; n++) {
+                        pageNums.push(n);
+                    }
+
+                    if(type == 'e') {
+                        if(pageShowMin > 3) {
+                            pageNums.unshift(1, '.');
+                        } else if(pageShowMin == 2){
+                            pageNums.unshift(1);
+                        } else if(pageShowMin == 3) {
+                            pageNums.unshift(1, 2);
+                        }
+
+                        if(pageShowMax < pageCount - 2) {
+                            pageNums.push('.', pageCount);
+                        } else {
+                            for(var x = pageShowMax + 1; x <= pageCount; x++) {
+                                pageNums.push(x);
+                            }
+                        }
+                    }
+
+                    return pageNums;
+                }
+
+                function renderItem(arr) {
+                    /** 分页展示页码个数end **/
+                    if(arr && arr.length) {
+                        for(var i = 0; i < arr.length; i++) {
+                            if('.' == arr[i]) {
+                                $(Sib.unite(infoTmpl, {cls : state.ALL_CLASS.ELLIPSIS})).html('...').appendTo($page);
+                            } else {
+                                var cls = state.ALL_CLASS.ITEM + ' ' + (arr[i] == opts.current ? state.ALL_CLASS.CURRENT : '');
+                                var itemData = {
+                                    value : arr[i], 
+                                    label : arr[i],
+                                    cls : cls
+                                };
+                                $(Sib.unite(itemTmpl, itemData)).appendTo($page);
+                            }
+                        }
+                    }
+                }
             }
         },
         public : {
@@ -194,8 +291,8 @@ define(function(require, exports, module) {
                     CURRENT : clsPrefix + '-current',
                     DISABLED : clsPrefix + '-disabled'
                 }
-                if(opts.threme && typeof opts.threme === 'string') {
-                    $page.addClass(opts.threme);
+                if(opts.theme && typeof opts.theme === 'string') {
+                    $page.addClass(opts.theme);
                 }
                 state.totalPages = parseInt(opts.totalPages);
                 if(state.totalPages <= 0) {

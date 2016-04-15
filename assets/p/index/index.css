@@ -236,6 +236,7 @@ a:hover{
     /* width: 220px;
     height: 146px; */
     overflow: hidden;
+    max-height: 250px;
 }
 .article-box .a-img img {
     width: 100%;

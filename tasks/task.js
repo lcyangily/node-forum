@@ -3,5 +3,5 @@
  * 遵守cronb的配置语法
  */
 module.exports = {
-    // "* * * * * *": "sample.js"
+    "0 */20 * * * *": "sync.js"
 }

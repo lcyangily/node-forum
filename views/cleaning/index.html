@@ -153,7 +153,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" id="J_submitBtn" class="btn btn-primary btn-block">预约</button>
+                            <button type="submit" id="J_submitBtn" class="btn btn-primary btn-block">预约</button>
                         </form>
                     </div>
                 </div>
@@ -371,6 +371,12 @@
             return true;
         }
 
+        function submitForm(){
+            var form1 = Sib.form2json('J_cleanBooking');
+            var form2 = Sib.form2json('J_cleanBooking2');
+            
+        }
+
         //验证
         $('#J_cleanBooking').validate({
             focusInvalid : true, // 校验不通过，是否设置为焦点
@@ -398,6 +404,16 @@
                 nextForm();
             }
         });
+
+        $('#J_cleanBooking2').validate({
+            focusInvalid : true, // 校验不通过，是否设置为焦点
+            errorClass : 'help-block error-tip',
+            errorElement : 'span',
+            submitHandler : function(form) {
+                
+            }
+        });
+
     });
     </script>
     {{/replace}}

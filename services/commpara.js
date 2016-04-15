@@ -3,6 +3,14 @@ var async  = require('async');
 
 var Commpara = new BaseModel('commpara');
 
+exports.getByAttr = function (attr, cb){
+    Commpara.findAll().where({
+        sys_code : 'SYS',
+        param_attr : attr
+    }).done(function(err, datas){
+        cb && cb(err, datas);
+    });
+}
 
 exports.getByCode = function (code, cb){
 

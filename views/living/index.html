@@ -207,11 +207,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">手机</label>
+                                <label class="col-sm-2 control-label">电话</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="phone" class="form-control" placeholder="手机号"
-                                        data-rule-required="true" data-msg-required="手机号不能为空" 
-                                        data-rule-mobile="200" data-msg-mobile="请输入有效的电话号码！">
+                                    <input type="text" name="phone" class="form-control" placeholder="电话"
+                                        data-rule-required="true" data-msg-required="电话号码不能为空" 
+                                        data-rule-multiPhone="true" data-msg-multiPhone="请输入有效的电话号码！">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -354,6 +354,20 @@
                     $('#J_extend_' + ctypeid).appendTo('#J_extendArea');
                 }
             });
+
+            $.validator.addMethod("multiPhone", function(value, element) {
+                var els = (value || '').split(',');
+                var flag = true;
+                for(var i = 0; i < els.length; i++) {
+                    if(els[i].length > 4 && 
+                       (/^([0-9]{1,9}(\-)?)?([0-9]{1,9}){1}(\-[0-9]{1,9})?$/.test(els[i]))) {
+                        continue;
+                    }
+                    flag = false;
+                    break;
+                }
+                return this.optional(element) || flag;
+            }, "请输入正确的电话号码，多个以，号分割！");
 
             $('#J_requestForm').validate({
                 focusInvalid : true, // 校验不通过，是否设置为焦点

@@ -1,4 +1,4 @@
-define(['jquery', 'sib.tip'], function($, Tip){
+define(['jquery', 'sib.tip', 'sib.lazyload'], function($, Tip, LazyLoad){
     $(document).ajaxError(function(e, xhr, o){
         if(xhr && xhr.responseText == '__requiredLogin-noLogin') {
             //alert('尚未登录，请先登录！');
@@ -57,5 +57,25 @@ define(['jquery', 'sib.tip'], function($, Tip){
                 }
             });
         });
+    });
+
+    new LazyLoad({
+        target : '[data-sib-lazyload]',
+        skipHidden : true
+    });
+
+    new LazyLoad({
+        target : 'img[data-src]',
+        attrName : 'data-src',
+        skipHidden : true,
+        render : function($el){
+            var state = this.state,
+                opts  = state.options,
+                nodeName = $el[0].nodeName.toUpperCase();
+            if (nodeName == "IMG") {
+                var src = $el.attr(opts.attrName);
+                $el.attr("src", '/imgp?s=' + src);
+            }
+        }
     });
 });

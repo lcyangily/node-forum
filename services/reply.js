@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var async  = require('async');
 var Topic  = new BaseModel('forum_topic');
 var User   = new BaseModel('users');
@@ -9,6 +10,10 @@ var replySvc = loadService('reply');
 var topicSvc = loadService('topic');
 var forumSvc = loadService('forum');
 
+var getPageWithDef = function(p){
+    return _.merge({page : 1, pageSize : 20}, p);
+}
+
 exports.getById = function (id, cb) {
     Reply.find().where({
         id : id
@@ -16,14 +21,14 @@ exports.getById = function (id, cb) {
 }
 
 exports.getListByTopicId = function(tid, cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     Reply.findAll().where({
         tid : tid
     }).include([User.Model]).page(p).done(cb);
 }
 
 exports.getListByUid = function(uid, cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     Reply.findAll().where({
         author_id : uid
     }).include([

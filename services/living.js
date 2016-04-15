@@ -1,12 +1,13 @@
 var _ = require('lodash');
 var async  = require('async');
-
 var User       = new BaseModel('users');
 var LivingInfo = new BaseModel('living_info');
 
+var getPageWithDef = function(p){
+    return _.merge({page : 1, pageSize : 20}, p);
+}
 
 exports.joinRequest = function (linfo, cb){
-
     LivingInfo.add(linfo).done(function(err, li){
         cb && cb(err, li);
     });
@@ -21,7 +22,7 @@ exports.getByType = function(type, cb, page){
 
 /** mgr **/
 exports.getRequestList = function(cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     LivingInfo.findAll().where({
         status : 3
     }).include([
@@ -30,7 +31,7 @@ exports.getRequestList = function(cb, page){
 }
 
 exports.getAuditedList = function(cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     LivingInfo.findAll().where({
         status : 0
     }).include([

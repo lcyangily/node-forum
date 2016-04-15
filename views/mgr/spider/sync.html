@@ -1,0 +1,94 @@
+{{#extend "layout"}}
+    {{#append "css"}}
+    <style type="text/css">
+    html,body{
+        height:auto;
+    }
+    </style>
+    {{/append}}
+    {{#replace "navWrap"}}{{/replace}}
+    {{#replace "bodyWrap"}}
+        <div id="content">
+            <div class="panel">
+                <form class="form-horizontal" id="J_form" role="form" name="forumForm" method="post" action="/mgr/spider/sync/{{id}}">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">同步方式</label>
+                        <div class="col-sm-10" id="J_type">
+                            <label class="radio-inline">
+                                <input type="radio" name="type" value="1" checked> 只同步今天
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="type" value="2"> 按距离天数同步
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="type" value="3"> 按时间区间同步
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="J_cnt_1" style="display:none;"></div>
+                    <div class="form-group" id="J_cnt_2" style="display:none;">
+                        <label for="J_parentId" class="col-sm-2 control-label">同步以下天数内的所有数据</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="offset" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="J_cnt_3" style="display:none;">
+                        <label for="J_parentId" class="col-sm-2 control-label">同步以下时间区间内的数据</label>
+                        <div class="col-sm-10">
+                            <div class="form-group">
+                                <div class="col-xs-5">
+                                    <input type="text" name="begin" class="form-control" />
+                                </div>
+                                <div class="col-xs-5">
+                                    <input type="text" name="end" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {{/replace}}
+    {{#replace "footer"}}{{/replace}}
+    {{#append "js"}}
+        <script type="text/javascript">
+        require(['jquery', 'sib.dialog', 'sib.calendar', 'sib.calendar.i18n.zh-cn'], 
+            function($, Dialog, Calendar, calLang){
+            $('#J_type').on('click', '[name=type]', function(){
+                var $t = $(this);
+                var id = $t.val();
+                if(id) {
+                    $('#J_cnt_1').hide();
+                    $('#J_cnt_2').hide();
+                    $('#J_cnt_3').hide();
+                    $('#J_cnt_' + id).show();
+                }
+            });
+
+            new Calendar({
+                trigger : $('#J_form [name=begin]'),
+                output : $('#J_form [name=begin]'),
+                lang : calLang,
+            });
+
+            new Calendar({
+                trigger : $('#J_form [name=end]'),
+                output : $('#J_form [name=end]'),
+                lang : calLang,
+            });
+
+            $('#J_form').submit(function(){
+                Dialog.blockUI({
+                    content : '更新中，请稍后。。。'
+                });
+                return true;
+            });
+        });
+        </script>
+    {{/append}}
+{{/extend}}

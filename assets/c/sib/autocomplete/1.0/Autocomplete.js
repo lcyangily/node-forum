@@ -40,6 +40,7 @@ define(function(require, exports, module){
             my : 'left top-1', 
             at : 'left bottom'
         },
+        theme : null,
 
         listItemFormatter : null, //list显示每条 function
         listItemFilter : null, //function 过滤结果集
@@ -170,6 +171,9 @@ define(function(require, exports, module){
                 $overlay.appendTo(this._getOverlayWrap());
                 $overlay.hide();
                 $overlay.css('zIndex', opts.zIndex);
+                if(opts.theme) {
+                    $overlay.addClass(opts.theme);
+                }
                 state.$liveRegion = $( "<span>", {
                     role: "status",
                     "aria-live": "polite"

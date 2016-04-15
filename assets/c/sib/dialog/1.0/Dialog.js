@@ -455,7 +455,7 @@ define(function(require, exports, module){
                 });
                 // iframe不支持0级DOM的onload事件绑定，所以 IE 下 onload 无法触发
                 // 用 $().one 函数来代替 onload,只执行一次
-                state.$iframe.on("load", function(e) {
+                state.$iframe.one("load", function(e) {
                     that._trigger('iframeload', e);
                     // 如果 dialog 已经隐藏了，就不需要触发 onload
                     if (!$dialog.is(":visible")) {

@@ -29,10 +29,10 @@ config = {
     upload : {
         //七牛上传配置
         qn : {
-            accessKey: '**********',
-            secretKey: '****************',
-            bucket: '*******',
-            domain: '************'
+            accessKey: 'wkKkpDQUjY0mFoKG8Nx6TNewBRDMRUN-nbnmuoD9',
+            secretKey: 'Fr_FiJATCJErYJ6JxH6K9mQ5eCrI8-XlEr1c89dq',
+            bucket: 'linbilin-topic',
+            domain: 'http://7vijxt.com1.z0.glb.clouddn.com'
         },
         //本地上传路径配置
         path : '/uploads/',

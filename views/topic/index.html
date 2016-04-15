@@ -381,15 +381,8 @@
         </div>
     {{/replace}}
     {{#replace "js"}}
-    {{#ne topic.closed 1}}
-        <script type="text/javascript" src="/assets/c/gallery/ckeditor/ckeditor.js"></script>
-    {{/ne}}
-    <script type="text/javascript">
-    require(['jquery'], function($){
-        $('[data-src]').each(function(){
-            $(this).attr('src', $(this).attr('data-src'));
-        });
-    });
-    </script>
+        {{#ne topic.closed 1}}
+            <script type="text/javascript" src="/assets/c/gallery/ckeditor/ckeditor.js"></script>
+        {{/ne}}
     {{/replace}}
 {{/extend}}

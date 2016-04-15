@@ -22,6 +22,7 @@ define(function(require, exports, module){
         wrapTmpl : '<span class="{clsPrefix}-wrap"></span>',
         width : 'auto',
         height : 'auto',
+        force : false,  //不论浏览器是否支持placeholder，强制使用组件
         position : {}
     };
     
@@ -61,6 +62,10 @@ define(function(require, exports, module){
                 }
                 $label.attr('for', iptId);
                 $label.insertAfter($el);
+
+                //force为true，则会默认和生成的placeholder都生效
+                $el.attr('sib-placeholder-txt', $el.attr('placeholder'));
+                $el.removeAttr('placeholder');
             },
             _bindEvent : function() {
                 var state = this.state,
@@ -106,7 +111,9 @@ define(function(require, exports, module){
         },
         public : {
             _init : function() {
-                if(support) return;
+                var state = this.state,
+                    opts  = state.options;
+                if(support && !opts.force) return;
                 this._prepareOption();
                 this._buildHTML();
                 this._bindEvent();
@@ -130,7 +137,7 @@ define(function(require, exports, module){
                     $el   = this.$element,
                     $label= state.$label;
                     
-                $label.html($el.attr('placeholder'));
+                $label.html($el.attr('sib-placeholder-txt'));
                 $label.show();
                 this._resize();
                 this._syncPosition();

@@ -1,0 +1,90 @@
+{{#extend "mgr/mlayout" action="spider"}}
+    {{!--{{#append "css"}}
+        <link rel="stylesheet" href="/assets/p/forum/index.css">
+        <style type="text/css">
+        .action{
+            padding:0px 5px;
+        }
+        </style>
+    {{/append}}--}}
+    {{#replace "breadcrumbPath"}}
+        <li><a href="/mgr/spider">文章同步管理</a></li>
+    {{/replace}}
+    {{#replace "content"}}
+        <table class="table table-hover" id='J_sList'>
+            <thead>
+                <tr>
+                    <th>编码</th>
+                    <th>名称</th>
+                    <th>类型</th>
+                    <th>用户</th>
+                    <th>论坛版块</th>
+                    <th>最新同步时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each list}}
+                    <tr>
+                        <td>{{param_code}}</td>
+                        <td>{{param_name}}</td>
+                        <td>{{param_1}}</td>
+                        <td>{{name}}</td>
+                        <td>{{name}}</td>
+                        <td>
+                            {{#if update_time}}
+                                {{moment update_time format='YYYY-MM-DD HH:mm:ss'}}
+                            {{else}}
+                                暂无同步记录
+                            {{/if}}
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" data-id="{{param_code}}" data-name="{{param_name}}"
+                                data-role="sync" class="action">同步</a>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{/replace}}
+
+    {{#append "js"}}
+    <script type="text/javascript">
+    require(['jquery', 'sib.datagrid', 'sib.dialog', 'sib.tabs', 'sib.combobox'], 
+        function($, DataGrid, Dialog, Tabs, ComboBox){
+        var d;
+
+        $('#J_sList').on('click', '[data-role=sync]', function(){
+            var $t = $(this);
+            var id = $t.attr('data-id');
+            var name = $t.attr('data-name');
+            sync(id, name);
+        });
+
+        function sync(id, name){
+            if(!d) {
+                d = new Dialog({
+                    title : '同步信息',
+                    content : '/mgr/spider/sync/',
+                    modal : true,
+                    width:600,
+                    height:400,
+                    zIndex : 10000,
+                    close : function(evt, data){
+                        if(data && data.msg) {
+                            Dialog.tip(data.msg);
+                            d.reload();
+                        }
+                    }
+                });
+            }
+            d.setOptions({
+                content : '/mgr/spider/sync/' + id,
+                title : '同步 '+ name +' 信息'
+            });
+            d.open();
+        }
+    });
+    </script>
+    {{/append}}
+{{/extend}}

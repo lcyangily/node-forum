@@ -471,7 +471,7 @@ module.exports = {
                         }
                     },
                     function(picUrl, cb){
-                        fs.unlink(tmpPath);
+                        if(iinfo && iinfo.path) fs.unlink(iinfo.path);
                         newsSvc.add({
                             id : tid,
                             img : picUrl,

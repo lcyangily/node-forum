@@ -20,6 +20,10 @@ var type2Int = {
     weixin : 3
 };
 
+var getPageWithDef = function(p){
+    return _.merge({page : 1, pageSize : 20}, p);
+}
+
 exports.register = function (user, type, cb){
     var self = this;
     var profile = user.profile || {};
@@ -260,7 +264,7 @@ exports.getByName = function (name, cb){
 }
 
 exports.getList = function(cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     User.findAll().include([
         UserCount.Model,
         UserProfile.Model
@@ -278,7 +282,7 @@ exports.getLastRegUser = function(cb){
 
 /** 得到用户的所有好友 **/
 exports.getFriends = function(uid, cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     UserFriend.findAll().where({
         uid : uid
     }).include([{
@@ -292,7 +296,7 @@ exports.getFriends = function(uid, cb, page){
 
 /** 得到用户接受到的好友请求 **/
 exports.getReceiveFriendsRequest = function(uid, cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     UserFriendRequest.findAll().where({
         fuid : uid
     }).include([{
@@ -307,7 +311,7 @@ exports.getReceiveFriendsRequest = function(uid, cb, page){
 
 /** 得到用户接收到的好友请求 **/
 exports.getSendFriendsRequest = function(uid, cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     UserFriendRequest.findAll().where({
         uid : uid
     }).include([{
@@ -375,7 +379,7 @@ exports.removeFriend = function(myid, fuid, cb) {
 
 /* 得到我关注的人 */
 exports.getFollowers = function(uid, cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     UserFollow.findAll().where({
         uid : uid,
         status : 0
@@ -386,7 +390,7 @@ exports.getFollowers = function(uid, cb, page){
 
 /* 得到关注我的人 */
 exports.getFollowersMe = function(uid, cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     UserFollow.findAll().where({
         follow_uid : uid,
         status : 0
@@ -540,7 +544,7 @@ exports.getFavForums = function(uid, cb){
 }
 
 exports.getFavTopics = function(uid, cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     UserFav.findAll().where({
         uid : uid,
         type : 2

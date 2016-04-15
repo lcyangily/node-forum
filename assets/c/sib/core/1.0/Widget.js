@@ -60,9 +60,13 @@ define(function(require, exports, module){
                 var mconst = {
                     clsPrefix : options.clsPrefix || this.constructor.defaults.clsPrefix || this.constructor.clsPrefix || ''
                 };
-                var $el = this.$element = getElement();
-                if(!$el[0]) {
-                    alert('target not found.');
+                var $el;
+                try {   //getElement 有可能报错 如 $('#[sib-data-lazyload]');会报错
+                    $el = this.$element = getElement();
+                } catch(e){}
+                
+                if(!$el || !$el[0]) {
+                    console.error('target not found : ' + options.target);
                     return;
                 }
 

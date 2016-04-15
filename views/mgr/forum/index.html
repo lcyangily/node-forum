@@ -23,12 +23,12 @@
                     <table class="table table-hover" id='J_fList'>
                         <thead>
                             <tr>
-                                <th>#ID</th>
-                                <th>Parent</th>
-                                <th>名称</th>
-                                <th>类型</th>
+                                <th style="width:50px;">#ID</th>
+                                <th style="width:60px;">Parent</th>
+                                <th style="width:160px;">名称</th>
+                                <th style="width:80px;">类型</th>
                                 <th>描述</th>
-                                <th>操作</th>
+                                <th style="width:100px;">操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -153,7 +153,6 @@
                     content : '/mgr/forum/master?',
                     modal : true,
                     zIndex : 10000,
-                    height : 500,
                     close : function(evt, data){
                         if(data && data.msg) {
                             Dialog.tip(data.msg);

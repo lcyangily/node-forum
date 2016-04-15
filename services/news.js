@@ -8,8 +8,64 @@ var UserCount = new BaseModel('user_count');
 var forumSvc = loadService('forum');
 var topicSvc = loadService('topic');
 
+var getPageWithDef = function(p){
+    return _.merge({page : 1, pageSize : 20}, p);
+}
+
+//面向公众的通用查询
+exports.getListCommon = function(where, order, cb, page){
+    //var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
+    //var o = _.extend({create_time : 'desc'}, order);
+    var o = order || [['create_time', 'desc']];
+    var w = _.extend({
+        status : 0, //0-正常
+        'forum_topic.status' : 0
+    }, where);
+    //指定fields 去掉conent 速度更快
+    News.findAll().include([
+        {
+            model : Topic.Model,
+            attributes : [  //除去content 
+                'id',
+                'title',
+                'fid',
+                'ftype_id',
+                'author_id',
+                'type',
+                'closed',
+                'status',
+                'status_chg_uid',
+                'status_chg_time',
+                'highlight',
+                'digest',
+                'top_all',
+                'top',
+                'is_hot',
+                'reply_count',
+                'visit_count',
+                'collect_count',
+                'zan_count',
+                'create_time',
+                'update_time',
+                'last_reply',
+                'last_reply_user_id',
+                'last_reply_time'
+            ],
+            include : [
+                User.Model, 
+                Forum.Model, 
+                {model : User.Model, as : 'reply_author'},
+                {model : Forum.Model, as : 'forum_type'}
+            ]
+        }
+    ]).where(w).order(o).page(p).done(cb);
+}
+
 exports.getList = function(cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+
+    return this.getListCommon({}, null, cb, page);
+    /*var p = getPageWithDef(page);
 
     News.findAll().include([
         {
@@ -52,11 +108,11 @@ exports.getList = function(cb, page){
         'forum_topic.status' : 0
     }).order({
         create_time : 'desc'
-    }).page(p).done(cb);
+    }).page(p).done(cb);*/
 }
 
 exports.getAuditRequests = function(cb, page){
-    var p = _.extend({page : 1, pageSize : 20}, page);
+    var p = getPageWithDef(page);
     News.findAll().include([
         {
             model : Topic.Model,

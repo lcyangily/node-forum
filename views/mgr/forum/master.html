@@ -2,9 +2,13 @@
     {{#append "css"}}
         <link rel="stylesheet" href="/assets/p/forum/index.css">
         <style type="text/css">
-        body{
+        html,body{
+            height: auto;
             padding-top: 0px;
             background: #fff;
+        }
+        body{
+            padding-bottom: 20px;
         }
         </style>
     {{/append}}
@@ -50,6 +54,7 @@
             method: 'get',
             url : '/mgr/user/alldata',
             singleSelect : false,
+            pagination : true,
             columns : [
                 [{
                     title : 'ID',
@@ -59,7 +64,7 @@
                     field : 'loginname'
                 }, {
                     title : '名称',
-                    field : 'name'
+                    field : 'nickname'
                 }, {
                     title : '是否是管理员',
                     field : 'is_admin',
