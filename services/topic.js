@@ -146,12 +146,12 @@ exports.getListCommon = function(where, order, cb, page){
     var o = order || [['last_reply_time', 'desc'], ['id', 'desc']];
     var w = _.extend({
         status : 0, //0-正常
-        'forum.status' : {
+        /*'forum.status' : {
             ne : 0  //0-删除
         },
         'forum.forum.status' : {
             ne : 0
-        }
+        }*/
     }, where);
     //指定fields 去掉conent 速度更快
     Topic.findAll()
@@ -183,7 +183,7 @@ exports.getListCommon = function(where, order, cb, page){
         ])
         .include([
             User.Model, 
-            {model : Forum.Model, include : [Forum.Model]}, 
+            {model : Forum.Model, include : [{ model: Forum.Model, where: { status: { ne: 0 } } }], where : { status: { ne: 0 } }},
             {model : User.Model, as : 'reply_author'},
             {model : Forum.Model, as : 'forum_type'}
         ]).where(w).order(o).page(p).done(cb);
@@ -192,8 +192,8 @@ exports.getListCommon = function(where, order, cb, page){
 //论坛首页列表
 exports.getList = function(cb, page){
     this.getListCommon({
-        'forum.forum.status' : 1,
-        'forum.status' : 1
+        // 'forum.forum.status' : 1,
+        // 'forum.status' : 1
     }, [
         ['top_all', 'desc'],
         ['create_time', 'DESC']
