@@ -5,6 +5,10 @@
   "main": "server.js",
   "author": "",
   "license": "BSD",
+  "scripts": {
+    "start": "nodemon --debug server.js",
+    "dev": "nodemon --debug server.js"
+  },
   "repository": {
     "type": "git",
     "url": ""
