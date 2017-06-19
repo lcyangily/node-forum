@@ -2,7 +2,7 @@ var config;
 
 config = {
     debug: true,
-    run_port: 8080,
+    run_port: 6003,
 
     base_path: __dirname, //应用根路径，程序中常用
     view_dir : 'views',
