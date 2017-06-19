@@ -20,7 +20,7 @@ exports.getListCommon = function(where, order, cb, page){
     var o = order || [['create_time', 'desc']];
     var w = _.extend({
         status : 0, //0-正常
-        'forum_topic.status' : 0
+        // 'forum_topic.status' : 0
     }, where);
     //指定fields 去掉conent 速度更快
     News.findAll().include([

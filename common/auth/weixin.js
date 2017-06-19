@@ -34,7 +34,7 @@ var Weixin = function(options) {
         api_group: [],
         scope: ""
     };
-    _.extend(this.options, config.auth.sina, options);
+    _.extend(this.options, config.auth.weixin, options);
 }
 
 //static attr
