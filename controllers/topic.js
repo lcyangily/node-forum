@@ -471,7 +471,7 @@ module.exports = {
                         }
                     },
                     function(picUrl, cb){
-                        if(iinfo && iinfo.path) fs.unlink(iinfo.path);
+                        // if(iinfo && iinfo.path) fs.unlink(iinfo.path);
                         newsSvc.add({
                             id : tid,
                             img : picUrl,
