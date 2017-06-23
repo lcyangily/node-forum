@@ -50,8 +50,8 @@ Weixin.prototype.getAuthUrl = function(){
         appid: this.options.app_id,
         redirect_uri: this.options.redirect_uri,
         response_type: 'code',
-        state: null,
-        scope : 'snsapi_login'
+        scope : 'snsapi_login',
+        // state: null,
     };
     return Weixin.API_BASE_URL + 'connect/qrconnect?' + querystring.stringify(options);
 }
